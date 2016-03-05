@@ -1,0 +1,44 @@
+Lisa
+- User interface
+- Everything except login/registration
+- Create design in photoshop - add classes
+
+David
+- front page
+- navigation
+- search in navigation bar
+
+Taewoo
+- registration
+- sign in/log in
+- user profile
+
+Rahal
+- 2 types of postings - one offer to take care of pet, one needs their pet taken care of
+- all postings
+- specific posting
+
+
+Example site:
+http://pic-collage.com/
+https://www.airbnb.ca/
+yelp.com
+https://www.studypool.com/
+
+
+- direct login for admin page
+- new, delete, all posts
+- rating system - stars
+- owners of similar pets will be grouped together, group based on location
+- notification for users in the navigation bar
+
+- group pages - sharing information about pets, upload ideas about pets
+- photo albums for pets, descriptions
+- subprofiles for pets
+
+- AngularJS 2.0
+- SASS
+- 1 User page for demo
+
+- create pull request if there is a conflict
+- use git stash if there is a conflict, git pull, git stash apply
