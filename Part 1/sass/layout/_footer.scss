@@ -22,6 +22,7 @@ footer {
 			cursor: pointer;
 			font-size: 30px;
 			margin: 8px 10px;
+  			@include transition(color 0.2s ease-in);
 
 			&:hover {
 				color: $gray-darker;

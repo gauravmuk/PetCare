@@ -58,8 +58,9 @@
 
 	.feature-container {
 		text-align: center;
-		margin: 0 10px;
+    	margin: 0 auto;
 	    box-sizing: border-box;
+    	max-width: 300px;
 
     	.fa {
 			font-size: 65px;
@@ -70,6 +71,7 @@
 			font-size: 18px;
 			margin: 20px 0;
 		}
+
 		.description {
 			font-size: 14px;
 			line-height: 20px;
@@ -113,11 +115,24 @@
 
     	padding: 40px 0;
 
+		.features-label {
+			font-size: $extraLarge;
+		}
+
 		.feature-container {
 		    margin: 0;
 		    float: left;
 		    padding: 0px 20px;
 		    width: 33.33%;
+    		max-width: none;
+
+			.name {
+				font-size: $hugeSize;
+			}
+			.description {
+				font-size: 16px;
+			}
+
 		}
 
 	}
@@ -133,6 +148,11 @@
 		    width: 50%;
 		    text-align: left;
 	    }
+	    .buttons {
+	    	li:first-child {
+			    margin-left: 0;
+	    	}
+	    }
 	}
 
 }
@@ -143,12 +163,6 @@
 	.home-header {
 	    .message {
 		    padding: 14% 30px;
-	    }
-	    
-	    .buttons {
-	    	li:first-child {
-			    margin-left: 0;
-	    	}
 	    }
 	}
 

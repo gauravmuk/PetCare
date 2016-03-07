@@ -6,9 +6,7 @@
     width: 100%;
     border: 0;
     border-radius: 0;
-    -webkit-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
-	   -moz-box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);
-	        box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.3);	
+    @include box-shadow (0px 0px 10px 1px rgba(0,0,0,0.3));
 
     .toggle {
 		position: relative;
@@ -21,6 +19,7 @@
 		background-image: none;
 		border: 1px solid $white;
 		border-radius: 4px;
+  		@include transition(background-color 0.2s ease-in);
 
 		&:hover {
 			background-color: $green-dark;
@@ -58,7 +57,7 @@
 		padding: 15px 15px;
 		font-size: $hugeSize;
     	font-weight: 700;
-		line-height: $hugeSize;
+		line-height: 20px;
     }
 
     ul {
@@ -68,6 +67,7 @@
     		text-decoration: none;
     		color: $link-color;
 		    font-size: $mediumSize;
+  			@include transition(background-color 0.2s ease-in);
     	}
 
     }
@@ -104,6 +104,7 @@
 					color: $white;
 					background-color: $green;
 					padding: 8px 16px;
+  					@include transition(all 0.2s ease-in);
 
 					&:hover, &:focus {
 						color: $white;
