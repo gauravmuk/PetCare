@@ -1,0 +1,45 @@
+// ----------------------------------------------------------------------
+	// Font Sizes
+// ----------------------------------------------------------------------
+$smallSize: 10px;
+$regularSize: 12px;
+$mediumSize: 14px;
+$largeSize: 18px;
+$hugeSize: 24px;
+
+// ----------------------------------------------------------------------
+	// Font Families
+// ----------------------------------------------------------------------
+$helvetica: Helvetica, Arial, sans-serif;
+$lato: 'Lato', sans-serif;
+
+// ----------------------------------------------------------------------
+	// Breakpoints
+// ----------------------------------------------------------------------
+$screen-sm-min: 768px;
+$screen-xs-max: ($screen-sm-min - 1);
+$screen-md-min: 992px;
+$screen-sm-max: ($screen-md-min - 1);
+$screen-lg-min: 1200px;
+$screen-md-max: ($screen-lg-min - 1);
+
+// ----------------------------------------------------------------------
+	// Colors
+// ----------------------------------------------------------------------
+$body-bg: #FEFEFE;
+
+$white: #FFF;
+
+$gray-light: #F8F8F8;
+$gray: #F8F8F8;
+$gray-dark: #DADADA;
+$gray-darker: #828282;
+
+$black-light: rgba(0, 0, 0, 0.9);
+$black: #000;
+
+$green: #10C8CD;
+$green-dark: #0EA3AB;
+
+$link-color: #476D82;
+$link-dark: #273D4A;
