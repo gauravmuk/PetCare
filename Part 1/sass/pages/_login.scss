@@ -1,16 +1,117 @@
+$border-color: #CECECE;
+$text-color: #929292;
+$input-height: 45px;
 
+.signup {
+    margin-top: 100px;
+    margin-bottom: 50px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+	border: 1px solid $border-color;
+	border-radius: 5px;
+	padding: 5%;
 
-/* Small devices (tablets, 768px and up) */
-@media (min-width: $screen-sm-min) {
+	form {
+		.signup-input {
+			width: 100%;
+			height: $input-height;
+			line-height: $input-height;
+			padding-left: 2%;
+			margin-bottom: 15px;
+			border: 1px solid $border-color;
+			border-radius: 5px;
+			color: $text-color;
+			vertical-align: middle;
+			overflow: hidden;
 
+			input {
+				float: right;
+				width: 58%;
+				height: 43px;
+				line-height: 43px;
+				border: none;
+				outline: none;
+				vertical-align: bottom;
+				color: black;
+			}
+		}
+
+		.center {
+			display: block;
+			text-align: center;
+			margin-top: 10px;
+			margin-bottom: 20px;
+			font-weight: bold;
+
+			a {
+				display: inline-block;
+				color: #10c8cd;
+			}
+
+			.line {
+				display: inline-block;
+				width: 43%;
+				height: 1px;
+				border: 1px solid $border-color;
+				margin-bottom: 3px;
+				margin-left: 1%;
+				margin-right: 1%;
+			}
+		}
+
+		.signup-button {
+			width: 100%;
+			height: $input-height;
+			background-color: #10c8cd;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			margin-bottom: 10px;
+			margin-top: 10px;
+		}
+
+		#facebook {
+			background-color: #3b5998;
+		}
+
+		#twitter {
+			background-color: #4099ff;
+		}
+
+		#google {
+			background-color: #d34836;
+		}
+
+		.remember-me {
+			font-weight: bold;
+
+			input[type="checkbox"] {
+				margin-right: 8px;
+			}
+
+			a {
+				float: right;
+				color: #10c8cd;
+			}
+		}
+	}
 }
 
-/* Medium devices (desktops, 992px and up) */
-@media (min-width: $screen-md-min) {
 
-}
+/* Small devices (550 and up) */
+@media (min-width: 550px) {
+	.signup {
+		width: 500px;
+		padding: 30px;
 
-/* Large devices (large desktops, 1200px and up) */
-@media (min-width: $screen-lg-min) {
+		form .signup-input input {
+				float: right;
+				width: 78%;
+		}
 
+		form .center .line {
+			width: 45%;
+		}
+	}
 }
