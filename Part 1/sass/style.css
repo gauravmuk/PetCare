@@ -399,7 +399,8 @@ div.postings, div.histories {
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .profile {
-    padding: 30px; }
+    padding: 30px;
+    padding-bottom: 10px; }
 
   .right-corner {
     float: right; }
@@ -423,7 +424,8 @@ div.postings, div.histories {
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   .profile {
-    padding: 50px; }
+    padding: 50px;
+    padding-bottom: 10px; }
 
   .info-piece {
     width: 250px; }
