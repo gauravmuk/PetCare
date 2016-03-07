@@ -1,0 +1,21 @@
+// Green Button
+.button {
+
+	text-decoration: none;
+	border-radius: 4px;
+	color: $white;
+	background-color: $green;
+	padding: 8px 16px;
+  	@include transition(all 0.2s ease-in);
+
+	&:hover, &:focus {
+		color: $white;
+		background-color: $green-dark;
+		text-decoration: none;
+	}
+
+	&.large {
+		padding: 15px 25px;
+	}
+
+}
