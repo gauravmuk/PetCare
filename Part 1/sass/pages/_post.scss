@@ -1,0 +1,74 @@
+.post-header {
+	margin-top: 50px;
+    margin-bottom: 50px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+	border-radius: 5px;
+	padding: 5% 0%;
+
+	.buttons {
+		.floatleft {
+    		float:left;
+		}
+		.floatright {
+    		float:right;
+		}
+
+    	li {
+		    margin-bottom: 10px;
+
+		    a {
+			    display: inline-block;
+			    width: 100%;
+		    }
+    	}
+    }
+}
+
+.post {
+	margin-top: 0px;
+    margin-bottom: 50px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+	border: 1px solid $border-color;
+	border-radius: 5px;
+	padding: 5%;
+
+	.top-buffer { 
+		margin-top: 30px; 
+	}
+
+	.icon {
+		margin: 0px;
+	}
+
+	.info-piece-long-text {
+    	margin-bottom: 8px;
+    	display: inline-block;
+    	width: 600px;
+
+    	.name {
+    		display: inline-block;
+    		width: 200px;
+    		font-weight: bold;
+		}
+	}
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $screen-sm-min) {
+	
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $screen-lg-min) {
+
+}
