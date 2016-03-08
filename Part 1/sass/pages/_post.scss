@@ -21,6 +21,7 @@
 		    a {
 			    display: inline-block;
 			    width: 100%;
+    			padding: 15px 10px;
 		    }
     	}
     }
@@ -39,36 +40,104 @@
 	.top-buffer { 
 		margin-top: 30px; 
 	}
+	.user_info {
 
-	.icon {
-		margin: 0px;
-	}
+		margin-bottom: 20px;
 
-	.info-piece-long-text {
-    	margin-bottom: 8px;
-    	display: inline-block;
-    	width: 600px;
+		.info {
 
-    	.name {
-    		display: inline-block;
-    		width: 200px;
-    		font-weight: bold;
+			&:first-child {
+				margin-bottom: 20px;
+			}
+
+			.icon {
+				margin: 0px;
+			}
+
+			.info-piece-long-text {
+
+				margin-top: 10px;
+				display: block;
+				text-align: left;
+
+		    	.name {
+		    		display: inline-block;
+		    		font-weight: bold;
+				}
+
+			}
+
 		}
+
 	}
 
+	.description {
+		padding: 10px 0;
+	}
+
+}
+
+.recommendations {
+
+    border: 0;
+    padding: 0;
+    margin-top: 0;
+
+    .consider {
+    	color: $link-color;
+    	font-size: 20px;
+    	font-weight: 700;
+    	text-align: center;
+    }
 }
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: $screen-sm-min) {
-	
+	.post-header {
+		margin-top: 40px;
+	    margin-bottom: 40px;
+
+		.buttons {
+
+	    	li {
+
+			    a {
+	    			padding: 15px 25px;
+			    }
+	    	}
+	    }
+	}
+
+	.post {
+		button.apply {
+			width: 100% !important;
+			float: left;
+		}
+	}
+
+	.recommendations {
+
+	    .consider {
+	    	text-align: left;
+	    }
+	}
 }
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: $screen-md-min) {
-
+	.post-header {
+		margin-top: 30px;
+	    margin-bottom: 30px;
+	}
 }
 
 /* Large devices (large desktops, 1200px and up) */
 @media (min-width: $screen-lg-min) {
 
+	.post {
+		button.apply {
+			float: right;
+			width: 100px;
+		}
+	}
 }

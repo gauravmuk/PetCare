@@ -43,7 +43,7 @@
                         <a href="#home">Home</a>
                     </li>
                     <li>
-                        <a href="#postings">Posting 1</a>
+                        <a href="post.html">Posting 1</a>
                     </li>
                     <li>
                         <a href="#postings">Posting 2</a>
@@ -65,31 +65,33 @@
                 <div class="user_info">
                     <div class="info">
                         <img class="profile-picture" src="images/default-profile-pic.png" alt="profile picture"/>
-                        <div class="title">Leonardo Dicaprio</div>
-                        <div class="rating">
-                            &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
-                        </div><br>
-                        <span class="info-piece">
-                            <span class="name">Location</span>
-                            <span class="value">Ottawa, ON</span>
-                        </span><br>
-                        <span class="info-piece">
-                            <span class="name">Email</span>
-                            <span class="value">example@gmail.com</span>
-                        </span>
+                        <div class="info-container">
+                            <div class="title">Leonardo Dicaprio</div>
+                            <div class="rating">
+                                &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
+                            </div>
+                            <span class="info-piece">
+                                <span class="name">Location</span>
+                                <span class="value">Ottawa, ON</span>
+                            </span>
+                            <span class="info-piece">
+                                <span class="name">Email</span>
+                                <span class="value">example@gmail.com</span>
+                            </span>
+                        </div>
                         <div class="right-corner">
                             <button class="button">
                                 <img class="icon" src="assets/icon-message.svg">
                                 <span>Message</span>
                             </button>
-                            <br>
                             <button class="button">
                                 <img class="icon" src="assets/icon-report.svg">
                                 <span>Report</span>
                             </button>
                         </div>
                     </div>
-                    <p>I am an actor who has oscar. I like to jog with my pets.</p>
+                    <p class="description">I am an actor who has oscar. I like to jog with my pets.
+                    </p>
                 </div>
 
                 <!-- nav bar for pets postings history -->
@@ -105,56 +107,71 @@
                     <div class="pet">
                         <div class="info">
                             <img class="profile-picture" src="images/cat1.jpg" alt="pet picture"/>
-                            <div class="title">Pudding</div>
-                            <span class="rating">
-                                &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
-                            </span><br>
-                            
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                <span class="value">Cat</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="name">Gender</span>
-                                <span class="value">Neutered male</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                <span class="value">2 years old</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="name">Breed</span>
-                                <span class="value">Manx</span>
-                            </span>
-
+                            <div class="left-info">
+                                <div class="title">Pudding</div>
+                                <span class="rating">
+                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
+                                </span>
+                                <div>
+                                    <div class="info-column">
+                                        <span class="info-piece icon-span">
+                                            <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
+                                            <span class="value">Cat</span>
+                                        </span>
+                                        <span class="info-piece icon-span">
+                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
+                                            <span class="value">2 years old</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <span class="info-piece">
+                                            <span class="name">Gender</span>
+                                            <span class="value">Neutered male</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="name">Breed</span>
+                                            <span class="value">Manx</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p>He is my best buddy. He likes tuna.</p>
+                        <p class="description">He is my best buddy. He likes tuna.
+                        </p>
                     </div>
                     <div class="pet">
                         <div class="info">
                             <img class="profile-picture" src="images/cat2.jpg" alt="pet picture"/>
-                            <div class="title">Apple</div>
-                            <span class="rating">
-                                &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                <span class="value">Cat</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="name">Gender</span>
-                                <span class="value">Neutered male</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                <span class="value">2 years old</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="name">Breed</span>
-                                <span class="value">Manx</span>
-                            </span>
+                            <div class="left-info">
+                                <div class="title">Apple</div>
+                                <span class="rating">
+                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
+                                </span>
+                                <div>
+                                    <div class="info-column">
+                                        <span class="info-piece icon-span">
+                                        <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
+                                        <span class="value">Cat</span>
+                                        </span>
+                                        <span class="info-piece icon-span">
+                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
+                                            <span class="value">2 years old</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <span class="info-piece">
+                                            <span class="name">Gender</span>
+                                            <span class="value">Neutered male</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="name">Breed</span>
+                                            <span class="value">Manx</span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p>He is my second best buddy. He likes apple.</p>
+                        <p class="description">He is my second best buddy. He likes apple.</p>
                     </div>
                 </div>
 
@@ -163,70 +180,91 @@
                     <div class="posting">
                         <div class="info">
                             <img class="profile-picture" src="images/cat1.jpg" alt="pet picture"/>
-                            <div class="title"><a href="">Finding a kind pet sitter.</a></div>
-                            <span class="rating">
-                                &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
-                            </span>
-                            <button class="apply">Apply</button>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
-                                <span class="value">Downtown, Toronto, ON</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                <span class="value">Cat</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
-                                <span class="value">25 per day</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
-                                <span class="value">March 3rd to April 1st</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                <span class="value">2 years old</span>
-                            </span>
-
+                            <div class="left-info">
+                                <div class="title"><a href="">Finding a kind pet sitter.</a></div>
+                                <div>
+                                    <div class="info-column">
+                                        <span class="rating">
+                                            &#9733;&#9733;&#9733;&#9733;&#9734;
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
+                                            <span class="value">Cat</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
+                                            <span class="value">March 3rd to April 1st</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
+                                            <span class="value">Downtown, Toronto, ON</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
+                                            <span class="value">25 per day</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
+                                            <span class="value">2 years old</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <button class="apply">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p>I'm going to aboard for one month. My pet's name is Pudding. He is introvert and 
-                            usually quiet. He likes to eat tuna but he can eat normal cat food...
-                             <a href="">See More</a></p>
+                        <p class="description">
+                            I'm going to aboard for one month. My pet's name is Pudding. He is introvert and usually quiet. He likes to eat tuna but he can eat normal cat food...
+                             <a href="">See More</a>
+                         </p>
                     </div>
                     <div class="posting">
                         <div class="info">
                             <img class="profile-picture" src="images/default-profile-pic.png" alt="profile picture"/>
-                            <div class="title"><a href="">Let me take care of your pet!</a></div>
-                            <span class="rating">
-                                &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
-                            </span>
-                            <button class="apply">Apply</button>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
-                                <span class="value">Downtown, Toronto, ON</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                <span class="value">Cats, Dogs, Hampsters</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
-                                <span class="value">20 ~ 25 per day</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
-                                <span class="value">March 3rd to April 1st</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                <span class="value">2 years experience</span>
-                            </span>
-
+                            <div class="left-info">
+                                <div class="title"><a href="">Let me take care of your pet!</a></div>
+                                <div>
+                                    <div class="info-column">
+                                        <span class="rating">
+                                            &#9733;&#9733;&#9733;&#9734;&#9734; 
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
+                                            <span class="value">Cats, Dogs, Hampsters</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
+                                            <span class="value">March 3rd to April 1st</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
+                                            <span class="value">Downtown, Toronto, ON</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
+                                            <span class="value">20 ~ 25 per day</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
+                                            <span class="value">2 years experience</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <button class="apply">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p>I'm really nice guy. You can see my reviews. Everyone satisfies with my service.
+                        <p class="description">
+                            I'm really nice guy. You can see my reviews. Everyone satisfies with my service.
                             100% safety guarantees. If you'd like to bring your own food for you pet, you...
-                             <a href="">See More</a></p>
+                             <a href="">See More</a>
+                         </p>
                     </div>
                 </div>
 
@@ -235,70 +273,91 @@
                     <div class="history">
                         <div class="info">
                             <img class="profile-picture" src="images/cat1.jpg" alt="pet picture"/>
-                            <div class="title"><a href="">Finding a kind pet sitter.</a></div>
-                            <span class="rating">
-                                &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
-                            </span>
-                            <button class="closed">Closed</button>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
-                                <span class="value">Downtown, Toronto, ON</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                <span class="value">Cat</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
-                                <span class="value">25 per day</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
-                                <span class="value">March 3rd to April 1st</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                <span class="value">2 years old</span>
-                            </span>
-
+                            <div class="left-info">
+                                <div class="title"><a href="">Finding a kind pet sitter.</a></div>
+                                <div>
+                                    <div class="info-column">
+                                        <span class="rating">
+                                            &#9733;&#9733;&#9733;&#9733;&#9734; 
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
+                                            <span class="value">Cat</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
+                                            <span class="value">March 3rd to April 1st</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
+                                            <span class="value">Downtown, Toronto, ON</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
+                                            <span class="value">25 per day</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
+                                            <span class="value">2 years old</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <button class="closed">Closed</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p>I'm going to aboard for one month. My pet's name is Pudding. He is introvert and 
-                            usually quiet. He likes to eat tuna but he can eat normal cat food...
-                             <a href="">See More</a></p>
+                        <p class="description">
+                            I'm going to aboard for one month. My pet's name is Pudding. He is introvert and usually quiet. He likes to eat tuna but he can eat normal cat food...
+                             <a href="">See More</a>
+                         </p>
                     </div>
                     <div class="history">
                         <div class="info">
                             <img class="profile-picture" src="images/default-profile-pic.png" alt="profile picture"/>
-                            <div class="title"><a href="">Let me take care of your pet!</a></div>
-                            <span class="rating">
-                                &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
-                            </span>
-                            <button class="closed">Closed</button>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
-                                <span class="value">Downtown, Toronto, ON</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                <span class="value">Cats, Dogs, Hampsters</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
-                                <span class="value">20 ~ 25 per day</span>
-                            </span><br>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
-                                <span class="value">March 3rd to April 1st</span>
-                            </span>
-                            <span class="info-piece">
-                                <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                <span class="value">2 years experience</span>
-                            </span>
-
+                            <div class="left-info">
+                                <div class="title"><a href="">Let me take care of your pet!</a></div>
+                                <div>
+                                    <div class="info-column">
+                                        <span class="rating">
+                                            &#9733;&#9733;&#9733;&#9734;&#9734; 
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
+                                            <span class="value">Cats, Dogs, Hampsters</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
+                                            <span class="value">March 3rd to April 1st</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
+                                            <span class="value">Downtown, Toronto, ON</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
+                                            <span class="value">20 ~ 25 per day</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
+                                            <span class="value">2 years experience</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <button class="closed">Closed</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                        <p>I'm really nice guy. You can see my reviews. Everyone satisfies with my service.
+                        <p class="description">
+                            I'm really nice guy. You can see my reviews. Everyone satisfies with my service.
                             100% safety guarantees. If you'd like to bring your own food for you pet, you...
-                             <a href="">See More</a></p>
+                             <a href="">See More</a>
+                         </p>
                     </div>
                 </div>
             </div>
