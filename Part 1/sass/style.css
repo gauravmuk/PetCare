@@ -203,9 +203,6 @@ footer {
       display: inline-block;
       width: 100%; }
 
-.content {
-  min-height: 200px; }
-
 .home-features {
   background-color: #10C8CD;
   color: #FFF;
@@ -273,8 +270,112 @@ footer {
 @media (min-width: 1200px) {
   .home-header .message {
     padding: 14% 30px; } }
+.search-bar {
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #FFF;
+  padding-top: 50px; }
+  .search-bar .search-container {
+    padding: 20px 15px; }
+  .search-bar .search {
+    padding-top: 10px; }
+    .search-bar .search label {
+      display: none;
+      margin-right: 10px; }
+    .search-bar .search input[type="text"] {
+      font-size: 14px;
+      width: 100%;
+      border-radius: 4px;
+      border: 0;
+      padding: 7px;
+      color: #000; }
+      .search-bar .search input[type="text"]:focus {
+        outline: 0; }
+  .search-bar .button {
+    display: block;
+    margin: 10px 0;
+    text-align: center; }
+
+.search-results .search-term {
+  font-size: 20px;
+  font-weight: 700;
+  color: #476D82;
+  margin: 30px 0; }
+.search-results .profile {
+  border: 0;
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 10px; }
+
+.pagination {
+  text-align: center;
+  display: block; }
+  .pagination ul {
+    display: inline-block; }
+    .pagination ul li {
+      float: left; }
+      .pagination ul li a {
+        color: #476D82;
+        text-decoration: none;
+        border-radius: 8px;
+        position: relative;
+        display: block;
+        text-align: center;
+        margin: 0 2px;
+        width: 28px;
+        height: 28px;
+        font-size: 15px;
+        line-height: 26px;
+        -webkit-transition: all 0.15s ease-in;
+        -moz-transition: all 0.15s ease-in;
+        -ms-transition: all 0.15s ease-in;
+        -o-transition: all 0.15s ease-in;
+        transition: all 0.15s ease-in; }
+        .pagination ul li a:hover {
+          color: #FFF;
+          background-color: #DADADA; }
+      .pagination ul li.active a {
+        cursor: default;
+        color: #FFF;
+        background-color: #10C8CD; }
+
+.modal form label {
+  margin-bottom: 6px; }
+.modal form textarea {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 4px; }
+.modal button.btn-primary {
+  background-color: #10C8CD; }
+  .modal button.btn-primary:hover, .modal button.btn-primary:focus {
+    background-color: #0EA3AB; }
+
 /* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .search-bar .search-container {
+    text-align: center;
+    padding: 30px 15px; }
+  .search-bar .search {
+    display: inline;
+    padding: 10px; }
+    .search-bar .search label {
+      display: inline;
+      font-size: 16px; }
+    .search-bar .search input[type="text"] {
+      width: initial;
+      min-width: 150px; }
+  .search-bar .button {
+    display: inline-block;
+    margin: 0;
+    margin-left: 15px;
+    padding: 8px 60px; } }
 /* Medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .search-bar .search input[type="text"] {
+    width: initial;
+    min-width: 200px; }
+  .search-bar .button {
+    min-width: 200px; } }
 /* Large devices (large desktops, 1200px and up) */
 .profile {
   margin-top: 100px;
