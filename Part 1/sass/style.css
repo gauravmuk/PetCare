@@ -497,5 +497,48 @@ div.postings, div.histories {
       width: 78%; }
     .signup form .center .line {
       width: 45%; } }
+.post-header {
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  border-radius: 5px;
+  padding: 5% 0%; }
+  .post-header .buttons .floatleft {
+    float: left; }
+  .post-header .buttons .floatright {
+    float: right; }
+  .post-header .buttons li {
+    margin-bottom: 10px; }
+    .post-header .buttons li a {
+      display: inline-block;
+      width: 100%; }
+
+.post {
+  margin-top: 0px;
+  margin-bottom: 50px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 100%;
+  border: 1px solid #CECECE;
+  border-radius: 5px;
+  padding: 5%; }
+  .post .top-buffer {
+    margin-top: 30px; }
+  .post .icon {
+    margin: 0px; }
+  .post .info-piece-long-text {
+    margin-bottom: 8px;
+    display: inline-block;
+    width: 600px; }
+    .post .info-piece-long-text .name {
+      display: inline-block;
+      width: 200px;
+      font-weight: bold; }
+
+/* Small devices (tablets, 768px and up) */
+/* Medium devices (desktops, 992px and up) */
+/* Large devices (large desktops, 1200px and up) */
 
 /*# sourceMappingURL=style.css.map */
