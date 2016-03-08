@@ -118,12 +118,12 @@ $border-color: #CECECE;
 	overflow: hidden;
 }
 
-img.medium {
+img.profile-picture {
 	float: left;
-	width: 150px;
-	height: 150px;
-	margin-right: 40px;
-	margin-bottom: 30px;
+	width: 200px;
+	height: 200px;
+	margin-right: 100%;
+	margin-bottom: 40px;
 }
 
 img.icon {
@@ -134,7 +134,7 @@ img.icon {
 }
 
 button.apply, button.closed {
-	width: 100px;
+	width: 80px;
 	height: 35px;
 	background-color: #10c8cd;
 	color: white;
@@ -146,15 +146,25 @@ button.closed {
 	background-color: gray;
 }
 
-
 div.postings, div.histories {
 	display: none;
+}
+
+@media (min-width: 620px) {
+	img.profile-picture {
+		margin-right: 40px;
+	}
 }
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: $screen-sm-min) {
 	.profile {
-		padding: 50px;
+		padding: 30px;
+		padding-bottom: 10px;
+	}
+
+	.right-corner {
+		float: right;
 	}
 
 	.nav-bar .nav-item {
@@ -176,13 +186,22 @@ div.postings, div.histories {
 	}
 
 	.title {
-		font-size: 30px;
+		font-size: 25px;
 	}
 }
 
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: $screen-md-min) {
+	.profile {
+		padding: 50px;
+		padding-bottom: 10px;
+	}
+
 	.info-piece {
 		width: 250px;
+	}
+
+	button.apply, button.closed {
+		width: 100px;
 	}
 }
