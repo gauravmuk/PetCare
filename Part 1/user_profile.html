@@ -80,11 +80,11 @@
                             </span>
                         </div>
                         <div class="right-corner">
-                            <button class="button">
+                            <button class="button" data-toggle="modal" data-target="#messageModal">
                                 <img class="icon" src="assets/icon-message.svg">
                                 <span>Message</span>
                             </button>
-                            <button class="button">
+                            <button class="button" data-toggle="modal" data-target="#reportModal">
                                 <img class="icon" src="assets/icon-report.svg">
                                 <span>Report</span>
                             </button>
@@ -211,7 +211,7 @@
                                         </span>
                                     </div>
                                     <div class="info-column">
-                                        <button class="apply">Apply</button>
+                                        <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -255,7 +255,7 @@
                                         </span>
                                     </div>
                                     <div class="info-column">
-                                        <button class="apply">Apply</button>
+                                        <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -359,6 +359,84 @@
                              <a href="">See More</a>
                          </p>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Message</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea name="comment"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Report</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea name="comment" placeholder="Please briefly describe what you are reporting for."></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Apply Modal -->
+    <div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Application</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="name" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Comments:</label>
+                            <textarea name="comment"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
                 </div>
             </div>
         </div>
