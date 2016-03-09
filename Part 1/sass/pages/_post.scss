@@ -1,0 +1,143 @@
+.post-header {
+	margin-top: 50px;
+    margin-bottom: 50px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+	border-radius: 5px;
+	padding: 5% 0%;
+
+	.buttons {
+		.floatleft {
+    		float:left;
+		}
+		.floatright {
+    		float:right;
+		}
+
+    	li {
+		    margin-bottom: 10px;
+
+		    a {
+			    display: inline-block;
+			    width: 100%;
+    			padding: 15px 10px;
+		    }
+    	}
+    }
+}
+
+.post {
+	margin-top: 0px;
+    margin-bottom: 50px;
+	margin-right: auto;
+	margin-left: auto;
+	width: 100%;
+	border: 1px solid $border-color;
+	border-radius: 5px;
+	padding: 5%;
+
+	.top-buffer { 
+		margin-top: 30px; 
+	}
+	.user_info {
+
+		margin-bottom: 20px;
+
+		.info {
+
+			&:first-child {
+				margin-bottom: 20px;
+			}
+
+			.icon {
+				margin: 0px;
+			}
+
+			.info-piece-long-text {
+
+				margin-top: 10px;
+				display: block;
+				text-align: left;
+
+		    	.name {
+		    		display: inline-block;
+		    		font-weight: bold;
+				}
+
+			}
+
+		}
+
+	}
+
+	.description {
+		padding: 10px 0;
+	}
+
+}
+
+.recommendations {
+
+    border: 0;
+    padding: 0;
+    margin-top: 0;
+
+    .consider {
+    	color: $link-color;
+    	font-size: 20px;
+    	font-weight: 700;
+    	text-align: center;
+    }
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $screen-sm-min) {
+	.post-header {
+		margin-top: 40px;
+	    margin-bottom: 40px;
+
+		.buttons {
+
+	    	li {
+
+			    a {
+	    			padding: 15px 25px;
+			    }
+	    	}
+	    }
+	}
+
+	.post {
+		button.apply {
+			width: 100% !important;
+			float: left;
+		}
+	}
+
+	.recommendations {
+
+	    .consider {
+	    	text-align: left;
+	    }
+	}
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+	.post-header {
+		margin-top: 30px;
+	    margin-bottom: 30px;
+	}
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $screen-lg-min) {
+
+	.post {
+		button.apply {
+			float: right;
+			width: 100px;
+		}
+	}
+}
