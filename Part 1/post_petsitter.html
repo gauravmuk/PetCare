@@ -6,7 +6,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PetCare</title>
+    <title>PetCare - Pet Sitter Posting</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico"/>
 
     <!-- Bootstrap Core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
@@ -17,6 +19,7 @@
     <!-- Custom Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
 
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 
 </head>
@@ -117,7 +120,7 @@
                                 <div class="info-column right-corner">
                                     <button class="button apply">
                                         <img class="icon" src="assets/icon-message.svg">
-                                        <span>Apply</span>
+                                        <span data-toggle="modal" data-target="#applyModal">Apply</span>
                                     </button>
                                 </div>
                             </div>
@@ -204,7 +207,7 @@
                                         </span>
                                     </div>
                                     <div class="info-column">
-                                        <button class="apply">Apply</button>
+                                        <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -248,7 +251,7 @@
                                         </span>
                                     </div>
                                     <div class="info-column">
-                                        <button class="apply">Apply</button>
+                                        <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
                                     </div>
                                 </div>
                             </div>
@@ -262,6 +265,38 @@
                 </div>
           </div>
       </div>    	
+
+    <!-- Apply Modal -->
+    <div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Application</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="name" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Comments:</label>
+                            <textarea name="comment"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
       <!-- Footer -->
       <footer>

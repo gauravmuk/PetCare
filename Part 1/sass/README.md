@@ -1,6 +1,6 @@
 ## SASS Instructions
 1. Install SASS: http://sass-lang.com/install
-2. cd into the /sass folder and run: sass --watch style.scss:style.css
+2. cd into the /sass folder and run: sass --watch style.scss:style.css --style expanded
 3. Make your changes to the .scss files and hit save and any changes will be saved to the style.css file. 
 	* Don't make changes to the style.css file directly or they will be overwritten.
 	* I created files under /sass/pages where you can make your changes depending on what page you are working on. This doesn't really matter so you can work on any of these files.
