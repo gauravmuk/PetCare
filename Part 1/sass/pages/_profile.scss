@@ -61,12 +61,13 @@ $border-color: #CECECE;
 	}
 
 	.rating {
-		font-size:25px;
+		font-size:20px;
 		display: block;
 		color: #10c8cd;
 		margin-bottom: 10px;
     	cursor: default;
-		
+		letter-spacing: 3px;
+
 		a {
 			font-size: 15px;
 		}
@@ -140,8 +141,8 @@ $border-color: #CECECE;
 	}
 
 	img.icon {
-		width: 40px;
-	    height: 18px;
+		height: 20px;
+   		margin-right: 5px;
 	    position: relative;
 	    top: 2px;
 	}
@@ -212,7 +213,7 @@ $border-color: #CECECE;
 
 		img.profile-picture {
 			float: left;
-			height: 180px;
+			height: 160px;
 			padding: 0;
 			margin-right: 20px;
 		}
@@ -233,7 +234,7 @@ $border-color: #CECECE;
 		}
 
 		.title {
-			font-size: 25px;
+			font-size: 23px;
 		}
 
 		.description {
@@ -243,7 +244,7 @@ $border-color: #CECECE;
 		.left-info {
 			float: right;
 			width: 65%;
-			width: calc(100% - 205px);
+			width: calc(100% - 195px);
 
 			.info-column {
 				width: 50%;
