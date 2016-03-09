@@ -73,6 +73,10 @@ $border-color: #CECECE;
 		}
 	}
 
+	.review-rating {
+		display: inline-block;
+	}
+
 	.info {
     	text-align: center;
 		overflow: hidden;
@@ -102,6 +106,7 @@ $border-color: #CECECE;
 
 	.description {
 		padding: 15px;
+		line-height: 22px;
 	}
 
 	.nav-bar {
@@ -129,7 +134,7 @@ $border-color: #CECECE;
 		color: #006e8c;
 	}
 
-	.pet, .posting, .history {
+	.pet, .posting, .history, .review {
 		margin-top: 25px;
 	    margin-bottom: 25px;
 		margin-right: auto;
@@ -149,7 +154,12 @@ $border-color: #CECECE;
 
 	img.profile-picture {
 		height: 200px;
-		padding: 15px;
+		padding: 10px;
+	}
+
+	img.review-user-picture {
+		height: 120px;
+		padding: 10px;
 	}
 
 	button.apply {
@@ -177,10 +187,22 @@ $border-color: #CECECE;
 		background-color: gray;
 	}
 
-	div.postings, div.histories {
+	div.postings, div.histories, div.reviews {
 		display: none;
 	}
 
+	.review-description {
+		padding-top: 0;
+	}
+
+	.review-user-info {
+		font-size: 14px;
+		margin: 5px 0;
+		.name {
+			color: #337ab7;
+			margin-bottom: 5px;
+		}
+	}
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -229,7 +251,7 @@ $border-color: #CECECE;
 			float: left;
 		}
 
-		.pet, .posting, .history {
+		.pet, .posting, .history, .review {
 			padding: 30px;
 		}
 
@@ -243,7 +265,6 @@ $border-color: #CECECE;
 
 		.left-info {
 			float: right;
-			width: 65%;
 			width: calc(100% - 195px);
 
 			.info-column {
@@ -256,6 +277,32 @@ $border-color: #CECECE;
 			}
 		}
 
+		.review-info {
+			width: calc(100% - 135px);
+		}
+
+		.review-description {
+			padding-top: 0;
+		}
+
+		.comment {
+			float:right;
+			width: calc(100% - 170px);
+		}
+
+		.review-user-info {
+			float: left;
+			width: 20%;
+			font-size: 14px;
+			.name {
+				color: #337ab7;
+				margin-bottom: 5px;
+			}
+		}
+
+		img.review-user-picture {
+			padding: 0;
+		}
 	}
 }
 
