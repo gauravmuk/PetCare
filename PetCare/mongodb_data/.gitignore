@@ -1,0 +1,4 @@
+# Files/Folders inside mongodb_data directory exceeds github size limit
+# Ingnore all files/folders in mongodb_data directory, but not the directory itself
+*
+!.gitignore
