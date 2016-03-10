@@ -131,10 +131,6 @@ $border-color: #CECECE;
 		}
 	}
 
-	#pet {
-		color: #006e8c;
-	}
-
 	.pet, .posting, .history, .review {
 		margin-top: 25px;
 	    margin-bottom: 25px;
@@ -188,7 +184,7 @@ $border-color: #CECECE;
 		background-color: gray;
 	}
 
-	div.postings, div.histories, div.reviews {
+	div.pets, div.postings, div.histories, div.reviews {
 		display: none;
 	}
 

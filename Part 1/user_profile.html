@@ -71,7 +71,7 @@
                         <div class="info-container">
                             <div class="title">Leonardo Dicaprio</div>
                             <div class="rating">
-                                &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
+                                &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
                             </div>
                             <span class="info-piece">
                                 <span class="name">Location</span>
@@ -99,10 +99,10 @@
 
                 <!-- nav bar for pets postings history -->
                 <div class="nav-bar">
-                    <button class="nav-item" id="pet">Pets</button>
-                    <button class="nav-item" id="posting">Postings</button>
-                    <button class="nav-item" id="history">History</button>
-                    <button class="nav-item" id="review">Review</button>
+                    <button class="nav-item" id="pet" href="#pet">Pets</button>
+                    <button class="nav-item" id="posting" href="#posting">Postings</button>
+                    <button class="nav-item" id="history" href="#history">History</button>
+                    <button class="nav-item" id='review' href="#review">Review</button>
                     <span class="line"></span>
                 </div>
 
@@ -114,7 +114,7 @@
                             <div class="left-info">
                                 <div class="title">Pudding</div>
                                 <span class="rating">
-                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
+                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
                                 </span>
                                 <div>
                                     <div class="info-column">
@@ -149,7 +149,7 @@
                             <div class="left-info">
                                 <div class="title">Apple</div>
                                 <span class="rating">
-                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a href="">13 Reviews</a>
+                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
                                 </span>
                                 <div>
                                     <div class="info-column">
@@ -185,7 +185,7 @@
                         <div class="info">
                             <img class="profile-picture" src="images/cat1.jpg" alt="pet picture"/>
                             <div class="left-info">
-                                <div class="title"><a href="">Finding a kind pet sitter.</a></div>
+                                <div class="title"><a href="post_pet.html">Finding a kind pet sitter.</a></div>
                                 <div>
                                     <div class="info-column">
                                         <span class="rating">
@@ -222,14 +222,14 @@
                         </div>
                         <p class="description">
                             I'm going to aboard for one month. My pet's name is Pudding. He is introvert and usually quiet. He likes to eat tuna but he can eat normal cat food...
-                             <a href="">See More</a>
+                             <a href="post_pet.html">See More</a>
                          </p>
                     </div>
                     <div class="posting">
                         <div class="info">
                             <img class="profile-picture" src="images/default-profile-pic.png" alt="profile picture"/>
                             <div class="left-info">
-                                <div class="title"><a href="">Let me take care of your pet!</a></div>
+                                <div class="title"><a href="post_petsitter.html">Let me take care of your pet!</a></div>
                                 <div>
                                     <div class="info-column">
                                         <span class="rating">
@@ -267,7 +267,7 @@
                         <p class="description">
                             I'm really nice guy. You can see my reviews. Everyone satisfies with my service.
                             100% safety guarantees. If you'd like to bring your own food for you pet, you...
-                             <a href="">See More</a>
+                             <a href="post_petsitter.html">See More</a>
                          </p>
                     </div>
                 </div>
@@ -502,7 +502,21 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 
     <script type="text/javascript">
-        $('#pet').on('click', function(){
+        $(document).ready(function(){
+            if (window.location.hash == '#review') {
+                showReview();
+            } else {
+                showPet();
+            }
+
+            $('#pet').on('click', showPet);
+            $('#posting').on('click', showPosting);
+            $('#history').on('click', showHistory);
+            $('#review').on('click', showReview);
+            $("a[class='showReview']").on('click', showReview);
+        });
+
+        function showPet() {
             $('#pet').css("color", "#006e8c");
             $('#posting').css("color", "#929292");
             $('#history').css("color", "#929292");
@@ -512,9 +526,9 @@
             $('div.postings').css("display", "none");
             $('div.histories').css("display", "none");
             $('div.reviews').css("display", "none");
-        })
+        }
 
-        $('#posting').on('click', function(){
+        function showPosting() {
             $('#pet').css("color", "#929292");
             $('#posting').css("color", "#006e8c");
             $('#history').css("color", "#929292");
@@ -524,9 +538,9 @@
             $('div.postings').css("display", "block");
             $('div.histories').css("display", "none");
             $('div.reviews').css("display", "none");
-        })
+        }
 
-        $('#history').on('click', function(){
+        function showHistory() {
             $('#pet').css("color", "#929292");
             $('#posting').css("color", "#929292");
             $('#history').css("color", "#006e8c");
@@ -536,9 +550,9 @@
             $('div.postings').css("display", "none");
             $('div.histories').css("display", "block");
             $('div.reviews').css("display", "none");
-        })
+        }
 
-        $('#review').on('click', function(){
+        function showReview() {
             $('#pet').css("color", "#929292");
             $('#posting').css("color", "#929292");
             $('#history').css("color", "#929292");
@@ -548,7 +562,7 @@
             $('div.postings').css("display", "none");
             $('div.histories').css("display", "none");
             $('div.reviews').css("display", "block");
-        })
+        }
 
     </script>
 
