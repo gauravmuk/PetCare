@@ -584,9 +584,6 @@ footer .icons .fa:hover {
   border: 1px solid #929292;
   margin-top: 5px;
 }
-.profile #pet {
-  color: #006e8c;
-}
 .profile .pet, .profile .posting, .profile .history, .profile .review {
   margin-top: 25px;
   margin-bottom: 25px;
@@ -636,7 +633,7 @@ footer .icons .fa:hover {
   cursor: default;
   background-color: gray;
 }
-.profile div.postings, .profile div.histories, .profile div.reviews {
+.profile div.pets, .profile div.postings, .profile div.histories, .profile div.reviews {
   display: none;
 }
 .profile .review-description {
