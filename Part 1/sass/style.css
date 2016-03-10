@@ -378,9 +378,10 @@ footer .icons .fa:hover {
   width: 200px;
   margin: 0 auto;
   cursor: pointer;
-  margin: 0 auto; }
+}
 .search-results .new-post-link:hover {
-  text-decoration: none; }
+  text-decoration: none;
+}
 .search-results .profile {
   border: 0;
   padding: 0;
@@ -530,14 +531,6 @@ footer .icons .fa:hover {
   color: #006e8c;
   margin-bottom: 10px;
 }
-.profile .rating {
-  font-size: 20px;
-  display: block;
-  color: #10c8cd;
-  margin-bottom: 10px;
-  cursor: default;
-  letter-spacing: 3px;
-}
 .profile .rating a {
   font-size: 15px;
   letter-spacing: initial;
@@ -648,6 +641,15 @@ footer .icons .fa:hover {
 .profile .review-user-info .name {
   color: #337ab7;
   margin-bottom: 5px;
+}
+
+.rating {
+  font-size: 20px;
+  display: block;
+  color: #10c8cd;
+  margin-bottom: 10px;
+  cursor: default;
+  letter-spacing: 3px;
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -880,7 +882,6 @@ footer .icons .fa:hover {
   width: 100%;
   border: 1px solid #CECECE;
   border-radius: 5px;
-
   padding: 5%;
 }
 .post .top-buffer {
@@ -906,39 +907,26 @@ footer .icons .fa:hover {
 }
 .post .description {
   padding: 10px 0;
-  padding: 5%; }
-  .post .top-buffer {
-    margin-top: 30px; }
-  .post .user_info {
-    margin-bottom: 20px; }
-    .post .user_info .info:first-child {
-      margin-bottom: 20px; }
-    .post .user_info .info .icon {
-      margin: 0px; }
-    .post .user_info .info .info-piece-long-text {
-      margin-top: 10px;
-      display: block;
-      text-align: left; }
-      .post .user_info .info .info-piece-long-text .name {
-        display: inline-block;
-        font-weight: bold; }
-  .post .description {
-    padding: 10px 0; }
-  .post form {
-    font-size: 14px; }
-  .post label {
-    margin: 2px 0; }
-  .post .post-button {
-    width: 100%;
-    height: 45px;
-    background-color: #10c8cd;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-bottom: 10px;
-    margin-top: 10px; }
-  .post .file-input {
-    margin-top: 5px; }
+}
+.post form {
+  font-size: 14px;
+}
+.post label {
+  margin: 2px 0;
+}
+.post .post-button {
+  width: 100%;
+  height: 45px;
+  background-color: #10c8cd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.post .file-input {
+  margin-top: 5px;
+}
 
 .recommendations {
   border: 0;

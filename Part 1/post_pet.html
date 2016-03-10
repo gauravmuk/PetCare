@@ -321,8 +321,15 @@
                 <div class="modal-body">
                     <form role="form">
                         <div class="form-group">
-                            <label for="name">Rating:</label>
-                            <!--add star-->
+                            <label for="name">Rating:
+                                <span class="rating">
+                                    <span class="star" id="star1">&#9734;</span>
+                                    <span class="star" id="star2">&#9734;</span>
+                                    <span class="star" id="star3">&#9734;</span>
+                                    <span class="star" id="star4">&#9734;</span>
+                                    <span class="star" id="star5">&#9734;</span>
+                                </span>
+                            </label>
                         </div>
                         <div class="form-group">
                             <label for="review">Review:</label>
@@ -332,7 +339,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
                 </div>
             </div>
         </div>
@@ -362,6 +369,8 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <script src="ratingStar.js"></script>
 
 </body>
 </html>
