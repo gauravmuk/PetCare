@@ -133,8 +133,12 @@
 
 	.post {
 		button.apply {
-			width: 100% !important;
+			width: 48% !important;
 			float: left;
+
+			&:first-child {
+				margin-right: 8px !important;
+			}
 		}
 	}
 
@@ -160,7 +164,11 @@
 	.post {
 		button.apply {
 			float: right;
-			width: 100px;
+			width: 200px !important;
+
+			&:first-child {
+				margin-right: 0px !important;
+			}
 		}
 	}
 }
