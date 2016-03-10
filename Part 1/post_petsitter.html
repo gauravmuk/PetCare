@@ -118,9 +118,13 @@
                                     </span>
                                 </div>
                                 <div class="info-column right-corner">
-                                    <button class="button apply">
+                                    <button class="button apply" data-toggle="modal" data-target="#applyModal">
                                         <img class="icon" src="assets/icon-message.svg">
-                                        <span data-toggle="modal" data-target="#applyModal">Apply</span>
+                                        <span>Apply</span>
+                                    </button>
+                                    <button class="button apply" data-toggle="modal" data-target="#reviewModal">
+                                        <img class="icon" src="assets/icon-comment.svg">
+                                        <span>Review</span>
                                     </button>
                                 </div>
                             </div>
@@ -298,8 +302,36 @@
         </div>
     </div>
 
-      <!-- Footer -->
-      <footer>
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Review</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="name">Rating:</label>
+                            <!--add star-->
+                        </div>
+                        <div class="form-group">
+                            <label for="review">Review:</label>
+                            <textarea id="review"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
         <div class="container">
             <div class="footer-label">
             	About Us
