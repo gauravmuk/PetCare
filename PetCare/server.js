@@ -19,7 +19,31 @@ app.engine("html", require("ejs").renderFile);
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
 mongoose.connect("mongodb://localhost/testDB");
 
-// Define database schema
+// Import Database schema
+var Application = require(__dirname + '/public/models/Application');
+var Message = require(__dirname + '/public/models/Message');
+var Pet = require(__dirname + '/public/models/Pet');
+var Pet_Posting = require(__dirname + '/public/models/Pet_Posting');
+var Sitter_Posting = require(__dirname + '/public/models/Sitter_Posting');
+var Report = require(__dirname + '/public/models/Report');
+var Review = require(__dirname + '/public/models/Review');
+var User = require(__dirname + '/public/models/User');
+
+// Testing
+var user1 = new User({
+	name: 'John Doe',
+	email: 'john@gmail.com'
+});
+
+user1.save();
+
+var pet1 = new Pet({
+	type: 'Cat',
+	user: user1._id
+});
+
+pet1.save();
+
 var dogSchema = new mongoose.Schema({
 	name: String,
 	age: Number
