@@ -95,8 +95,8 @@ app.get("/search_petsitter", function(req, res){
 	res.render("search_petsitter.html");
 });
 
-app.get("/user_profile", function(req, res){
-	res.render("user_profile.html");
+app.get("/users/:id", function(req, res){
+	res.render("users/show.html");
 });
 
 // Tesing 
