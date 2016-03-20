@@ -2,6 +2,7 @@ var express = require("express");
 var app		= express();
 var path 	= require("path");
 var mongoose= require("mongoose");
+var autoIncrement = require("mongoose-auto-increment");
 
 /* Application Setup */ 
 
@@ -17,7 +18,8 @@ app.engine("html", require("ejs").renderFile);
 
 // Connect to a database
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
-mongoose.connect("mongodb://localhost/testDB");
+var connection = mongoose.connect("mongodb://localhost/testDB");
+autoIncrement.initialize(connection)
 
 // Import Database schema
 var Application = require(__dirname + '/public/models/Application');
@@ -93,6 +95,16 @@ app.get("/search_pet", function(req, res){
 
 app.get("/search_petsitter", function(req, res){
 	res.render("search_petsitter.html");
+});
+
+app.get("/users/:id", function(req, res){
+	var user = [];
+	User.findById(req.params.id, function(err, user) {
+		if (err) {
+			throw err;
+		}
+		res.json(user)
+	});
 });
 
 app.get("/user_profile", function(req, res){
