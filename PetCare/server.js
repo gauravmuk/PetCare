@@ -98,7 +98,17 @@ app.get("/search_petsitter", function(req, res){
 });
 
 app.get("/users/:id", function(req, res){
-	res.render("users/show.html");
+	var user = [];
+	User.findById(req.params.id, function(err, user) {
+		if (err) {
+			throw err;
+		}
+		res.json(user)
+	});
+});
+
+app.get("/user_profile", function(req, res){
+	res.render("user_profile.html");
 });
 
 // Tesing 
