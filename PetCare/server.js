@@ -97,6 +97,14 @@ app.get("/search_petsitter", function(req, res){
 	res.render("search_petsitter.html");
 });
 
+app.get("/messages", function(req, res){
+	res.render("messages.html");
+});
+
+app.get("/applications", function(req, res){
+	res.render("applications.html");
+});
+
 app.get("/users/:id", function(req, res){
 	var user = [];
 	User.findById(req.params.id, function(err, user) {
