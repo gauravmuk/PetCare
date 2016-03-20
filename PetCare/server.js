@@ -101,6 +101,10 @@ app.get("/users/:id", function(req, res){
 	res.render("users/show.html");
 });
 
+app.get("/user_profile", function(req, res){
+	res.render("user_profile.html");
+});
+
 // Tesing 
 app.get("/dogs", function(req, res){
 	res.send("Who let the dogs out?");
