@@ -1,4 +1,5 @@
 var mongoose = require("mongoose");
+var autoIncrement = require("mongoose-auto-increment");
 var Schema = mongoose.Schema;
 
 var PetSchema = new Schema({
@@ -14,6 +15,12 @@ var PetSchema = new Schema({
 	description: String,
 	rating: Number,
 	photo: String
+});
+
+PetSchema.plugin(autoIncrement.plugin, {
+	model: 		'Pet',
+	field: 		'_id',
+	startAt: 	1
 });
 
 module.exports = mongoose.model("Pet", PetSchema);
