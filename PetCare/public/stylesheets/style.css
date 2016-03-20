@@ -70,6 +70,7 @@ body {
   background-image: none;
   border: 1px solid #FFF;
   border-radius: 4px;
+  outline: 0;
   -webkit-transition: background-color 0.2s ease-in;
   -moz-transition: background-color 0.2s ease-in;
   -ms-transition: background-color 0.2s ease-in;
@@ -78,9 +79,6 @@ body {
 }
 .navbar .toggle:hover {
   background-color: #0EA3AB;
-}
-.navbar .toggle:focus {
-  outline: 0;
 }
 .navbar .toggle .icon-bar {
   display: block;
@@ -107,6 +105,20 @@ body {
   font-weight: 700;
   line-height: 20px;
 }
+.navbar .dropdown .dropdown-menu li a .new {
+  display: inline;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 19px;
+  color: #FFF;
+  border-radius: 50%;
+  background-color: #EA6C6C;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  right: 15px;
+}
 .navbar ul {
   margin: 0;
 }
@@ -120,7 +132,33 @@ body {
   -o-transition: background-color 0.2s ease-in;
   transition: background-color 0.2s ease-in;
 }
+.navbar ul a:hover {
+  background-color: #EEE;
+}
 
+@media (max-width: 767px) {
+  .navbar .dropdown .dropdown-toggle {
+    display: none;
+  }
+  .navbar .dropdown .dropdown-menu {
+    display: block;
+    position: relative;
+    width: 100%;
+    background-color: transparent;
+    border: 0;
+    padding: 0;
+  }
+  .navbar .dropdown .dropdown-menu li a {
+    padding: 10px 15px;
+    color: #476D82;
+    font-size: 14px;
+    -webkit-transition: background-color 0.2s ease-in;
+    -moz-transition: background-color 0.2s ease-in;
+    -ms-transition: background-color 0.2s ease-in;
+    -o-transition: background-color 0.2s ease-in;
+    transition: background-color 0.2s ease-in;
+  }
+}
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .navbar .toggle {
@@ -139,7 +177,8 @@ body {
   .navbar .collapse-bar .sign-up {
     padding-top: 7px;
   }
-  .navbar .collapse-bar .sign-up a {
+  .navbar .collapse-bar .sign-up > a, .navbar .collapse-bar .sign-up .dropdown > a {
+    display: block;
     border-radius: 4px;
     color: #FFF;
     background-color: #10C8CD;
@@ -150,9 +189,17 @@ body {
     -o-transition: all 0.2s ease-in;
     transition: all 0.2s ease-in;
   }
-  .navbar .collapse-bar .sign-up a:hover, .navbar .collapse-bar .sign-up a:focus {
+  .navbar .collapse-bar .sign-up > a:hover, .navbar .collapse-bar .sign-up > a:focus, .navbar .collapse-bar .sign-up .dropdown > a:hover, .navbar .collapse-bar .sign-up .dropdown > a:focus {
     color: #FFF;
     background-color: #0EA3AB;
+  }
+  .navbar .dropdown .dropdown-menu {
+    top: 44px;
+    border-radius: 2px;
+  }
+  .navbar .dropdown .dropdown-menu li a {
+    padding-top: 6px;
+    padding-bottom: 6px;
   }
 }
 /* Medium devices (desktops, 992px and up) */
@@ -1100,6 +1147,106 @@ footer .icons .fa:hover {
   }
   .admin .panel {
     margin-bottom: 40px;
+  }
+}
+/* Medium devices (desktops, 992px and up) */
+/* Large devices (large desktops, 1200px and up) */
+.messages {
+  padding-top: 50px;
+}
+.messages .panel {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.messages .panel .panel-heading {
+  text-align: center;
+  font-size: 28px;
+}
+.messages .panel .panel-body {
+  padding: 0;
+}
+.messages .message-container .message {
+  border-bottom: 1px solid #DADADA;
+}
+.messages .message-container .message .info {
+  cursor: pointer;
+  padding: 15px 15px;
+  font-size: 14px;
+}
+.messages .message-container .message .info .user {
+  display: inline;
+  float: left;
+}
+.messages .message-container .message .info .date {
+  display: inline;
+  float: right;
+}
+.messages .message-container .message .info .read {
+  display: inline;
+  cursor: default;
+  color: #FFF;
+  font-size: 11px;
+  margin-left: 10px;
+  padding: 4px 6px;
+}
+.messages .message-container .message .info .read.false {
+  background-color: #EA6C6C;
+}
+.messages .message-container .message .info .read.true {
+  background-color: #BBB;
+}
+.messages .message-container .message .info .posting {
+  display: inline;
+  cursor: default;
+  font-size: 11px;
+  margin-left: 10px;
+  padding: 4px 6px;
+  background-color: rgba(16, 200, 205, 0.58);
+}
+.messages .message-container .message .info .posting a {
+  color: #FFF;
+  text-decoration: none;
+}
+.messages .message-container .message .content {
+  display: none;
+  padding: 15px 15px;
+  font-size: 14px;
+  color: #656565;
+  border-top: 1px solid #EEE;
+}
+.messages .message-container .message .content .reply {
+  display: inline-block;
+  cursor: pointer;
+  padding: 8px 8px;
+  box-sizing: border-box;
+  border: 1px solid #DADADA;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-top: 10px;
+  -webkit-transition: background-color 0.2s ease-in;
+  -moz-transition: background-color 0.2s ease-in;
+  -ms-transition: background-color 0.2s ease-in;
+  -o-transition: background-color 0.2s ease-in;
+  transition: background-color 0.2s ease-in;
+}
+.messages .message-container .message .content .reply:hover {
+  background-color: #F8F8F8;
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .messages .message-container .message .info {
+    padding: 15px 20px;
+    font-size: 16px;
+  }
+  .messages .message-container .message .info .read {
+    font-size: 12px;
+  }
+  .messages .message-container .message .info .posting {
+    font-size: 14px;
+  }
+  .messages .message-container .message .content .reply {
+    padding: 10px 20px;
   }
 }
 /* Medium devices (desktops, 992px and up) */

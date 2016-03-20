@@ -1,0 +1,51 @@
+footer {
+	background-color: $black-light;
+	color: $gray-dark;
+	padding: 20px 0;
+
+	.footer-label {
+		color: $white;
+		font-size: $largeSize;
+		text-align: center;
+		margin: 15px 0;
+	}
+
+	.description {
+		font-size: $mediumSize;
+		margin: 10px;
+	}
+
+	.icons {
+		text-align: center;
+
+		.fa {
+			cursor: pointer;
+			font-size: 30px;
+			margin: 8px 10px;
+  			@include transition(color 0.2s ease-in);
+
+			&:hover {
+				color: $gray-darker;
+			}
+		}
+
+	}
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $screen-sm-min) {
+	footer {
+		padding: 40px 0;
+	}
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $screen-lg-min) {
+
+}

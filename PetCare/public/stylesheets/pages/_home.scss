@@ -1,0 +1,169 @@
+.home-header {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+    color: $gray-light;
+    background: linear-gradient(
+			      rgba(0, 0, 0, 0.5), 
+			      rgba(0, 0, 0, 0.5)
+			    ),
+	    url(../images/intro-header-1.jpg) no-repeat center center;
+    background-size: cover;
+
+    .message {
+		position: relative;
+    	padding: 20% 30px;
+
+    	.heading {
+		    font-size: $hugeSize;
+		    font-weight: 700;
+    	}
+
+    	.description {
+			font-size: $largeSize;
+    		margin: 15px 0 30px;
+    	}
+
+    }
+
+    .buttons {
+    	li {
+		    margin-bottom: 10px;
+
+		    a {
+			    display: inline-block;
+			    width: 100%;
+		    }
+    	}
+    }
+
+}
+
+.content {
+	
+}
+
+.home-features {
+
+	background-color: $green;
+	color: $white;
+    padding: 20px 0;
+
+	.features-label {
+		font-size: $hugeSize;
+		font-weight: 700;
+		text-align: center;
+		padding: 10px 0;
+	}
+
+	.feature-container {
+		text-align: center;
+    	margin: 0 auto;
+	    box-sizing: border-box;
+    	max-width: 300px;
+
+    	.fa {
+			font-size: 65px;
+			margin-top: 20px;
+    	}
+
+		.name {
+			font-size: 18px;
+			margin: 20px 0;
+		}
+
+		.description {
+			font-size: 14px;
+			line-height: 20px;
+			margin-bottom: 10px;
+		}
+
+	}
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $screen-sm-min) {
+
+	.home-header {
+	    .message {
+
+	    	.heading {
+			    font-size: 34px;
+    			line-height: 40px;
+	    	}
+
+	    	.description {
+				font-size: $largeSize;
+    			line-height: 22px;
+	    	}
+	    }
+
+	    .buttons {
+	    	li {
+	    		margin-bottom: 0;
+			    margin-left: 14px;
+			    display: inline;
+			    a {
+				    display: inline;
+				    width: auto;
+			    }
+	    	}
+	    }
+	}
+	.home-features {
+
+    	padding: 40px 0;
+
+		.features-label {
+			font-size: $extraLarge;
+		}
+
+		.feature-container {
+		    margin: 0;
+		    float: left;
+		    padding: 0px 20px;
+		    width: 33.33%;
+    		max-width: none;
+
+			.name {
+				font-size: $hugeSize;
+			}
+			.description {
+				font-size: 16px;
+			}
+
+		}
+
+	}
+
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+
+	.home-header {
+	    .message {
+		    padding: 16% 30px;
+		    width: 50%;
+		    text-align: left;
+	    }
+	    .buttons {
+	    	li:first-child {
+			    margin-left: 0;
+	    	}
+	    }
+	}
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $screen-lg-min) {
+
+	.home-header {
+	    .message {
+		    padding: 14% 30px;
+	    }
+	}
+
+}

@@ -1,0 +1,157 @@
+.messages {
+
+	padding-top: 50px;
+
+	.panel {
+
+		margin-top: 20px;
+		margin-bottom: 20px;
+
+		.panel-heading {
+			text-align: center;
+			font-size: 28px;
+		}
+
+		.panel-body {
+			padding: 0;
+		}
+
+	}
+
+	.message-container {
+
+		.message {
+
+			border-bottom: 1px solid $gray-dark;
+
+			.info {
+
+				cursor: pointer;
+				padding: 15px 15px;
+				font-size: 14px;
+
+				.user {
+				    display: inline;
+				    float: left;
+				}
+
+				.date {
+				    display: inline;
+				    float: right;
+				}
+
+				.read {
+
+				    display: inline;
+					cursor: default;
+				    color: #FFF;
+				    font-size: 11px;
+				    margin-left: 10px;
+				    padding: 4px 6px;
+
+				    &.false {
+					    background-color: #EA6C6C;
+				    }
+
+				    &.true {
+					    background-color: #BBB;
+				    }
+
+				}
+
+				.posting {
+
+				    display: inline;
+					cursor: default;
+				    font-size: 11px;
+				    margin-left: 10px;
+				    padding: 4px 6px;
+					background-color: rgba(16, 200, 205, 0.58);
+
+					a {
+				    	color: #FFF;
+						text-decoration: none;
+					}
+
+				}
+
+			}
+
+			.content {
+				display: none;
+				padding: 15px 15px;
+				font-size: $mediumSize;
+				color: #656565;
+    			border-top: 1px solid #EEE;
+
+				.reply {
+				    display: inline-block;
+				    cursor: pointer;
+				    padding: 8px 8px;
+				    box-sizing: border-box;
+				    border: 1px solid $gray-dark;
+				    border-radius: 6px;
+				    font-size: 12px;
+				    margin-top: 10px;
+  					@include transition(background-color 0.2s ease-in);
+
+				    &:hover {
+				    	background-color: $gray;
+				    }
+				}
+			}
+
+		}
+
+	}
+
+}
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: $screen-sm-min) {
+
+	.messages {
+
+		.message-container {
+
+			.message {
+
+
+				.info {
+
+					padding: 15px 20px;
+					font-size: 16px;
+
+					.read {
+					    font-size: 12px;
+					}
+
+					.posting {
+					    font-size: 14px;
+					}
+
+				}
+
+				.content {
+
+					.reply {
+					    padding: 10px 20px;
+					}
+				}
+
+			}
+		}
+
+	}
+
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (min-width: $screen-md-min) {
+
+}
+
+/* Large devices (large desktops, 1200px and up) */
+@media (min-width: $screen-lg-min) {
+
+}
