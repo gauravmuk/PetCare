@@ -1,4 +1,4 @@
-<html>
+<html ng-app="petCare">
 <head>
 	<meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -217,6 +217,7 @@
                             </div>
                         </div>
                         <p class="description">
+                            <p>Hello {{ user.name }}!</p>
                             I'm going to aboard for one month. My pet's name is Pudding. He is introvert and usually quiet. He likes to eat tuna but he can eat normal cat food...
                              <a href="">See More</a>
                          </p>
@@ -310,8 +311,8 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title" id="myModalLabel">Review</h4>
                 </div>
-                <div class="modal-body">
-                    <form role="form">
+                <form ng-controller="reviewController">
+                    <div class="modal-body">
                         <div class="form-group">
                             <label for="name">Rating:
                                 <span class="rating">
@@ -327,12 +328,12 @@
                             <label for="review">Review:</label>
                             <textarea id="review"></textarea>
                         </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
-                </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button ng-click="submitReview()" type="button" class="btn btn-primary" data-dismiss="modal">Submitt</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
