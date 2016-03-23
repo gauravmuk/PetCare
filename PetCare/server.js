@@ -31,7 +31,8 @@ var Report = require(__dirname + '/public/models/Report');
 var Review = require(__dirname + '/public/models/Review');
 var User = require(__dirname + '/public/models/User');
 
-// Testing
+// Insert test data
+/**********************************************************************/
 var user1 = new User({
 	name: 'John Doe',
 	email: 'john@gmail.com'
@@ -40,12 +41,53 @@ var user1 = new User({
 user1.save();
 
 var pet1 = new Pet({
+	name: 'Kitty',
+	user: 1,
 	type: 'Cat',
-	user: user1._id
+	breed: 'Persian',
+	gender: 'Male',
+	age: 2,
+	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
+	rating: 2
 });
 
 pet1.save();
 
+var petPosting1 = new Pet_Posting({
+    user: 1,
+    pet: 1,
+	title: 'Looking for a kind pet sitter.',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: '/images/cat1.jpg',
+	status: 'open'
+});
+
+petPosting1.save();
+
+var sitterPosting1 = new Sitter_Posting({
+    user: 1,
+	title: 'Cat/Dog Sitter Near Toronto',
+	types: 'Dogs, Cats, Birds',
+	duration: 'March 3rd to April 1st',
+	location: 'Downtown, Toronto, ON',
+	price: '20 - 25 per Day',
+	experience: '2 years',
+	supplies: 'Toys, Kennel, Clothes',
+	number_of_pets: 2,
+	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
+	thumbnail: '/images/default-profile-pic.png',
+	status: 'open'
+});
+
+sitterPosting1.save();
+
+/**********************************************************************/
+													
 var dogSchema = new mongoose.Schema({
 	name: String,
 	age: Number
@@ -117,6 +159,36 @@ app.get("/users/:id", function(req, res){
 
 app.get("/user_profile", function(req, res){
 	res.render("user_profile.html");
+});
+
+app.get("/pets/:id", function(req, res){
+	var pet = [];
+	Pet.findById(req.params.id, function(err, pet) {
+		if (err) {
+			throw err;
+		}
+		res.json(pet)
+	});
+});
+
+app.get("/petpostings/:id", function(req, res){
+	var petposting = [];
+	Pet_Posting.findById(req.params.id, function(err, petposting) {
+		if (err) {
+			throw err;
+		}
+		res.json(petposting)
+	});
+});
+
+app.get("/sitterpostings/:id", function(req, res){
+	var sitterposting = [];
+	Sitter_Posting.findById(req.params.id, function(err, sitterposting) {
+		if (err) {
+			throw err;
+		}
+		res.json(sitterposting)
+	});
 });
 
 // Tesing 
