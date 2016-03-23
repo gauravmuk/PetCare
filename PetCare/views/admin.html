@@ -1,0 +1,530 @@
+<!DOCTYPE html> 
+<html>
+
+<head>
+
+	<meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+	<title>PetCare - Admin Dashboard</title>
+
+    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico"/>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+	<link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
+
+    <!-- Custom Fonts -->
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Font Awesome Icons -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="toggle" data-toggle="collapse" data-target="#navbar1">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="logo" href="/">PetCare</a>
+            </div>
+            <div class="collapse collapse-bar" id="navbar1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+                    <li>
+                        <a href="search_petsitter">Hire a Pet Sitter</a>
+                    </li>
+                    <li>
+                        <a href="search_pet">Offer Pet Sitting</a>
+                    </li>
+                    <li class="sign-up">
+                        <a href="signup">Sign Up</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin -->
+    <div class="admin">
+        <div class="container">
+
+            <div class="title">
+                <span>Admin Dashboard</span>
+            </div>
+
+            <div class="dashboard">
+                <div class="notifications">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="notice user">
+                            <div class="icon">
+                                <i class="fa fa-user"></i>
+                            </div>
+                            <div class="message">
+                                <span class="number">25</span>
+                                <span class="type">new users</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="notice posting">
+                            <div class="icon">
+                                <i class="fa fa-pencil-square-o"></i>
+                            </div>
+                            <div class="message">
+                                <span class="number">18</span>
+                                <span class="type">new posts</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="notice report">
+                            <div class="icon">
+                                <i class="fa fa-flag"></i>
+                            </div>
+                            <div class="message">
+                                <span class="number">4</span>
+                                <span class="type">new reports</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="notice active">
+                            <div class="icon">
+                                <i class="fa fa-users"></i>
+                            </div>
+                            <div class="message">
+                                <span class="number">12</span>
+                                <span class="type">active users</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+
+            <!-- User Panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">Users</div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Profile</th>
+                                    <th>Message</th>
+                                    <th>Edit Info</th>
+                                    <th>Ban User</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Leonardo DiCaprio</td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button view">View</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button edit" data-toggle="modal" data-target="#userModal">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Ban</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Bradley Cooper</td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button view">View</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button edit" data-toggle="modal" data-target="#userModal">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Ban</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Brad Pitt</td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button view">View</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button edit" data-toggle="modal" data-target="#userModal">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Ban</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Postings Panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">Postings</div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>User</th>
+                                    <th>Edit Posting</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>March 10, 2016</td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button view">Leonardo DiCaprio</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button edit" data-toggle="modal" data-target="#postModal">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>December 25, 2015</td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button view">Brad Pitt</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button edit" data-toggle="modal" data-target="#postModal">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>November 24, 2015</td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button view">Leonardo DiCaprio</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button edit" data-toggle="modal" data-target="#postModal">Edit</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Reports Panel -->
+            <div class="panel panel-default">
+                <div class="panel-heading">Reports</div>
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Reported by</th>
+                                    <th>Reporting</th>
+                                    <th>Read Report</th>
+                                    <th>Message</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>January 10, 2016</td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button view">Leonardo DiCaprio</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button delete">Brad Pitt</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button edit" data-toggle="modal" data-target="#reportModal">Read</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>September 20, 2015</td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button view">Brad Pitt</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="user_profile" target="_blank">
+                                            <button class="admin-button delete">Bradley Cooper</button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button edit" data-toggle="modal" data-target="#reportModal">Read</button>
+                                    </td>
+                                    <td>
+                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Apply Modal -->
+    <div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Application</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="name" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Comments:</label>
+                            <textarea name="comment"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Action</h4>
+                </div>
+                <div class="modal-body">
+                    This action cannot be undone.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Report Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Report Message</h4>
+                </div>
+                <div class="modal-body">
+                    User hasn't paid me for pet sitting services performed the week of December 25.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Modal -->
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Message</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea name="comment"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Send</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit User Info Modal -->
+    <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Edit User Info</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="name" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="location" class="form-control" id="location">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- New Post Modal -->
+    <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Edit Posting</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="name" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="pet">Pet:</label>
+                            <input type="pet" class="form-control" id="pet">
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date:</label>
+                            <input type="date" class="form-control" id="date">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location:</label>
+                            <input type="location" class="form-control" id="location">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price:</label>
+                            <input type="price" class="form-control" id="price">
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Description:</label>
+                            <textarea name="description"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-label">
+            	About Us
+            </div>
+
+            <div class="description">
+            	PetCare is an online service where individuals who are looking for someone to take care of their pets can connect with pet sitters in their community who are experienced in taking care of pets. Users can register on the system and look for a pet sitter or offer their pet sitting services, or both.
+            </div>
+
+            <div class="icons">
+            	<i class="fa fa-twitter"></i>
+            	<i class="fa fa-facebook"></i>
+            	<i class="fa fa-youtube-play"></i>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+    <!-- AngularJS -->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+    <script type="text/javascript" src="javascripts/app.js"></script>
+
+    <script type="text/javascript">
+
+    </script>
+
+</body>
+
+</html>
