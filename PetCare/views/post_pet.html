@@ -1,4 +1,6 @@
-<html>
+<!DOCTYPE html> 
+<html ng-app="petCare">
+
 <head>
 	<meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -56,7 +58,7 @@
 
 
     <!-- Post -->
-    <div class="content">
+    <div class="content" ng-controller="petPostingController">
         <div class="container">
 
             <!-- Two buttons on the top of the page -->
@@ -86,9 +88,9 @@
                 <!-- User Info -->
                 <div class="user_info">
                     <div class="info">
-                        <img class="profile-picture" src="images/cat1.jpg" alt="pet picture"/>
+                        <img class="profile-picture" ng-src="{{ petPosting.thumbnail }}" alt="pet picture"/>
                         <div class="left-info">
-                            <div class="title">Finding a kind pet sitter.</div>
+                            <div class="title">{{ petPosting.title }}</div>
                             <div>
                                 <div class="info-column">
                                     <div class="rating">
@@ -96,25 +98,25 @@
                                     </div>
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-icon-pet.svg">
-                                        <span class="value">Cat</span>
+                                        <span class="value">{{ pet.type }}</span>
                                     </span>
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-calendar.svg">
-                                        <span class="value">March 3rd to April 1st</span>
+                                        <span class="value">{{ petPosting.duration }}</span>
                                     </span>
                                 </div>
                                 <div class="info-column">
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-location.svg">
-                                        <span class="value">Downtown, Toronto, ON</span>
+                                        <span class="value">{{ petPosting.location }}</span>
                                     </span>
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-price.svg">
-                                        <span class="value">25 per Day</span>
+                                        <span class="value">{{ petPosting.price }}</span>
                                     </span>
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-age.svg">
-                                        <span class="value">2 years old</span>
+                                        <span class="value">{{ pet.age }} years old</span>
                                     </span>
                                 </div>
                                 <div class="info-column right-corner">
@@ -134,25 +136,25 @@
                     <div class="info">
                         <span class="info-piece-long-text">
                             <span class="name">Gender</span>
-                            <span class="value">Neutered male</span>
+                            <span class="value">{{ pet.gender }}</span>
                         </span>
                         <span class="info-piece-long-text">
                             <span class="name">Breed</span>
-                            <span class="value">Manx</span>
+                            <span class="value">{{ pet.breed }}</span>
                         </span>
                         <span class="info-piece-long-text">
                             <span class="name">Pet Supplies</span>
-                            <span class="value">Toys, Kennel, Clothes</span>
+                            <span class="value">{{ petPosting.supplies }}</span>
                         </span>
                         <span class="info-piece-long-text">
                             <span class="name">Medicine or Special Diet</span>
-                            <span class="value">N/A</span>
+                            <span class="value">{{ petPosting.additional_info }}</span>
                         </span>
                     </div>
                 </div>    
 
                 <p class="description">
-                    I'm going to aboard for one month. My pet's name is Pudding. He is introvert and usually quiet. He likes to eat tuna but he can eat normal cat food.
+                    {{ petPosting.description }}
                 </p>
 
                     <!-- Stack the columns on mobile by making one full-width and the other half-width -->

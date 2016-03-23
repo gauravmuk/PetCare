@@ -35,3 +35,37 @@ app.controller('reviewController', ['$http', '$scope', function($http, $scope) {
 		// TO-DO: Post Review Text and Rating to the backend server
 	};
 }]);
+
+app.controller('petPostingController', ['$http', '$scope', function($http, $scope) {
+	
+	$scope.petPosting = []
+	$scope.pet = []
+
+	$http.get('/petpostings/1').success(function(data) {
+		console.log(data);
+		$scope.petPosting = data;
+
+		// get the posting's pet number
+		var petID = $scope.petPosting.pet;
+
+		// make AJAX call to get pet info
+		$http.get('/pets/' + petID).success(function(data) {
+			console.log(data);
+			$scope.pet = data;
+		});
+
+	});
+
+}]);
+
+
+app.controller('sitterPostingController', ['$http', '$scope', function($http, $scope) {
+	
+	$scope.sitterPosting = []
+
+	$http.get('/sitterpostings/1').success(function(data) {
+		console.log(data);
+		$scope.sitterPosting = data;
+	});
+
+}]);

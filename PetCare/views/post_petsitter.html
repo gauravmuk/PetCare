@@ -56,7 +56,7 @@
 
 
     <!-- Post -->
-    <div class="content">
+    <div class="content" ng-controller="sitterPostingController">
         <div class="container">
 
             <!-- Two buttons on the top of the page -->
@@ -86,9 +86,9 @@
                 <!-- User Info -->
                 <div class="user_info">
                     <div class="info">
-                        <img class="profile-picture" src="images/default-profile-pic.png" alt="profile picture"/>
+                        <img class="profile-picture" ng-src="{{ sitterPosting.thumbnail }}" alt="profile picture"/>
                         <div class="left-info">
-                            <div class="title">Cat/Dog Sitter Near Toronto</div>
+                            <div class="title">{{ sitterPosting.title }}</div>
                             <div>
                                 <div class="info-column">
                                     <div class="rating">
@@ -96,25 +96,25 @@
                                     </div>
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-icon-pet.svg">
-                                        <span class="value">Cats, Dogs</span>
+                                        <span class="value">{{ sitterPosting.types }}</span>
                                     </span>
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-calendar.svg">
-                                        <span class="value">March 3rd to April 1st</span>
+                                        <span class="value">{{ sitterPosting.duration }}</span>
                                     </span>
                                 </div>
                                 <div class="info-column">
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-location.svg">
-                                        <span class="value">Downtown, Toronto, ON</span>
+                                        <span class="value">{{ sitterPosting.location }}</span>
                                     </span>
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-price.svg">
-                                        <span class="value">20 ~ 25 per Day</span>
+                                        <span class="value">{{ sitterPosting.price }}</span>
                                     </span>
                                     <span class="info-piece">
                                         <img class="icon" src="assets/icon-age.svg">
-                                        <span class="value">2 years experience</span>
+                                        <span class="value">{{ sitterPosting.experience }} experience</span>
                                     </span>
                                 </div>
                                 <div class="info-column right-corner">
@@ -134,17 +134,17 @@
                     <div class="info">
                         <span class="info-piece-long-text">
                             <span class="name">Number of Pets</span>
-                            <span class="value">3</span>
+                            <span class="value">{{ sitterPosting.number_of_pets }}</span>
                         </span>
                         <span class="info-piece-long-text">
                             <span class="name">Pet Supplies at home</span>
-                            <span class="value">Toys, Kennel, Clothes</span>
+                            <span class="value">{{ sitterPosting.supplies }}</span>
                         </span>
                     </div>
                 </div>    
 
                 <p class="description">
-                    I will look after your pets for $25 per hour. Please contact me for more information.
+                    {{ sitterPosting.description }}
                 </p>
 
                     <!-- Stack the columns on mobile by making one full-width and the other half-width -->
