@@ -16,8 +16,22 @@ app.controller('userController', ['$http', '$scope', function($http, $scope) {
 }]);
 
 app.controller('reviewController', ['$http', '$scope', function($http, $scope) {
+	
+	var rating;
+
+	$scope.submitStar = function(rating){
+		// Set rating to the rating level user selected
+		this.rating = rating;
+	}
 
 	$scope.submitReview = function (){
-		console.log("submitReview");
+		// Another way to check for undefined/null/NaN
+		if(!Number.isInteger(this.rating))
+			this.rating = 0;
+
+		console.log("Review Text:" + $scope.reviewText);
+		console.log("Review Star:" + this.rating);
+
+		// TO-DO: Post Review Text and Rating to the backend server
 	};
 }]);

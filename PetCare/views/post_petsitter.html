@@ -316,17 +316,17 @@
                         <div class="form-group">
                             <label for="name">Rating:
                                 <span class="rating">
-                                    <span class="star" id="star1">&#9734;</span>
-                                    <span class="star" id="star2">&#9734;</span>
-                                    <span class="star" id="star3">&#9734;</span>
-                                    <span class="star" id="star4">&#9734;</span>
-                                    <span class="star" id="star5">&#9734;</span>
+                                    <span class="star" id="star1" ng-click="submitStar(1)">&#9734;</span>
+                                    <span class="star" id="star2" ng-click="submitStar(2)">&#9734;</span>
+                                    <span class="star" id="star3" ng-click="submitStar(3)">&#9734;</span>
+                                    <span class="star" id="star4" ng-click="submitStar(4)">&#9734;</span>
+                                    <span class="star" id="star5" ng-click="submitStar(5)">&#9734;</span>
                                 </span>
                             </label>
                         </div>
                         <div class="form-group">
                             <label for="review">Review:</label>
-                            <textarea id="review"></textarea>
+                            <textarea id="review" ng-model="reviewText"></textarea>
                         </div>
                     </div>
                     <div class="modal-footer">
