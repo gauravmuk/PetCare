@@ -78,7 +78,7 @@
     </div>
 
     <!-- Search Results -->
-    <div class="search-results">
+    <div class="search-results" ng-app="search">
         <div class="container">
             <div class="search-term">
                 Looking for Cat sitters near Toronto, ON
@@ -89,39 +89,40 @@
                 </div>
             </a>
 
-            <div class="profile">
+            <div class="profile" ng-controller="HireController">
                 <div class="recommend">
-                    <div class="posting">
+                    <div class="posting" ng-repeat="post in posts">
                         <div class="info">
-                            <img class="profile-picture" src="images/default-profile-pic.png" alt="profile picture"/>
+                            <img class="profile-picture" ng-src="{{post.image}}" alt="profile picture"/>
                             <div class="left-info">
-                                <div class="title"><a href="post_petsitter">Let me take care of your pet!</a></div>
+                                <div class="title"><a href="post_petsitter">{{post.title}}</a></div>
                                 <div>
                                     <div class="info-column">
-                                        <span class="rating">
-                                            &#9733;&#9733;&#9733;&#9734;&#9734; 
+                                        <span class="rating" id="rating{{$index}}">
+                                            {{rating(post.rate, $index)}}
+                                            <img src="">
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                            <span class="value">Cats, Dogs, Hampsters</span>
+                                            <span class="value">{{post.pet_types}}</span>
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
-                                            <span class="value">March 3rd to April 1st</span>
+                                            <span class="value">{{post.duration}}</span>
                                         </span>
                                     </div>
                                     <div class="info-column">
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
-                                            <span class="value">Downtown, Toronto, ON</span>
+                                            <span class="value">{{post.location}}</span>
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
-                                            <span class="value">20 ~ 25 per day</span>
+                                            <span class="value">{{post.price_range}} per day</span>
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                            <span class="value">2 years experience</span>
+                                            <span class="value">{{post.experience}} years experience</span>
                                         </span>
                                     </div>
                                     <div class="info-column">
@@ -131,56 +132,11 @@
                             </div>
                         </div>
                         <p class="description">
-                            I'm really nice guy. You can see my reviews. Everyone satisfies with my service.
-                            100% safety guarantees. If you'd like to bring your own food for you pet, you...
+                            {{post.description | limitTo: 200}}...
                              <a href="post_petsitter">See More</a>
                          </p>
                     </div>
-                    <div class="posting">
-                        <div class="info">
-                            <img class="profile-picture" src="images/default-profile-pic.png" alt="profile picture"/>
-                            <div class="left-info">
-                                <div class="title"><a href="post_petsitter">Let me take care of your pet!</a></div>
-                                <div>
-                                    <div class="info-column">
-                                        <span class="rating">
-                                            &#9733;&#9733;&#9733;&#9734;&#9734; 
-                                        </span>
-                                        <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                            <span class="value">Cats, Dogs, Hampsters</span>
-                                        </span>
-                                        <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
-                                            <span class="value">March 3rd to April 1st</span>
-                                        </span>
-                                    </div>
-                                    <div class="info-column">
-                                        <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
-                                            <span class="value">Downtown, Toronto, ON</span>
-                                        </span>
-                                        <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
-                                            <span class="value">20 ~ 25 per day</span>
-                                        </span>
-                                        <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                            <span class="value">2 years experience</span>
-                                        </span>
-                                    </div>
-                                    <div class="info-column">
-                                        <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p class="description">
-                            I'm really nice guy. You can see my reviews. Everyone satisfies with my service.
-                            100% safety guarantees. If you'd like to bring your own food for you pet, you...
-                             <a href="post_petsitter">See More</a>
-                         </p>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -312,6 +268,8 @@
     <!-- AngularJS -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
     <script type="text/javascript" src="javascripts/app.js"></script>
+
+    <script src="javascripts/search.js"></script>
 
 </body>
 
