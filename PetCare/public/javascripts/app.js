@@ -29,10 +29,25 @@ app.controller('reviewController', ['$http', '$scope', function($http, $scope) {
 		if(!Number.isInteger(this.rating))
 			this.rating = 0;
 
-		console.log("Review Text:" + $scope.reviewText);
-		console.log("Review Star:" + this.rating);
+		var reviewComment = $scope.reviewComment;
+		var reviewRating = this.rating;
 
-		// TO-DO: Post Review Text and Rating to the backend server
+		// Creare object to be sent through the post request
+		var dataObj = {
+    		to: 1,
+			from: 2,
+			rating: reviewRating,
+			comment: reviewComment
+		}
+
+		// Make a http post request to the server
+		console.log("Make a post request to /reviews");
+		$http.post('/reviews', {data:dataObj})
+			.success(function(data, status, headers, config) {
+    			// TO-DO: Get the average rating
+			}).error(function(data, status, headers, config) {
+    			
+			});
 	};
 }]);
 

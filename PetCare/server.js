@@ -3,8 +3,14 @@ var app		= express();
 var path 	= require("path");
 var mongoose= require("mongoose");
 var autoIncrement = require("mongoose-auto-increment");
+var bodyParser = require('body-parser');
+var multer = require('multer'); // v1.0.5
 
 /* Application Setup */ 
+
+// For parsing
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Serving static files in Express
 app.use(express.static(path.join(__dirname, 'public')));
@@ -12,7 +18,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.engine("html", require("ejs").renderFile);
-
 
 /* Database Setup */
 
@@ -147,6 +152,12 @@ app.get("/applications", function(req, res){
 	res.render("applications.html");
 });
 
+app.get("/user_profile", function(req, res){
+	res.render("user_profile.html");
+});
+
+/* REST API routes */
+
 app.get("/users/:id", function(req, res){
 	var user = [];
 	User.findById(req.params.id, function(err, user) {
@@ -157,8 +168,37 @@ app.get("/users/:id", function(req, res){
 	});
 });
 
-app.get("/user_profile", function(req, res){
-	res.render("user_profile.html");
+app.post("/reviews", function(req, res){
+
+	var toUser 			= req.body.data.to;
+	var fromUser 		= req.body.data.from;
+	var reviewRating 	= req.body.data.rating;
+	var reviewComment 	= req.body.data.comment;
+
+	console.log("Review Rating : "+ reviewRating);
+
+	// Save to the user reviwe information to the database
+	// TO-DO: Also calclute the average rating and save under user.rating
+	// 		  Send avg number back to front-end as res.json()
+	// Review.create({
+	// 	to: user1._id,
+	// 	from: user2._id,
+	// 	rating: 3,
+	// 	comment: "reviewComment"
+
+	// }, function(err, review){
+	// 	if(err){
+	// 		console.log("Review.create(): error = "+ err);
+	// 	}
+	// 	else{
+	// 		console.log("Review.create(): successful");
+	// 		console.log(review);
+	// 	}
+	// });
+
+	// Send back a response or end response
+	res.json({resData: "data"});
+	// res.end();
 });
 
 app.get("/pets/:id", function(req, res){
