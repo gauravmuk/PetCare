@@ -2,11 +2,11 @@ var mongoose = require("mongoose");
 var autoIncrement = require("mongoose-auto-increment");
 var Schema = mongoose.Schema;
 
-var ReviewSchema = new Schema(
+var PetReviewSchema = new Schema(
     {
         to: {
             type: Number,
-            ref: 'User'
+            ref: 'Pet'
         },
         from: {
             type: Number,
@@ -21,10 +21,10 @@ var ReviewSchema = new Schema(
     }
 );
 
-ReviewSchema.plugin(autoIncrement.plugin, {
-    model:      'Review',
+PetReviewSchema.plugin(autoIncrement.plugin, {
+    model:      'PetReview',
     field:      '_id',
     startAt:    1
 });
 
-module.exports = mongoose.model("Review", ReviewSchema);
+module.exports = mongoose.model("PetReview", PetReviewSchema);

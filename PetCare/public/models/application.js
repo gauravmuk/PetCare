@@ -1,25 +1,37 @@
 var mongoose = require("mongoose");
+var autoIncrement = require("mongoose-auto-increment");
 var Schema = mongoose.Schema;
 
-var ApplicationSchema = new Schema({
-	created_at: Date,
-    to: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+var ApplicationSchema = new Schema(
+    {
+        to: {
+            type: Number,
+            ref: 'User'
+        },
+        from: {
+            type: Number,
+            ref: 'User'
+        },
+        pet_posting: {
+            type: Number,
+            ref: 'PetPosting'
+        },
+        sitter_posting: {
+            type: Number,
+            ref: 'SitterPosting'
+        },
+    	message: String,
     },
-    from: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
-    },
-    pet_posting: {
-        type: Schema.Types.ObjectId,
-        ref: 'PetPosting'
-    },
-    sitter_posting: {
-        type: Schema.Types.ObjectId,
-        ref: 'SitterPosting'
-    },
-	message: String,
+    {
+        timestamps: { createdAt: 'created_at',
+                      updatedAt: 'updated_at' }
+    }
+);
+
+ApplicationSchema.plugin(autoIncrement.plugin, {
+    model:      'Application',
+    field:      '_id',
+    startAt:    1
 });
 
 module.exports = mongoose.model("Application", ApplicationSchema);

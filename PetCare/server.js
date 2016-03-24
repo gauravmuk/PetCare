@@ -34,6 +34,7 @@ var Pet_Posting = require(__dirname + '/public/models/Pet_Posting');
 var Sitter_Posting = require(__dirname + '/public/models/Sitter_Posting');
 var Report = require(__dirname + '/public/models/Report');
 var Review = require(__dirname + '/public/models/Review');
+var Pet_Review = require(__dirname + '/public/models/Pet_Review');
 var User = require(__dirname + '/public/models/User');
 
 // Insert test data
