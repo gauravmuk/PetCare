@@ -57,7 +57,6 @@ app.controller('petPostingController', ['$http', '$scope', function($http, $scop
 	$scope.pet = []
 
 	$http.get('/petpostings/1').success(function(data) {
-		console.log(data);
 		$scope.petPosting = data;
 
 		// get the posting's pet number
@@ -65,7 +64,6 @@ app.controller('petPostingController', ['$http', '$scope', function($http, $scop
 
 		// make AJAX call to get pet info
 		$http.get('/pets/' + petID).success(function(data) {
-			console.log(data);
 			$scope.pet = data;
 		});
 
@@ -79,8 +77,70 @@ app.controller('sitterPostingController', ['$http', '$scope', function($http, $s
 	$scope.sitterPosting = []
 
 	$http.get('/sitterpostings/1').success(function(data) {
-		console.log(data);
 		$scope.sitterPosting = data;
 	});
+
+}]);
+
+app.controller('sitterPostingFormController', ['$http', '$scope', function($http, $scope) {
+
+	$scope.createPosting = function (){
+
+		// Create object to be sent through the POST request
+		var dataObj = {
+		    user: 1,	// TODO: Use user id from session
+			title: $scope.title,
+			types: $scope.types,
+			duration: $scope.duration,
+			location: $scope.location,
+			price: $scope.price,
+			experience: $scope.experience,
+			supplies: $scope.supplies,
+			number_of_pets: $scope.number_of_pets,
+			description: $scope.description,
+			thumbnail: '/images/default-profile-pic.png',	// TODO: Get user image
+			status: 'open',
+		};
+
+		// Make POST request to the /sitterpostings
+		$http.post('/sitterpostings', {data: dataObj})
+			.success(function(data, status, headers, config) {
+
+			}).error(function(data, status, headers, config) {
+    			
+			});
+	};
+
+}]);
+
+app.controller('petPostingFormController', ['$http', '$scope', function($http, $scope) {
+
+	$scope.createPosting = function (){
+
+		console.log("creating pet posting");
+
+		// Create object to be sent through the POST request
+		var dataObj = {
+		    user: 1,	// TODO: Use user id from session
+    		pet: 1,		// TODO: Use actual pet id
+			title: $scope.title,
+			duration: $scope.duration,
+			location: $scope.location,
+			price: $scope.price,
+			supplies: $scope.supplies,
+			additional_info: $scope.additional_info,
+			description: $scope.description,
+			thumbnail: '/images/cat1.png',	// TODO: Get user image
+			status: 'open',
+		};
+
+		// Make POST request to the /petpostings
+		$http.post('/petpostings', {data: dataObj})
+			.success(function(data, status, headers, config) {
+
+			}).error(function(data, status, headers, config) {
+    			
+			});
+	};
 
 }]);

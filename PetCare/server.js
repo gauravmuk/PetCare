@@ -222,6 +222,14 @@ app.get("/petpostings/:id", function(req, res){
 	});
 });
 
+app.post("/petpostings", function(req, res){
+
+	console.log("New Pet Post");
+	console.log(req.body);
+	res.json({resData: "data"});
+
+});
+
 app.get("/sitterpostings/:id", function(req, res){
 	var sitterposting = [];
 	Sitter_Posting.findById(req.params.id, function(err, sitterposting) {
@@ -230,6 +238,14 @@ app.get("/sitterpostings/:id", function(req, res){
 		}
 		res.json(sitterposting)
 	});
+});
+
+app.post("/sitterpostings", function(req, res){
+
+	console.log("New Sitter Post");
+	console.log(req.body);
+	res.json({resData: "data"});
+
 });
 
 // Tesing 
