@@ -77,7 +77,7 @@
     </div>
 
     <!-- Search Results -->
-    <div class="search-results">
+    <div class="search-results" ng-app="search">
         <div class="container">
             <div class="search-term">
                 Looking for Cat sittings near Toronto, ON
@@ -88,39 +88,39 @@
                 </div>
             </a>
                 
-            <div class="profile">
+            <div class="profile" ng-controller="OfferController">
                 <div class="recommend">
-                    <div class="posting">
+                    <div class="posting" ng-repeat="post in posts">
                         <div class="info">
-                            <img class="profile-picture" src="images/cat1.jpg" alt="pet picture"/>
+                            <img class="profile-picture" ng-src="{{post.image}}" alt="pet picture"/>
                             <div class="left-info">
-                                <div class="title"><a href="post_pet">Finding a kind pet sitter.</a></div>
+                                <div class="title"><a href="post_pet">{{post.title}}</a></div>
                                 <div>
                                     <div class="info-column">
-                                        <span class="rating">
-                                            &#9733;&#9733;&#9733;&#9733;&#9734;
+                                        <span class="rating" id="rating{{$index}}">
+                                            {{rating(post.rate, $index)}}
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                            <span class="value">Cat</span>
+                                            <span class="value">{{post.pet_type}}</span>
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
-                                            <span class="value">March 3rd to April 1st</span>
+                                            <span class="value">{{post.duration}}</span>
                                         </span>
                                     </div>
                                     <div class="info-column">
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
-                                            <span class="value">Downtown, Toronto, ON</span>
+                                            <span class="value">{{post.location}}</span>
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
-                                            <span class="value">25 per day</span>
+                                            <span class="value">{{post.price}} per day</span>
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                            <span class="value">2 years old</span>
+                                            <span class="value">{{post.age}} years old</span>
                                         </span>
                                     </div>
                                     <div class="info-column">
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                         <p class="description">
-                            I'm going to aboard for one month. My pet's name is Pudding. He is introvert and usually quiet. He likes to eat tuna but he can eat normal cat food...
+                            {{post.description | limitTo: 200}}...
                              <a href="post_pet">See More</a>
                          </p>
                     </div>
@@ -265,6 +265,8 @@
     <!-- AngularJS -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
     <script type="text/javascript" src="javascripts/app.js"></script>
+
+    <script src="javascripts/search.js"></script>
 
 </body>
 
