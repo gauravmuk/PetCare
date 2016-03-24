@@ -1,3 +1,8 @@
+/* 
+ * Make the rating stars full or empty on click
+ * Left stars from click including the clicked star become full stars.
+ * The right stars become empty.
+ */
 $(document).ready(function(){
     $('span[class="star"]').on('click', function() {
         var starIndex;
