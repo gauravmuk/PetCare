@@ -63,6 +63,9 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 			templateUrl: 	'/petsitter_posts/new.html',
 			controller: 	'sitterPostingFormController',
 			controllerAs: 	'sitterPostingFormController'
+		})
+		.otherwise({
+			redirectTo: '/'
 		});
 }]);
 
