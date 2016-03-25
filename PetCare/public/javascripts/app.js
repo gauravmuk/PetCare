@@ -124,29 +124,10 @@ app.controller('adminController', ['$anchorScroll', '$location', '$http', '$scop
 
 app.controller('userController', ['$http', '$scope', function($http, $scope) {
 	$scope.user = []
-	$scope.userId = 2; // TODO: change this to session userId
-	$scope.profileUserId = 1; // TODO: user of the profile, which is user id in the url
-	$scope.msg_content;
-
-	$http.get('/api/users/' + $scope.profileUserId).success(function(data){
+	$http.get('/api/users/1').success(function(data){
 		console.log(data);
 		$scope.user = data;
 	});
-
-	$scope.send = function() {
-        var data = $.param({
-            from: $scope.userId,
-            to: $scope.profileUserId,
-            message: $scope.msg_content
-        });
-        var config = {
-            headers : {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
-        $http.post('/message', data, config);
-        $scope.msg_content = "";
-    };
 }]);
 
 /* Module for message page */
@@ -156,7 +137,7 @@ app.controller('messageController', ['$http', '$scope', function($http, $scope){
     $scope.sent = [];
 
     $scope.toId; //hold userId to send message
-    $scope.msg_content = "";
+    $scope.reply_msg = "";
 
     $http.get('/messages/' + $scope.userId).success(function(data){
         $scope.inbox = data.inbox;
@@ -192,7 +173,7 @@ app.controller('messageController', ['$http', '$scope', function($http, $scope){
         var data = $.param({
             from: $scope.userId,
             to: $scope.toId,
-            message: $scope.msg_content
+            message: $scope.reply_msg
         });
         var config = {
             headers : {
@@ -200,7 +181,7 @@ app.controller('messageController', ['$http', '$scope', function($http, $scope){
             }
         }
         $http.post('/message', data, config);
-        $scope.msg_content = "";
+        $scope.reply_msg = "";
     };
 
 }]);
