@@ -149,7 +149,12 @@ app.controller('userController', ['$http', '$scope', function($http, $scope) {
     };
 }]);
 
-/* Module for message page */
+app.controller('applicationController', ['$http', '$scope', function($http, $scope){
+    $scope.applications = received;
+    $scope.applications = sentApp;
+
+}]);
+
 app.controller('messageController', ['$http', '$scope', function($http, $scope){
     $scope.userId = 1; // TODO: change this to session userId
     $scope.inbox = [];
@@ -256,7 +261,6 @@ app.controller('reviewController', ['$http', '$scope', function($http, $scope) {
 }]);
 
 app.controller('petPostingController', ['$http', '$scope', '$routeParams', function($http, $scope, $routeParams) {
-	
 	$scope.petPosting = []
 	$scope.pet = []
 	$scope.postingID = $routeParams.id;
@@ -279,6 +283,15 @@ app.controller('petPostingController', ['$http', '$scope', '$routeParams', funct
 
 	});
 
+	$scope.ratingStar = function(id) {
+		var starIndex = id;
+        for (var i = 1; i <= starIndex; i++) {
+            $('#star' + i).html('&#9733;');
+        }
+        for (var i = starIndex + 1; i <= 5; i++) {
+            $('#star' + i).html('&#9734;');
+        }
+	};
 }]);
 
 
