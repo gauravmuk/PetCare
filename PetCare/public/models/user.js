@@ -1,13 +1,12 @@
 var mongoose = require("mongoose");
 var autoIncrement = require("mongoose-auto-increment");
+var passportLocalMongoose = require("passport-local-mongoose");
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema(
 	{
 		name: String,
-		email: String,
-		hashed_password: String,
-		salt: String,
+		username: String,
 		location: Number,
 		description: String,
 		rating: Number,
@@ -53,6 +52,10 @@ UserSchema.plugin(autoIncrement.plugin, {
 	model: 		'User',
 	field: 		'_id',
 	startAt: 	1
+});
+
+UserSchema.plugin(passportLocalMongoose, {
+	usernameUnique: true
 });
 
 module.exports = mongoose.model("User", UserSchema);

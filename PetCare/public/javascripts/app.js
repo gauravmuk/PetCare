@@ -11,7 +11,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		})
 		.when('/users/:id', {
 			templateUrl: 	'/users/show.html',
-			controller: '	userController',
+			controller: 	'userController',
 			controllerAs: 	'userCtrl'
 		})
 		.when('/users/:id/applications', {
@@ -31,8 +31,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		})
 		.when('/signup', {
 			templateUrl: 	'/signup.html',
-			controller: 	'userController',
-			controllerAs: 	'userCtrl'
+			controller: 	'accountController',
+			controllerAs: 	'accountCtrl'
 		})
 		.when('/pet_posts', {
 			templateUrl: 	'/pet_posts/index.html',
