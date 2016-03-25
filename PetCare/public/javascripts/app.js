@@ -11,7 +11,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		})
 		.when('/users/:id', {
 			templateUrl: 	'/users/show.html',
-			controller: '	userController',
+			controller: 	'userController',
 			controllerAs: 	'userCtrl'
 		})
 		.when('/users/:id/applications', {
@@ -136,7 +136,7 @@ app.controller('messageController', ['$http', '$scope', function($http, $scope){
     $scope.inbox = [];
     $scope.sent = [];
 
-    $scope.replyId; //hold userId to send message
+    $scope.toId; //hold userId to send message
     $scope.reply_msg = "";
 
     $http.get('/messages/' + $scope.userId).success(function(data){
@@ -166,13 +166,13 @@ app.controller('messageController', ['$http', '$scope', function($http, $scope){
     };
 
     $scope.reply = function(userId) {
-        $scope.replyId = userId;
+        $scope.toId = userId;
     };
 
     $scope.send = function() {
         var data = $.param({
             from: $scope.userId,
-            to: $scope.replyId,
+            to: $scope.toId,
             message: $scope.reply_msg
         });
         var config = {
