@@ -24,7 +24,7 @@ app.engine("html", require("ejs").renderFile);
 // Connect to a database
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
 var connection = mongoose.connect("mongodb://localhost/testDB");
-autoIncrement.initialize(connection)
+autoIncrement.initialize(connection);
 
 // Import Database schema
 var Application = require(__dirname + '/public/models/Application');
@@ -104,62 +104,56 @@ var Dog = mongoose.model("Dog", dogSchema);
 
 
 /* Application Routes */
-
-app.get("/", function(req, res){
-	res.render("index.html");
+app.get("/layouts/home.html",function(req,res){
+    res.render("layouts/home.html");
 });
 
-app.get("/signup", function(req, res){
-	res.render("signup.html");
+app.get("/users/show.html", function(req, res) {
+	res.render("users/show.html");
 });
 
-app.get("/signin", function(req, res){
-	res.render("signin.html");
+app.get("/users/applications.html", function(req, res) {
+	res.render("users/applications.html")
 });
 
-app.get("/admin", function(req, res){
-	res.render("admin.html");
+app.get("/users/messages.html", function(req, res) {
+	res.render("users/messages.html")
 });
 
-app.get("/new_post_pet", function(req, res){
-	res.render("new_post_pet.html");
+app.get("/signin.html", function(req, res) {
+	res.render("signin.html")
 });
 
-app.get("/new_post_petsitter", function(req, res){
-	res.render("new_post_petsitter.html");
+app.get("/signup.html", function(req, res) {
+	res.render("signup.html")
 });
 
-app.get("/post_pet", function(req, res){
-	res.render("post_pet.html");
+app.get("/pet_posts/index.html", function(req, res){
+	res.render("pet_posts/index.html");
 });
 
-app.get("/post_petsitter", function(req, res){
-	res.render("post_petsitter.html");
+app.get("/pet_posts/new.html", function(req, res){
+	res.render("pet_posts/new.html");
 });
 
-app.get("/search_pet", function(req, res){
-	res.render("search_pet.html");
+app.get("/pet_posts/show.html", function(req, res){
+	res.render("pet_posts/show.html");
 });
 
-app.get("/search_petsitter", function(req, res){
-	res.render("search_petsitter.html");
+app.get("/petsitter_posts/index.html", function(req, res){
+	res.render("petsitter_posts/index.html");
 });
 
-app.get("/messages", function(req, res){
-	res.render("messages.html");
+app.get("/petsitter_posts/show.html", function(req, res){
+	res.render("petsitter_posts/show.html");
 });
 
-app.get("/applications", function(req, res){
-	res.render("applications.html");
-});
-
-app.get("/user_profile", function(req, res){
-	res.render("user_profile.html");
+app.get("/petsitter_posts/new.html", function(req, res){
+	res.render("petsitter_posts/new.html");
 });
 
 /* REST API routes */
-
-app.get("/users/:id", function(req, res){
+app.get("/api/users/:id", function(req, res){
 	var user = [];
 	User.findById(req.params.id, function(err, user) {
 		if (err) {
@@ -169,8 +163,8 @@ app.get("/users/:id", function(req, res){
 	});
 });
 
-app.post("/reviews", function(req, res){
 
+app.post("/api/reviews", function(req, res){
 	var toUser 			= req.body.data.to;
 	var fromUser 		= req.body.data.from;
 	var reviewRating 	= req.body.data.rating;
@@ -202,7 +196,8 @@ app.post("/reviews", function(req, res){
 	// res.end();
 });
 
-app.get("/pets/:id", function(req, res){
+
+app.get("/api/pets/:id", function(req, res){
 	var pet = [];
 	Pet.findById(req.params.id, function(err, pet) {
 		if (err) {
@@ -212,7 +207,7 @@ app.get("/pets/:id", function(req, res){
 	});
 });
 
-app.get("/petpostings/:id", function(req, res){
+app.get("/api/petpostings/:id", function(req, res){
 	var petposting = [];
 	Pet_Posting.findById(req.params.id, function(err, petposting) {
 		if (err) {
@@ -222,15 +217,16 @@ app.get("/petpostings/:id", function(req, res){
 	});
 });
 
-app.post("/petpostings", function(req, res){
 
+app.post("/api/petpostings", function(req, res){
 	console.log("New Pet Post");
 	console.log(req.body);
 	res.json({resData: "data"});
 
 });
 
-app.get("/sitterpostings/:id", function(req, res){
+
+app.get("/api/sitterpostings/:id", function(req, res){
 	var sitterposting = [];
 	Sitter_Posting.findById(req.params.id, function(err, sitterposting) {
 		if (err) {
@@ -240,8 +236,8 @@ app.get("/sitterpostings/:id", function(req, res){
 	});
 });
 
-app.post("/sitterpostings", function(req, res){
 
+app.post("/api/sitterpostings", function(req, res){
 	console.log("New Sitter Post");
 	console.log(req.body);
 	res.json({resData: "data"});
@@ -249,14 +245,14 @@ app.post("/sitterpostings", function(req, res){
 });
 
 // Tesing 
-app.get("/dogs", function(req, res){
+app.get("/api/dogs", function(req, res){
 	res.send("Who let the dogs out?");
 });
 
 // Testing Route Parameters
 // Ex: 	/http://localhost:3000/dogs/1
 // 		/http://localhost:3000/dogs/33
-app.get("/dogs/:id", function(req, res){
+app.get("/api/dogs/:id", function(req, res){
 	console.log(req.params);
 	res.send("Dog id = "+ req.params.id);
 });
@@ -264,7 +260,7 @@ app.get("/dogs/:id", function(req, res){
 // Testing Route Parameters + Database
 // Ex: 	/http://localhost:3000/dogs/new/Timmy
 // 		/http://localhost:3000/dogs/new/Max
-app.get("/dogs/new/:name", function(req, res){
+app.get("/api/dogs/new/:name", function(req, res){
 	var dogName = req.params.name;
 
 	// Adding a new dog to the database testDB
@@ -288,7 +284,7 @@ app.get("/dogs/new/:name", function(req, res){
 // Testing Route Parameters + Database
 // Ex: 	/http://localhost:3000/dogs/find/Timmy
 // 		/http://localhost:3000/dogs/find/Buster
-app.get("/dogs/find/:name", function(req, res){
+app.get("/api/dogs/find/:name", function(req, res){
 	var dogName = req.params.name;
 
 	var result = [];
@@ -311,6 +307,10 @@ app.get("/dogs/find/:name", function(req, res){
 
 });
 
+app.use("*",function(req, res) {
+    res.sendFile(path.join(__dirname,"views/index.html"));
+});
+
 // If none of the above routes matches, display an error
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -321,7 +321,6 @@ app.use(function(req, res, next) {
 
 
 /* Start server */ 
-
 app.listen(3000, function(){
 	console.log("PetCare server listening on port 3000");
 });

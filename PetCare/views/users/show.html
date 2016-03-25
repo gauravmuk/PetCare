@@ -1,157 +1,99 @@
-<!DOCTYPE html> 
-<html ng-app="petCare">
-
-    <head>
-
-    	<meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="">
-        <meta name="author" content="">
-
-    	<title>PetCare - User Profile</title>
-
-        <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico"/>
-
-        <!-- Bootstrap Core CSS -->
-        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-
-        <!-- Custom CSS -->
-    	<link rel="stylesheet" href="/stylesheets/style.css" type="text/css"/>
-
-        <!-- Custom Fonts -->
-    	<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
-
-        <!-- Font Awesome Icons -->
-    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-    </head>
-
-    <body>
-        <!-- Navigation -->
-        <nav class="navbar" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="toggle" data-toggle="collapse" data-target="#navbar1">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="logo" href="/">PetCare</a>
-                </div>
-                <div class="collapse collapse-bar" id="navbar1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li>
-                            <a href="/">Home</a>
-                        </li>
-                        <li>
-                            <a href="/search_petsitter">Hire a Pet Sitter</a>
-                        </li>
-                        <li>
-                            <a href="/search_pet">Offer Pet Sitting</a>
-                        </li>
-                        <li class="sign-up">
-                            <a href="/signup">Sign Up</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <!-- Content goes here -->
-        <div class="content" ng-controller="userController">
-            <div class="container">
-                <div class="profile">
-                    <!-- User Info -->
-                    <div class="user_info">
-                        <div class="info">
-                            <img class="profile-picture" src="/images/default-profile-pic.png" alt="profile picture"/>
-                            <div class="info-container">
-                                <div class="title">{{ user.name }}</div>
-                                <div class="rating">
-                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
-                                </div>
-                                <span class="info-piece">
-                                    <span class="name">Location</span>
-                                    <span class="value">{{ user.location}} </span>
-                                </span>
-                                <span class="info-piece">
-                                    <span class="name">Email</span>
-                                    <span class="value">{{ user.email }}</span>
-                                </span>
-                            </div>
-                            <div class="right-corner">
-                                <button class="button" data-toggle="modal" data-target="#messageModal">
-                                    <img class="icon" src="/assets/icon-message.svg">
-                                    <span>Message</span>
-                                </button>
-                                <button class="button" data-toggle="modal" data-target="#reportModal">
-                                    <img class="icon" src="/assets/icon-report.svg">
-                                    <span>Report</span>
-                                </button>
-                            </div>
+<div class="content" ng-controller="userController">
+    <div class="container">
+        <div class="profile">
+            <!-- User Info -->
+            <div class="user_info">
+                <div class="info">
+                    <img class="profile-picture" src="/images/default-profile-pic.png" alt="profile picture"/>
+                        <div class="info-container">
+                        <div class="title">{{ user.name }}</div>
+                        <div class="rating">
+                            &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
                         </div>
-                        <p class="description">{{ user.description }}
-                        </p>
+                        <span class="info-piece">
+                            <span class="name">Location</span>
+                            <span class="value">{{ user.location}} </span>
+                        </span>
+                        <span class="info-piece">
+                            <span class="name">Email</span>
+                            <span class="value">{{ user.email }}</span>
+                        </span>
                     </div>
-
-                    <!-- nav bar for pets postings history -->
-                    <div class="nav-bar">
-                        <button class="nav-item" id="pet" href="#pet">Pets</button>
-                        <button class="nav-item" id="posting" href="#posting">Postings</button>
-                        <button class="nav-item" id="history" href="#history">History</button>
-                        <button class="nav-item" id='review' href="#review">Review</button>
-                        <span class="line"></span>
+                    <div class="right-corner">
+                        <button class="button" data-toggle="modal" data-target="#messageModal">
+                           <img class="icon" src="/assets/icon-message.svg">
+                           <span>Message</span>
+                        </button>
+                        <button class="button" data-toggle="modal" data-target="#reportModal">
+                            <img class="icon" src="/assets/icon-report.svg">
+                            <span>Report</span>
+                        </button>
                     </div>
+                </div>
+                <p class="description">
+                    {{ user.description }}
+                </p>
+            </div>
 
-                    <!-- Pets -->
-                    <div class="pets">
-                        <div class="pet">
-                            <div class="info">
-                                <img class="profile-picture" src="/images/cat1.jpg" alt="pet picture"/>
-                                <div class="left-info">
-                                    <div class="title">Pudding</div>
-                                    <span class="rating">
-                                        &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
-                                    </span>
-                                    <div>
-                                        <div class="info-column">
-                                            <span class="info-piece icon-span">
-                                                <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
-                                                <span class="value">Cat</span>
-                                            </span>
-                                            <span class="info-piece icon-span">
-                                                <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
-                                                <span class="value">2 years old</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <span class="info-piece">
-                                                <span class="name">Gender</span>
-                                                <span class="value">Neutered male</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="name">Breed</span>
-                                                <span class="value">Manx</span>
-                                            </span>
-                                        </div>
+            <!-- nav bar for pets postings history -->
+            <div class="nav-bar">
+                <button class="nav-item" id="pet" href="#pet">Pets</button>
+                <button class="nav-item" id="posting" href="#posting">Postings</button>
+                <button class="nav-item" id="history" href="#history">History</button>
+                <button class="nav-item" id='review' href="#review">Review</button>
+                <span class="line"></span>
+            </div>
+
+            <!-- Pets -->
+            <div class="pets">
+                <div class="pet">
+                    <div class="info">
+                        <img class="profile-picture" src="/images/cat1.jpg" alt="pet picture"/>
+                        <div class="left-info">
+                            <div class="title">Pudding</div>
+                            <span class="rating">
+                                &#9733;&#9733;&#9733;&#9733;&#9734; 
+                                <a class='showReview'>13 Reviews</a>
+                            </span>
+                            <div>
+                                <div class="info-column">
+                                    <span class="info-piece icon-span">
+                                        <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
+                                        <span class="value">Cat</span>
+                                        </span>
+                                        <span class="info-piece icon-span">
+                                            <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
+                                            <span class="value">2 years old</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <span class="info-piece">
+                                            <span class="name">Gender</span>
+                                            <span class="value">Neutered male</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="name">Breed</span>
+                                            <span class="value">Manx</span>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
-                            <p class="description">He is my best buddy. He likes tuna.
-                            </p>
                         </div>
-                        <div class="pet">
-                            <div class="info">
-                                <img class="profile-picture" src="/images/cat2.jpg" alt="pet picture"/>
-                                <div class="left-info">
-                                    <div class="title">Apple</div>
-                                    <span class="rating">
-                                        &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
-                                    </span>
-                                    <div>
-                                        <div class="info-column">
-                                            <span class="info-piece icon-span">
+                        <p class="description">
+                            He is my best buddy. He likes tuna.
+                        </p>
+                    </div>
+                    <div class="pet">
+                        <div class="info">
+                            <img class="profile-picture" src="/images/cat2.jpg" alt="pet picture"/>
+                            <div class="left-info">
+                                <div class="title">Apple</div>
+                                <span class="rating">
+                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
+                                </span>
+                                <div>
+                                    <div class="info-column">
+                                        <span class="info-piece icon-span">
                                             <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
                                             <span class="value">Cat</span>
                                             </span>
@@ -391,116 +333,105 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
+        </div>
+    </div>
+</div>
+
+<!-- Message Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Message</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <textarea name="comment"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Send</button>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- Message Modal -->
-        <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Message</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form">
-                            <div class="form-group">
-                                <textarea name="comment"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Send</button>
-                    </div>
+<!-- Report Modal -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">
+                            &times;
+                        </span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Report</h4>
                 </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <textarea name="comment" placeholder="Please briefly describe what you are reporting for."></textarea>
+                        </div>
+                    </form>
+                </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">Report</button>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- Report Modal -->
-        <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Report</h4>
+<!-- Apply Modal -->
+<div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Application</h4>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="name" class="form-control" id="name">
                     </div>
-                    <div class="modal-body">
-                        <form role="form">
-                            <div class="form-group">
-                                <textarea name="comment" placeholder="Please briefly describe what you are reporting for."></textarea>
-                            </div>
-                        </form>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" class="form-control" id="email">
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Report</button>
+                    <div class="form-group">
+                        <label for="comment">Comments:</label>
+                        <textarea name="comment"></textarea>
                     </div>
-                </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    Apply
+                </button>
             </div>
         </div>
+    </div>
+</div>
 
-        <!-- Apply Modal -->
-        <div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Application</h4>
-                    </div>
-                    <div class="modal-body">
-                        <form role="form">
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <input type="name" class="form-control" id="name">
-                            </div>
-                            <div class="form-group">
-                                <label for="email">Email:</label>
-                                <input type="email" class="form-control" id="email">
-                            </div>
-                            <div class="form-group">
-                                <label for="comment">Comments:</label>
-                                <textarea name="comment"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer>
-            <div class="container">
-                <div class="footer-label">
-                	About Us
-                </div>
-
-                <div class="description">
-                	PetCare is an online service where individuals who are looking for someone to take care of their pets can connect with pet sitters in their community who are experienced in taking care of pets. Users can register on the system and look for a pet sitter or offer their pet sitting services, or both.
-                </div>
-
-                <div class="icons">
-                	<i class="fa fa-twitter"></i>
-                	<i class="fa fa-facebook"></i>
-                	<i class="fa fa-youtube-play"></i>
-                </div>
-            </div>
-        </footer>
-
-        <!-- jQuery -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-        <!-- Bootstrap Core JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
-        <script type="text/javascript" src="/javascripts/app.js"></script>
 
         <script type="text/javascript">
             $(document).ready(function(){
@@ -565,5 +496,3 @@
                 $('div.reviews').css("display", "block");
             }
         </script>
-    </body>
-</html>

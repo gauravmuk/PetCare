@@ -1,15 +1,81 @@
-var app = angular.module('petCare', []);
+var app = angular.module('petCare', ['ngRoute']);
 
-app.controller('userController', function() {
+app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
+	$locationProvider.html5Mode(true);
 
-});
+	$routeProvider
+		.when('/', {
+			templateUrl: 	'/layouts/home.html',
+			controller: 	'mainController',
+			controllerAs: 	'mainCtrl'
+		})
+		.when('/users/:id', {
+			templateUrl: 	'/users/show.html',
+			controller: '	userController',
+			controllerAs: 	'userCtrl'
+		})
+		.when('/users/:id/applications', {
+			templateUrl: 	'/users/applications.html',
+			controller: 	'userController',
+			controllerAs: 	'userCtrl'
+		})
+		.when('/users/:id/messages', {
+			templateUrl: 	'/users/messages.html',
+			controller: 	'userController',
+			controllerAs: 	'userCtrl'
+		})
+		.when('/signin', {
+			templateUrl: 	'/signin.html',
+			controller: 	'userController',
+			controllerAs: 	'userCtrl'
+		})
+		.when('/signup', {
+			templateUrl: 	'/signup.html',
+			controller: 	'userController',
+			controllerAs: 	'userCtrl'
+		})
+		.when('/pet_posts', {
+			templateUrl: 	'/pet_posts/index.html',
+			controller: 	'HireController',
+			controllerAs: 	'HireCtrl'
+		})
+		.when('/new_pet_posts', {
+			templateUrl: 	'/pet_posts/new.html',
+			controller: 	'petPostingFormController',
+			controllerAs: 	'petPostingFormCtrl'
+		})
+		.when('/pet_posts/:id', {
+			templateUrl: 	'/pet_posts/show.html',
+			controller: 	'petPostingController',
+			controllerAs: 	'petPostingCtrl'
+		})
+		.when('/petsitter_posts', {
+			templateUrl: 	'/petsitter_posts/index.html',
+			controller: 	'OfferController',
+			controllerAs: 	'OfferCtrl'
+		})
+		.when('/petsitter_posts/:id', {
+			templateUrl: 	'/petsitter_posts/show.html',
+			controller: 	'sitterPostingController',
+			controllerAs: 	'sitterPostingCtrl'
+		})
+		.when('/new_petsitter_posts', {
+			templateUrl: 	'/petsitter_posts/new.html',
+			controller: 	'sitterPostingFormController',
+			controllerAs: 	'sitterPostingFormController'
+		});
+}]);
 
 app.controller('mainController', function() {
 });
 
+app.controller('adminController', function() {
+
+});
+
 app.controller('userController', ['$http', '$scope', function($http, $scope) {
 	$scope.user = []
-	$http.get('/users/1').success(function(data){
+	$http.get('/api/users/1').success(function(data){
 		console.log(data);
 		$scope.user = data;
 	});
@@ -42,7 +108,9 @@ app.controller('reviewController', ['$http', '$scope', function($http, $scope) {
 
 		// Make a http post request to the server
 		console.log("Make a post request to /reviews");
-		$http.post('/reviews', {data:dataObj})
+
+		$http.post('/api/reviews', {data:dataObj})
+
 			.success(function(data, status, headers, config) {
     			// TO-DO: Get the average rating
 			}).error(function(data, status, headers, config) {
@@ -56,14 +124,18 @@ app.controller('petPostingController', ['$http', '$scope', function($http, $scop
 	$scope.petPosting = []
 	$scope.pet = []
 
-	$http.get('/petpostings/1').success(function(data) {
+
+	$http.get('/api/petpostings/1').success(function(data) {
+
 		$scope.petPosting = data;
 
 		// get the posting's pet number
 		var petID = $scope.petPosting.pet;
 
 		// make AJAX call to get pet info
-		$http.get('/pets/' + petID).success(function(data) {
+
+		$http.get('/api/pets/' + petID).success(function(data) {
+
 			$scope.pet = data;
 		});
 
@@ -76,7 +148,9 @@ app.controller('sitterPostingController', ['$http', '$scope', function($http, $s
 	
 	$scope.sitterPosting = []
 
-	$http.get('/sitterpostings/1').success(function(data) {
+
+	$http.get('/api/sitterpostings/1').success(function(data) {
+
 		$scope.sitterPosting = data;
 	});
 
@@ -103,7 +177,9 @@ app.controller('sitterPostingFormController', ['$http', '$scope', function($http
 		};
 
 		// Make POST request to the /sitterpostings
-		$http.post('/sitterpostings', {data: dataObj})
+
+		$http.post('/api/sitterpostings', {data: dataObj})
+
 			.success(function(data, status, headers, config) {
 
 			}).error(function(data, status, headers, config) {
@@ -135,7 +211,9 @@ app.controller('petPostingFormController', ['$http', '$scope', function($http, $
 		};
 
 		// Make POST request to the /petpostings
-		$http.post('/petpostings', {data: dataObj})
+
+		$http.post('/api/petpostings', {data: dataObj})
+
 			.success(function(data, status, headers, config) {
 
 			}).error(function(data, status, headers, config) {
@@ -144,3 +222,88 @@ app.controller('petPostingFormController', ['$http', '$scope', function($http, $
 	};
 
 }]);
+
+app.controller('HireController', ['$http', '$scope', function($http, $scope){
+        $scope.posts = sitterPosts;
+
+        $scope.rating = rating;
+}]);
+
+// Controller for offer pet sitting search
+app.controller('OfferController', ['$http', '$scope', function($http, $scope){
+    $scope.posts = offerPosts;
+
+    $scope.rating = rating;
+}]);
+
+// Show rating
+function rating(numOfStar, index) {
+    var res = '';
+    for (var i = 0; i < 5; i++) {
+        if (i < numOfStar) {
+        	res += '&#9733;';
+        } else {
+        	res += '&#9734;';
+        }
+    }
+    $('#rating'+index).html(res);
+}
+
+//####################### dummy data
+var sitterPosts = [
+	{	
+		id: 1,
+		title: 'Let me take care of your pet!',
+		user_id: 1,
+		price_range: '20 ~ 25',
+		rate: 2,
+		experience: '2 years experience',
+		duration: 'March 3rd to April 1st',
+		pet_types: ' Cats, Dogs, Hampsters',
+		location: 'Downtown, Toronto, ON',
+        image: 'images/default-profile-pic.png',
+		description: "I'm really nice guy. You can see my reviews. Everyone satisfies with my service. 100% safety guarantees. If you'd like to bring your own food for you pet, you"
+	},
+    {
+    	id: 1,
+        title: 'Let me take care of your pet!',
+        user_id: 1,
+        price_range: '20 ~ 25',
+        rate: 4,
+        experience: '2 years experience',
+        duration: 'March 3rd to April 1st',
+        pet_types: ' Cats, Dogs, Hampsters',
+        location: 'Downtown, Toronto, ON',
+        image: 'images/default-profile-pic.png',
+        description: "I'm really nice guy. You can see my reviews. Everyone satisfies with my service. 100% safety guarantees. If you'd like to bring your own food for you pet, you"
+    }
+]
+
+offerPosts = [
+    {
+    	id: 1,
+        title: 'Let me take care of your pet!',
+        user_id: 1,
+        price: 25,
+        rate: 2,
+        age: 2,
+        duration: 'March 3rd to April 1st',
+        pet_type: ' Cat',
+        location: 'Downtown, Toronto, ON',
+        image: 'images/cat1.jpg',
+        description: "I'm really nice guy. You can see my reviews. Everyone satisfies with my service. 100% safety guarantees. If you'd like to bring your own food for you pet, you"
+    },
+    {
+    	id: 1,
+        title: 'Let me take care of your pet!',
+        user_id: 1,
+        price: 25,
+        rate: 5,
+        age: 2,
+        duration: 'March 3rd to April 1st',
+        pet_type: ' Cat',
+        location: 'Downtown, Toronto, ON',
+        image: 'images/cat2.jpg',
+        description: "I'm really nice guy. You can see my reviews. Everyone satisfies with my service. 100% safety guarantees. If you'd like to bring your own food for you pet, you"
+    }
+]

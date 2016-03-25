@@ -1,63 +1,4 @@
-<!DOCTYPE html> 
-<html>
 
-<head>
-
-	<meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-	<title>PetCare - Pet Sitter Posting Results</title>
-
-    <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico"/>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-	<link rel="stylesheet" href="stylesheets/style.css" type="text/css"/>
-
-    <!-- Custom Fonts -->
-	<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
-
-    <!-- Font Awesome Icons -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-
-</head>
-
-<body>
-
-    <!-- Navigation -->
-    <nav class="navbar" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="toggle" data-toggle="collapse" data-target="#navbar1">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="logo" href="/">PetCare</a>
-            </div>
-            <div class="collapse collapse-bar" id="navbar1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                    <li>
-                        <a href="search_petsitter">Hire a Pet Sitter</a>
-                    </li>
-                    <li>
-                        <a href="search_pet">Offer Pet Sitting</a>
-                    </li>
-                    <li class="sign-up">
-                        <a href="signup">Sign Up</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
 
     <div class="search-bar content">
         <div class="container">
@@ -81,30 +22,29 @@
     <div class="search-results" ng-app="search">
         <div class="container">
             <div class="search-term">
-                Looking for Cat sitters near Toronto, ON
-            </div>
-            <a href="new_post_petsitter" class="new-post-link">
+                Looking for Cat sittings near Toronto, ON
+            </div>   
+            <a href="new_pet_posts" class="new-post-link">
                 <div class="button new-post-btn">
-                    <span class="button-label">Make a new post</span>
+                    <span class="button-label">Make a new post</span>  
                 </div>
             </a>
-
-            <div class="profile" ng-controller="HireController">
+                
+            <div class="profile" ng-controller="OfferController">
                 <div class="recommend">
                     <div class="posting" ng-repeat="post in posts">
                         <div class="info">
-                            <img class="profile-picture" ng-src="{{post.image}}" alt="profile picture"/>
+                            <img class="profile-picture" ng-src="{{post.image}}" alt="pet picture"/>
                             <div class="left-info">
-                                <div class="title"><a href="post_petsitter">{{post.title}}</a></div>
-                                <div>
+                                <div class="title"><a ng-href="pet_posts/{{ post.id }}">{{post.title}}</a></div>
+                                <div>{{post.id}}
                                     <div class="info-column">
                                         <span class="rating" id="rating{{$index}}">
                                             {{rating(post.rate, $index)}}
-                                            <img src="">
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                            <span class="value">{{post.pet_types}}</span>
+                                            <span class="value">{{post.pet_type}}</span>
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
@@ -118,11 +58,11 @@
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
-                                            <span class="value">{{post.price_range}} per day</span>
+                                            <span class="value">{{post.price}} per day</span>
                                         </span>
                                         <span class="info-piece">
                                             <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                            <span class="value">{{post.experience}} years experience</span>
+                                            <span class="value">{{post.age}} years old</span>
                                         </span>
                                     </div>
                                     <div class="info-column">
@@ -133,16 +73,15 @@
                         </div>
                         <p class="description">
                             {{post.description | limitTo: 200}}...
-                             <a href="post_petsitter">See More</a>
+                             <a href="post_pet">See More</a>
                          </p>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Modal -->
+    <!--Apply Modal -->
     <div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -239,38 +178,3 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-label">
-            	About Us
-            </div>
-
-            <div class="description">
-            	PetCare is an online service where individuals who are looking for someone to take care of their pets can connect with pet sitters in their community who are experienced in taking care of pets. Users can register on the system and look for a pet sitter or offer their pet sitting services, or both.
-            </div>
-
-            <div class="icons">
-            	<i class="fa fa-twitter"></i>
-            	<i class="fa fa-facebook"></i>
-            	<i class="fa fa-youtube-play"></i>
-            </div>
-        </div>
-    </footer>
-
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-    <!-- AngularJS -->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
-    <script type="text/javascript" src="javascripts/app.js"></script>
-
-    <script src="javascripts/search.js"></script>
-
-</body>
-
-</html>
