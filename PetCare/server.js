@@ -105,6 +105,32 @@ var msg5 = new Message({
 
 msg5.save();
 
+var app1 = new Application({
+	to: 1,
+	from: 2,
+	isPetPost: true,
+	pet_posting: 1,
+	message: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et,',
+});
+app1.save();
+
+var app2 = new Application({
+	to: 1,
+	from: 3,
+	isPetPost: false,
+	sitter_posting: 1,
+	message: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et,',
+});
+app2.save();
+
+var app3 = new Application({
+	to: 2,
+	from: 1,
+	isPetPost: true,
+	pet_posting: 1,
+	message: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et,',
+});
+app3.save();
 
 var pet1 = new Pet({
 	name: 'Kitty',
@@ -376,7 +402,66 @@ app.get("/api/reports", function(req, res){
 	});
 });
 
-// Inbox and Sent messages of the given user
+// Get Received and Sent applications of the given user
+app.get("/applications/:userId", function(req,res){
+	var received = [];
+	var sent = [];
+
+	Application.find({to: req.params.userId}).populate('from').exec(function(err, received) {
+		if (err) {
+			throw err;
+		}
+		Application.find({from: req.params.userId}).populate('to').exec(function(err, sent) {
+			if (err) {
+				throw err;
+			}
+
+			// create JSON object
+			var data = "{" + JSON.stringify("received") + ": [";
+			for (var i = 0; i < received.length; i++) {
+				if (received[i]['isPetPost']) {
+					var posting_id = received[i]['pet_posting'];
+					var url = "/pet_posts/" + posting_id;
+
+				} else {
+					var posting_id = received[i]['sitter_posting'];
+					var url = "/petsitter_posts/" + posting_id;
+				}
+				data += "{" + JSON.stringify("from") + ":" + JSON.stringify(received[i]['from']['name']);
+				data += "," + JSON.stringify("from_id") + ":" + JSON.stringify(received[i]['from']['_id']);
+				data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(received[i]['created_at']);
+				data += "," + JSON.stringify("message") + ":" + JSON.stringify(received[i]['message']);
+				data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
+				data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
+				data += "}";
+				if (i != received.length - 1) {data += ",";}
+			}
+			data += "]," + JSON.stringify("sent") + ": ["
+			for (var i = 0; i < sent.length; i++) {
+				if (received[i]['isPetPost']) {
+					var posting_id = sent[i]['pet_posting'];
+					var url = "/pet_posts/" + posting_id;
+				} else {
+					var posting_id = sent[i]['sitter_posting'];
+					var url = "/petsitter_posts/" + posting_id;
+				}
+				data += "{" + JSON.stringify("to") + ":" + JSON.stringify(sent[i]['to']['name']);
+				data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(sent[i]['created_at']);
+				data += "," + JSON.stringify("message") + ":" + JSON.stringify(sent[i]['message']);
+				data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
+				data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
+				data += "}";
+				if (i != sent.length - 1) {data += ",";}
+			}
+			data += "]}"
+
+			console.log(JSON.parse(data));
+			res.json(JSON.parse(data));
+		});
+	});
+});
+
+// Get inbox and Sent messages of the given user
 app.get("/messages/:userId", function(req,res){
 	var inbox = [];
 	var sent = [];

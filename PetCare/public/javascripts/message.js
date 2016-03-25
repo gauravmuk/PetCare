@@ -13,7 +13,5 @@ function ready() {
         // Change message status to read
         $(this).find(".read").text("READ");
         $(this).find(".read").addClass("true");
-        
-
     });
 }
