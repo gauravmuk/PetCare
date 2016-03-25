@@ -240,16 +240,13 @@ app.get("/api/users", function(req, res){
 
 
 app.post("/api/reviews", function(req, res){
+	// Get Review information from the request body
 	var toUser 			= req.body.data.to;
 	var fromUser 		= req.body.data.from;
 	var reviewRating 	= req.body.data.rating;
 	var reviewComment 	= req.body.data.comment;
 
-	console.log("Review Rating : "+ reviewRating);
-
-	// Save to the user reviwe information to the database
-	// TO-DO: Also calclute the average rating and save under user.rating
-	// 		  Send avg number back to front-end as res.json()
+	// Save Review information in the database 
 	Review.create({
 		to: toUser,
 		from: fromUser,
@@ -258,11 +255,30 @@ app.post("/api/reviews", function(req, res){
 
 	}, function(err, review){
 		if(err){
-			console.log("Review.create(): error = "+ err);
+			console.log("Review.create(): error\n"+ err);
 		}
 		else{
-			console.log("Review.create(): successful");
-			console.log(review);
+			// Successfully added a new review to the database
+			// Now calculate average rating for the 'to' user
+			Review.find({to: toUser}, function(err, reviews){
+				if(err){
+					"Review.find(): error\n"+ err
+				}
+				else{
+					// Successfully found all the reviews for the given user
+					// Now calulate the new average rating value for the user
+					var num = reviews.length;
+					var sum = 0;
+					for (var i=0; i<num; i++){
+						sum = sum + reviews[i].rating;
+					}
+
+					var newAvgRating = Math.round(sum/num)
+					console.log("Average rating for user "+ toUser + " = " + newAvgRating);
+					
+					// TO-DO: Update new average rating on the user schema
+				}
+			}); 
 		}
 	});
 
