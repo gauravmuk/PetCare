@@ -1,0 +1,90 @@
+
+    <!-- Content goes here -->
+    <div class="content">
+        <div class="container">
+
+            <div class="post-header">
+                <ul class="buttons">
+                    <div class="floatleft">
+                        <li>
+                            <a href="pet_posts" class="button large">
+                                <span class="button-label">Go Back To Posting</span>
+                            </a>
+                        </li>
+                    </div>
+                </ul>
+            </div>
+
+            <div class="post">
+                <form ng-controller="petPostingFormController">
+                    <div class="form-group">
+                        <label for="petImageToUpload">Upload your pet's picture:</label>
+                        <input type="file" class="file-input" name="petImageToUpload" id="petImageToUpload">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputTitle">Title</label>
+                        <input type="text" class="form-control" name="inputTitle" id="inputTitle" ng-model="title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPetType">Pet Type</label>
+                        <input type="text" class="form-control" name="inputPetType" id="inputPetType" ng-model="type">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputDuration">Duration</label>
+                        <input type="text" class="form-control" name="inputDuration" id="inputDuration"  ng-model="duration"/>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputLocation">Location</label>
+                        <input type="text" class="form-control" name="inputLocation" id="inputLocation" ng-model="location">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPrice">Price</label>
+                        <input type="text" class="form-control" name="inputPrice" id="inputPrice" ng-model="title">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPetAge">Pet age</label>
+                        <input type="text" class="form-control" name="inputPetAge" id="inputPetAge">
+                    </div>
+
+                    <div class="form-group">
+                        <label >Gender</label>
+                        <select class="form-control">
+                          <option value="Intact Male">Intact Male</option>
+                          <option value="Neutered Male">Neutered Male</option>
+                          <option value="Intact Female">Intact Female</option>
+                          <option value="Speyed Female">Speyed Female</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputBreed">Breed</label>
+                        <input type="text" class="form-control" name="inputBreed" id="inputBreed">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputPetSupplies">Pet Supplies</label>
+                        <input type="text" class="form-control" name="inputPetSupplies" id="inputPetSupplies" ng-model="supplies">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputMedicine">Medicine or Special Diet</label>
+                        <input type="text" class="form-control" name="inputMedicine" id="inputMedicine" ng-model="additional_info">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="inputDescription">Description</label>
+                        <textarea row="10" class="form-control" name="inputDescription" id="inputDescription" ng-model="description"></textarea>
+                    </div>
+            
+                    <button ng-click="createPosting()" type="button" class="post-button">Submit</button>
+
+                </form>
+            </div>
+        </div>
+    </div>

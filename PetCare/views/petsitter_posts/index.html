@@ -1,0 +1,136 @@
+    <div class="search-bar content">
+        <div class="container">
+            <div class="search-container">
+                <div class="search">
+                    <label for="pet-search"><span class="search-label">Pet</span></label>
+                    <input type="text" id="pet-search" placeholder="Enter pet type ..." />
+                </div>
+                <div class="search">
+                    <label for="location-search"><span class="search-label">Location</span></label>
+                    <input type="text" id="location-search" placeholder="Enter location ..." />
+                </div>
+                <a href="#search" class="button">
+                    <span class="button-label">Search</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Results -->
+    <div class="search-results" ng-app="search">
+        <div class="container">
+            <div class="search-term">
+                Looking for Cat sitters near Toronto, ON
+            </div>
+            <a href="new_petsitter_posts" class="new-post-link">
+                <div class="button new-post-btn">
+                    <span class="button-label">Make a new post</span>
+                </div>
+            </a>
+
+            <div class="profile" ng-controller="HireController">
+                <div class="recommend">
+                    <div class="posting" ng-repeat="post in posts">
+                        <div class="info">
+                            <img class="profile-picture" ng-src="{{post.image}}" alt="profile picture"/>
+                            <div class="left-info">
+                                <div class="title"><a href="post_petsitter">{{post.title}}</a></div>
+                                <div>
+                                    <div class="info-column">
+                                        <span class="rating" id="rating{{$index}}">
+                                            {{rating(post.rate, $index)}}
+                                            <img src="">
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
+                                            <span class="value">{{post.pet_types}}</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
+                                            <span class="value">{{post.duration}}</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
+                                            <span class="value">{{post.location}}</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
+                                            <span class="value">{{post.price_range}} per day</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
+                                            <span class="value">{{post.experience}} years experience</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="description">
+                            {{post.description | limitTo: 200}}...
+                             <a href="post_petsitter">See More</a>
+                         </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Application</h4>
+                </div>
+                <div class="modal-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="name">Name:</label>
+                            <input type="name" class="form-control" id="name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Comments:</label>
+                            <textarea name="comment"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="pagination">
+        <div class="container">
+            <ul>
+                <li class="arrow prev"><a href="#">&laquo;</a></li>
+                <li>
+                    <ol>
+                        <li class="active"><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">6</a></li>
+                        <li><a href="#">7</a></li>
+                        <li><a href="#">8</a></li>
+                        <li><a href="#">9</a></li>
+                    </ol>
+                </li>
+                <li class="arrow next"><a href="#">&raquo;</a></li>
+            </ul>
+        </div>
+    </div>
