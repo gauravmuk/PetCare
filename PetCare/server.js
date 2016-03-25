@@ -250,21 +250,21 @@ app.post("/api/reviews", function(req, res){
 	// Save to the user reviwe information to the database
 	// TO-DO: Also calclute the average rating and save under user.rating
 	// 		  Send avg number back to front-end as res.json()
-	// Review.create({
-	// 	to: user1._id,
-	// 	from: user2._id,
-	// 	rating: 3,
-	// 	comment: "reviewComment"
+	Review.create({
+		to: toUser,
+		from: fromUser,
+		rating: reviewRating,
+		comment: reviewComment
 
-	// }, function(err, review){
-	// 	if(err){
-	// 		console.log("Review.create(): error = "+ err);
-	// 	}
-	// 	else{
-	// 		console.log("Review.create(): successful");
-	// 		console.log(review);
-	// 	}
-	// });
+	}, function(err, review){
+		if(err){
+			console.log("Review.create(): error = "+ err);
+		}
+		else{
+			console.log("Review.create(): successful");
+			console.log(review);
+		}
+	});
 
 	// Send back a response or end response
 	res.json({resData: "data"});
