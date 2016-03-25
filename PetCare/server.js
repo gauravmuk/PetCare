@@ -162,15 +162,6 @@ var report1 = new Report({
 report1.save();
 
 /**********************************************************************/
-													
-var dogSchema = new mongoose.Schema({
-	name: String,
-	age: Number
-});
-
-// Take the dogSchema, compile it in to a model and save it in a variable 
-var Dog = mongoose.model("Dog", dogSchema);
-
 
 /* Application Routes */
 app.get("/layouts/home.html",function(req,res){
@@ -369,43 +360,6 @@ app.get("/api/reports", function(req, res){
 	});
 });
 
-// Tesing 
-app.get("/api/dogs", function(req, res){
-	res.send("Who let the dogs out?");
-});
-
-// Testing Route Parameters
-// Ex: 	/http://localhost:3000/dogs/1
-// 		/http://localhost:3000/dogs/33
-app.get("/api/dogs/:id", function(req, res){
-	console.log(req.params);
-	res.send("Dog id = "+ req.params.id);
-});
-
-// Testing Route Parameters + Database
-// Ex: 	/http://localhost:3000/dogs/new/Timmy
-// 		/http://localhost:3000/dogs/new/Max
-app.get("/api/dogs/new/:name", function(req, res){
-	var dogName = req.params.name;
-
-	// Adding a new dog to the database testDB
-	Dog.create({
-		name: dogName,
-		age: 6
-
-	}, function(err, dog){
-		if(err){
-			console.log("Dog.create(): error");
-		}
-		else{
-			console.log("Dog.create(): successful");
-			console.log(dog);
-		}
-	});
-
-	res.send("Creating new dog");
-});
-
 // Inbox and Sent messages of the given user
 app.get("/messages/:userId", function(req,res){
 	var inbox = [];
@@ -467,33 +421,6 @@ app.post("/message", function(req, res){
 	});
 
 	msg.save();
-});
-
-
-// Testing Route Parameters + Database
-// Ex: 	/http://localhost:3000/dogs/find/Timmy
-// 		/http://localhost:3000/dogs/find/Buster
-app.get("/api/dogs/find/:name", function(req, res){
-	var dogName = req.params.name;
-
-	var result = [];
-
-	// Find dogs with a given name from the testDB
-	Dog.find({name : dogName}, function(err, dogs){
-		if(err){
-			console.log("Dog.find(): error");
-		}
-		else{
-			console.log("Dog.find(): successful");
-			console.log(dogs);
-			result = dogs;
-			if (result.length != 0 )
-				res.send(result[0].name+ " is "+ result[0].age + " years old");
-			else
-				res.send("No results found");
-			}
-	});
-
 });
 
 app.use("*",function(req, res) {
