@@ -64,6 +64,11 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 			controller: 	'sitterPostingFormController',
 			controllerAs: 	'sitterPostingFormController'
 		})
+		.when('/admin', {
+			templateUrl: 	'/admin/admin.html',
+			controller: 	'adminController',
+			controllerAs: 	'adminCtrl'
+		})
 		.otherwise({
 			redirectTo: '/'
 		});
@@ -72,9 +77,50 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 app.controller('mainController', function() {
 });
 
-app.controller('adminController', function() {
+app.controller('adminController', ['$anchorScroll', '$location', '$http', '$scope', 
+	function($anchorScroll, $location, $http, $scope) {
 
-});
+	$scope.users = [];
+	$scope.petPostings = [];
+	$scope.sitterPostings = [];
+	$scope.reports = [];
+
+	$scope.num_users = 0;
+	$scope.num_petPostings = 0;
+	$scope.num_sitterPostings = 0;
+	$scope.num_reports = 0;
+	$scope.num_postings = 0;
+
+	// TODO: Format created_at dates
+
+	$http.get('/api/users').success(function(data){
+		$scope.users = data;
+		$scope.num_users = Object.keys($scope.users).length;
+	});
+
+	$http.get('/api/petpostings').success(function(data){
+		$scope.petPostings = data;
+		$scope.num_petPostings = Object.keys($scope.petPostings).length;
+		$scope.num_postings += $scope.num_petPostings;
+	});
+
+	$http.get('/api/sitterpostings').success(function(data){
+		$scope.sitterPostings = data;
+		$scope.num_sitterPostings = Object.keys($scope.sitterPostings).length;
+		$scope.num_postings += $scope.num_sitterPostings;
+	});
+
+	$http.get('/api/reports').success(function(data){
+		$scope.reports = data;
+		$scope.num_reports = Object.keys($scope.reports).length;
+	});
+
+	$scope.scroll = function(anchor) {
+		$location.hash(anchor);
+		$anchorScroll();
+	};
+
+}]);
 
 app.controller('userController', ['$http', '$scope', function($http, $scope) {
 	$scope.user = []
@@ -122,13 +168,15 @@ app.controller('reviewController', ['$http', '$scope', function($http, $scope) {
 	};
 }]);
 
-app.controller('petPostingController', ['$http', '$scope', function($http, $scope) {
+app.controller('petPostingController', ['$http', '$scope', '$routeParams', function($http, $scope, $routeParams) {
 	
 	$scope.petPosting = []
 	$scope.pet = []
+	$scope.postingID = $routeParams.id;
 
+	// TODO: Display message if id not found
 
-	$http.get('/api/petpostings/1').success(function(data) {
+	$http.get('/api/petpostings/' + $scope.postingID).success(function(data) {
 
 		$scope.petPosting = data;
 
@@ -147,12 +195,12 @@ app.controller('petPostingController', ['$http', '$scope', function($http, $scop
 }]);
 
 
-app.controller('sitterPostingController', ['$http', '$scope', function($http, $scope) {
+app.controller('sitterPostingController', ['$http', '$scope', '$routeParams', function($http, $scope, $routeParams) {
 	
-	$scope.sitterPosting = []
+	$scope.sitterPosting = [];
+	$scope.postingID = $routeParams.id;
 
-
-	$http.get('/api/sitterpostings/1').success(function(data) {
+	$http.get('/api/sitterpostings/' + $scope.postingID).success(function(data) {
 
 		$scope.sitterPosting = data;
 	});

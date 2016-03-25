@@ -92,6 +92,15 @@ var sitterPosting1 = new Sitter_Posting({
 
 sitterPosting1.save();
 
+var report1 = new Report({
+    to: 1,
+    from: 2,
+	message: "I would like to report user 1.",
+    resolve: false
+});
+
+report1.save();
+
 /**********************************************************************/
 													
 var dogSchema = new mongoose.Schema({
@@ -152,10 +161,25 @@ app.get("/petsitter_posts/new.html", function(req, res){
 	res.render("petsitter_posts/new.html");
 });
 
+app.get("/admin/admin.html", function(req, res){
+	res.render("admin/admin.html");
+});
+
 /* REST API routes */
 app.get("/api/users/:id", function(req, res){
 	var user = [];
 	User.findById(req.params.id, function(err, user) {
+		if (err) {
+			throw err;
+		}
+		res.json(user)
+	});
+});
+
+// Return all users
+app.get("/api/users", function(req, res){
+	var user = [];
+	User.find({}, function(err, user) {
 		if (err) {
 			throw err;
 		}
@@ -217,6 +241,16 @@ app.get("/api/petpostings/:id", function(req, res){
 	});
 });
 
+// Return all pet postings
+app.get("/api/petpostings", function(req, res){
+	var petposting = [];
+	Pet_Posting.find({}, function(err, petposting) {
+		if (err) {
+			throw err;
+		}
+		res.json(petposting)
+	});
+});
 
 app.post("/api/petpostings", function(req, res){
 	console.log("New Pet Post");
@@ -236,12 +270,43 @@ app.get("/api/sitterpostings/:id", function(req, res){
 	});
 });
 
+// Return all sitter postings
+app.get("/api/sitterpostings", function(req, res){
+	var sitterposting = [];
+	Sitter_Posting.find({}, function(err, sitterposting) {
+		if (err) {
+			throw err;
+		}
+		res.json(sitterposting)
+	});
+});
+
 
 app.post("/api/sitterpostings", function(req, res){
 	console.log("New Sitter Post");
 	console.log(req.body);
 	res.json({resData: "data"});
 
+});
+
+app.get("/api/reports/:id", function(req, res){
+	var report = [];
+	Report.findById(req.params.id, function(err, report) {
+		if (err) {
+			throw err;
+		}
+		res.json(report)
+	});
+});
+
+app.get("/api/reports", function(req, res){
+	var report = [];
+	Report.find({}, function(err, report) {
+		if (err) {
+			throw err;
+		}
+		res.json(report)
+	});
 });
 
 // Tesing 

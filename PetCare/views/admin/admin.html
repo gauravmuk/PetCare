@@ -1,7 +1,7 @@
 
 
     <!-- Admin -->
-    <div class="admin">
+    <div class="admin" ng-controller="adminController">
         <div class="container">
 
             <div class="title">
@@ -10,47 +10,36 @@
 
             <div class="dashboard">
                 <div class="notifications">
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="notice user">
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="notice user" ng-click="scroll('users')">
                             <div class="icon">
                                 <i class="fa fa-user"></i>
                             </div>
                             <div class="message">
-                                <span class="number">25</span>
-                                <span class="type">new users</span>
+                                <span class="number">{{ num_users }}</span>
+                                <span class="type">users</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="notice posting">
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="notice posting" ng-click="scroll('postings')">
                             <div class="icon">
                                 <i class="fa fa-pencil-square-o"></i>
                             </div>
                             <div class="message">
-                                <span class="number">18</span>
-                                <span class="type">new posts</span>
+                                <span class="number">{{ num_postings }}</span>
+                                <span class="type">posts</span>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="notice report">
+                    <div class="col-sm-4 col-xs-12">
+                        <div class="notice report" ng-click="scroll('reports')">
                             <div class="icon">
                                 <i class="fa fa-flag"></i>
                             </div>
                             <div class="message">
-                                <span class="number">4</span>
-                                <span class="type">new reports</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3 col-sm-6 col-xs-12">
-                        <div class="notice active">
-                            <div class="icon">
-                                <i class="fa fa-users"></i>
-                            </div>
-                            <div class="message">
-                                <span class="number">12</span>
-                                <span class="type">active users</span>
+                                <span class="number">{{ num_reports }}</span>
+                                <span class="type">reports</span>
                             </div>
                         </div>
                     </div>
@@ -59,7 +48,7 @@
             </div>
 
             <!-- User Panel -->
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="users">
                 <div class="panel-heading">Users</div>
 
                 <div class="panel-body">
@@ -75,44 +64,10 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Leonardo DiCaprio</td>
+                                <tr ng-repeat="user in users">
+                                    <td>{{ user.name }}</td>
                                     <td>
-                                        <a href="user_profile" target="_blank">
-                                            <button class="admin-button view">View</button>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button edit" data-toggle="modal" data-target="#userModal">Edit</button>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Ban</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Bradley Cooper</td>
-                                    <td>
-                                        <a href="user_profile" target="_blank">
-                                            <button class="admin-button view">View</button>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button edit" data-toggle="modal" data-target="#userModal">Edit</button>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Ban</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Brad Pitt</td>
-                                    <td>
-                                        <a href="user_profile" target="_blank">
+                                        <a href="user_profile/{{ user._id }}" target="_blank">
                                             <button class="admin-button view">View</button>
                                         </a>
                                     </td>
@@ -133,7 +88,7 @@
             </div>
 
             <!-- Postings Panel -->
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="postings">
                 <div class="panel-heading">Postings</div>
 
                 <div class="panel-body">
@@ -142,17 +97,17 @@
                             <thead>
                                 <tr>
                                     <th>Date</th>
-                                    <th>User</th>
+                                    <th>View</th>
                                     <th>Edit Posting</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>March 10, 2016</td>
+                                <tr ng-repeat="posting in petPostings">
+                                    <td>{{ posting.created_at }}</td>
                                     <td>
-                                        <a href="user_profile" target="_blank">
-                                            <button class="admin-button view">Leonardo DiCaprio</button>
+                                        <a href="pet_posts/{{ posting._id }}" target="_blank">
+                                            <button class="admin-button view">{{ posting._id }}</button>
                                         </a>
                                     </td>
                                     <td>
@@ -162,25 +117,11 @@
                                         <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Delete</button>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>December 25, 2015</td>
+                                <tr ng-repeat="posting in sitterPostings">
+                                    <td>{{ posting.created_at }}</td>
                                     <td>
-                                        <a href="user_profile" target="_blank">
-                                            <button class="admin-button view">Brad Pitt</button>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button edit" data-toggle="modal" data-target="#postModal">Edit</button>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>November 24, 2015</td>
-                                    <td>
-                                        <a href="user_profile" target="_blank">
-                                            <button class="admin-button view">Leonardo DiCaprio</button>
+                                        <a href="petsitter_posts/{{ posting._id }}" target="_blank">
+                                            <button class="admin-button view">{{ posting._id }}</button>
                                         </a>
                                     </td>
                                     <td>
@@ -197,7 +138,7 @@
             </div>
 
             <!-- Reports Panel -->
-            <div class="panel panel-default">
+            <div class="panel panel-default" id="reports">
                 <div class="panel-heading">Reports</div>
 
                 <div class="panel-body">
@@ -213,39 +154,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>January 10, 2016</td>
+                                <tr ng-repeat="report in reports">
+                                    <td>{{ report.created_at }}</td>
                                     <td>
-                                        <a href="user_profile" target="_blank">
-                                            <button class="admin-button view">Leonardo DiCaprio</button>
+                                        <a href="user_profile/{{ report.from }}" target="_blank">
+                                            <button class="admin-button view">User ID: {{ report.from }}</button>
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="user_profile" target="_blank">
-                                            <button class="admin-button delete">Brad Pitt</button>
+                                        <a href="user_profile/{{ report.to }}" target="_blank">
+                                            <button class="admin-button delete">User ID: {{ report.to }}</button>
                                         </a>
                                     </td>
                                     <td>
-                                        <button class="admin-button edit" data-toggle="modal" data-target="#reportModal">Read</button>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>September 20, 2015</td>
-                                    <td>
-                                        <a href="user_profile" target="_blank">
-                                            <button class="admin-button view">Brad Pitt</button>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <a href="user_profile" target="_blank">
-                                            <button class="admin-button delete">Bradley Cooper</button>
-                                        </a>
-                                    </td>
-                                    <td>
-                                        <button class="admin-button edit" data-toggle="modal" data-target="#reportModal">Read</button>
+                                        <button class="admin-button edit" data-toggle="modal" data-target="#reportModal{{ report._id }}">Read</button>
                                     </td>
                                     <td>
                                         <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
@@ -259,6 +181,27 @@
 
         </div>
 
+    </div>
+
+
+    <div ng-repeat="report in reports">
+        <!-- Report Modal -->
+        <div class="modal fade" id="reportModal{{ report._id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Report Message</h4>
+                    </div>
+                    <div class="modal-body">
+                        {{ report.message }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Apply Modal -->
@@ -307,24 +250,6 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Report Modal -->
-    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Report Message</h4>
-                </div>
-                <div class="modal-body">
-                    User hasn't paid me for pet sitting services performed the week of December 25.
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
