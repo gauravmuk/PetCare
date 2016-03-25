@@ -21,8 +21,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		})
 		.when('/users/:id/messages', {
 			templateUrl: 	'/users/messages.html',
-			controller: 	'userController',
-			controllerAs: 	'userCtrl'
+			controller: 	'messageController',
+			controllerAs: 	'messageCtrl'
 		})
 		.when('/signin', {
 			templateUrl: 	'/signin.html',
@@ -129,6 +129,75 @@ app.controller('userController', ['$http', '$scope', function($http, $scope) {
 		$scope.user = data;
 	});
 }]);
+
+/* Module for message page */
+app.controller('messageController', ['$http', '$scope', function($http, $scope){
+    $scope.userId = 1; // TODO: change this to session userId
+    $scope.inbox = [];
+    $scope.sent = [];
+
+    $scope.replyId; //hold userId to send message
+    $scope.reply_msg = "";
+
+    $http.get('/messages/' + $scope.userId).success(function(data){
+        $scope.inbox = data.inbox;
+        $scope.sent = data.sent;
+    });
+
+    $scope.isReadInbox = function(read) {
+        if (read) {
+            return 'READ';
+        } else {
+            return 'UNREAD';
+        }
+    };
+
+    $scope.isReadSent = function(read) {
+        if (read) {
+            return 'SEEN';
+        } else {
+            return 'UNSEEN';
+        }
+    };
+
+    // Update message status in database to read
+    $scope.setRead = function(msgId) {
+        $http.put('/read/' + msgId);
+    };
+
+    $scope.reply = function(userId) {
+        $scope.replyId = userId;
+    };
+
+    $scope.send = function() {
+        var data = $.param({
+            from: $scope.userId,
+            to: $scope.replyId,
+            message: $scope.reply_msg
+        });
+        var config = {
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        $http.post('/message', data, config);
+        $scope.reply_msg = "";
+    };
+
+}]);
+
+// call jQuery functions after rendering finishes
+app.directive('onFinishRender', function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            if (scope.$last === true) {
+                ready();
+            }
+        }
+    };
+});
+
 
 app.controller('reviewController', ['$http', '$scope', function($http, $scope) {
 	

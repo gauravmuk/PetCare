@@ -1,4 +1,4 @@
-$(document).ready(function(){
+function ready() {
 
     // Click to show messages and applications
     $(".message .info").click(function() {
@@ -13,40 +13,10 @@ $(document).ready(function(){
         // Change message status to read
         $(this).find(".read").text("READ");
         $(this).find(".read").addClass("true");
-        // TODO: Update message status in database to read
+        
 
     });
-
-});
-
-/* Module for message page */
-(function() {
-    var app = angular.module('message', []);
-
-    app.controller('InboxController', ['$http', '$scope', function($http, $scope){
-        $scope.messages = inbox;
-
-        $scope.isRead = function(read) {
-            if (read) {
-                return 'READ';
-            } else {
-                return 'UNREAD';
-            }
-        };
-    }]);
-
-    app.controller('SentController', ['$http', '$scope', function($http, $scope){
-        $scope.messages = sent;
-
-        $scope.isRead = function(read) {
-            if (read) {
-                return 'SEEN';
-            } else {
-                return 'UNSEEN';
-            }
-        };
-    }]);
-})();
+}
 
 
 /* Module for user application page */
@@ -65,61 +35,6 @@ $(document).ready(function(){
 })();
 
 //########## dummy data ##########
-var inbox = [
-    {
-        from: 'Leonardo DiCaprio',
-        date: 'March 14, 2016',
-        content: 'Lorem ipsum dolor sit amet, eu mei delenit appetere reprehendunt. Tractatos sententiae ut has, vix cu nihil alienum. Te cum altera adolescens argumentum, ei vel suas rationibus. Eam in eius pertinax. Cum no delenit delicatissimi, qui eu voluptaria adipiscing concludaturque.',
-        read: false
-    },
-    {
-        from: 'Leonardo DiCaprio',
-        date: 'March 14, 2016',
-        content: 'Lorem ipsum dolor sit amet, eu mei delenit appetere reprehendunt. Tractatos sententiae ut has, vix cu nihil alienum. Te cum altera adolescens argumentum, ei vel suas rationibus. Eam in eius pertinax. Cum no delenit delicatissimi, qui eu voluptaria adipiscing concludaturque.',
-        read: false
-
-    },
-    {
-        from: 'Bradley Cooper',
-        date: 'March 19, 2016',
-        content: 'Lorem ipsum dolor sit amet, eu mei delenit appetere reprehendunt. Tractatos sententiae ut has, vix cu nihil alienum. Te cum altera adolescens argumentum, ei vel suas rationibus. Eam in eius pertinax. Cum no delenit delicatissimi, qui eu voluptaria adipiscing concludaturque.',
-        read: false
-    },
-    {
-        from: 'Leonardo DiCaprio',
-        date: 'February 20, 2016',
-        content: 'Lorem ipsum dolor sit amet, eu mei delenit appetere reprehendunt. Tractatos sententiae ut has, vix cu nihil alienum. Te cum altera adolescens argumentum, ei vel suas rationibus. Eam in eius pertinax. Cum no delenit delicatissimi, qui eu voluptaria adipiscing concludaturque.',
-        read: true
-    }
-]
-
-var sent = [
-    {
-        to: 'Bradley Cooper',
-        date: 'March 20, 2016',
-        content: 'Lorem ipsum dolor sit amet, eu mei delenit appetere reprehendunt. Tractatos sententiae ut has, vix cu nihil alienum. Te cum altera adolescens argumentum, ei vel suas rationibus. Eam in eius pertinax. Cum no delenit delicatissimi, qui eu voluptaria adipiscing concludaturque.',
-        read: false
-    },
-    {
-        to: 'Leonardo DiCaprio',
-        date: 'March 14, 2016',
-        content: 'Lorem ipsum dolor sit amet, eu mei delenit appetere reprehendunt. Tractatos sententiae ut has, vix cu nihil alienum. Te cum altera adolescens argumentum, ei vel suas rationibus. Eam in eius pertinax. Cum no delenit delicatissimi, qui eu voluptaria adipiscing concludaturque.',
-        read: true
-    },
-    {
-        to: 'Bradley Cooper',
-        date: 'March 19, 2016',
-        content: 'Lorem ipsum dolor sit amet, eu mei delenit appetere reprehendunt. Tractatos sententiae ut has, vix cu nihil alienum. Te cum altera adolescens argumentum, ei vel suas rationibus. Eam in eius pertinax. Cum no delenit delicatissimi, qui eu voluptaria adipiscing concludaturque.',
-        read: true
-    },
-    {
-        to: 'Leonardo DiCaprio',
-        date: 'February 20, 2016',
-        content: 'Lorem ipsum dolor sit amet, eu mei delenit appetere reprehendunt. Tractatos sententiae ut has, vix cu nihil alienum. Te cum altera adolescens argumentum, ei vel suas rationibus. Eam in eius pertinax. Cum no delenit delicatissimi, qui eu voluptaria adipiscing concludaturque.',
-        read: false
-    }
-]
-
 
 
 var received = [
