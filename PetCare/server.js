@@ -19,7 +19,7 @@ app.engine("html", require("ejs").renderFile);
 // Connect to a database
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
 var connection = mongoose.connect("mongodb://localhost/testDB");
-autoIncrement.initialize(connection)
+autoIncrement.initialize(connection);
 
 // Import Database schema
 var Application = require(__dirname + '/public/models/Application');
@@ -61,7 +61,7 @@ app.get("/layouts/home.html",function(req,res){
 });
 
 app.get("/users/show.html", function(req, res) {
-	res.render("users/show.html")
+	res.render("users/show.html");
 });
 
 app.get("/users/applications.html", function(req, res) {
@@ -103,7 +103,6 @@ app.get("/petsitter_posts/show.html", function(req, res){
 app.get("/petsitter_posts/new.html", function(req, res){
 	res.render("petsitter_posts/new.html");
 });
-
 
 /* REST API routes */
 app.get("/api/users/:id", function(req, res){
@@ -193,7 +192,6 @@ app.post("/api/sitterpostings", function(req, res){
 	console.log(req.body);
 	res.json({resData: "data"});
 
->>>>>>> Stashed changes
 });
 
 // Tesing 
@@ -258,7 +256,8 @@ app.get("/api/dogs/find/:name", function(req, res){
 	});
 
 });
-app.use("*",function(req,res){
+
+app.use("*",function(req, res) {
     res.sendFile(path.join(__dirname,"views/index.html"));
 });
 
@@ -272,7 +271,6 @@ app.use(function(req, res, next) {
 
 
 /* Start server */ 
-
 app.listen(3000, function(){
 	console.log("PetCare server listening on port 3000");
 });

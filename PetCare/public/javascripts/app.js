@@ -1,4 +1,4 @@
-var app = angular.module('petCare', ['ngRoute']);
+var app = angular.module('petCare', ['ngRoute', 'search']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
