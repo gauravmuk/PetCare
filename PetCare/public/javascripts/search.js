@@ -1,51 +1,37 @@
 /* Module for search page */
-(function() {
-    var app = angular.module('search', []);
+var search = angular.module('search', []);
 
     // Controller for hire pet sitter search
-    app.controller('HireController', ['$http', '$scope', function($http, $scope){
-        $scope.posts = sitterPosts;
+search.controller('HireController', ['$http', '$scope', function($http, $scope){
+    $scope.posts = sitterPosts;
 
-        $scope.rating = rating;
-    }]);
+    $scope.rating = rating;
+}]);
 
     // Controller for offer pet sitting search
-    app.controller('OfferController', ['$http', '$scope', function($http, $scope){
-        $scope.posts = offerPosts;
+search.controller('OfferController', ['$http', '$scope', function($http, $scope){
+    $scope.posts = offerPosts;
 
-        $scope.rating = rating;
-    }]);
+    $scope.rating = rating;
+}]);
 
     // Show rating
-    function rating(numOfStar, index) {
-        var res = '';
-        for (var i = 0; i < 5; i++) {
-            if (i < numOfStar) {
-                res += '&#9733;';
-            } else {
-                res += '&#9734;';
-            }
+function rating(numOfStar, index) {
+    var res = '';
+    for (var i = 0; i < 5; i++) {
+        if (i < numOfStar) {
+            res += '&#9733;';
+        } else {
+            res += '&#9734;';
         }
-        $('#rating'+index).html(res);
     }
-
-})();
-
-
-
-
-
-
-
-
-
-
-
-
+    $('#rating'+index).html(res);
+}
 
 //####################### dummy data
 var sitterPosts = [
 	{
+        id: 1,
 		title: 'Let me take care of your pet!',
 		user_id: 1,
 		price_range: '20 ~ 25',
@@ -58,6 +44,7 @@ var sitterPosts = [
 		description: "I'm really nice guy. You can see my reviews. Everyone satisfies with my service. 100% safety guarantees. If you'd like to bring your own food for you pet, you"
 	},
     {
+        id: 1,
         title: 'Let me take care of your pet!',
         user_id: 1,
         price_range: '20 ~ 25',
@@ -73,6 +60,7 @@ var sitterPosts = [
 
 offerPosts = [
     {
+        id: 1,
         title: 'Let me take care of your pet!',
         user_id: 1,
         price: 25,
@@ -85,6 +73,7 @@ offerPosts = [
         description: "I'm really nice guy. You can see my reviews. Everyone satisfies with my service. 100% safety guarantees. If you'd like to bring your own food for you pet, you"
     },
     {
+        id: 1,
         title: 'Let me take care of your pet!',
         user_id: 1,
         price: 25,

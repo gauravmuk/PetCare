@@ -1,4 +1,6 @@
-app.controller('accountController', ['$http', '$scope', '$location', 'authService', function($http, $scope, $location, authService) {
+var account = angular.module('account', []);
+
+account.controller('accountController', ['$http', '$scope', '$location', 'authService', function($http, $scope, $location, authService) {
 	
 	$scope.register = function(email, name, password) {
 		$scope.error = false;
@@ -37,4 +39,3 @@ app.controller('accountController', ['$http', '$scope', '$location', 'authServic
 		});
 	};
 }]);
-
