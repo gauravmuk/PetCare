@@ -82,8 +82,8 @@ app.service('shareDataService', function() {
  	var data;
 
  	// Setter function that store data	
- 	var setData = function(userID) {
-    	this.data = userID;
+ 	var setData = function(data) {
+    	this.data = data;
   	};
 
   	// Getter function that return data to the controller
@@ -106,6 +106,7 @@ app.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shareD
 	// Make http request to ban the user
     $scope.ConfirmBan = function(){
     	var userID = shareDataService.getData();
+    	console.log("app.js: Ban user " + userID);
 
     	// Creare object to be sent through the put request 
     	var dataObj = {
@@ -120,6 +121,16 @@ app.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shareD
 			}).error(function(data, status, headers, config) {
     			console.log("error");
 			});
+    }
+
+	// Make http request to delete the user
+    $scope.ConfirmDelete = function(){
+    	var postID   = shareDataService.getData().postingID;
+    	var postType = shareDataService.getData().postingType;
+
+    	console.log("app.js: Delete post " + postID + " from " + postType);
+
+    	// TO-DO: Make an http delete request 
     }
 
 }]);
@@ -171,6 +182,15 @@ app.controller('adminController', ['$rootScope', '$anchorScroll', '$location', '
 
 	$scope.setUserId = function(userID){
 		shareDataService.setData(userID);
+	}
+
+	$scope.setPostingId = function(postingType, postingID){
+		// Pass arguments as one object for easier handling
+		var obj = {
+			postingType : postingType,
+			postingID : postingID
+		}
+		shareDataService.setData(obj);
 	}
 
 
