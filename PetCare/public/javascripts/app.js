@@ -289,6 +289,8 @@ app.controller('petPostingController', ['$http', '$scope', '$routeParams', funct
 	$scope.petPosting = []
 	$scope.pet = []
 	$scope.postingID = $routeParams.id;
+	$scope.msg_content = "";
+	$scope.userId = 2; // TODO: change this to session userId
 
 	// TODO: Display message if id not found
 
@@ -316,6 +318,22 @@ app.controller('petPostingController', ['$http', '$scope', '$routeParams', funct
         for (var i = starIndex + 1; i <= 5; i++) {
             $('#star' + i).html('&#9734;');
         }
+	};
+
+	$scope.apply = function() {
+        var data = $.param({
+            from: $scope.userId,
+            isPetPost: true,
+            posting_id: $scope.postingID,
+            message: $scope.msg_content
+        });
+        var config = {
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        $http.post('/application', data, config);
+        $scope.msg_content = "";
 	};
 }]);
 
@@ -400,9 +418,10 @@ app.controller('petPostingFormController', ['$http', '$scope', function($http, $
 }]);
 
 app.controller('HireController', ['$http', '$scope', function($http, $scope){
-        $scope.posts = sitterPosts;
+    $scope.posts = sitterPosts;
 
-        $scope.rating = rating;
+    $scope.rating = rating;
+
 }]);
 
 // Controller for offer pet sitting search

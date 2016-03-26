@@ -461,6 +461,25 @@ app.get("/applications/:userId", function(req,res){
 	});
 });
 
+// Post a new application
+app.post("/application", function(req, res){
+	var post = [];
+	Pet_Posting.find({_id: req.body.posting_id}, function(err, post){
+		if (err) {
+			throw err;
+		}
+		var application = new Application({
+			from: req.body.from,
+			to: post[0]['user'],
+			pet_posting: req.body.posting_id,
+			sitter_posting: req.body.posting_id,
+			message: req.body.message,
+			isPetPost: req.body.isPetPost,
+		});
+		application.save();
+	});
+});
+
 // Get inbox and Sent messages of the given user
 app.get("/messages/:userId", function(req,res){
 	var inbox = [];

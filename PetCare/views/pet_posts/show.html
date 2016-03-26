@@ -233,22 +233,14 @@
                 <div class="modal-body">
                     <form role="form">
                         <div class="form-group">
-                            <label for="name">Name:</label>
-                            <input type="name" class="form-control" id="name">
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="email" class="form-control" id="email">
-                        </div>
-                        <div class="form-group">
                             <label for="comment">Comments:</label>
-                            <textarea name="comment"></textarea>
+                            <textarea name="comment" ng-model="msg_content"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Apply</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="apply()">Apply</button>
                 </div>
             </div>
         </div>
