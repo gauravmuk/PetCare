@@ -7,6 +7,14 @@ review.controller('reviewController', ['$http', '$scope', function($http, $scope
 	$scope.submitStar = function(rating){
 		// Set rating to the rating level user selected
 		this.rating = rating;
+		// Note: Rating = Star Index
+		var starIndex = rating;
+        for (var i = 1; i <= starIndex; i++) {
+            $('#star' + i).html('&#9733;');
+        }
+        for (var i = starIndex + 1; i <= 5; i++) {
+            $('#star' + i).html('&#9734;');
+        }
 	}
 
 	$scope.submitReview = function (){
@@ -31,7 +39,7 @@ review.controller('reviewController', ['$http', '$scope', function($http, $scope
 		$http.post('/api/reviews', {data:dataObj})
 
 			.success(function(data, status, headers, config) {
-    			// TO-DO: Get the average rating
+    			
 			}).error(function(data, status, headers, config) {
     			
 			});

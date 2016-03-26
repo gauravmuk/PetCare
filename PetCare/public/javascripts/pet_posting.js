@@ -59,16 +59,6 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 
 	});
 
-	$scope.ratingStar = function(id) {
-		var starIndex = id;
-        for (var i = 1; i <= starIndex; i++) {
-            $('#star' + i).html('&#9733;');
-        }
-        for (var i = starIndex + 1; i <= 5; i++) {
-            $('#star' + i).html('&#9734;');
-        }
-	};
-
 	$scope.apply = function() {
         var data = $.param({
             from: $scope.userId,
