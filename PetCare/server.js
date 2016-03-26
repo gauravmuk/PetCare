@@ -1,41 +1,54 @@
-var express = require("express");
-var app		= express();
-var path 	= require("path");
-var mongoose= require("mongoose");
-var autoIncrement = require("mongoose-auto-increment");
-var bodyParser = require('body-parser');
-var multer = require('multer'); // v1.0.5
-
+var express 		= require("express");
+var path 			= require("path");
+var mongoose 		= require("mongoose");
+var autoIncrement 	= require("mongoose-auto-increment");
+var bodyParser 		= require("body-parser");
+var cookieParser 	= require("cookie-parser");
+var multer 			= require("multer");
+var passport 		= require("passport");
+var LocalStrategy 	= require("passport-local");
+var session   		= require("express-session");
+var app				= express();
 /* Application Setup */ 
 
 // For parsing
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Serving static files in Express
 app.use(express.static(path.join(__dirname, 'public')));
+
 // Configure View engine
 app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 
 /* Database Setup */
-
 // Connect to a database
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
 var connection = mongoose.connect("mongodb://localhost/testDB");
 autoIncrement.initialize(connection);
 
 // Import Database schema
-var Application = require(__dirname + '/public/models/Application');
-var Message = require(__dirname + '/public/models/Message');
-var Pet = require(__dirname + '/public/models/Pet');
-var Pet_Posting = require(__dirname + '/public/models/Pet_Posting');
-var Sitter_Posting = require(__dirname + '/public/models/Sitter_Posting');
-var Report = require(__dirname + '/public/models/Report');
-var Review = require(__dirname + '/public/models/Review');
-var Pet_Review = require(__dirname + '/public/models/Pet_Review');
-var User = require(__dirname + '/public/models/User');
+var Application 	= require(__dirname + '/public/models/Application');
+var Message 		= require(__dirname + '/public/models/Message');
+var Pet 			= require(__dirname + '/public/models/Pet');
+var Pet_Posting 	= require(__dirname + '/public/models/Pet_Posting');
+var Sitter_Posting	= require(__dirname + '/public/models/Sitter_Posting');
+var Report			= require(__dirname + '/public/models/Report');
+var Review			= require(__dirname + '/public/models/Review');
+var Pet_Review		= require(__dirname + '/public/models/Pet_Review');
+var User			= require(__dirname + '/public/models/User');
+
+// Authentication
+app.use(session({ secret: 'Session Key' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Insert test data
 /**********************************************************************/
@@ -245,6 +258,42 @@ app.get("/admin/admin.html", function(req, res){
 	res.render("admin/admin.html");
 });
 
+app.post('/api/register', function(req, res, next) {
+	var username 	= req.body.username;
+	var password 	= req.body.password;
+	var name 		= req.body.name;
+
+	User.register(new User({ username: username, name: name }), password, function(err) {
+		if (err) {
+			console.log("error when registering");
+			return next(err);
+		}
+
+		passport.authenticate('local')(req, res, function() {
+			res.send({ id: res.req.user.id, name: res.req.user.name });
+		});
+	});
+});
+
+app.post('/api/login', passport.authenticate('local'), function(req, res) {
+	res.send({ id: res.req.user.id, name: res.req.user.name });
+});
+
+app.get('/api/logout', function(req, res) {
+	req.logout();
+	console.log("logged out ok!")
+	res.send('Logged out!');
+});
+
+app.get('/api/status', function(req, res) {
+	if (!req.isAuthenticated()) {
+		res.json(false);
+	}
+	else {
+		res.json(true);
+	}
+})
+
 /* REST API routes */
 app.get("/api/users/:id", function(req, res){
 	var user = [];
@@ -282,7 +331,6 @@ app.put("/users/:id/ban", function(req, res){
 		}
 	});
 });
-
 
 app.post("/api/reviews", function(req, res){
 	// Get Review information from the request body

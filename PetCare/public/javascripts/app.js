@@ -1,4 +1,4 @@
-var app = angular.module('petCare', ['ngRoute']);
+var app = angular.module('petCare', ['ngRoute', 'ngCookies']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
@@ -7,7 +7,8 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		.when('/', {
 			templateUrl: 	'/layouts/home.html',
 			controller: 	'mainController',
-			controllerAs: 	'mainCtrl'
+			controllerAs: 	'mainCtrl',
+			access: { restricted: false}
 		})
 		.when('/users/:id', {
 			templateUrl: 	'/users/show.html',
@@ -26,55 +27,83 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		})
 		.when('/signin', {
 			templateUrl: 	'/signin.html',
-			controller: 	'userController',
-			controllerAs: 	'userCtrl'
+			controller: 	'accountController',
+			controllerAs: 	'accountCtrl',
+			access: { restricted: false }
 		})
 		.when('/signup', {
 			templateUrl: 	'/signup.html',
-			controller: 	'userController',
-			controllerAs: 	'userCtrl'
+			controller: 	'accountController',
+			controllerAs: 	'accountCtrl',
+			access: { restricted: false }
+		})
+		.when('/signout', {
+			controller: 	'accountController',
+			controllerAs: 	'accountCtrl',
+			access: { restricted: true }
 		})
 		.when('/pet_posts', {
 			templateUrl: 	'/pet_posts/index.html',
 			controller: 	'HireController',
-			controllerAs: 	'HireCtrl'
+			controllerAs: 	'HireCtrl',
+			access: { restricted: false }
 		})
 		.when('/new_pet_posts', {
 			templateUrl: 	'/pet_posts/new.html',
 			controller: 	'petPostingFormController',
-			controllerAs: 	'petPostingFormCtrl'
+			controllerAs: 	'petPostingFormCtrl',
+			access: { restricted: true }
+
 		})
 		.when('/pet_posts/:id', {
 			templateUrl: 	'/pet_posts/show.html',
 			controller: 	'petPostingController',
-			controllerAs: 	'petPostingCtrl'
+			controllerAs: 	'petPostingCtrl',
+			access: { restricted: false }
 		})
 		.when('/petsitter_posts', {
 			templateUrl: 	'/petsitter_posts/index.html',
 			controller: 	'OfferController',
-			controllerAs: 	'OfferCtrl'
+			controllerAs: 	'OfferCtrl',
+			access: { restricted: false }
 		})
 		.when('/petsitter_posts/:id', {
 			templateUrl: 	'/petsitter_posts/show.html',
 			controller: 	'sitterPostingController',
-			controllerAs: 	'sitterPostingCtrl'
+			controllerAs: 	'sitterPostingCtrl',
+			access: { restricted: false }
 		})
 		.when('/new_petsitter_posts', {
 			templateUrl: 	'/petsitter_posts/new.html',
 			controller: 	'sitterPostingFormController',
-			controllerAs: 	'sitterPostingFormController'
+			controllerAs: 	'sitterPostingFormController',
+			access: { restricted: true }
 		})
 		.when('/admin', {
 			templateUrl: 	'/admin/admin.html',
 			controller: 	'adminController',
-			controllerAs: 	'adminCtrl'
+			controllerAs: 	'adminCtrl',
+			access: { restricted: false }
 		})
 		.otherwise({
-			redirectTo: '/'
+			redirectTo: '/',
+			access: { restricted: false }
 		});
 }]);
 
+app.run(function ($rootScope, $location, $route, authService) {
+  $rootScope.$on('$routeChangeStart',
+    function (event, next, current) {
+    	authService.getUserStatus();
+    	if (next.access.restricted && !authService.isLoggedIn()) {
+        	$location.path('/login');
+        	$route.reload();
+      }
+  });
+});
+
 app.controller('mainController', function() {
+
 });
 
 // Service to share data between adminController and adminModalController in admin page
@@ -135,9 +164,19 @@ app.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shareD
 
 }]);
 
+app.controller('navController', ['$scope', '$location', 'authService',function($scope, $location, authService) {
+	$scope.authService = authService;
+
+	$scope.logout = function() {
+		authService.logout().then(function () {
+        	$location.path('/login');
+        });
+	};
+}]);
+
+
 app.controller('adminController', ['$rootScope', '$anchorScroll', '$location', '$http', '$scope', 'shareDataService', 
 	function($rootScope, $anchorScroll, $location, $http, $scope, shareDataService) {
-
 	$scope.users = [];
 	$scope.petPostings = [];
 	$scope.sitterPostings = [];

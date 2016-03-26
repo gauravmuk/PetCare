@@ -23,7 +23,7 @@
 
         <!-- Font Awesome Icons -->
     	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+        
         <!-- jQuery -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
 
@@ -31,16 +31,19 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     
         <!-- AngularJS -->
-        
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular-route.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular-cookies.js"></script>
         <script type="text/javascript" src="javascripts/app.js"></script>
+        <script type="text/javascript" src="javascripts/authService.js"></script>
         <script type="text/javascript" src="javascripts/search.js"></script>
-        <script src="javascripts/message.js"></script>
+        <script type="text/javascript" src="javascripts/message.js"></script>
+        <script type="text/javascript" src="javascripts/accountCtrl.js"></script>
     </head>
 
     <body>
         <!-- Navigation -->
-        <nav class="navbar" role="navigation">
+        <nav class="navbar" role="navigation" ng-controller="navController">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="toggle" data-toggle="collapse" data-target="#navbar1">
@@ -61,8 +64,14 @@
                         <li>
                             <a href="/pet_posts">Offer Pet Sitting</a>
                         </li>
-                        <li class="sign-up">
+                        <li ng-hide="authService.getUserData().userName" class="sign-up">
                             <a href="signup">Sign Up</a>
+                        </li>
+                        <li ng-show="authService.getUserData().userName" class="sign-up">
+                            <a href="signup">{{ authService.getUserData().userName }}</a>
+                        </li>
+                        <li ng-show="authService.getUserData().userName">
+                            <a href="signout" ng-click="logout()">Sign out</a>
                         </li>
                     </ul>
                 </div>
