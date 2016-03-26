@@ -77,32 +77,16 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 app.controller('mainController', function() {
 });
 
-app.service('productService', function() {
-  var productList = [];
-
-  var addProduct = function(newObj) {
-      productList.push(newObj);
-  };
-
-  var getProducts = function(){
-      return productList;
-  };
-
-  return {
-    addProduct: addProduct,
-    getProducts: getProducts
-  };
-
-});
-
 // Service to share data between adminController and adminModalController in admin page
 app.service('shareDataService', function() {
  	var data;
 
+ 	// Setter function that store data	
  	var setData = function(userID) {
     	this.data = userID;
   	};
 
+  	// Getter function that return data to the controller
   	var getData = function(){
     	return this.data;
   	};
@@ -115,17 +99,33 @@ app.service('shareDataService', function() {
 });
 
 
-app.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shareDataService', function($rootScope, $http, $scope, shareDataService){
+app.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shareDataService', 
+	function($rootScope, $http, $scope, shareDataService){
 
-    $scope.getUserId = function(){
+	// Get user Id from shared data
+	// Make http request to ban the user
+    $scope.ConfirmBan = function(){
     	var userID = shareDataService.getData();
-    	console.log(userID);
+
+    	// Creare object to be sent through the put request 
+    	var dataObj = {
+    		id:userID
+    	}
+    	
+    	// Make an http put request since Angular doesn't provide update
+    	$http.put('/users/'+ userID + '/ban', {data:dataObj})
+			.success(function(data, status, headers, config) {
+				// If update request was successful, update the view (i.e change from 'Ban' to 'Banned')
+    			$('#ban-btn-'+userID).html('Banned');
+			}).error(function(data, status, headers, config) {
+    			console.log("error");
+			});
     }
 
 }]);
 
-app.controller('adminController', ['$anchorScroll', '$location', '$http', '$scope', 'shareDataService', 
-	function($anchorScroll, $location, $http, $scope, shareDataService) {
+app.controller('adminController', ['$rootScope', '$anchorScroll', '$location', '$http', '$scope', 'shareDataService', 
+	function($rootScope, $anchorScroll, $location, $http, $scope, shareDataService) {
 
 	$scope.users = [];
 	$scope.petPostings = [];

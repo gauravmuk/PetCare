@@ -41,21 +41,24 @@ var User = require(__dirname + '/public/models/User');
 /**********************************************************************/
 var user1 = new User({
 	name: 'John Doe',
-	email: 'john@gmail.com'
+	email: 'john@gmail.com',
+	banned: false
 });
 
 user1.save();
 
 var user2 = new User({
 	name: 'Leonardo DiCaprio',
-	email: 'leo@gmail.com'
+	email: 'leo@gmail.com',
+	banned: false
 });
 
 user2.save();
 
 var user3 = new User({
 	name: 'Taewoo Kim',
-	email: 'rlaxodn@gmail.com'
+	email: 'rlaxodn@gmail.com',
+	banned: true
 });
 
 user3.save();
@@ -261,6 +264,22 @@ app.get("/api/users", function(req, res){
 			throw err;
 		}
 		res.json(user)
+	});
+});
+
+// Ban a user with the given user id
+app.put("/users/:id/ban", function(req, res){
+	var id 	= req.body.data.id;
+
+	// Update the 'banned' field of the user to true
+	User.update({_id: id}, {$set: {banned:true}}, function(err, updatedUser){
+		if (err) {
+			throw err;
+		}
+		else{
+			// On Success return info
+			res.json({user: updatedUser});
+		}
 	});
 });
 
