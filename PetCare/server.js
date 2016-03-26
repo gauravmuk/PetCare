@@ -317,8 +317,10 @@ app.get("/api/users", function(req, res){
 });
 
 // Ban a user with the given user id
-app.put("/users/:id/ban", function(req, res){
-	var id 	= req.body.data.id;
+app.put("/api/users/:id/ban", function(req, res){
+	// var id 	= req.body.data.id;
+	var id = req.params.id;
+	// console.log("updatedUser");
 
 	// Update the 'banned' field of the user to true
 	User.update({_id: id}, {$set: {banned:true}}, function(err, updatedUser){
@@ -327,7 +329,8 @@ app.put("/users/:id/ban", function(req, res){
 		}
 		else{
 			// On Success return info
-			res.json({user: updatedUser});
+			console.log(updatedUser);
+			res.json(updatedUser);
 		}
 	});
 });
@@ -412,6 +415,25 @@ app.get("/api/petpostings", function(req, res){
 	});
 });
 
+
+// Delete a given pet posting from the database
+app.delete("/api/petpostings/:id", function(req, res){
+	// Get params from the request
+	var postID = req.params.id;
+	console.log("delete sitter posting " + postID);
+	// remove a pet posting with a given ID from the datbase
+	Pet_Posting.remove({ _id:postID }, function(err, result){
+		if(err){
+			throw err;
+		}
+		else{
+			// On success, log and return response
+			console.log("sitter posting deleted " + result);
+			res.json(result);
+		}
+	});
+});
+
 app.post("/api/petpostings", function(req, res){
 	console.log("New Pet Post");
 	console.log(req.body);
@@ -427,6 +449,24 @@ app.get("/api/sitterpostings/:id", function(req, res){
 			throw err;
 		}
 		res.json(sitterposting)
+	});
+});
+
+// Delete a given sitter posting from the database
+app.delete("/api/sitterpostings/:id", function(req, res){
+	// Get params from the request
+	var postID = req.params.id;
+	console.log("delete sitter posting " + postID);
+	// remove a sitter posting with a given ID from the datbase
+	Sitter_Posting.remove({ _id:postID }, function(err, result){
+		if(err){
+			throw err;
+		}
+		else{
+			// On success, log and return response
+			console.log("sitter posting deleted " + result);
+			res.json(result);
+		}
 	});
 });
 

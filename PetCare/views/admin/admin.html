@@ -103,7 +103,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="posting in petPostings">
+                                <tr ng-repeat="posting in petPostings"  ng-attr-id="{{ 'pet-post-' + posting._id }}">
                                     <td>{{ posting.created_at }}</td>
                                     <td>
                                         <a href="pet_posts/{{ posting._id }}" target="_blank">
@@ -117,7 +117,7 @@
                                         <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal" ng-click="setPostingId('pet_posting', posting._id)" >Delete</button>
                                     </td>
                                 </tr>
-                                <tr ng-repeat="posting in sitterPostings">
+                                <tr ng-repeat="posting in sitterPostings" ng-attr-id="{{ 'sitter-post-' + posting._id }}">
                                     <td>{{ posting.created_at }}</td>
                                     <td>
                                         <a href="petsitter_posts/{{ posting._id }}" target="_blank">

@@ -73,7 +73,7 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
     	}
     	
     	// Make an http put request since Angular doesn't provide update
-    	$http.put('/users/'+ userID + '/ban', {data:dataObj})
+    	$http.put('/api/users/'+ userID + '/ban', {data:dataObj})
 			.success(function(data, status, headers, config) {
 				// If update request was successful, update the view (i.e change from 'Ban' to 'Banned')
     			$('#ban-btn-'+userID).html('Banned');
@@ -89,7 +89,28 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
 
     	console.log("app.js: Delete post " + postID + " from " + postType);
 
-    	// TO-DO: Make an http delete request 
+        // If type is sitter_posting, make an API call to delete /api/sitterpostings/:id
+        if (postType === 'sitter_posting'){
+            // Make an http delete request to delete post with a given id
+            $http.delete('/api/sitterpostings/'+ postID)
+                .success(function(data, status, headers, config) {
+                    // If delete request was successful, update the view (i.e hide post)
+                    $('#sitter-post-'+postID).hide();
+                }).error(function(data, status, headers, config) {
+                    console.log("error");
+                });
+        }
+        // If type is pet_posting, make an API call to delete /api/petpostings/:id
+        if(postType === 'pet_posting'){
+            // Make an http delete request to delete post with a given id
+            $http.delete('/api/petpostings/'+ postID)
+                .success(function(data, status, headers, config) {
+                    // If delete request was successful, update the view (i.e hide post)
+                    $('#pet-post-'+postID).hide();
+                }).error(function(data, status, headers, config) {
+                    console.log("error");
+                });
+        } 
     }
 
 }]);
