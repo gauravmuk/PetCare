@@ -1,15 +1,40 @@
-app.controller('accountController', ['$http', '$scope', '$location', function($http, $scope, $location) {
+app.controller('accountController', ['$http', '$scope', '$location', 'authService', function($http, $scope, $location, authService) {
 	
 	$scope.register = function(email, name, password) {
-		userData = {
-			username: 	$scope.email, 
-			password: 	$scope.password,
-			name: 		$scope.name
-		}
-		console.log(userData);
-		$http.post('/api/register', { data: userData }).success(function(data) {
-			$location.path(data.redirectPath);
+		$scope.error = false;
+      	$scope.disabled = true;
+
+      	var promise = authService.register(email, password, name);
+
+		promise.then(function() {
+				console.log("success Register");
+				$location.path('/');
+				$scope.disabled = false;
+			})
+			.catch(function() {
+				console.log("Error Register");
+				$scope.error = true;
+				$scope.errorMessage = "Invalid username and/or password";
+				$scope.disabled = false;
 		});
-	}
+	};
+
+	$scope.login = function(email, password) {
+		$scope.error = false;
+      	$scope.disabled = true;
+
+		authService.login(email, password)
+		.then(function() {
+			console.log("success Login");
+			$location.path('/');
+			$scope.disabled = false;
+		})
+		.catch(function() {
+			console.log("Error Login");
+			$scope.error = true;
+			$scope.errorMessage = "Invalid username and/or password";
+			$scope.disabled = false;
+		});
+	};
 }]);
 

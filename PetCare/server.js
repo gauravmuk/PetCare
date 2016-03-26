@@ -177,6 +177,42 @@ app.get("/admin/admin.html", function(req, res){
 	res.render("admin/admin.html");
 });
 
+app.post('/api/register', function(req, res, next) {
+	var username 	= req.body.username;
+	var password 	= req.body.password;
+	var name 		= req.body.name;
+
+	User.register(new User({ username: username, name: name }), password, function(err) {
+		if (err) {
+			console.log("error when registering");
+			return next(err);
+		}
+
+		passport.authenticate('local')(req, res, function() {
+			res.send({ id: res.req.user.id, name: res.req.user.name });
+		});
+	});
+});
+
+app.post('/api/login', passport.authenticate('local'), function(req, res) {
+	res.send({ id: res.req.user.id, name: res.req.user.name });
+});
+
+app.get('/api/logout', function(req, res) {
+	req.logout();
+	console.log("logged out ok!")
+	res.send('Logged out!');
+});
+
+app.get('/api/status', function(req, res) {
+	if (!req.isAuthenticated()) {
+		res.json(false);
+	}
+	else {
+		res.json(true);
+	}
+})
+
 /* REST API routes */
 app.get("/api/users/:id", function(req, res){
 	var user = [];
@@ -198,25 +234,6 @@ app.get("/api/users", function(req, res){
 		res.json(user)
 	});
 });
-
-
-app.post('/api/register', function(req, res, next) {
-	var username 	= req.body.data.username;
-	var password 	= req.body.data.password;
-	var name 		= req.body.data.name;
-
-	User.register(new User({ username: username, name: name }), password, function(err) {
-		if (err) {
-
-			console.log("error when registering");
-			return next(err);
-		}
-
-		console.log("register ok!");
-		res.send({ redirectPath: '/' });
-	});
-});
-
 
 app.post("/api/reviews", function(req, res){
 	var toUser 			= req.body.data.to;
