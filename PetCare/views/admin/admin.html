@@ -72,7 +72,7 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
+                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal" ng-click="setUserId(user._id)">Message</button>
                                     </td>
                                     <td>
                                         <button class="admin-button edit" data-toggle="modal" data-target="#userModal">Edit</button>
@@ -170,7 +170,7 @@
                                         <button class="admin-button edit" data-toggle="modal" data-target="#reportModal{{ report._id }}">Read</button>
                                     </td>
                                     <td>
-                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal">Message</button>
+                                        <button class="admin-button message" data-toggle="modal" data-target="#messageModal" ng-click="setUserId(report.to)">Message</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -275,7 +275,7 @@
     </div>
 
     <!-- Message Modal -->
-    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="adminModalController">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -285,13 +285,13 @@
                 <div class="modal-body">
                     <form role="form">
                         <div class="form-group">
-                            <textarea name="comment"></textarea>
+                            <textarea name="comment" ng-model="msg_content"></textarea>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Send</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="sendMsg()">Send</button>
                 </div>
             </div>
         </div>

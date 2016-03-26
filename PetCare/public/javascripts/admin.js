@@ -45,6 +45,7 @@ admin.controller('adminController', ['$rootScope', '$anchorScroll', '$location',
     // Admin Actions
 
     $scope.setUserId = function(userID){
+        console.log("setUserId = " + userID);
         shareDataService.setData(userID);
     }
 
@@ -54,6 +55,8 @@ admin.controller('adminController', ['$rootScope', '$anchorScroll', '$location',
             postingType : postingType,
             postingID : postingID
         }
+        console.log("setPostingId");
+        console.log(obj);
         shareDataService.setData(obj);
     }
 }]);
@@ -112,5 +115,28 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
                 });
         } 
     }
+
+    // Send a message to a given
+    // To: a given user ID
+    // From : Admin
+    $scope.sendMsg  = function() {
+        var to   = shareDataService.getData();
+        var from = 2; // TO-DO: Get this from the session
+
+        // Cteate object to be sent through the post request
+        var data = $.param({
+            from: from,
+            to: to,
+            message: $scope.msg_content
+        });
+        var config = {
+            headers : {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }
+        console.log(data);
+        $http.post('/message', data, config);
+        $scope.msg_content = "";
+    };
 
 }]);
