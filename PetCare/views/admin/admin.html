@@ -78,7 +78,7 @@
                                         <button class="admin-button edit" data-toggle="modal" data-target="#userModal">Edit</button>
                                     </td>
                                     <td>
-                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal">Ban</button>
+                                        <button class="admin-button delete" data-toggle="modal" data-target="#deleteModal" ng-click="setUserId(user._id)">Ban</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -107,7 +107,7 @@
                                     <td>{{ posting.created_at }}</td>
                                     <td>
                                         <a href="pet_posts/{{ posting._id }}" target="_blank">
-                                            <button class="admin-button view">{{ posting._id }}</button>
+                                            <button class="admin-button view">Pet Post {{ posting._id }}</button>
                                         </a>
                                     </td>
                                     <td>
@@ -121,7 +121,7 @@
                                     <td>{{ posting.created_at }}</td>
                                     <td>
                                         <a href="petsitter_posts/{{ posting._id }}" target="_blank">
-                                            <button class="admin-button view">{{ posting._id }}</button>
+                                            <button class="admin-button view">Sitter Post {{ posting._id }}</button>
                                         </a>
                                     </td>
                                     <td>
@@ -237,7 +237,7 @@
     </div>
 
     <!-- Delete Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="adminModalController">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -249,7 +249,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="getUserId()">Confirm</button>
                 </div>
             </div>
         </div>

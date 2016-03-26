@@ -77,8 +77,55 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 app.controller('mainController', function() {
 });
 
-app.controller('adminController', ['$anchorScroll', '$location', '$http', '$scope', 
-	function($anchorScroll, $location, $http, $scope) {
+app.service('productService', function() {
+  var productList = [];
+
+  var addProduct = function(newObj) {
+      productList.push(newObj);
+  };
+
+  var getProducts = function(){
+      return productList;
+  };
+
+  return {
+    addProduct: addProduct,
+    getProducts: getProducts
+  };
+
+});
+
+// Service to share data between adminController and adminModalController in admin page
+app.service('shareDataService', function() {
+ 	var data;
+
+ 	var setData = function(userID) {
+    	this.data = userID;
+  	};
+
+  	var getData = function(){
+    	return this.data;
+  	};
+
+  	return {
+    	setData: setData,
+    	getData: getData
+  	};
+
+});
+
+
+app.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shareDataService', function($rootScope, $http, $scope, shareDataService){
+
+    $scope.getUserId = function(){
+    	var userID = shareDataService.getData();
+    	console.log(userID);
+    }
+
+}]);
+
+app.controller('adminController', ['$anchorScroll', '$location', '$http', '$scope', 'shareDataService', 
+	function($anchorScroll, $location, $http, $scope, shareDataService) {
 
 	$scope.users = [];
 	$scope.petPostings = [];
@@ -119,6 +166,13 @@ app.controller('adminController', ['$anchorScroll', '$location', '$http', '$scop
 		$location.hash(anchor);
 		$anchorScroll();
 	};
+
+	// Admin Actions
+
+	$scope.setUserId = function(userID){
+		shareDataService.setData(userID);
+	}
+
 
 }]);
 
