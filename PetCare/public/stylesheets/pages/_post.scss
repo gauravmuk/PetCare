@@ -7,6 +7,11 @@
 	border-radius: 5px;
 	padding: 5% 0%;
 
+	&.pet {
+		margin-top: 5px;
+	    margin-bottom: 5px;
+	}
+
 	.buttons {
 		.floatleft {
     		float:left;
@@ -98,6 +103,20 @@
 	.file-input {
 		margin-top: 5px;
 	}
+
+	.select-pet {
+		display: inline-block;
+		width: calc(100% - 105px);
+	}
+
+	.add_pet.button {
+	    display: inline-block;
+	    text-align: center;
+	    width: 100px;
+	    padding-left: 0;
+	    padding-right: 0;
+	}
+
 }
 
 .recommendations {

@@ -12,7 +12,7 @@ var PetSchema = new Schema(
 		type: String,
 		breed: String,
 		gender: String,
-		age: Number,
+		age: String,
 		description: String,
 		rating: Number,
 		photo: String

@@ -16,7 +16,7 @@
 
                 <div class="floatright">
                     <li>
-                        <a href="user_profile" class="button large">
+                        <a href="users/{{ sitterPosting.user._id }}" class="button large">
                             <span class="button-label">View User Profile</span>
                         </a>
                     </li>
@@ -35,7 +35,8 @@
                         <div>
                             <div class="info-column">
                                 <div class="rating">
-                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a href="user_profile.html#review">13 Reviews</a>
+                                    <span id="star1">&#9734;</span><span id="star2">&#9734;</span><span id="star3">&#9734;</span><span id="star4">&#9734;</span><span id="star5">&#9734;</span>
+                                    <a href="users/{{ sitterPosting.user._id }}/#review">13 Reviews</a>
                                 </div>
                                 <span class="info-piece">
                                     <img class="icon" src="assets/icon-icon-pet.svg">

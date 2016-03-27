@@ -1,5 +1,6 @@
 var app = angular.module('petCare',	['ngRoute', 
 									 'ngCookies', 
+									 'ngMessages',
 									 'admin', 
 									 'account', 
 									 'application', 
@@ -88,6 +89,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 			templateUrl: 	'/petsitter_posts/new.html',
 			controller: 	'sitterPostingFormController',
 			controllerAs: 	'sitterPostingFormController',
+			access: { restricted: true }
+		})
+		.when('/new_pet', {
+			templateUrl: 	'/pet/new.html',
+			controller: 	'petFormController',
+			controllerAs: 	'petFormController',
 			access: { restricted: true }
 		})
 		.when('/admin', {

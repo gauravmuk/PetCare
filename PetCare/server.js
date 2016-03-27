@@ -55,6 +55,7 @@ passport.deserializeUser(User.deserializeUser());
 var user1 = new User({
 	name: 'John Doe',
 	email: 'john@gmail.com',
+	rating: 0,
 	banned: false
 });
 
@@ -63,6 +64,7 @@ user1.save();
 var user2 = new User({
 	name: 'Leonardo DiCaprio',
 	email: 'leo@gmail.com',
+	rating: 0,
 	banned: false
 });
 
@@ -71,6 +73,7 @@ user2.save();
 var user3 = new User({
 	name: 'Taewoo Kim',
 	email: 'rlaxodn@gmail.com',
+	rating: 0,
 	banned: true
 });
 
@@ -254,6 +257,10 @@ app.get("/petsitter_posts/new.html", function(req, res){
 	res.render("petsitter_posts/new.html");
 });
 
+app.get("/pet/new.html", function(req, res){
+	res.render("pet/new.html");
+});
+
 app.get("/admin/admin.html", function(req, res){
 	res.render("admin/admin.html");
 });
@@ -263,7 +270,7 @@ app.post('/api/register', function(req, res, next) {
 	var password 	= req.body.password;
 	var name 		= req.body.name;
 
-	User.register(new User({ username: username, name: name }), password, function(err) {
+	User.register(new User({ username: username, name: name, rating: 0 }), password, function(err) {
 		if (err) {
 			console.log("error when registering");
 			return next(err);
@@ -335,6 +342,21 @@ app.put("/api/users/:id/ban", function(req, res){
 	});
 });
 
+// Return the pets for a given user
+app.get("/api/users/:id/pets", function(req,res){
+	var inbox = [];
+	var sent = [];
+
+	Pet.find({user: req.params.id}).populate('user').exec(function(err, pet) {
+		if (err) {
+			throw err;
+		}
+		res.json(pet);
+
+	});
+
+});
+
 app.post("/api/reviews", function(req, res){
 	// Get Review information from the request body
 	var toUser 			= req.body.data.to;
@@ -394,9 +416,31 @@ app.get("/api/pets/:id", function(req, res){
 	});
 });
 
+app.post("/api/pets", function(req, res){
+
+	var newPet = new Pet({
+		user: req.body.data.user,
+		name: req.body.data.name,
+		type: req.body.data.type,
+		breed: req.body.data.breed,
+		gender: req.body.data.gender,
+		age: req.body.data.age,
+		description: req.body.data.description,
+		rating: req.body.data.rating,
+		photo: req.body.data.photo,	// TODO: Get pet image
+	});
+
+	newPet.save(function(err) {
+		console.log(newPet);
+		res.setHeader('Location', '/users/' + newPet.user);
+    	res.status(201).send(null);
+	});
+
+});
+
 app.get("/api/petpostings/:id", function(req, res){
 	var petposting = [];
-	Pet_Posting.findById(req.params.id, function(err, petposting) {
+	Pet_Posting.findById(req.params.id).populate('user').exec(function(err, petposting) {
 		if (err) {
 			throw err;
 		}
@@ -435,16 +479,31 @@ app.delete("/api/petpostings/:id", function(req, res){
 });
 
 app.post("/api/petpostings", function(req, res){
-	console.log("New Pet Post");
-	console.log(req.body);
-	res.json({resData: "data"});
+
+	var newPost = new Pet_Posting({
+		user: req.body.data.user,
+		title: req.body.data.title,
+		duration: req.body.data.duration,
+		location: req.body.data.location,
+		price: req.body.data.price,
+		supplies: req.body.data.supplies,
+		additional_info: req.body.data.additional_info,
+		description: req.body.data.description,
+		thumbnail: req.body.data.thumbnail,	// TODO: Get user image
+		pet: 1,
+		status: 'open'
+	});
+
+	newPost.save(function(err) {
+		res.setHeader('Location', '/pet_posts/' + newPost._id);
+    	res.status(201).send(null);
+	});
 
 });
 
-
 app.get("/api/sitterpostings/:id", function(req, res){
 	var sitterposting = [];
-	Sitter_Posting.findById(req.params.id, function(err, sitterposting) {
+	Sitter_Posting.findById(req.params.id).populate('user').exec(function(err, sitterposting) {
 		if (err) {
 			throw err;
 		}
@@ -481,11 +540,28 @@ app.get("/api/sitterpostings", function(req, res){
 	});
 });
 
-
 app.post("/api/sitterpostings", function(req, res){
-	console.log("New Sitter Post");
-	console.log(req.body);
-	res.json({resData: "data"});
+
+	var newPost = new Sitter_Posting({
+		user: req.body.data.user,
+		types: req.body.data.types,
+		title: req.body.data.title,
+		duration: req.body.data.duration,
+		location: req.body.data.location,
+		price: req.body.data.price,
+		experience: req.body.data.price,
+		supplies: req.body.data.supplies,
+		number_of_pets: req.body.data.number_of_pets,
+		description: req.body.data.description,
+		thumbnail: req.body.data.thumbnail,	// TODO: Get user image
+		status: 'open'
+	});
+
+	newPost.save(function(err) {
+		res.setHeader('Location', '/petsitter_posts/' + newPost._id);
+		console.log(newPost._id);
+    	res.status(201).send(null);
+	});
 
 });
 

@@ -1,9 +1,10 @@
 var user = angular.module('user', []);
 
-user.controller('userController', ['$http', '$scope', function($http, $scope) {
+user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies',
+    function($http, $scope, $routeParams, $cookies) {
 	$scope.user = [];
-	$scope.userId = 1;			//TODO: change this to session userId
-	$scope.profileUserId = 2;	//TODO: change this to userId from URL
+	$scope.userId = $cookies.get('userID');
+	$scope.profileUserId = $routeParams.id;
 	$scope.msg_content;
 
 	$http.get('/api/users/' + $scope.profileUserId).success(function(data){

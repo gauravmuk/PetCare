@@ -1,34 +1,43 @@
 var petsitter_posting = angular.module('petsitter_posting', []);
 
-petsitter_posting.controller('sitterPostingFormController', ['$http', '$scope', function($http, $scope) {
+petsitter_posting.controller('sitterPostingFormController', ['$http', '$location', '$scope', '$cookies', 
+	function($http, $location, $scope, $cookies) {
 
-	$scope.createPosting = function (){
+	$scope.createPosting = function (isValid){
 
-		// Create object to be sent through the POST request
-		var dataObj = {
-		    user: 1,	// TODO: Use user id from session
-			title: $scope.title,
-			types: $scope.types,
-			duration: $scope.duration,
-			location: $scope.location,
-			price: $scope.price,
-			experience: $scope.experience,
-			supplies: $scope.supplies,
-			number_of_pets: $scope.number_of_pets,
-			description: $scope.description,
-			thumbnail: '/images/default-profile-pic.png',	// TODO: Get user image
-			status: 'open',
-		};
+		// Check if form information is valid	
+	    if (isValid) {
 
-		// Make POST request to the /sitterpostings
+			// Create object to be sent through the POST request
+			var dataObj = {
+			    user: $cookies.get('userID'),
+				title: $scope.title,
+				types: $scope.types,
+				duration: $scope.duration,
+				location: $scope.location,
+				price: $scope.price,
+				experience: $scope.experience,
+				supplies: $scope.supplies,
+				number_of_pets: $scope.number_of_pets,
+				description: $scope.description,
+				thumbnail: '/images/default-profile-pic.png',	// TODO: Get user image
+				status: 'open',
+			};
 
-		$http.post('/api/sitterpostings', {data: dataObj})
+			// Make POST request to the /sitterpostings
 
-			.success(function(data, status, headers, config) {
+			$http.post('/api/sitterpostings', {data: dataObj})
 
-			}).error(function(data, status, headers, config) {
-    			
+				.success(function(data, status, headers, config) {
+
+	    			$location.path(headers()['location']);
+
+				}).error(function(data, status, headers, config) {
+	    			
 			});
+
+		}
+
 	};
 
 }]);
@@ -37,10 +46,27 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
 	
 	$scope.sitterPosting = [];
 	$scope.postingID = $routeParams.id;
+	$scope.userRating = 0;
 
 	$http.get('/api/sitterpostings/' + $scope.postingID).success(function(data) {
 
 		$scope.sitterPosting = data;
+
+		// If user has a rating, store it
+		if ($scope.sitterPosting.user) {
+			if ($scope.sitterPosting.user.rating) {
+				$scope.userRating = $scope.sitterPosting.user.rating;
+			}
+		}
+
+	    for (var i = 1; i <= $scope.userRating; i++) {
+	        $('.user_info #star' + i).html('&#9733;');
+	    }
+	    for (var i = $scope.userRating + 1; i <= 5; i++) {
+	        $('.user_info #star' + i).html('&#9734;');
+	    }
+
 	});
+
 
 }]);

@@ -15,7 +15,7 @@ var SitterPostingSchema = new Schema(
 		price: String,
 		experience: String,
 		supplies: String,
-		number_of_pets: Number,
+		number_of_pets: String,
 		description: String,
 		thumbnail: String,
 		status: String

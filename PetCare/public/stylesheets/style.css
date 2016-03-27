@@ -906,6 +906,10 @@ footer .icons .fa:hover {
   border-radius: 5px;
   padding: 5% 0%;
 }
+.post-header.pet {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
 .post-header .buttons .floatleft {
   float: left;
 }
@@ -973,6 +977,17 @@ footer .icons .fa:hover {
 }
 .post .file-input {
   margin-top: 5px;
+}
+.post .select-pet {
+  display: inline-block;
+  width: calc(100% - 105px);
+}
+.post .add_pet.button {
+  display: inline-block;
+  text-align: center;
+  width: 100px;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .recommendations {
