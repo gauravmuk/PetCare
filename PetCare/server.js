@@ -208,6 +208,14 @@ report1.save();
 
 /**********************************************************************/
 
+// Returns true if the value is an integer
+// TODO: Add mocha tests
+function isNumber(value) {
+    return /^\d+$/.test(value);
+};
+
+/**********************************************************************/
+
 /* Application Routes */
 app.get("/layouts/home.html",function(req,res){
     res.render("layouts/home.html");
@@ -304,12 +312,20 @@ app.get('/api/status', function(req, res) {
 /* REST API routes */
 app.get("/api/users/:id", function(req, res){
 	var user = [];
-	User.findById(req.params.id, function(err, user) {
-		if (err) {
-			throw err;
-		}
-		res.json(user)
-	});
+
+	if (isNumber(req.params.id)) {
+
+		User.findById(req.params.id, function(err, user) {
+			if (err) {
+				throw err;
+			}
+			res.json(user)
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
 });
 
 // Return all users
@@ -325,35 +341,49 @@ app.get("/api/users", function(req, res){
 
 // Ban a user with the given user id
 app.put("/api/users/:id/ban", function(req, res){
-	// var id 	= req.body.data.id;
-	var id = req.params.id;
-	// console.log("updatedUser");
 
-	// Update the 'banned' field of the user to true
-	User.update({_id: id}, {$set: {banned:true}}, function(err, updatedUser){
-		if (err) {
-			throw err;
-		}
-		else{
-			// On Success return info
-			console.log(updatedUser);
-			res.json(updatedUser);
-		}
-	});
+	if (isNumber(req.params.id)) {
+
+		// var id 	= req.body.data.id;
+		var id = req.params.id;
+		// console.log("updatedUser");
+
+		// Update the 'banned' field of the user to true
+		User.update({_id: id}, {$set: {banned:true}}, function(err, updatedUser){
+			if (err) {
+				throw err;
+			}
+			else{
+				// On Success return info
+				console.log(updatedUser);
+				res.json(updatedUser);
+			}
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
 });
 
 // Return the pets for a given user
 app.get("/api/users/:id/pets", function(req,res){
-	var inbox = [];
-	var sent = [];
 
-	Pet.find({user: req.params.id}).populate('user').exec(function(err, pet) {
-		if (err) {
-			throw err;
-		}
-		res.json(pet);
+	if (isNumber(req.params.id)) {
 
-	});
+		var inbox = [];
+		var sent = [];
+
+		Pet.find({user: req.params.id}).populate('user').exec(function(err, pet) {
+			if (err) {
+				throw err;
+			}
+			res.json(pet);
+
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
 
 });
 
@@ -407,13 +437,21 @@ app.post("/api/reviews", function(req, res){
 
 
 app.get("/api/pets/:id", function(req, res){
-	var pet = [];
-	Pet.findById(req.params.id, function(err, pet) {
-		if (err) {
-			throw err;
-		}
-		res.json(pet)
-	});
+
+	if (isNumber(req.params.id)) {
+
+		var pet = [];
+		Pet.findById(req.params.id, function(err, pet) {
+			if (err) {
+				throw err;
+			}
+			res.json(pet)
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
 });
 
 app.post("/api/pets", function(req, res){
@@ -439,13 +477,21 @@ app.post("/api/pets", function(req, res){
 });
 
 app.get("/api/petpostings/:id", function(req, res){
-	var petposting = [];
-	Pet_Posting.findById(req.params.id).populate('user').exec(function(err, petposting) {
-		if (err) {
-			throw err;
-		}
-		res.json(petposting)
-	});
+
+	if (isNumber(req.params.id)) {
+
+		var petposting = [];
+		Pet_Posting.findById(req.params.id).populate('user').exec(function(err, petposting) {
+			if (err) {
+				throw err;
+			}
+			res.json(petposting)
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
 });
 
 // Return all pet postings
@@ -462,20 +508,28 @@ app.get("/api/petpostings", function(req, res){
 
 // Delete a given pet posting from the database
 app.delete("/api/petpostings/:id", function(req, res){
-	// Get params from the request
-	var postID = req.params.id;
-	console.log("delete sitter posting " + postID);
-	// remove a pet posting with a given ID from the datbase
-	Pet_Posting.remove({ _id:postID }, function(err, result){
-		if(err){
-			throw err;
-		}
-		else{
-			// On success, log and return response
-			console.log("sitter posting deleted " + result);
-			res.json(result);
-		}
-	});
+
+	if (isNumber(req.params.id)) {
+
+		// Get params from the request
+		var postID = req.params.id;
+		console.log("delete sitter posting " + postID);
+		// remove a pet posting with a given ID from the datbase
+		Pet_Posting.remove({ _id:postID }, function(err, result){
+			if(err){
+				throw err;
+			}
+			else{
+				// On success, log and return response
+				console.log("sitter posting deleted " + result);
+				res.json(result);
+			}
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
 });
 
 app.post("/api/petpostings", function(req, res){
@@ -502,31 +556,47 @@ app.post("/api/petpostings", function(req, res){
 });
 
 app.get("/api/sitterpostings/:id", function(req, res){
-	var sitterposting = [];
-	Sitter_Posting.findById(req.params.id).populate('user').exec(function(err, sitterposting) {
-		if (err) {
-			throw err;
-		}
-		res.json(sitterposting)
-	});
+
+	if (isNumber(req.params.id)) {
+
+		var sitterposting = [];
+		Sitter_Posting.findById(req.params.id).populate('user').exec(function(err, sitterposting) {
+			if (err) {
+				throw err;
+			}
+			res.json(sitterposting)
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
 });
 
 // Delete a given sitter posting from the database
 app.delete("/api/sitterpostings/:id", function(req, res){
-	// Get params from the request
-	var postID = req.params.id;
-	console.log("delete sitter posting " + postID);
-	// remove a sitter posting with a given ID from the datbase
-	Sitter_Posting.remove({ _id:postID }, function(err, result){
-		if(err){
-			throw err;
-		}
-		else{
-			// On success, log and return response
-			console.log("sitter posting deleted " + result);
-			res.json(result);
-		}
-	});
+
+	if (isNumber(req.params.id)) {
+
+		// Get params from the request
+		var postID = req.params.id;
+		console.log("delete sitter posting " + postID);
+		// remove a sitter posting with a given ID from the datbase
+		Sitter_Posting.remove({ _id:postID }, function(err, result){
+			if(err){
+				throw err;
+			}
+			else{
+				// On success, log and return response
+				console.log("sitter posting deleted " + result);
+				res.json(result);
+			}
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
 });
 
 // Return all sitter postings
@@ -566,13 +636,21 @@ app.post("/api/sitterpostings", function(req, res){
 });
 
 app.get("/api/reports/:id", function(req, res){
-	var report = [];
-	Report.findById(req.params.id, function(err, report) {
-		if (err) {
-			throw err;
-		}
-		res.json(report)
-	});
+
+	if (isNumber(req.params.id)) {
+
+		var report = [];
+		Report.findById(req.params.id, function(err, report) {
+			if (err) {
+				throw err;
+			}
+			res.json(report)
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
 });
 
 app.get("/api/reports", function(req, res){
@@ -587,61 +665,68 @@ app.get("/api/reports", function(req, res){
 
 // Get Received and Sent applications of the given user
 app.get("/api/applications/:userId", function(req,res){
-	var received = [];
-	var sent = [];
 
-	Application.find({to: req.params.userId}).populate('from').exec(function(err, received) {
-		if (err) {
-			throw err;
-		}
-		Application.find({from: req.params.userId}).populate('to').exec(function(err, sent) {
+	if (isNumber(req.params.userId)) {
+
+		var received = [];
+		var sent = [];
+
+		Application.find({to: req.params.userId}).populate('from').exec(function(err, received) {
 			if (err) {
 				throw err;
 			}
-
-			// create JSON object
-			var data = "{" + JSON.stringify("received") + ": [";
-			for (var i = 0; i < received.length; i++) {
-				if (received[i]['isPetPost']) {
-					var posting_id = received[i]['pet_posting'];
-					var url = "/pet_posts/" + posting_id;
-
-				} else {
-					var posting_id = received[i]['sitter_posting'];
-					var url = "/petsitter_posts/" + posting_id;
+			Application.find({from: req.params.userId}).populate('to').exec(function(err, sent) {
+				if (err) {
+					throw err;
 				}
-				data += "{" + JSON.stringify("from") + ":" + JSON.stringify(received[i]['from']['name']);
-				data += "," + JSON.stringify("from_id") + ":" + JSON.stringify(received[i]['from']['_id']);
-				data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(received[i]['created_at']);
-				data += "," + JSON.stringify("message") + ":" + JSON.stringify(received[i]['message']);
-				data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
-				data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
-				data += "}";
-				if (i != received.length - 1) {data += ",";}
-			}
-			data += "]," + JSON.stringify("sent") + ": ["
-			for (var i = 0; i < sent.length; i++) {
-				if (received[i]['isPetPost']) {
-					var posting_id = sent[i]['pet_posting'];
-					var url = "/pet_posts/" + posting_id;
-				} else {
-					var posting_id = sent[i]['sitter_posting'];
-					var url = "/petsitter_posts/" + posting_id;
-				}
-				data += "{" + JSON.stringify("to") + ":" + JSON.stringify(sent[i]['to']['name']);
-				data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(sent[i]['created_at']);
-				data += "," + JSON.stringify("message") + ":" + JSON.stringify(sent[i]['message']);
-				data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
-				data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
-				data += "}";
-				if (i != sent.length - 1) {data += ",";}
-			}
-			data += "]}"
 
-			console.log(JSON.parse(data));
-			res.json(JSON.parse(data));
+				// create JSON object
+				var data = "{" + JSON.stringify("received") + ": [";
+				for (var i = 0; i < received.length; i++) {
+					if (received[i]['isPetPost']) {
+						var posting_id = received[i]['pet_posting'];
+						var url = "/pet_posts/" + posting_id;
+
+					} else {
+						var posting_id = received[i]['sitter_posting'];
+						var url = "/petsitter_posts/" + posting_id;
+					}
+					data += "{" + JSON.stringify("from") + ":" + JSON.stringify(received[i]['from']['name']);
+					data += "," + JSON.stringify("from_id") + ":" + JSON.stringify(received[i]['from']['_id']);
+					data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(received[i]['created_at']);
+					data += "," + JSON.stringify("message") + ":" + JSON.stringify(received[i]['message']);
+					data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
+					data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
+					data += "}";
+					if (i != received.length - 1) {data += ",";}
+				}
+				data += "]," + JSON.stringify("sent") + ": ["
+				for (var i = 0; i < sent.length; i++) {
+					if (received[i]['isPetPost']) {
+						var posting_id = sent[i]['pet_posting'];
+						var url = "/pet_posts/" + posting_id;
+					} else {
+						var posting_id = sent[i]['sitter_posting'];
+						var url = "/petsitter_posts/" + posting_id;
+					}
+					data += "{" + JSON.stringify("to") + ":" + JSON.stringify(sent[i]['to']['name']);
+					data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(sent[i]['created_at']);
+					data += "," + JSON.stringify("message") + ":" + JSON.stringify(sent[i]['message']);
+					data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
+					data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
+					data += "}";
+					if (i != sent.length - 1) {data += ",";}
+				}
+				data += "]}"
+
+				console.log(JSON.parse(data));
+				res.json(JSON.parse(data));
+			});
 		});
-	});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
 });
 
 // Post a new application
@@ -665,53 +750,68 @@ app.post("/api/application", function(req, res){
 
 // Get inbox and Sent messages of the given user
 app.get("/api/messages/:userId", function(req,res){
-	var inbox = [];
-	var sent = [];
 
-	Message.find({to: req.params.userId}).populate('from').exec(function(err, inbox) {
-		if (err) {
-			throw err;
-		}
-		Message.find({from: req.params.userId}).populate('to').exec(function(err, sent) {
+	if (isNumber(req.params.userId)) {
+
+		var inbox = [];
+		var sent = [];
+
+		Message.find({to: req.params.userId}).populate('from').exec(function(err, inbox) {
 			if (err) {
 				throw err;
 			}
+			Message.find({from: req.params.userId}).populate('to').exec(function(err, sent) {
+				if (err) {
+					throw err;
+				}
 
-			// create JSON object
-			var data = "{" + JSON.stringify("inbox") + ": [";
-			for (var i = 0; i < inbox.length; i++) {
-				data += "{" + JSON.stringify("from") + ":" + JSON.stringify(inbox[i]['from']['name']);
-				data += "," + JSON.stringify("from_id") + ":" + JSON.stringify(inbox[i]['from']['_id']);
-				data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(inbox[i]['created_at']);
-				data += "," + JSON.stringify("message") + ":" + JSON.stringify(inbox[i]['message']);
-				data += "," + JSON.stringify("read") + ":" + JSON.stringify(inbox[i]['read']);
-				data += "," + JSON.stringify("msg_id") + ":" + JSON.stringify(inbox[i]['_id']) + "}";
-				if (i != inbox.length - 1) {data += ",";}
+				// create JSON object
+				var data = "{" + JSON.stringify("inbox") + ": [";
+				for (var i = 0; i < inbox.length; i++) {
+					data += "{" + JSON.stringify("from") + ":" + JSON.stringify(inbox[i]['from']['name']);
+					data += "," + JSON.stringify("from_id") + ":" + JSON.stringify(inbox[i]['from']['_id']);
+					data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(inbox[i]['created_at']);
+					data += "," + JSON.stringify("message") + ":" + JSON.stringify(inbox[i]['message']);
+					data += "," + JSON.stringify("read") + ":" + JSON.stringify(inbox[i]['read']);
+					data += "," + JSON.stringify("msg_id") + ":" + JSON.stringify(inbox[i]['_id']) + "}";
+					if (i != inbox.length - 1) {data += ",";}
 
-			}
-			data += "]," + JSON.stringify("sent") + ": ["
-			for (var i = 0; i < sent.length; i++) {
-				data += "{" + JSON.stringify("to") + ":" + JSON.stringify(sent[i]['to']['name']);
-				data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(sent[i]['created_at']);
-				data += "," + JSON.stringify("message") + ":" + JSON.stringify(sent[i]['message']);
-				data += "," + JSON.stringify("read") + ":" + JSON.stringify(sent[i]['read']) + "}";
-				if (i != sent.length - 1) {data += ",";}
-			}
-			data += "]}"
+				}
+				data += "]," + JSON.stringify("sent") + ": ["
+				for (var i = 0; i < sent.length; i++) {
+					data += "{" + JSON.stringify("to") + ":" + JSON.stringify(sent[i]['to']['name']);
+					data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(sent[i]['created_at']);
+					data += "," + JSON.stringify("message") + ":" + JSON.stringify(sent[i]['message']);
+					data += "," + JSON.stringify("read") + ":" + JSON.stringify(sent[i]['read']) + "}";
+					if (i != sent.length - 1) {data += ",";}
+				}
+				data += "]}"
 
-			console.log(JSON.parse(data));
-			res.json(JSON.parse(data));
+				console.log(JSON.parse(data));
+				res.json(JSON.parse(data));
+			});
 		});
-	});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
 });
 
 // Update read status of the given message
 app.put("/api/read/:msg_id", function(req, res){
-	var msg = [];
 
-	Message.findByIdAndUpdate(req.params.msg_id, {$set: {read:true}}, function(err, msg){
-		if (err) throw err;
-	});
+	if (isNumber(req.params.msg_id)) {
+
+		var msg = [];
+
+		Message.findByIdAndUpdate(req.params.msg_id, {$set: {read:true}}, function(err, msg){
+			if (err) throw err;
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+	
 });
 
 // Post a new message
