@@ -510,7 +510,7 @@ app.get("/api/reports", function(req, res){
 });
 
 // Get Received and Sent applications of the given user
-app.get("/applications/:userId", function(req,res){
+app.get("/api/applications/:userId", function(req,res){
 	var received = [];
 	var sent = [];
 
@@ -569,7 +569,7 @@ app.get("/applications/:userId", function(req,res){
 });
 
 // Post a new application
-app.post("/application", function(req, res){
+app.post("/api/application", function(req, res){
 	var post = [];
 	Pet_Posting.find({_id: req.body.posting_id}, function(err, post){
 		if (err) {
@@ -588,7 +588,7 @@ app.post("/application", function(req, res){
 });
 
 // Get inbox and Sent messages of the given user
-app.get("/messages/:userId", function(req,res){
+app.get("/api/messages/:userId", function(req,res){
 	var inbox = [];
 	var sent = [];
 
@@ -630,7 +630,7 @@ app.get("/messages/:userId", function(req,res){
 });
 
 // Update read status of the given message
-app.put("/read/:msg_id", function(req, res){
+app.put("/api/read/:msg_id", function(req, res){
 	var msg = [];
 
 	Message.findByIdAndUpdate(req.params.msg_id, {$set: {read:true}}, function(err, msg){
@@ -639,7 +639,7 @@ app.put("/read/:msg_id", function(req, res){
 });
 
 // Post a new message
-app.post("/message", function(req, res){
+app.post("/api/message", function(req, res){
 	var msg = new Message({
 		from: req.body.from,
 		to: req.body.to,

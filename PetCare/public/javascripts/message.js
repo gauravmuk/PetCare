@@ -1,6 +1,6 @@
 var message = angular.module('message', []);
 
-message.controller('messageController', ['$http', '$scope', function($http, $scope){
+message.controller('messageController', ['$http', '$scope', '$cookies', function($http, $scope, $cookies){
     $scope.userId = 1; // TODO: change this to session userId
     $scope.inbox = [];
     $scope.sent = [];
@@ -8,7 +8,7 @@ message.controller('messageController', ['$http', '$scope', function($http, $sco
     $scope.toId; //hold userId to send message
     $scope.msg_content = "";
 
-    $http.get('/messages/' + $scope.userId).success(function(data){
+    $http.get('/api/messages/' + $scope.userId).success(function(data){
         $scope.inbox = data.inbox;
         $scope.sent = data.sent;
     });
@@ -31,7 +31,7 @@ message.controller('messageController', ['$http', '$scope', function($http, $sco
 
     // Update message status in database to read
     $scope.setRead = function(msgId) {
-        $http.put('/read/' + msgId);
+        $http.put('/api/read/' + msgId);
     };
 
     $scope.reply = function(userId) {
@@ -49,7 +49,7 @@ message.controller('messageController', ['$http', '$scope', function($http, $sco
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
-        $http.post('/message', data, config);
+        $http.post('/api/message', data, config);
         $scope.msg_content = "";
     };
 }]);

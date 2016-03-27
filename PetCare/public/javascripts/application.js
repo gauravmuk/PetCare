@@ -6,7 +6,7 @@ application.controller('applicationController', ['$http', '$scope', function($ht
     $scope.receivedApps = [];
     $scope.sentApps = [];
 
-    $http.get('/applications/' + $scope.userId).success(function(data){
+    $http.get('/api/applications/' + $scope.userId).success(function(data){
         $scope.receivedApps = data.received;
         $scope.sentApps = data.sent;
     });
@@ -26,7 +26,7 @@ application.controller('applicationController', ['$http', '$scope', function($ht
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
-        $http.post('/message', data, config);
+        $http.post('/api/message', data, config);
         $scope.msg_content = "";
     };
 }]);
