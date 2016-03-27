@@ -278,7 +278,8 @@ app.post('/api/register', function(req, res, next) {
 	var password 	= req.body.password;
 	var name 		= req.body.name;
 
-	User.register(new User({ username: username, name: name, rating: 0 }), password, function(err) {
+	User.register(new User({ username: username, name: name, rating: 0,	location: '',
+		description: '', role: '', photo: '', banned: false }), password, function(err) {
 		if (err) {
 			console.log("error when registering");
 			return next(err);
@@ -387,6 +388,30 @@ app.get("/api/users/:id/pets", function(req,res){
 
 });
 
+// Update user information
+app.put('/api/users/:id', function (req, res) {
+
+	if (isNumber(req.params.id)) {
+
+		User.findOne({_id: req.params.id}, function (err, user) {
+
+		    user.name = req.body.data.name;
+		    user.location = req.body.data.location;
+		    user.description = req.body.data.description;
+
+		    user.save(function (err) {
+		        if(err) {
+		        }
+		    });
+
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
+}); 
+
 app.post("/api/reviews", function(req, res){
 	// Get Review information from the request body
 	var toUser 			= req.body.data.to;
@@ -485,7 +510,7 @@ app.get("/api/petpostings/:id", function(req, res){
 			if (err) {
 				throw err;
 			}
-			res.json(petposting)
+			res.jsonp(petposting)
 		});
 
 	} else {
@@ -554,6 +579,32 @@ app.post("/api/petpostings", function(req, res){
 	});
 
 });
+
+app.put('/api/petpostings/:id', function (req, res) {
+
+	if (isNumber(req.params.id)) {
+
+		Pet_Posting.findOne({_id: req.params.id}, function (err, petposting) {
+
+            petposting.title = req.body.data.title;
+            petposting.duration = req.body.data.duration;
+            petposting.location = req.body.data.location;
+            petposting.price = req.body.data.price;
+            petposting.description = req.body.data.description;
+
+
+		    petposting.save(function (err) {
+		        if(err) {
+		        }
+		    });
+
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
+}); 
 
 app.get("/api/sitterpostings/:id", function(req, res){
 
@@ -635,6 +686,31 @@ app.post("/api/sitterpostings", function(req, res){
 
 });
 
+app.put('/api/sitterpostings/:id', function (req, res) {
+
+	if (isNumber(req.params.id)) {
+
+		Sitter_Posting.findOne({_id: req.params.id}, function (err, sitterposting) {
+
+            sitterposting.title = req.body.data.title;
+            sitterposting.duration = req.body.data.duration;
+            sitterposting.location = req.body.data.location;
+            sitterposting.price = req.body.data.price;
+            sitterposting.description = req.body.data.description;
+
+		    sitterposting.save(function (err) {
+		        if(err) {
+		        }
+		    });
+
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
+}); 
+
 app.get("/api/reports/:id", function(req, res){
 
 	if (isNumber(req.params.id)) {
@@ -655,7 +731,7 @@ app.get("/api/reports/:id", function(req, res){
 
 app.get("/api/reports", function(req, res){
 	var report = [];
-	Report.find({}, function(err, report) {
+	Report.find({}).populate('to').populate('from').exec(function(err, report) {
 		if (err) {
 			throw err;
 		}
@@ -811,7 +887,7 @@ app.put("/api/read/:msg_id", function(req, res){
 	} else {
 		res.status(400).send({ error: "Invalid ID" });
 	}
-	
+
 });
 
 // Post a new message

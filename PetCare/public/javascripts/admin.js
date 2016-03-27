@@ -59,10 +59,15 @@ admin.controller('adminController', ['$rootScope', '$anchorScroll', '$location',
         console.log(obj);
         shareDataService.setData(obj);
     }
+
+    $scope.setReportMessage = function(reportMessage) {
+        $('#reportModal .modal-body').html(reportMessage);
+    }
+
 }]);
 
-admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shareDataService', 
-	function($rootScope, $http, $scope, shareDataService){
+admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shareDataService', '$cookies',
+	function($rootScope, $http, $scope, shareDataService, $cookies){
 
 	// Get user Id from shared data
 	// Make http request to ban the user
@@ -121,7 +126,7 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
     // From : Admin
     $scope.sendMsg  = function() {
         var to   = shareDataService.getData();
-        var from = 2; // TO-DO: Get this from the session
+        var from = $cookies.get('userID');
 
         // Cteate object to be sent through the post request
         var data = $.param({
@@ -135,8 +140,66 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
             }
         }
         console.log(data);
-        $http.post('/message', data, config);
+        $http.post('/api/message', data, config);
         $scope.msg_content = "";
     };
+
+    // Edit the information of the given user
+    $scope.editUserInfo = function (isValid) {
+
+        // Check if form information is valid   
+        if (isValid) {
+            var userID = shareDataService.getData();
+
+            // Create object to be sent through the POST request
+            var dataObj = {
+                name: $scope.user_name,
+                location: $scope.user_location,
+                description: $scope.user_description
+            };
+
+            // Make PUT request to the /api/users/:id
+            $http.put('/api/users/' + userID, {data: dataObj})
+
+                .success(function(data, status, headers, config) {
+
+                }).error(function(data, status, headers, config) {
+                    
+            });
+
+        }
+
+    };
+
+    // Edit posting information
+    $scope.editPostingInfo = function (isValid) {
+
+        // Check if form information is valid   
+        if (isValid) {
+
+            var postType = shareDataService.getData().postingType;
+            var postID   = shareDataService.getData().postingID;
+
+            // Create object to be sent through the POST request
+            var dataObj = {
+                title: $scope.posting_title,
+                duration: $scope.posting_duration,
+                location: $scope.posting_location,
+                price: $scope.posting_price,
+                description: $scope.posting_description,
+            };
+
+            // Make PUT request to the /api/users/:id
+            $http.put('/api/' + postType + '/' + postID, {data: dataObj})
+
+                .success(function(data, status, headers, config) {
+
+                }).error(function(data, status, headers, config) {
+                    
+            });
+        }
+
+    }
+
 
 }]);

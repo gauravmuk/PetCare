@@ -7,7 +7,7 @@ var UserSchema = new Schema(
 	{
 		name: String,
 		username: String,
-		location: Number,
+		location: String,
 		description: String,
 		rating: Number,
 		role: String,
