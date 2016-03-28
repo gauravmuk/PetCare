@@ -174,7 +174,7 @@ var petPosting1 = new Pet_Posting({
 	supplies: 'Toys, Kennel, Clothes',
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
-	thumbnail: '/images/cat1.jpg',
+	thumbnail: 'images/cat1.jpg',
 	status: 'open'
 });
 
@@ -736,6 +736,62 @@ app.get("/api/reports", function(req, res){
 			throw err;
 		}
 		res.json(report)
+	});
+});
+
+// Search pet postings
+app.get("/api/search_pet", function(req, res){
+	var petposting = [];
+
+	Pet_Posting.find({}).populate('pet').exec(function(err, petposting) {
+		if (err) {
+			throw err;
+		}
+
+		// create JSON object
+		var data = "[";
+		for (var i = 0; i < petposting.length; i++) {
+			var rating = 3 // TODO: change this to get a pet rating. function call.
+			data += "{" + JSON.stringify("posting_id") + ":" + JSON.stringify(petposting[i]['_id']);
+			data += "," + JSON.stringify("user_id") + ":" + JSON.stringify(petposting[i]['user']);
+			data += "," + JSON.stringify("pet_id") + ":" + JSON.stringify(petposting[i]['pet']['_id']);
+			data += "," + JSON.stringify("title") + ":" + JSON.stringify(petposting[i]['title']);
+			data += "," + JSON.stringify("duration") + ":" + JSON.stringify(petposting[i]['duration']);
+			data += "," + JSON.stringify("location") + ":" + JSON.stringify(petposting[i]['location']);
+			data += "," + JSON.stringify("price") + ":" + JSON.stringify(petposting[i]['price']);
+			data += "," + JSON.stringify("description") + ":" + JSON.stringify(petposting[i]['description']);
+			data += "," + JSON.stringify("thumbnail") + ":" + JSON.stringify(petposting[i]['thumbnail']);
+			data += "," + JSON.stringify("pet_type") + ":" + JSON.stringify(petposting[i]['pet']['type']);
+			data += "," + JSON.stringify("rating") + ":" + JSON.stringify(rating);
+			data += "," + JSON.stringify("pet_age") + ":" + JSON.stringify(petposting[i]['pet']['age']);
+			data += "}";
+			if (i != petposting.length - 1) {data += ",";}
+		}
+		data += "]";
+
+		console.log(JSON.parse(data));
+		res.json(JSON.parse(data));
+
+	});
+});
+
+
+
+
+
+
+
+
+
+
+// Search sitter postings
+app.get("/api/sitterpostings", function(req, res){
+	var sitterposting = [];
+	Sitter_Posting.find({}, function(err, sitterposting) {
+		if (err) {
+			throw err;
+		}
+		res.json(sitterposting)
 	});
 });
 
