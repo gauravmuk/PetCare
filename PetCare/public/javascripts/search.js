@@ -1,5 +1,5 @@
 /* Module for search page */
-var search = angular.module('search', []);
+var search = angular.module('search', ['ngAnimate', 'ui.bootstrap']);
 
 // Controller for pet_posts
 search.controller('HireController', ['$http', '$scope', '$cookies', '$location', 'appService',
@@ -30,6 +30,24 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         appService.apply($scope.userId, true, $scope.toPostingID, $scope.msg_content);
         $scope.msg_content = "";
     };
+
+//##################pagination
+
+  $scope.totalItems = 64;
+  $scope.currentPage = 4;
+
+  $scope.setPage = function (pageNo) {
+    $scope.currentPage = pageNo;
+  };
+
+  $scope.pageChanged = function() {
+  };
+
+  $scope.maxSize = 5;
+  $scope.bigTotalItems = 175;
+  $scope.bigCurrentPage = 1;
+
+
 }]);
 
 
