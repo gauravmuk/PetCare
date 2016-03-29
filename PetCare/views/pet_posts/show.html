@@ -65,7 +65,7 @@
                                 </span>
                             </div>
                             <div class="info-column right-corner">
-                                <button class="button apply" data-toggle="modal" data-target="#applyModal">
+                                <button class="button apply" data-toggle="modal" data-target="#applyModal" ng-click="setPostingId(-1)">
                                     <img class="icon" src="assets/icon-message.svg">
                                     <span>Apply</span>
                                 </button>
@@ -166,7 +166,7 @@
                                 </span>
                             </div>
                             <div class="info-column">
-                                <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
+                                <button class="apply" data-toggle="modal" data-target="#applyModal" ng-click="setPostingId(post.posting_id)">Apply</button>
                             </div>
                         </div>
                     </div>
