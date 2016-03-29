@@ -1,7 +1,9 @@
 var message = angular.module('message', []);
 
-message.controller('messageController', ['$http', '$scope', '$cookies', function($http, $scope, $cookies){
-    $scope.userId = 1; //$cookies.get('userID');
+message.controller('messageController', ['$http', '$scope', '$cookies', 'msgService',
+    function($http, $scope, $cookies, msgService){
+
+    $scope.userId = $cookies.get('userID');
     $scope.inbox = [];
     $scope.sent = [];
 
@@ -13,25 +15,13 @@ message.controller('messageController', ['$http', '$scope', '$cookies', function
         $scope.sent = data.sent;
     });
 
-    $scope.isReadInbox = function(read) {
-        if (read) {
-            return 'READ';
-        } else {
-            return 'UNREAD';
-        }
-    };
+    $scope.isReadInbox = msgService.isReadInbox;
 
-    $scope.isReadSent = function(read) {
-        if (read) {
-            return 'SEEN';
-        } else {
-            return 'UNSEEN';
-        }
-    };
+    $scope.isReadSent = msgService.isReadSent;
 
     // Update message status in database to read
     $scope.setRead = function(msgId) {
-        $http.put('/api/read/' + msgId);
+        $http.put('/api/read_msg/' + msgId);
     };
 
     $scope.reply = function(userId) {
@@ -39,10 +29,40 @@ message.controller('messageController', ['$http', '$scope', '$cookies', function
     };
 
     $scope.sendMsg  = function() {
+        msgService.sendMsg($scope.userId, $scope.toId, $scope.msg_content);
+        $scope.msg_content = "";
+    };
+}]);
+
+app.factory('msgService', ['$http', function($http){
+
+    return({
+        isReadInbox: isReadInbox,
+        isReadSent: isReadSent,
+        sendMsg: sendMsg
+    });
+
+    function isReadInbox(read) {
+        if (read) {
+            return 'READ';
+        } else {
+            return 'UNREAD';
+        }
+    };
+
+    function isReadSent(read) {
+        if (read) {
+            return 'SEEN';
+        } else {
+            return 'UNSEEN';
+        }
+    };
+
+    function sendMsg(from, to, content) {
         var data = $.param({
-            from: $scope.userId,
-            to: $scope.toId,
-            message: $scope.msg_content
+            from: from,
+            to: to,
+            message: content
         });
         var config = {
             headers : {
@@ -50,9 +70,9 @@ message.controller('messageController', ['$http', '$scope', '$cookies', function
             }
         }
         $http.post('/api/message', data, config);
-        $scope.msg_content = "";
     };
 }]);
+
 
 function ready() {
 

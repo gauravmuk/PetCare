@@ -1,50 +1,36 @@
 var application = angular.module('application', []);
 
-application.controller('applicationController', ['$http', '$scope', '$cookies', function($http, $scope, $cookies){
-	$scope.userId = 1; //$cookies.get('userID');
-	$scope.toId;
+application.controller('applicationController', ['$http', '$scope', '$cookies', 'msgService',
+    function($http, $scope, $cookies, msgService){
+
+    $scope.userId = $cookies.get('userID');
     $scope.receivedApps = [];
     $scope.sentApps = [];
+
+    $scope.toId; //hold userId to send message
+    $scope.msg_content = "";
+
 
     $http.get('/api/applications/' + $scope.userId).success(function(data){
         $scope.receivedApps = data.received;
         $scope.sentApps = data.sent;
     });
 
-    $scope.isReadReceived = function(read) {
-        if (read) {
-            return 'READ';
-        } else {
-            return 'UNREAD';
-        }
-    };
+    $scope.isReadReceived = msgService.isReadInbox;
 
-    $scope.isReadSent = function(read) {
-        if (read) {
-            return 'SEEN';
-        } else {
-            return 'UNSEEN';
-        }
-    };
+    $scope.isReadSent = msgService.isReadSent;
 
-    // TODO: Update read status in backend
+    // Update message status in database to read
+    $scope.setRead = function(appId) {
+        $http.put('/api/read_application/' + appId);
+    };
 
     $scope.reply = function(userId) {
         $scope.toId = userId;
     };
 
-   	$scope.sendMsg = function() {
-        var data = $.param({
-            from: $scope.userId,
-            to: $scope.toId,
-            message: $scope.msg_content
-        });
-        var config = {
-            headers : {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
-        $http.post('/api/message', data, config);
+    $scope.sendMsg = function() {
+        msgService.sendMsg($scope.userId, $scope.toId, $scope.msg_content);
         $scope.msg_content = "";
     };
 }]);

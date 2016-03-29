@@ -55,7 +55,7 @@
         <nav class="navbar" role="navigation" ng-controller="navController">
             <div class="container">
                 <div class="navbar-header">
-                    <button type="button" class="toggle" data-toggle="collapse" data-target="#navbar1">
+                    <button type="button" class="toggle" data-toggle="collapse" data-target="#navbar1" ng-click="getNews()">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -81,13 +81,13 @@
                         </li>
                         <li ng-show="authService.getUserData().userName" class="sign-up">
                             <div class="dropdown">
-                                <a class="btn dropdown-toggle" type="button" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                <a class="btn dropdown-toggle" type="button" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-click="getNews()">
                                     {{ authService.getUserData().userName }}
                                 </a>
                                 <ul id="dropdown-menu" class="dropdown-menu" aria-labelledby="dropdownUserMenu">
                                     <li><a href="/users/{{userId}}">Settings</a></li>
-                                    <li><a href="/users/{{userId}}/applications">Applications<div class="new">6</div></a></li>
-                                    <li><a href="/users/{{userId}}/messages">Messages<div class="new">12</div></a></li>
+                                    <li><a href="/users/{{userId}}/applications">Applications<div class="new">{{numb_new_app}}</div></a></li>
+                                    <li><a href="/users/{{userId}}/messages">Messages<div class="new">{{numb_new_msg}}</div></a></li>
                                     <li ng-if="authService.getUserData().userRole == 'admin'">
                                         <a href="/admin">Admin Console</a></li>
                                     </li>

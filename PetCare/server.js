@@ -1019,6 +1019,49 @@ app.post("/api/reports/", function(req, res){
 	});
 });
 
+// Get the number of new messages and applications
+app.get("/api/news/:userId", function(req, res){
+	if (isNumber(req.params.userId)) {
+
+		var messages = [];
+		var applications = [];
+
+		Message.find({to: req.params.userId}, function(err, messages) {
+			if (err) {
+				throw err;
+			}
+			Application.find({to: req.params.userId}, function(err, messages) {
+				if (err) {
+					throw err;
+				}
+
+				var m_count = 0;
+				var a_count = 0;
+
+				for (var i = 0; i < messages.length; i++) {
+					if (!messages[i]['read'])
+						m_count++;
+				}
+
+				for (var i = 0; i < applications.length; i++) {
+					if (!applications[i]['read'])
+						a_count++;
+				}
+
+				var data = "{" + JSON.stringify("messages") + ":" + JSON.stringify(m_count);
+				data += "," + JSON.stringify("applications") + ":" + JSON.stringify(a_count);
+				data += "}";
+
+				console.log(JSON.parse(data));
+				res.json(JSON.parse(data));
+			});
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+});
+
 // Search pet postings
 app.get("/api/search_pet", function(req, res){
 	var petposting = [];
@@ -1087,13 +1130,6 @@ app.get("/api/search_sitter", function(req, res){
 });
 
 
-
-
-
-
-
-
-
 // Search sitter postings
 app.get("/api/sitterpostings", function(req, res){
 	var sitterposting = [];
@@ -1140,6 +1176,7 @@ app.get("/api/applications/:userId", function(req,res){
 					data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
 					data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
 					data += "," + JSON.stringify("read") + ":" + JSON.stringify(received[i]['read']);
+					data += "," + JSON.stringify("app_id") + ":" + JSON.stringify(received[i]['_id']);
 					data += "}";
 					if (i != received.length - 1) {data += ",";}
 				}
@@ -1192,6 +1229,23 @@ app.post("/api/application", function(req, res){
 	});
 });
 
+// Update read status of the given application
+app.put("/api/read_application/:app_id", function(req, res){
+
+	if (isNumber(req.params.app_id)) {
+
+		var app = [];
+
+		Application.findByIdAndUpdate(req.params.app_id, {$set: {read:true}}, function(err, app){
+			if (err) throw err;
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
+});
+
 // Get inbox and Sent messages of the given user
 app.get("/api/messages/:userId", function(req,res){
 
@@ -1242,7 +1296,7 @@ app.get("/api/messages/:userId", function(req,res){
 });
 
 // Update read status of the given message
-app.put("/api/read/:msg_id", function(req, res){
+app.put("/api/read_msg/:msg_id", function(req, res){
 
 	if (isNumber(req.params.msg_id)) {
 

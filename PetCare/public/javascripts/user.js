@@ -1,11 +1,11 @@
 var user = angular.module('user', []);
 
-user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies',
-    function($http, $scope, $routeParams, $cookies) {
+user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies', 'msgService',
+    function($http, $scope, $routeParams, $cookies, msgService) {
 	$scope.user = [];
 	$scope.userId = $cookies.get('userID');
 	$scope.profileUserId = $routeParams.id;
-	$scope.msg_content;
+	$scope.msg_content = "";
 
 	$http.get('/api/users/' + $scope.profileUserId).success(function(data){
 		console.log(data);
@@ -13,17 +13,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
 	});
 
 	$scope.sendMsg  = function() {
-        var data = $.param({
-            from: $scope.userId,
-            to: $scope.profileUserId,
-            message: $scope.msg_content
-        });
-        var config = {
-            headers : {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
-        $http.post('/message', data, config);
+        msgService.sendMsg($scope.userId, $scope.profileUserId, $scope.msg_content);
         $scope.msg_content = "";
     };
 

@@ -135,8 +135,12 @@ app.controller('mainController', function() {
 
 });
 
-app.controller('navController', ['$scope', '$location', 'authService', '$cookies', function($scope, $location, authService, $cookies) {
+app.controller('navController', ['$scope', '$location', 'authService', '$cookies', '$http',
+	function($scope, $location, authService, $cookies, $http) {
+
 	$scope.authService = authService;
+	$scope.numb_new_msg = 0;
+	$scope.numb_new_app = 0;
 
 	$scope.logout = function() {
 		authService.logout().then(function () {
@@ -146,6 +150,13 @@ app.controller('navController', ['$scope', '$location', 'authService', '$cookies
 
 	$scope.userId = $cookies.get('userID');
 
+	$scope.getNews = function() {
+
+	    $http.get('/api/news/' + $scope.userId).success(function(data){
+	        $scope.numb_new_msg = data.messages;
+	        $scope.numb_new_app = data.applications;
+	    });
+	};
 }]);
 
 // call jQuery functions after rendering finishes
