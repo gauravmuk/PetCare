@@ -128,7 +128,7 @@ app.controller('mainController', function() {
 
 });
 
-app.controller('navController', ['$scope', '$location', 'authService',function($scope, $location, authService) {
+app.controller('navController', ['$scope', '$location', 'authService', '$cookies', function($scope, $location, authService, $cookies) {
 	$scope.authService = authService;
 
 	$scope.logout = function() {
@@ -136,6 +136,9 @@ app.controller('navController', ['$scope', '$location', 'authService',function($
         	$location.path('/login');
         });
 	};
+
+	$scope.userId = $cookies.get('userID');
+
 }]);
 
 // call jQuery functions after rendering finishes
