@@ -93,7 +93,12 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 		}
 	});
 
-	$scope.setPostingId = function(postId) {
+    $scope.showDetailPost = function(postId) {
+        $cookies.put('posts', JSON.stringify($scope.posts));
+        window.location="/pet_posts/" + postId;
+    };
+
+   	$scope.setPostingId = function(postId) {
 		if (postId == -1) {
 			$scope.toPostingID = $scope.postingID;
 		} else {
@@ -105,11 +110,6 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 		appService.apply($scope.userId, true, $scope.toPostingID, $scope.msg_content);
         $scope.msg_content = "";
 	};
-
-    $scope.showDetailPost = function(postId) {
-        $cookies.put('posts', JSON.stringify($scope.posts));
-        window.location="/pet_posts/" + postId;
-    }
 }]);
 
 pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$cookies', 

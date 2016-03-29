@@ -42,12 +42,15 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 
 }]);
 
-petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$routeParams', '$cookies',
-	function($http, $scope, $routeParams, $cookies) {
+petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService',
+	function($http, $scope, $routeParams, $cookies, appService) {
 	
 	$scope.sitterPosting = [];
 	$scope.postingID = $routeParams.id;
 	$scope.userRating = 0;
+	$scope.toPostingID; // posting_id holder for application
+	$scope.msg_content = "";
+	$scope.userId = $cookies.get('userID');
 
 	$scope.rating = rating;
 	$scope.recomm_posts = [];
@@ -77,4 +80,17 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
         $cookies.put('posts', JSON.stringify($scope.posts));
         window.location="/petsitter_posts/" + postId;
     }
+
+   	$scope.setPostingId = function(postId) {
+		if (postId == -1) {
+			$scope.toPostingID = $scope.postingID;
+		} else {
+			$scope.toPostingID = postId;
+		}
+	}
+
+	$scope.apply = function() {
+		appService.apply($scope.userId, false, $scope.toPostingID, $scope.msg_content);
+        $scope.msg_content = "";
+	};
 }]);
