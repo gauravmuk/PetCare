@@ -22,6 +22,7 @@ var ApplicationSchema = new Schema(
         },
     	message: String,
         isPetPost: Boolean,
+        read: Boolean,
     },
     {
         timestamps: { createdAt: 'created_at',

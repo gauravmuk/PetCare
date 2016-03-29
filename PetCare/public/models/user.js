@@ -12,27 +12,7 @@ var UserSchema = new Schema(
 		rating: Number,
 		role: String,
 		photo: String,
-		banned: Boolean,
-		pets: [{
-			type: Schema.Types.ObjectId, 
-			ref: 'Pet' 
-		}],
-		pet_postings: [{
-			type: Schema.Types.ObjectId, 
-			ref: 'PetPosting' 
-		}],
-		sitter_postings: [{
-			type: Schema.Types.ObjectId, 
-			ref: 'SitterPosting' 
-		}],
-		reviews: [{
-			type: Schema.Types.ObjectId, 
-			ref: 'Review' 
-		}],
-		reports: [{
-			type: Schema.Types.ObjectId, 
-			ref: 'Report' 
-		}]
+		banned: Boolean
 	},
 	{
 	 	timestamps: { createdAt: 'created_at',

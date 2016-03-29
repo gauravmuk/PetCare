@@ -1,7 +1,7 @@
 var application = angular.module('application', []);
 
-application.controller('applicationController', ['$http', '$scope', function($http, $scope){
-	$scope.userId = 1; // TODO: change this to session userId
+application.controller('applicationController', ['$http', '$scope', '$cookies', function($http, $scope, $cookies){
+	$scope.userId = 1; //$cookies.get('userID');
 	$scope.toId;
     $scope.receivedApps = [];
     $scope.sentApps = [];
@@ -10,6 +10,24 @@ application.controller('applicationController', ['$http', '$scope', function($ht
         $scope.receivedApps = data.received;
         $scope.sentApps = data.sent;
     });
+
+    $scope.isReadReceived = function(read) {
+        if (read) {
+            return 'READ';
+        } else {
+            return 'UNREAD';
+        }
+    };
+
+    $scope.isReadSent = function(read) {
+        if (read) {
+            return 'SEEN';
+        } else {
+            return 'UNSEEN';
+        }
+    };
+
+    // TODO: Update read status in backend
 
     $scope.reply = function(userId) {
         $scope.toId = userId;

@@ -1,7 +1,7 @@
 var message = angular.module('message', []);
 
 message.controller('messageController', ['$http', '$scope', '$cookies', function($http, $scope, $cookies){
-    $scope.userId = 1; // TODO: change this to session userId
+    $scope.userId = 1; //$cookies.get('userID');
     $scope.inbox = [];
     $scope.sent = [];
 
@@ -65,6 +65,14 @@ function ready() {
 
     // Update read status for messages
     $(".inbox .message .info").click(function() {
+
+        // Change message status to read
+        $(this).find(".read").text("READ");
+        $(this).find(".read").addClass("true");
+    });
+
+    // Update read status for messages
+    $(".application .received .message .info").click(function() {
 
         // Change message status to read
         $(this).find(".read").text("READ");

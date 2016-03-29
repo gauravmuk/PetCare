@@ -133,6 +133,7 @@ var app1 = new Application({
 	from: 2,
 	isPetPost: true,
 	pet_posting: 1,
+	read: true,
 	message: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et,',
 });
 app1.save();
@@ -142,6 +143,7 @@ var app2 = new Application({
 	from: 3,
 	isPetPost: false,
 	sitter_posting: 1,
+	read: false,
 	message: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et,',
 });
 app2.save();
@@ -151,6 +153,7 @@ var app3 = new Application({
 	from: 1,
 	isPetPost: true,
 	pet_posting: 1,
+	read: true,
 	message: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et,',
 });
 app3.save();
@@ -1037,12 +1040,13 @@ app.get("/api/applications/:userId", function(req,res){
 					data += "," + JSON.stringify("message") + ":" + JSON.stringify(received[i]['message']);
 					data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
 					data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
+					data += "," + JSON.stringify("read") + ":" + JSON.stringify(received[i]['read']);
 					data += "}";
 					if (i != received.length - 1) {data += ",";}
 				}
 				data += "]," + JSON.stringify("sent") + ": ["
 				for (var i = 0; i < sent.length; i++) {
-					if (received[i]['isPetPost']) {
+					if (sent[i]['isPetPost']) {
 						var posting_id = sent[i]['pet_posting'];
 						var url = "/pet_posts/" + posting_id;
 					} else {
@@ -1054,6 +1058,7 @@ app.get("/api/applications/:userId", function(req,res){
 					data += "," + JSON.stringify("message") + ":" + JSON.stringify(sent[i]['message']);
 					data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
 					data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
+					data += "," + JSON.stringify("read") + ":" + JSON.stringify(sent[i]['read']);
 					data += "}";
 					if (i != sent.length - 1) {data += ",";}
 				}
