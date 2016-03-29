@@ -1224,6 +1224,7 @@ app.post("/api/application", function(req, res){
 			sitter_posting: req.body.posting_id,
 			message: req.body.message,
 			isPetPost: req.body.isPetPost,
+			read: false
 		});
 		application.save();
 	});

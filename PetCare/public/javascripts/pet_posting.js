@@ -49,12 +49,13 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 }]);
 
 
-pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies',
-	function($http, $scope, $routeParams, $cookies) {
+pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService',
+	function($http, $scope, $routeParams, $cookies, appService) {
 
 	$scope.petPosting = []
 	$scope.pet = []
 	$scope.postingID = $routeParams.id;
+	$scope.toPostingID; // posting_id holder for application
 	$scope.msg_content = "";
 	$scope.userId = $cookies.get('userID');
 
@@ -92,19 +93,16 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 		}
 	});
 
+	$scope.setPostingId = function(postId) {
+		if (postId == -1) {
+			$scope.toPostingID = $scope.postingID;
+		} else {
+			$scope.toPostingID = postId;
+		}
+	}
+
 	$scope.apply = function() {
-        var data = $.param({
-            from: $scope.userId,
-            isPetPost: true,
-            posting_id: $scope.postingID,
-            message: $scope.msg_content
-        });
-        var config = {
-            headers : {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }
-        $http.post('/application', data, config);
+		appService.apply($scope.userId, true, $scope.toPostingID, $scope.msg_content);
         $scope.msg_content = "";
 	};
 

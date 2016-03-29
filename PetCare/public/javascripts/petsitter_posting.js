@@ -77,5 +77,4 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
         $cookies.put('posts', JSON.stringify($scope.posts));
         window.location="/petsitter_posts/" + postId;
     }
-
 }]);
