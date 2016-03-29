@@ -56,6 +56,15 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 	$scope.postingID = $routeParams.id;
 	$scope.msg_content = "";
 	$scope.userId = $cookies.get('userID');
+	$scope.rating = rating;
+
+	$scope.recomm_posts = [];
+	$scope.posts = JSON.parse($cookies.get('posts'));
+
+    for (var i = 0; i < $scope.posts.length; i++) {
+        if ($scope.posts[i].posting_id != $scope.postingID)
+            $scope.recomm_posts.push($scope.posts[i]);
+    }
 
 	// TODO: Display message if id not found
 
@@ -102,6 +111,11 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
         $http.post('/application', data, config);
         $scope.msg_content = "";
 	};
+
+    $scope.showDetailPost = function(postId) {
+        $cookies.put('posts', JSON.stringify($scope.posts));
+        window.location="/pet_posts/" + postId;
+    }
 }]);
 
 pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$cookies', 

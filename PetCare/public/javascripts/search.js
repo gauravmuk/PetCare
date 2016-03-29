@@ -8,16 +8,24 @@ search.controller('HireController', ['$http', '$scope', function($http, $scope){
 }]);
 
     // Controller for offer pet sitting search
-search.controller('OfferController', ['$http', '$scope', function($http, $scope){
+search.controller('OfferController', ['$http', '$scope', '$cookies', function($http, $scope, $cookies){
     $scope.posts = [];
     $scope.rating = rating;
 
-    $http.get('/api/search_pet').success(function(data){
-        $scope.posts = data;
-    });
+    $scope.search = function() {
+        $http.get('/api/search_pet').success(function(data){
+            $scope.posts = data;
+        });
+    };
+
+    $scope.showDetailPost = function(postId) {
+        $cookies.put('posts', JSON.stringify($scope.posts));
+        window.location="/pet_posts/" + postId;
+    }
+
 }]);
 
-    // Show rating
+// Show rating
 function rating(numOfStar, index) {
     var res = '';
     for (var i = 0; i < 5; i++) {

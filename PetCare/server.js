@@ -164,6 +164,19 @@ var pet1 = new Pet({
 
 pet1.save();
 
+var pet2 = new Pet({
+	name: 'Mango',
+	user: 1,
+	type: 'Cat',
+	breed: 'Persian',
+	gender: 'Male',
+	age: 5,
+	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
+	rating: 3
+});
+
+pet2.save();
+
 var petPosting1 = new Pet_Posting({
     user: 1,
     pet: 1,
@@ -179,6 +192,22 @@ var petPosting1 = new Pet_Posting({
 });
 
 petPosting1.save();
+
+var petPosting2 = new Pet_Posting({
+    user: 1,
+    pet: 2,
+	title: 'this is posting 2',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: 'images/cat2.jpg',
+	status: 'open'
+});
+
+petPosting2.save();
 
 var sitterPosting1 = new Sitter_Posting({
     user: 1,
@@ -751,7 +780,6 @@ app.get("/api/search_pet", function(req, res){
 		// create JSON object
 		var data = "[";
 		for (var i = 0; i < petposting.length; i++) {
-			var rating = 3 // TODO: change this to get a pet rating. function call.
 			data += "{" + JSON.stringify("posting_id") + ":" + JSON.stringify(petposting[i]['_id']);
 			data += "," + JSON.stringify("user_id") + ":" + JSON.stringify(petposting[i]['user']);
 			data += "," + JSON.stringify("pet_id") + ":" + JSON.stringify(petposting[i]['pet']['_id']);
@@ -762,7 +790,7 @@ app.get("/api/search_pet", function(req, res){
 			data += "," + JSON.stringify("description") + ":" + JSON.stringify(petposting[i]['description']);
 			data += "," + JSON.stringify("thumbnail") + ":" + JSON.stringify(petposting[i]['thumbnail']);
 			data += "," + JSON.stringify("pet_type") + ":" + JSON.stringify(petposting[i]['pet']['type']);
-			data += "," + JSON.stringify("rating") + ":" + JSON.stringify(rating);
+			data += "," + JSON.stringify("rating") + ":" + JSON.stringify(petposting[i]['pet']['rating']);
 			data += "," + JSON.stringify("pet_age") + ":" + JSON.stringify(petposting[i]['pet']['age']);
 			data += "}";
 			if (i != petposting.length - 1) {data += ",";}
