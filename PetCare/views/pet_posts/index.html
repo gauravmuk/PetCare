@@ -105,6 +105,20 @@
     </div>
 
     <div class="pagination">
+        <div>
+            <h4>Default</h4>
+            <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
+            <uib-pagination boundary-links="true" total-items="totalItems" ng-model="currentPage" class="pagination-sm" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+            <uib-pagination direction-links="false" boundary-links="true" total-items="totalItems" ng-model="currentPage"></uib-pagination>
+            <uib-pagination direction-links="false" total-items="totalItems" ng-model="currentPage" num-pages="smallnumPages"></uib-pagination>
+
+        </div>
+
+
+
+
+
+        <!--
         <div class="container">
             <ul>
                 <li class="arrow prev"><a href="#">&laquo;</a></li>
@@ -123,7 +137,7 @@
                 </li>
                 <li class="arrow next"><a href="#">&raquo;</a></li>
             </ul>
-        </div>
+        </div>-->
     </div>
 
     <!-- New Post Modal -->
