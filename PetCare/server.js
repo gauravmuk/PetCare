@@ -992,6 +992,33 @@ app.get("/api/reports", function(req, res){
 	});
 });
 
+app.post("/api/reports/", function(req, res){
+	var to 			= req.body.data.to;
+	var from 		= req.body.data.from;
+	var reportMsg	= req.body.data.reportMsg;
+
+	console.log("to " + to);
+	console.log("from " + from);
+	console.log("reportMsg " + reportMsg);
+
+	var newReport = new Report({
+		to: to,
+		from: from,
+		message: reportMsg
+	});
+
+	newReport.save(function(err, report) {
+		if(err){
+			res.setHeader('Location', '/');
+			console.log("Error Creating Report");
+    		res.status(400).send({ error: "Error Creating Report" });
+		}
+		else{
+			res.json({report: report});
+		}
+	});
+});
+
 // Search pet postings
 app.get("/api/search_pet", function(req, res){
 	var petposting = [];
