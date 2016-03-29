@@ -1395,7 +1395,6 @@ app.listen(3000, function(){
 	console.log("PetCare server listening on port 3000");
 });
 
-
 /* Helper Functions */
 
 // Return a given user's avg Rating
@@ -1421,3 +1420,17 @@ function getPetRating(petID){
 		}
 	});
 }
+
+/* Functions for mocha testing */
+
+exports.startServer = function(port) {
+    console.log('\nMocha Testing: Start Server on Port ' + port + '\n');
+    app.listen(port);
+};
+
+// close destroys the server.
+// exports.closeServer = function() {
+// 	console.log('Mocha Testing Ends: close server');
+//     app.close();
+// };
+
