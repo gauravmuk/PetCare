@@ -10,7 +10,8 @@ var app = angular.module('petCare',	['ngRoute',
 									 'petsitter_posting',
 									 'review',
 									 'search', 
-									 'user']);
+									 'user', 
+									 'forum']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
@@ -25,17 +26,20 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		.when('/users/:id', {
 			templateUrl: 	'/users/show.html',
 			controller: 	'userController',
-			controllerAs: 	'userCtrl'
+			controllerAs: 	'userCtrl',
+			access: { restricted: false}
 		})
 		.when('/users/:id/applications', {
 			templateUrl: 	'/users/applications.html',
 			controller: 	'applicationController',
-			controllerAs: 	'appCtrl'
+			controllerAs: 	'appCtrl',
+			access: { restricted: false}
 		})
 		.when('/users/:id/messages', {
 			templateUrl: 	'/users/messages.html',
 			controller: 	'messageController',
-			controllerAs: 	'messageCtrl'
+			controllerAs: 	'messageCtrl',
+			access: { restricted: false}
 		})
 		.when('/signin', {
 			templateUrl: 	'/signin.html',
@@ -97,11 +101,17 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 			controllerAs: 	'petFormController',
 			access: { restricted: true }
 		})
+		.when('/forum', {
+			templateUrl: 	'/forum/index.html',
+			controller: 	'forumController',
+			controllerAs: 	'forumController',
+			access: { restricted: false }
+		})
 		.when('/admin', {
 			templateUrl: 	'/admin/admin.html',
 			controller: 	'adminController',
 			controllerAs: 	'adminCtrl',
-			access: { restricted: false }
+			access: { restricted: true }
 		})
 		.otherwise({
 			redirectTo: '/',
@@ -109,22 +119,23 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		});
 }]);
 
-// app.run(function ($rootScope, $location, $route, authService) {
-//   $rootScope.$on('$routeChangeStart',
-//     function (event, next, current) {
-//     	authService.getUserStatus();
-//     	if (next.access.restricted && !authService.isLoggedIn()) {
-//         	$location.path('/login');
-//         	$route.reload();
-//       }
-//   });
-// });
+app.run(function ($rootScope, $location, $route, authService) {
+	$rootScope.$on('$routeChangeStart', function (event, next, current) {
+	    authService.getUserStatus();
+		if (next.access.restricted) {
+			if (!authService.isLoggedIn()) {
+	        	$location.path('/signin');
+	        	$route.reload();
+	        }
+	    };
+  	});
+});
 
 app.controller('mainController', function() {
 
 });
 
-app.controller('navController', ['$scope', '$location', 'authService',function($scope, $location, authService) {
+app.controller('navController', ['$scope', '$location', 'authService', '$cookies', function($scope, $location, authService, $cookies) {
 	$scope.authService = authService;
 
 	$scope.logout = function() {
@@ -132,6 +143,9 @@ app.controller('navController', ['$scope', '$location', 'authService',function($
         	$location.path('/login');
         });
 	};
+
+	$scope.userId = $cookies.get('userID');
+
 }]);
 
 // call jQuery functions after rendering finishes

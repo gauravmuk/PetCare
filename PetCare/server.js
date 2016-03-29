@@ -40,6 +40,7 @@ var Report			= require(__dirname + '/public/models/Report');
 var Review			= require(__dirname + '/public/models/Review');
 var Pet_Review		= require(__dirname + '/public/models/Pet_Review');
 var User			= require(__dirname + '/public/models/User');
+var ForumPost		= require(__dirname + '/public/models/Forum_Post');
 
 // Authentication
 app.use(session({ secret: 'Session Key' }));
@@ -55,8 +56,9 @@ passport.deserializeUser(User.deserializeUser());
 var user1 = new User({
 	name: 'John Doe',
 	email: 'john@gmail.com',
-	rating: 0,
-	banned: false
+	rating: 4,
+	banned: false,
+	location: "Toronto, ON"
 });
 
 user1.save();
@@ -64,8 +66,9 @@ user1.save();
 var user2 = new User({
 	name: 'Leonardo DiCaprio',
 	email: 'leo@gmail.com',
-	rating: 0,
-	banned: false
+	rating: 3,
+	banned: false,
+	location: "New York, NY"
 });
 
 user2.save();
@@ -74,7 +77,8 @@ var user3 = new User({
 	name: 'Taewoo Kim',
 	email: 'rlaxodn@gmail.com',
 	rating: 0,
-	banned: true
+	banned: true,
+	location: "Ottawa, ON"
 });
 
 user3.save();
@@ -164,6 +168,19 @@ var pet1 = new Pet({
 
 pet1.save();
 
+var pet2 = new Pet({
+	name: 'Mango',
+	user: 1,
+	type: 'Cat',
+	breed: 'Persian',
+	gender: 'Male',
+	age: 5,
+	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
+	rating: 3
+});
+
+pet2.save();
+
 var petPosting1 = new Pet_Posting({
     user: 1,
     pet: 1,
@@ -174,11 +191,27 @@ var petPosting1 = new Pet_Posting({
 	supplies: 'Toys, Kennel, Clothes',
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
-	thumbnail: '/images/cat1.jpg',
+	thumbnail: 'images/cat1.jpg',
 	status: 'open'
 });
 
 petPosting1.save();
+
+var petPosting2 = new Pet_Posting({
+    user: 1,
+    pet: 2,
+	title: 'this is posting 2',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: 'images/cat2.jpg',
+	status: 'open'
+});
+
+petPosting2.save();
 
 var sitterPosting1 = new Sitter_Posting({
     user: 1,
@@ -197,6 +230,23 @@ var sitterPosting1 = new Sitter_Posting({
 
 sitterPosting1.save();
 
+var sitterPosting2 = new Sitter_Posting({
+    user: 2,
+	title: '222222222222222222',
+	types: 'Dogs, Cats, Birds',
+	duration: 'March 3rd to April 1st',
+	location: 'Downtown, Toronto, ON',
+	price: '20 - 25 per Day',
+	experience: '2 years',
+	supplies: 'Toys, Kennel, Clothes',
+	number_of_pets: 100,
+	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
+	thumbnail: '/images/default-profile-pic.png',
+	status: 'open'
+});
+
+sitterPosting2.save();
+
 var report1 = new Report({
     to: 1,
     from: 2,
@@ -205,6 +255,26 @@ var report1 = new Report({
 });
 
 report1.save();
+
+var forumPost1 = new ForumPost({
+    user: 1,
+	type: 'message',
+	message: 'I have 2 dogs!',
+	image: '',
+	likes: 0
+});
+
+forumPost1.save();
+
+var forumPost2 = new ForumPost({
+    user: 2,
+	type: 'image',
+	message: '',
+	image: 'http://bebusinessed.com/wp-content/uploads/2014/03/734899052_13956580111.jpg',
+	likes: 12
+});
+
+forumPost2.save();
 
 /**********************************************************************/
 
@@ -267,6 +337,10 @@ app.get("/petsitter_posts/new.html", function(req, res){
 
 app.get("/pet/new.html", function(req, res){
 	res.render("pet/new.html");
+});
+
+app.get("/forum/index.html", function(req, res){
+	res.render("forum/index.html");
 });
 
 app.get("/admin/admin.html", function(req, res){
@@ -843,6 +917,92 @@ app.get("/api/reports", function(req, res){
 	});
 });
 
+// Search pet postings
+app.get("/api/search_pet", function(req, res){
+	var petposting = [];
+
+	Pet_Posting.find({}).populate('pet').exec(function(err, petposting) {
+		if (err) {
+			throw err;
+		}
+
+		// create JSON object
+		var data = "[";
+		for (var i = 0; i < petposting.length; i++) {
+			data += "{" + JSON.stringify("posting_id") + ":" + JSON.stringify(petposting[i]['_id']);
+			data += "," + JSON.stringify("user_id") + ":" + JSON.stringify(petposting[i]['user']);
+			data += "," + JSON.stringify("pet_id") + ":" + JSON.stringify(petposting[i]['pet']['_id']);
+			data += "," + JSON.stringify("title") + ":" + JSON.stringify(petposting[i]['title']);
+			data += "," + JSON.stringify("duration") + ":" + JSON.stringify(petposting[i]['duration']);
+			data += "," + JSON.stringify("location") + ":" + JSON.stringify(petposting[i]['location']);
+			data += "," + JSON.stringify("price") + ":" + JSON.stringify(petposting[i]['price']);
+			data += "," + JSON.stringify("description") + ":" + JSON.stringify(petposting[i]['description']);
+			data += "," + JSON.stringify("thumbnail") + ":" + JSON.stringify(petposting[i]['thumbnail']);
+			data += "," + JSON.stringify("pet_type") + ":" + JSON.stringify(petposting[i]['pet']['type']);
+			data += "," + JSON.stringify("rating") + ":" + JSON.stringify(petposting[i]['pet']['rating']);
+			data += "," + JSON.stringify("pet_age") + ":" + JSON.stringify(petposting[i]['pet']['age']);
+			data += "}";
+			if (i != petposting.length - 1) {data += ",";}
+		}
+		data += "]";
+
+		console.log(JSON.parse(data));
+		res.json(JSON.parse(data));
+	});
+});
+
+// Search sitter postings
+app.get("/api/search_sitter", function(req, res){
+	var sitterPosting = [];
+
+	Sitter_Posting.find({}).populate('user').exec(function(err, sitterPosting) {
+		if (err) {
+			throw err;
+		}
+
+		// create JSON object
+		var data = "[";
+		for (var i = 0; i < sitterPosting.length; i++) {
+			data += "{" + JSON.stringify("posting_id") + ":" + JSON.stringify(sitterPosting[i]['_id']);
+			data += "," + JSON.stringify("user_id") + ":" + JSON.stringify(sitterPosting[i]['user']['_id']);
+			data += "," + JSON.stringify("title") + ":" + JSON.stringify(sitterPosting[i]['title']);
+			data += "," + JSON.stringify("types") + ":" + JSON.stringify(sitterPosting[i]['types']);
+			data += "," + JSON.stringify("duration") + ":" + JSON.stringify(sitterPosting[i]['duration']);
+			data += "," + JSON.stringify("location") + ":" + JSON.stringify(sitterPosting[i]['location']);
+			data += "," + JSON.stringify("price") + ":" + JSON.stringify(sitterPosting[i]['price']);
+			data += "," + JSON.stringify("experience") + ":" + JSON.stringify(sitterPosting[i]['experience']);
+			data += "," + JSON.stringify("description") + ":" + JSON.stringify(sitterPosting[i]['description']);
+			data += "," + JSON.stringify("thumbnail") + ":" + JSON.stringify(sitterPosting[i]['thumbnail']);
+			data += "," + JSON.stringify("rating") + ":" + JSON.stringify(sitterPosting[i]['user']['rating']);
+			data += "}";
+			if (i != sitterPosting.length - 1) {data += ",";}
+		}
+		data += "]";
+
+		console.log(JSON.parse(data));
+		res.json(JSON.parse(data));
+	});
+});
+
+
+
+
+
+
+
+
+
+// Search sitter postings
+app.get("/api/sitterpostings", function(req, res){
+	var sitterposting = [];
+	Sitter_Posting.find({}, function(err, sitterposting) {
+		if (err) {
+			throw err;
+		}
+		res.json(sitterposting)
+	});
+});
+
 // Get Received and Sent applications of the given user
 app.get("/api/applications/:userId", function(req,res){
 
@@ -1006,8 +1166,78 @@ app.post("/api/message", function(req, res){
 	msg.save();
 });
 
+// Return all forum posts
+app.get("/api/forumposts", function(req, res){
+	var forumpost = [];
+	ForumPost.find({}).sort([['created_at', 'descending']]).populate('user').exec(function(err, forumpost) {
+		if (err) {
+			throw err;
+		}
+		res.json(forumpost)
+	});
 
-// Helper Functions 
+});
+
+// Post a new forum post
+app.post("/api/forumposts", function(req, res){
+
+	var forumpost = new ForumPost({
+	    user: req.body.data.user,
+		type: req.body.data.type,
+		message: req.body.data.message,
+		image: req.body.data.image,
+		likes: req.body.data.likes,
+	});
+
+	forumpost.save(function(err) {
+		console.log(forumpost);
+    	res.status(201).send(null);
+	});
+
+
+});
+
+// Increases the 'likes' on a forum post by 1
+app.put('/api/forumposts/:id/like', function (req, res) {
+
+	if (isNumber(req.params.id)) {
+
+		ForumPost.findOne({_id: req.params.id}, function (err, forumpost) {
+
+		    forumpost.likes = forumpost.likes + 1;
+
+		    forumpost.save(function(err) {
+		    	res.status(200).send(null);
+			});
+
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
+}); 
+
+app.use("*",function(req, res) {
+    res.sendFile(path.join(__dirname,"views/index.html"));
+});
+
+// If none of the above routes matches, display an error
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+  var err = new Error("Not Found");
+  err.status = 404;
+  next(err);
+});
+
+
+/* Start server */ 
+app.listen(3000, function(){
+	console.log("PetCare server listening on port 3000");
+});
+
+
+/* Helper Functions */
 
 // Return a given user's avg Rating
 function getUserRating(userID){
@@ -1032,21 +1262,3 @@ function getPetRating(petID){
 		}
 	});
 }
-
-app.use("*",function(req, res) {
-    res.sendFile(path.join(__dirname,"views/index.html"));
-});
-
-// If none of the above routes matches, display an error
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error("Not Found");
-  err.status = 404;
-  next(err);
-});
-
-
-/* Start server */ 
-app.listen(3000, function(){
-	console.log("PetCare server listening on port 3000");
-});

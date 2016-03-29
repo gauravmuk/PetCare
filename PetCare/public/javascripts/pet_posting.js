@@ -51,11 +51,24 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 
 pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies',
 	function($http, $scope, $routeParams, $cookies) {
+
 	$scope.petPosting = []
 	$scope.pet = []
 	$scope.postingID = $routeParams.id;
 	$scope.msg_content = "";
 	$scope.userId = $cookies.get('userID');
+
+	$scope.rating = rating;
+	$scope.recomm_posts = [];
+
+	if ($cookies.get('posts')) {
+		$scope.posts = JSON.parse($cookies.get('posts'));
+
+	    for (var i = 0; i < $scope.posts.length; i++) {
+	        if ($scope.posts[i].posting_id != $scope.postingID)
+	            $scope.recomm_posts.push($scope.posts[i]);
+	    }
+	}
 
 	// TODO: Display message if id not found
 
@@ -77,14 +90,6 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 				$scope.userRating = $scope.petPosting.user.rating;
 			}
 		}
-
-	    for (var i = 1; i <= $scope.userRating; i++) {
-	        $('.user_info #star' + i).html('&#9733;');
-	    }
-	    for (var i = $scope.userRating + 1; i <= 5; i++) {
-	        $('.user_info #star' + i).html('&#9734;');
-	    }
-
 	});
 
 	$scope.apply = function() {
@@ -102,6 +107,11 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
         $http.post('/application', data, config);
         $scope.msg_content = "";
 	};
+
+    $scope.showDetailPost = function(postId) {
+        $cookies.put('posts', JSON.stringify($scope.posts));
+        window.location="/pet_posts/" + postId;
+    }
 }]);
 
 pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$cookies', 
