@@ -23,7 +23,8 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 	function getUserData() {
 		userData = {
 			userID: $cookies.get('userID'),
-			userName: $cookies.get('userName')
+			userName: $cookies.get('userName'),
+			userRole: $cookies.get('userRole')
 		};
 		return userData;
 	}
@@ -42,6 +43,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 				userData = data;
 				$cookies.put('userID', data.id);
 				$cookies.put('userName', data.name);
+				$cookies.put('userRole', data.role);
 				user = true;
 				deferred.resolve();
 			})
@@ -65,6 +67,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 			userData = data;
 			$cookies.put('userID', data.id);
 			$cookies.put('userName', data.name);
+			$cookies.put('userRole', data.role);
 			user = true;
 			deferred.resolve(data);
 		})
@@ -96,6 +99,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 			userData = {};
 			$cookies.remove('userID');
 			$cookies.remove('userName');
+			$cookies.remove('userRole');
 				
 			user = true;
 			deferred.resolve();

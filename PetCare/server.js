@@ -355,21 +355,33 @@ app.post('/api/register', function(req, res, next) {
 	var password 	= req.body.password;
 	var name 		= req.body.name;
 
+	// Make users who use '@petcare.com' eamils as Admins
+	var role;
+	var check = username.includes("@petcare.com");
+	check? role='admin':role='regular';
+
 	User.register(new User({ username: username, name: name, rating: 0,	location: '',
-		description: '', role: '', photo: '', banned: false }), password, function(err) {
+		description: '', role: role, photo: '', banned: false }), password, function(err) {
 		if (err) {
 			console.log("error when registering");
 			return next(err);
 		}
 
 		passport.authenticate('local')(req, res, function() {
-			res.send({ id: res.req.user.id, name: res.req.user.name });
+			res.send({ id: res.req.user.id, name: res.req.user.name, role: role });
 		});
 	});
 });
 
 app.post('/api/login', passport.authenticate('local'), function(req, res) {
-	res.send({ id: res.req.user.id, name: res.req.user.name });
+	User.findOne({_id: res.req.user.id}, function(err, user){
+		if(err){
+			console.log('User Login Failed');
+		}
+		else{
+			res.send({ id: res.req.user.id, name: res.req.user.name, role: user.role });
+		}
+	});
 });
 
 app.get('/api/logout', function(req, res) {
