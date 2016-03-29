@@ -42,11 +42,21 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 
 }]);
 
-petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$routeParams', function($http, $scope, $routeParams) {
+petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$routeParams', '$cookies',
+	function($http, $scope, $routeParams, $cookies) {
 	
 	$scope.sitterPosting = [];
 	$scope.postingID = $routeParams.id;
 	$scope.userRating = 0;
+
+	$scope.rating = rating;
+	$scope.recomm_posts = [];
+	$scope.posts = JSON.parse($cookies.get('posts'));
+
+    for (var i = 0; i < $scope.posts.length; i++) {
+        if ($scope.posts[i].posting_id != $scope.postingID)
+            $scope.recomm_posts.push($scope.posts[i]);
+    }
 
 	$http.get('/api/sitterpostings/' + $scope.postingID).success(function(data) {
 
@@ -58,15 +68,11 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
 				$scope.userRating = $scope.sitterPosting.user.rating;
 			}
 		}
-
-	    for (var i = 1; i <= $scope.userRating; i++) {
-	        $('.user_info #star' + i).html('&#9733;');
-	    }
-	    for (var i = $scope.userRating + 1; i <= 5; i++) {
-	        $('.user_info #star' + i).html('&#9734;');
-	    }
-
 	});
 
+    $scope.showDetailPost = function(postId) {
+        $cookies.put('posts', JSON.stringify($scope.posts));
+        window.location="/petsitter_posts/" + postId;
+    }
 
 }]);

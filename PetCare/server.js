@@ -55,7 +55,7 @@ passport.deserializeUser(User.deserializeUser());
 var user1 = new User({
 	name: 'John Doe',
 	email: 'john@gmail.com',
-	rating: 0,
+	rating: 4,
 	banned: false
 });
 
@@ -64,7 +64,7 @@ user1.save();
 var user2 = new User({
 	name: 'Leonardo DiCaprio',
 	email: 'leo@gmail.com',
-	rating: 0,
+	rating: 3,
 	banned: false
 });
 
@@ -225,6 +225,23 @@ var sitterPosting1 = new Sitter_Posting({
 });
 
 sitterPosting1.save();
+
+var sitterPosting2 = new Sitter_Posting({
+    user: 2,
+	title: '222222222222222222',
+	types: 'Dogs, Cats, Birds',
+	duration: 'March 3rd to April 1st',
+	location: 'Downtown, Toronto, ON',
+	price: '20 - 25 per Day',
+	experience: '2 years',
+	supplies: 'Toys, Kennel, Clothes',
+	number_of_pets: 100,
+	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
+	thumbnail: '/images/default-profile-pic.png',
+	status: 'open'
+});
+
+sitterPosting2.save();
 
 var report1 = new Report({
     to: 1,
@@ -799,10 +816,41 @@ app.get("/api/search_pet", function(req, res){
 
 		console.log(JSON.parse(data));
 		res.json(JSON.parse(data));
-
 	});
 });
 
+// Search sitter postings
+app.get("/api/search_sitter", function(req, res){
+	var sitterPosting = [];
+
+	Sitter_Posting.find({}).populate('user').exec(function(err, sitterPosting) {
+		if (err) {
+			throw err;
+		}
+
+		// create JSON object
+		var data = "[";
+		for (var i = 0; i < sitterPosting.length; i++) {
+			data += "{" + JSON.stringify("posting_id") + ":" + JSON.stringify(sitterPosting[i]['_id']);
+			data += "," + JSON.stringify("user_id") + ":" + JSON.stringify(sitterPosting[i]['user']['_id']);
+			data += "," + JSON.stringify("title") + ":" + JSON.stringify(sitterPosting[i]['title']);
+			data += "," + JSON.stringify("types") + ":" + JSON.stringify(sitterPosting[i]['types']);
+			data += "," + JSON.stringify("duration") + ":" + JSON.stringify(sitterPosting[i]['duration']);
+			data += "," + JSON.stringify("location") + ":" + JSON.stringify(sitterPosting[i]['location']);
+			data += "," + JSON.stringify("price") + ":" + JSON.stringify(sitterPosting[i]['price']);
+			data += "," + JSON.stringify("experience") + ":" + JSON.stringify(sitterPosting[i]['experience']);
+			data += "," + JSON.stringify("description") + ":" + JSON.stringify(sitterPosting[i]['description']);
+			data += "," + JSON.stringify("thumbnail") + ":" + JSON.stringify(sitterPosting[i]['thumbnail']);
+			data += "," + JSON.stringify("rating") + ":" + JSON.stringify(sitterPosting[i]['user']['rating']);
+			data += "}";
+			if (i != sitterPosting.length - 1) {data += ",";}
+		}
+		data += "]";
+
+		console.log(JSON.parse(data));
+		res.json(JSON.parse(data));
+	});
+});
 
 
 

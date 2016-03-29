@@ -51,13 +51,14 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 
 pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies',
 	function($http, $scope, $routeParams, $cookies) {
+
 	$scope.petPosting = []
 	$scope.pet = []
 	$scope.postingID = $routeParams.id;
 	$scope.msg_content = "";
 	$scope.userId = $cookies.get('userID');
-	$scope.rating = rating;
 
+	$scope.rating = rating;
 	$scope.recomm_posts = [];
 	$scope.posts = JSON.parse($cookies.get('posts'));
 
@@ -86,14 +87,6 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 				$scope.userRating = $scope.petPosting.user.rating;
 			}
 		}
-
-	    for (var i = 1; i <= $scope.userRating; i++) {
-	        $('.user_info #star' + i).html('&#9733;');
-	    }
-	    for (var i = $scope.userRating + 1; i <= 5; i++) {
-	        $('.user_info #star' + i).html('&#9734;');
-	    }
-
 	});
 
 	$scope.apply = function() {
