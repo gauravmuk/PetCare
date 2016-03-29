@@ -576,6 +576,36 @@ app.post("/api/sitterpostings/:id/reviews", function(req, res){
 	res.json({resData: "data"});
 });
 
+// Given a post ID, return the avg rating of the person who made the post(User/Sitter)
+app.get("/api/sitterpostings/:id/rating", function(req, res){
+	console.log('GET /api/sitterpostings/:id/rating');
+
+	var postID 			= req.params.id;
+	if (isNumber(postID)){
+		// Query post from the database and get the ID of the user who made the post
+		Sitter_Posting.findOne({_id : postID}, function(err, post){
+			if(err){
+				console.log("error");
+			}
+			else{
+				// If found post successfully
+				// Get the ID of the user who made the post from this post we found
+				var userID = post.user;
+				// Query that user and return his/her average rating
+				User.findOne({_id: userID}, function(err, user){
+					var avgRating = user.rating;
+					// Send back a response or end response
+					console.log('Avg rating of the user= ' + avgRating);
+					res.json({avgRating: avgRating});
+				});
+			}
+		});
+	}
+	else{
+		res.status(400).send({ error: "Invalid ID" });
+	}
+});
+
 // Update Pet review table, calculate new average rating for the pet on the post and update rating
 app.post("/api/petpostings/:id/reviews", function(req, res){
 	console.log("/api/petpostings/:id/reviews");
@@ -652,6 +682,36 @@ app.post("/api/petpostings/:id/reviews", function(req, res){
 
 	// Send back a response or end response
 	res.json({resData: "data"});
+});
+
+// Given a post ID, return the avg rating of the pet reffered to by the post
+app.get("/api/petpostings/:id/rating", function(req, res){
+	console.log('GET /api/petpostings/:id/rating');
+
+	var postID 			= req.params.id;
+	if (isNumber(postID)){
+		// Query post from the database and get the ID of pet reffered to by this post
+		Pet_Posting.findOne({_id : postID}, function(err, post){
+			if(err){
+				console.log("error");
+			}
+			else{
+				// If found post successfully
+				// Get user Id of the pet
+				var PetID = post.pet;
+				// Query that pet and return it's average rating
+				User.findOne({_id: PetID}, function(err, pet){
+					var avgRating = pet.rating;
+					// Send back a response or end response
+					console.log('Avg rating of the pet = ' + avgRating);
+					res.json({avgRating: avgRating});
+				});
+			}
+		});
+	}	
+	else{
+		res.status(400).send({ error: "Invalid ID" });
+	}
 });
 
 app.get("/api/pets/:id", function(req, res){
