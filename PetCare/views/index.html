@@ -76,10 +76,17 @@
                             <a href="signup">Sign Up</a>
                         </li>
                         <li ng-show="authService.getUserData().userName" class="sign-up">
-                            <a href="signup">{{ authService.getUserData().userName }}</a>
-                        </li>
-                        <li ng-show="authService.getUserData().userName">
-                            <a href="signout" ng-click="logout()">Sign out</a>
+                            <div class="dropdown">
+                                <a class="btn dropdown-toggle" type="button" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                    {{ authService.getUserData().userName }}
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+                                    <li><a href="/users/{{userId}}">Settings</a></li>
+                                    <li><a href="/users/{{userId}}/applications">Applications<div class="new">6</div></a></li>
+                                    <li><a href="/users/{{userId}}/messages">Messages<div class="new">12</div></a></li>
+                                    <li><a href="signout" ng-click="logout()">Log out</a></li>
+                                </ul>
+                            </div>
                         </li>
                     </ul>
                 </div>
