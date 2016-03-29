@@ -51,12 +51,15 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
 
 	$scope.rating = rating;
 	$scope.recomm_posts = [];
-	$scope.posts = JSON.parse($cookies.get('posts'));
 
-    for (var i = 0; i < $scope.posts.length; i++) {
-        if ($scope.posts[i].posting_id != $scope.postingID)
-            $scope.recomm_posts.push($scope.posts[i]);
-    }
+	if ($cookies.get('posts')) {
+		$scope.posts = JSON.parse($cookies.get('posts'));
+
+	    for (var i = 0; i < $scope.posts.length; i++) {
+	        if ($scope.posts[i].posting_id != $scope.postingID)
+	            $scope.recomm_posts.push($scope.posts[i]);
+	    }
+	}
 
 	$http.get('/api/sitterpostings/' + $scope.postingID).success(function(data) {
 

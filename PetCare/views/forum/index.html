@@ -1,0 +1,75 @@
+
+
+    <!-- Forum -->
+    <div class="forum" ng-controller="forumController">
+        <div class="container">
+
+            <div class="title">
+                <span>Latest Forum Activity</span>
+            </div>
+
+            <div class="new-post" ng-show="authService.getUserData().userName" >
+
+                <form name="forumForm">
+
+                    <div class="top">
+                        <textarea id="post" name="postMessage" placeholder="Enter a message or image link..." ng-model="postMessage" required></textarea>
+                    </div>
+
+                    <div class="bottom">
+                        <div class="type">
+                            <ul>
+                                <li>
+                                    <input type="radio" id="message-option" name="selector" value="message" ng-model="postType" required>
+                                    <label for="message-option">Message</label>
+                                </li>
+                                <li>
+                                    <input type="radio" id="image-option" value="image" name="selector" ng-model="postType">
+                                    <label for="image-option">Image</label>
+                                </li>
+                                <li>
+                                </li>
+                            </ul>
+                        </div>
+                        <button ng-click="addForumPost(forumForm.$valid)" type="button" class="postButton button">Post</button>
+                    </div>
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+
+            <div class="post-container">
+                <div class="post" ng-repeat="post in forumPosts">
+                    <div class="info">
+                        <div class="left">
+                            <span class="name">
+                                {{ post.user.name }}
+                            </span>
+                            <span class="action">
+                                posted a {{ post.type }}
+                            </span>
+                        </div>
+                        <div class="right">
+                            <span class="location">
+                                {{ post.user.location }}
+                                <i class="fa fa-map-marker"></i>
+                            </span>
+                            <span class="likes">
+                                {{ post.likes }}
+                                <i class="fa fa-heart" ng-click="likePost(post._id)"></i>
+                            </span>
+                            <span class="date">
+                                {{ post.created_at | date:"MM/dd/yyyy 'at' h:mma" }}
+                            </span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="content" ng-class="{image: post.isImage}">
+                        {{ post.message }}
+                        <img ng-src="{{ post.image }}" ng-show="post.isImage" alt="forum image"/>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>

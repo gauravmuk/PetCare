@@ -60,12 +60,15 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 
 	$scope.rating = rating;
 	$scope.recomm_posts = [];
-	$scope.posts = JSON.parse($cookies.get('posts'));
 
-    for (var i = 0; i < $scope.posts.length; i++) {
-        if ($scope.posts[i].posting_id != $scope.postingID)
-            $scope.recomm_posts.push($scope.posts[i]);
-    }
+	if ($cookies.get('posts')) {
+		$scope.posts = JSON.parse($cookies.get('posts'));
+
+	    for (var i = 0; i < $scope.posts.length; i++) {
+	        if ($scope.posts[i].posting_id != $scope.postingID)
+	            $scope.recomm_posts.push($scope.posts[i]);
+	    }
+	}
 
 	// TODO: Display message if id not found
 

@@ -10,7 +10,8 @@ var app = angular.module('petCare',	['ngRoute',
 									 'petsitter_posting',
 									 'review',
 									 'search', 
-									 'user']);
+									 'user', 
+									 'forum']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
@@ -99,6 +100,12 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 			controller: 	'petFormController',
 			controllerAs: 	'petFormController',
 			access: { restricted: true }
+		})
+		.when('/forum', {
+			templateUrl: 	'/forum/index.html',
+			controller: 	'forumController',
+			controllerAs: 	'forumController',
+			access: { restricted: false }
 		})
 		.when('/admin', {
 			templateUrl: 	'/admin/admin.html',

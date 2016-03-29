@@ -40,6 +40,7 @@ var Report			= require(__dirname + '/public/models/Report');
 var Review			= require(__dirname + '/public/models/Review');
 var Pet_Review		= require(__dirname + '/public/models/Pet_Review');
 var User			= require(__dirname + '/public/models/User');
+var ForumPost		= require(__dirname + '/public/models/Forum_Post');
 
 // Authentication
 app.use(session({ secret: 'Session Key' }));
@@ -56,7 +57,8 @@ var user1 = new User({
 	name: 'John Doe',
 	email: 'john@gmail.com',
 	rating: 4,
-	banned: false
+	banned: false,
+	location: "Toronto, ON"
 });
 
 user1.save();
@@ -65,7 +67,8 @@ var user2 = new User({
 	name: 'Leonardo DiCaprio',
 	email: 'leo@gmail.com',
 	rating: 3,
-	banned: false
+	banned: false,
+	location: "New York, NY"
 });
 
 user2.save();
@@ -74,7 +77,8 @@ var user3 = new User({
 	name: 'Taewoo Kim',
 	email: 'rlaxodn@gmail.com',
 	rating: 0,
-	banned: true
+	banned: true,
+	location: "Ottawa, ON"
 });
 
 user3.save();
@@ -252,6 +256,26 @@ var report1 = new Report({
 
 report1.save();
 
+var forumPost1 = new ForumPost({
+    user: 1,
+	type: 'message',
+	message: 'I have 2 dogs!',
+	image: '',
+	likes: 0
+});
+
+forumPost1.save();
+
+var forumPost2 = new ForumPost({
+    user: 2,
+	type: 'image',
+	message: '',
+	image: 'http://bebusinessed.com/wp-content/uploads/2014/03/734899052_13956580111.jpg',
+	likes: 12
+});
+
+forumPost2.save();
+
 /**********************************************************************/
 
 // Returns true if the value is an integer
@@ -313,6 +337,10 @@ app.get("/petsitter_posts/new.html", function(req, res){
 
 app.get("/pet/new.html", function(req, res){
 	res.render("pet/new.html");
+});
+
+app.get("/forum/index.html", function(req, res){
+	res.render("forum/index.html");
 });
 
 app.get("/admin/admin.html", function(req, res){
@@ -1033,6 +1061,58 @@ app.post("/api/message", function(req, res){
 
 	msg.save();
 });
+
+// Return all forum posts
+app.get("/api/forumposts", function(req, res){
+	var forumpost = [];
+	ForumPost.find({}).sort([['created_at', 'descending']]).populate('user').exec(function(err, forumpost) {
+		if (err) {
+			throw err;
+		}
+		res.json(forumpost)
+	});
+
+});
+
+// Post a new forum post
+app.post("/api/forumposts", function(req, res){
+
+	var forumpost = new ForumPost({
+	    user: req.body.data.user,
+		type: req.body.data.type,
+		message: req.body.data.message,
+		image: req.body.data.image,
+		likes: req.body.data.likes,
+	});
+
+	forumpost.save(function(err) {
+		console.log(forumpost);
+    	res.status(201).send(null);
+	});
+
+
+});
+
+// Increases the 'likes' on a forum post by 1
+app.put('/api/forumposts/:id/like', function (req, res) {
+
+	if (isNumber(req.params.id)) {
+
+		ForumPost.findOne({_id: req.params.id}, function (err, forumpost) {
+
+		    forumpost.likes = forumpost.likes + 1;
+
+		    forumpost.save(function(err) {
+		    	res.status(200).send(null);
+			});
+
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
+}); 
 
 app.use("*",function(req, res) {
     res.sendFile(path.join(__dirname,"views/index.html"));
