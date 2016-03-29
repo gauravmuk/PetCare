@@ -69,7 +69,6 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 			deferred.resolve(data);
 		})
 		.error(function(data) {
-			console.log("Error");
 			user = false;
 			deferred.reject(data);
 		});
@@ -81,7 +80,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 		$http.get('/api/status')
 		  	// handle success
 		  	.success(function (data) {
-		      	user = true;
+		      	user = data;
 		  	})
 		  // handle error
 		  	.error(function (data) {
