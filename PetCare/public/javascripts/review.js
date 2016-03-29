@@ -1,6 +1,7 @@
 var review = angular.module('review', []);
 
-review.controller('reviewController', ['$http', '$scope', function($http, $scope) {
+review.controller('reviewController', ['$http', '$scope', '$routeParams', '$cookies', '$location', 'authService', '$location', 
+	function($http, $scope, $routeParams, $cookies, $location, authService) {
 	
 	var rating;
 
@@ -17,31 +18,46 @@ review.controller('reviewController', ['$http', '$scope', function($http, $scope
         }
 	}
 
-	$scope.submitReview = function (){
+	$scope.submitReview = function (typeOfReview){
 		// Another way to check for undefined/null/NaN
 		if(!Number.isInteger(this.rating))
 			this.rating = 0;
 
-		var reviewComment = $scope.reviewComment;
-		var reviewRating = this.rating;
+		var reviewComment 	= $scope.reviewComment;
+		var reviewRating 	= this.rating;
+		var postID			= $routeParams.id;
+		var from 			= $cookies.get('userID');
 
-		// Creare object to be sent through the post request
+		// Create object to be sent through the post request
 		var dataObj = {
-    		to: 1,
-			from: 2,
+			from: from,
 			rating: reviewRating,
 			comment: reviewComment
 		}
 
-		// Make a http post request to the server
-		console.log("Make a post request to /reviews");
-
-		$http.post('/api/reviews', {data:dataObj})
+		if (typeOfReview === 'petSitter'){
+			// Make a http post request to the server
+			console.log("Make a post request to /api/sitterpostings/:postID/reviews");
+			$http.post('/api/sitterpostings/'+ postID +'/reviews', {data:dataObj})
 
 			.success(function(data, status, headers, config) {
     			
 			}).error(function(data, status, headers, config) {
     			
 			});
+		}
+		
+		if (typeOfReview === 'pet'){
+			// Make a http post request to the server
+			console.log("Make a post request to /api/petpostings/:postID/reviews");
+			$http.post('/api/petpostings/'+ postID +'/reviews', {data:dataObj})
+
+			.success(function(data, status, headers, config) {
+    			
+			}).error(function(data, status, headers, config) {
+    			
+			});
+		}
+		
 	};
 }]);

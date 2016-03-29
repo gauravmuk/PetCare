@@ -412,54 +412,158 @@ app.put('/api/users/:id', function (req, res) {
 
 }); 
 
-app.post("/api/reviews", function(req, res){
+
+// Update Sitter review table, calculate new average rating for person who made the post(User/Sitter) and update
+app.post("/api/sitterpostings/:id/reviews", function(req, res){
+	console.log("/api/sitterpostings/:id/reviews");
+
 	// Get Review information from the request body
-	var toUser 			= req.body.data.to;
 	var fromUser 		= req.body.data.from;
 	var reviewRating 	= req.body.data.rating;
 	var reviewComment 	= req.body.data.comment;
+	var postID 			= req.params.id;
 
-	// Save Review information in the database 
-	Review.create({
-		to: toUser,
-		from: fromUser,
-		rating: reviewRating,
-		comment: reviewComment
+	// Get user Id who made the post
+	if (isNumber(postID)){
+		Sitter_Posting.findOne({_id : postID}, function(err, post){
+			if(err){
+				console.log("error");
+			}
+			// If found post successfully 
+			else{
+				// Get user Id who made the post from this post we found
+				var toUser = post.user;
 
-	}, function(err, review){
-		if(err){
-			console.log("Review.create(): error\n"+ err);
-		}
-		else{
-			// Successfully added a new review to the database
-			// Now calculate average rating for the 'to' user
-			Review.find({to: toUser}, function(err, reviews){
+				// Save Review information in the database 
+				Review.create({
+				to: toUser,
+				from: fromUser,
+				rating: reviewRating,
+				comment: reviewComment
+
+				}, function(err, review){
 				if(err){
-					"Review.find(): error\n"+ err
+					console.log("Review.create(): error\n"+ err);
 				}
 				else{
-					// Successfully found all the reviews for the given user
-					// Now calulate the new average rating value for the user
-					var num = reviews.length;
-					var sum = 0;
-					for (var i=0; i<num; i++){
-						sum = sum + reviews[i].rating;
+					// Successfully added a new review to the database
+					// Now calculate average rating for the 'to' user
+					Review.find({to: toUser}, function(err, reviews){
+					if(err){
+						"Review.find(): error\n"+ err
 					}
+					else{
+						// Successfully found all the reviews for the given user
+						// Now calulate the new average rating value for the user
+						var num = reviews.length;
+						var sum = 0;
+						for (var i=0; i<num; i++){
+							sum = sum + reviews[i].rating;
+						}
 
-					var newAvgRating = Math.round(sum/num)
-					console.log("Average rating for user "+ toUser + " = " + newAvgRating);
+						// Round the average rating to int
+						var newAvgRating = Math.round(sum/num)
+						console.log("Average rating for user "+ toUser + " = " + newAvgRating);
+						console.log("From user "+ fromUser);
 					
-					// TO-DO: Update new average rating on the user schema
+						// Update new average rating on the user schema
+						User.update({_id: toUser}, {$set: {rating:newAvgRating}}, function(err, updatedUser){
+							if(err){
+								console.log(err);
+							}
+							else{
+								console.log(updatedUser);
+							}
+						});
+					}
+					}); 
 				}
-			}); 
-		}
-	});
+				});
+			}
+		});
+	}
 
 	// Send back a response or end response
 	res.json({resData: "data"});
-	// res.end();
 });
 
+// Update Pet review table, calculate new average rating for the pet on the post and update rating
+app.post("/api/petpostings/:id/reviews", function(req, res){
+	console.log("/api/petpostings/:id/reviews");
+
+	// Get Review information from the request body
+	var fromUser 		= req.body.data.from;
+	var reviewRating 	= req.body.data.rating;
+	var reviewComment 	= req.body.data.comment;
+	var postID 			= req.params.id;
+
+	// Get user Id who made the post
+	if (isNumber(postID)){
+		Pet_Posting.findOne({_id : postID}, function(err, post){
+			if(err){
+				console.log("error");
+			}
+			// If found post successfully 
+			else{
+				// Get user pet id which we want to make the review to
+				var toPet = post.pet;
+				console.log("\npost");
+				console.log(post);
+
+				// Save Review information in the database 
+				Review.create({
+				to: toPet,
+				from: fromUser,
+				rating: reviewRating,
+				comment: reviewComment
+
+				}, function(err, review){
+				if(err){
+					console.log("Review.create(): error\n"+ err);
+				}
+				else{
+					// Successfully added a new review to the database
+					// Now calculate average rating for the 'to' user
+					console.log(review);
+
+					Review.find({to: toPet}, function(err, reviews){
+					if(err){
+						"Review.find(): error\n"+ err
+					}
+					else{
+						// Successfully found all the reviews for the given user
+						// Now calulate the new average rating value for the user
+						var num = reviews.length;
+						var sum = 0;
+						for (var i=0; i<num; i++){
+							sum = sum + reviews[i].rating;
+						}
+
+						// Round the average rating to int
+						var newAvgRating = Math.round(sum/num)
+						console.log("Average rating for pet "+ toPet + " = " + newAvgRating);
+						console.log("From user "+ fromUser);
+					
+						// Update new average rating on the user schema
+						Pet.update({_id: toPet}, {$set: {rating:newAvgRating}}, function(err, updatedPet){
+							if(err){
+								console.log(err);
+							}
+							else{
+								console.log(updatedPet);
+							}
+						});
+					}
+					}); 
+				}
+				});
+			}
+		});
+	}
+
+	// Send back a response or end response
+	res.json({resData: "data"});
+});
 
 app.get("/api/pets/:id", function(req, res){
 
@@ -901,6 +1005,33 @@ app.post("/api/message", function(req, res){
 
 	msg.save();
 });
+
+
+// Helper Functions 
+
+// Return a given user's avg Rating
+function getUserRating(userID){
+	User.findOne({_id:userID}, function(err, user){
+		if(err){
+			return 0;
+		}
+		else{
+			return user.rating;
+		}
+	});
+}
+
+// Return a given pet's avg Rating
+function getPetRating(petID){
+	Pet.findOne({_id:petID}, function(err, pet){
+		if(err){
+			return 0;
+		}
+		else{
+			return pet.rating;
+		}
+	});
+}
 
 app.use("*",function(req, res) {
     res.sendFile(path.join(__dirname,"views/index.html"));
