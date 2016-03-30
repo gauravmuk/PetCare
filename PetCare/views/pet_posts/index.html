@@ -28,10 +28,13 @@
                     <span class="button-label">Make a new post</span>  
                 </div>
             </a>
-                
+            <!-- Pagination -->
+            <div class="pagination">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" boundary-link-numbers="true" items-per-page="items_per_page" ng-change="pageChanged()"></uib-pagination>
+            </div>
             <div class="profile">
                 <div class="recommend">
-                    <div class="posting" ng-repeat="post in posts">
+                    <div class="posting" ng-repeat="post in posts" ng-show="post.show">
                         <div class="info">
                             <img class="profile-picture" ng-src="{{post.thumbnail}}" alt="pet picture"/>
                             <div class="left-info">
@@ -106,8 +109,8 @@
 
     <!-- Pagination -->
     <div class="pagination">
-        <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
-    </div
+        <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" boundary-link-numbers="true" items-per-page="items_per_page" ng-change="pageChanged()"></uib-pagination>
+    </div>
 
     <!-- New Post Modal -->
     <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -27,10 +27,13 @@
                     <span class="button-label">Make a new post</span>
                 </div>
             </a>
-
+            <!-- Pagination -->
+            <div class="pagination">
+                <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" boundary-link-numbers="true" items-per-page="items_per_page" ng-change="pageChanged()"></uib-pagination>
+            </div>
             <div class="profile">
                 <div class="recommend">
-                    <div class="posting" ng-repeat="post in posts">
+                    <div class="posting" ng-repeat="post in posts" ng-show="post.show">
                         <div class="info">
                             <img class="profile-picture" ng-src="{{post.thumbnail}}" alt="profile picture"/>
                             <div class="left-info">
@@ -103,24 +106,7 @@
             </div>
         </div>
     </div>
+    <!-- Pagination -->
     <div class="pagination">
-        <div class="container">
-            <ul>
-                <li class="arrow prev"><a href="#">&laquo;</a></li>
-                <li>
-                    <ol>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">7</a></li>
-                        <li><a href="#">8</a></li>
-                        <li><a href="#">9</a></li>
-                    </ol>
-                </li>
-                <li class="arrow next"><a href="#">&raquo;</a></li>
-            </ul>
-        </div>
+        <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" boundary-link-numbers="true" items-per-page="items_per_page" ng-change="pageChanged()"></uib-pagination>
     </div>
