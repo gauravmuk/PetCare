@@ -145,6 +145,8 @@ $border-color: #CECECE;
 	img.profile-picture {
 		height: 200px;
 		padding: 10px;
+		max-width: 160px;
+		height: auto;
 	}
 
 	img.review-user-picture {
@@ -237,6 +239,8 @@ $border-color: #CECECE;
 			height: 160px;
 			padding: 0;
 			margin-right: 20px;
+    		max-width: 160px;
+    		height: auto;
 		}
 
 		.nav-bar .nav-item {

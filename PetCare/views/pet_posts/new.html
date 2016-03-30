@@ -19,7 +19,7 @@
                 <form ng-controller="petPostingFormController" name="postingForm">
                     <div class="form-group">
                         <label for="petImageToUpload">Upload your pet's picture:</label>
-                        <input type="file" class="file-input" name="petImageToUpload" id="petImageToUpload">
+                        <input type="file" class="file-input" name="userImageToUpload" id="userImageToUpload" ng-model="thumbnail" file-model="imageFile">
                     </div>
 
                     <div class="form-group">
@@ -30,7 +30,7 @@
 
                     <div class="form-group select-pet">
                         <label >Pet</label>
-                        <select class="form-control" required>
+                        <select class="form-control" name="inputPet" ng-model="inputPet" required>
                             <option value="{{ pet._id }}" ng-repeat="pet in userPets">{{ pet.name }}</option>
                         </select>
                     </div>

@@ -6,6 +6,7 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 	$scope.userPets = [];
 	$scope.userId = $cookies.get('userID');
 	
+	// Populate user's pets
 	$http.get('/api/users/' + $scope.userId + '/pets').success(function(data) {
 		$scope.userPets = data;
 	});
@@ -15,34 +16,69 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 		// Check if form information is valid	
 	    if (isValid) {
 
-			// Create object to be sent through the POST request
-			var dataObj = {
-			    user: $cookies.get('userID'),
-	    		pet: 1,		// TODO: Use actual pet id
-				title: $scope.title,
-				duration: $scope.duration,
-				location: $scope.location,
-				price: $scope.price,
-				supplies: $scope.supplies,
-				additional_info: $scope.additional_info,
-				description: $scope.description,
-				thumbnail: '/images/cat1.jpg',	// TODO: Get user image
-				status: 'open',
-			};
+	        var file = $scope.imageFile;
 
-			// Make POST request to the /petpostings
+	        var thumbnail = '';
 
-			$http.post('/api/petpostings', {data: dataObj})
+	        // If user selected a file, upload it
+	        if (file) {
 
-				.success(function(data, status, headers, config) {
+				var fd = new FormData();
+				fd.append('file', file);
 
-	    			$location.path(headers()['location']);
+				$http.post('/api/upload', fd, {
+					transformRequest: angular.identity,
+					headers: {'Content-Type': undefined}
+				})
 
-				}).error(function(data, status, headers, config) {
-	    			
-			});
+				.success(function(data) {
+					console.log(data);
+
+					if (data.url != null) {
+						thumbnail = data.url;
+						sendPost(thumbnail);
+					} else {
+						sendPost('/images/cat1.jpg');
+					}
+
+				});
+
+		    } else {
+				sendPost('/images/cat1.jpg');
+		    }
 
 		}
+
+	};
+
+	function sendPost(userThumbnail) {
+
+		// Create object to be sent through the POST request
+		var dataObj = {
+		    user: $cookies.get('userID'),
+    		pet: $scope.inputPet,
+			title: $scope.title,
+			duration: $scope.duration,
+			location: $scope.location,
+			price: $scope.price,
+			supplies: $scope.supplies,
+			additional_info: $scope.additional_info,
+			description: $scope.description,
+			thumbnail: userThumbnail,
+			status: 'open',
+		};
+
+		// Make POST request to the /petpostings
+
+		$http.post('/api/petpostings', {data: dataObj})
+
+			.success(function(data, status, headers, config) {
+
+    			$location.path(headers()['location']);
+
+			}).error(function(data, status, headers, config) {
+    			
+		});
 
 	};
 
@@ -119,31 +155,67 @@ pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$c
 
 		// Check if form information is valid	
 	    if (isValid) {
-			// Create object to be sent through the POST request
-			var dataObj = {
-			    user: $cookies.get('userID'),
-				name: $scope.name,
-				type: $scope.type,
-				breed: $scope.breed,
-				gender: $scope.gender,
-				age: $scope.age,	// TODO: make sure it is an integer
-				description: $scope.description,
-				rating: 0,
-				photo: '/images/cat1.jpg'
-			};
 
-			// Make POST request to the /petpostings
-			$http.post('/api/pets', {data: dataObj})
+	        var file = $scope.imageFile;
 
-				.success(function(data, status, headers, config) {
+	        var thumbnail = '';
 
-	    			$location.path(headers()['location']);
+	        // If user selected a file, upload it
+	        if (file) {
 
-				}).error(function(data, status, headers, config) {
-	    			
-			});
+				var fd = new FormData();
+				fd.append('file', file);
+
+				$http.post('/api/upload', fd, {
+					transformRequest: angular.identity,
+					headers: {'Content-Type': undefined}
+				})
+
+				.success(function(data) {
+					console.log(data);
+
+					if (data.url != null) {
+						thumbnail = data.url;
+						sendPet(thumbnail);
+					} else {
+						sendPet('/images/cat1.jpg');
+					}
+
+				});
+
+		    } else {
+				sendPet('/images/cat1.jpg');
+		    }
 
 		}
+
+	};
+
+	function sendPet(userThumbnail) {
+
+		// Create object to be sent through the POST request
+		var dataObj = {
+		    user: $cookies.get('userID'),
+			name: $scope.name,
+			type: $scope.type,
+			breed: $scope.breed,
+			gender: $scope.gender,
+			age: $scope.age,	// TODO: make sure it is an integer
+			description: $scope.description,
+			rating: 0,
+			photo: userThumbnail
+		};
+
+		// Make POST request to the /petpostings
+		$http.post('/api/pets', {data: dataObj})
+
+			.success(function(data, status, headers, config) {
+
+    			$location.path(headers()['location']);
+
+			}).error(function(data, status, headers, config) {
+    			
+		});
 
 	};
 

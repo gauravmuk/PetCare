@@ -1,42 +1,76 @@
 var petsitter_posting = angular.module('petsitter_posting', []);
 
-petsitter_posting.controller('sitterPostingFormController', ['$http', '$location', '$scope', '$cookies', 
+petsitter_posting.controller('sitterPostingFormController', ['$http', '$location', '$scope', '$cookies',
 	function($http, $location, $scope, $cookies) {
 
-	$scope.createPosting = function (isValid){
+	$scope.createPosting = function (isValid) {
 
 		// Check if form information is valid	
 	    if (isValid) {
 
-			// Create object to be sent through the POST request
-			var dataObj = {
-			    user: $cookies.get('userID'),
-				title: $scope.title,
-				types: $scope.types,
-				duration: $scope.duration,
-				location: $scope.location,
-				price: $scope.price,
-				experience: $scope.experience,
-				supplies: $scope.supplies,
-				number_of_pets: $scope.number_of_pets,
-				description: $scope.description,
-				thumbnail: '/images/default-profile-pic.png',	// TODO: Get user image
-				status: 'open',
-			};
+	        var file = $scope.imageFile;
+	        var thumbnail = '';
 
-			// Make POST request to the /sitterpostings
+	        // If user selected a file, upload it
+	        if (file) {
 
-			$http.post('/api/sitterpostings', {data: dataObj})
+				var fd = new FormData();
+				fd.append('file', file);
 
-				.success(function(data, status, headers, config) {
+				$http.post('/api/upload', fd, {
+					transformRequest: angular.identity,
+					headers: {'Content-Type': undefined}
+				})
 
-	    			$location.path(headers()['location']);
+				.success(function(data) {
+					console.log(data);
 
-				}).error(function(data, status, headers, config) {
-	    			
-			});
+					if (data.url != null) {
+						thumbnail = data.url;
+						sendPost(thumbnail);
+					} else {
+						sendPost('/images/default-profile-pic.png');
+					}
+
+				});
+
+		    } else {
+				sendPost('/images/default-profile-pic.png');
+		    }
 
 		}
+
+	};
+
+	function sendPost(userThumbnail) {
+
+		// Create object to be sent through the POST request
+		var dataObj = {
+		    user: $cookies.get('userID'),
+			title: $scope.title,
+			types: $scope.types,
+			duration: $scope.duration,
+			location: $scope.location,
+			price: $scope.price,
+			experience: $scope.experience,
+			supplies: $scope.supplies,
+			number_of_pets: $scope.number_of_pets,
+			description: $scope.description,
+			thumbnail: userThumbnail,
+			status: 'open',
+		};
+
+		// Make POST request to the /sitterpostings
+
+		$http.post('/api/sitterpostings', {data: dataObj})
+
+			.success(function(data, status, headers, config) {
+
+    			$location.path(headers()['location']);
+
+			}).error(function(data, status, headers, config) {
+    			
+		});
 
 	};
 
@@ -92,5 +126,23 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
 	$scope.apply = function() {
 		appService.apply($scope.userId, false, $scope.toPostingID, $scope.msg_content);
         $scope.msg_content = "";
+	};
+}]);
+
+
+// Tutorial link: http://www.tutorialspoint.com/angularjs/angularjs_upload_file.htm
+app.directive('fileModel', ['$parse', function ($parse) {
+	return {
+	   restrict: 'A',
+	   link: function(scope, element, attrs) {
+	      var model = $parse(attrs.fileModel);
+	      var modelSetter = model.assign;
+	      
+	      element.bind('change', function(){
+	         scope.$apply(function(){
+	            modelSetter(scope, element[0].files[0]);
+	         });
+	      });
+	   }
 	};
 }]);

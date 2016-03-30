@@ -10,8 +10,7 @@
                 <form ng-controller="petFormController" name="petForm">
                     <div class="form-group">
                         <label for="petImageToUpload">Upload your pet's picture:</label>
-                        <input type="file" class="file-input" name="petImageToUpload" id="petImageToUpload" required>
-                        <span ng-show="petForm.petImageToUpload.$touched && petForm.petImageToUpload.$invalid">This field is required.</span>
+                        <input type="file" class="file-input" name="userImageToUpload" id="userImageToUpload" ng-model="thumbnail" file-model="imageFile">
                     </div>
 
                     <div class="form-group">
