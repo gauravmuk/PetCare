@@ -459,36 +459,6 @@ footer .icons .fa:hover {
 .pagination ul {
   display: inline-block;
 }
-.pagination ul li {
-  float: left;
-}
-.pagination ul li a {
-  color: #476D82;
-  text-decoration: none;
-  border-radius: 8px;
-  position: relative;
-  display: block;
-  text-align: center;
-  margin: 0 2px;
-  width: 28px;
-  height: 28px;
-  font-size: 15px;
-  line-height: 26px;
-  -webkit-transition: all 0.15s ease-in;
-  -moz-transition: all 0.15s ease-in;
-  -ms-transition: all 0.15s ease-in;
-  -o-transition: all 0.15s ease-in;
-  transition: all 0.15s ease-in;
-}
-.pagination ul li a:hover {
-  color: #FFF;
-  background-color: #DADADA;
-}
-.pagination ul li.active a {
-  cursor: default;
-  color: #FFF;
-  background-color: #10C8CD;
-}
 
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {

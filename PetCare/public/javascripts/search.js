@@ -11,8 +11,25 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
     $scope.toPostingID; // posting_id holder for application
     $scope.msg_content = "";
 
+    // pagination
+    $scope.totalItems = 0;
+    $scope.currentPage = 1;
+    $scope.items_per_page = 5;
+    $scope.maxSize = 5;
+
     $scope.search_pet = function() {
         $http.get('/api/search_pet').success(function(data){
+            $scope.totalItems = data.length;
+            $scope.currentPage = 1;
+
+            for (var i = 0; i < data.length; i++) {
+                if (i < $scope.items_per_page) {
+                    data[i].show = true;
+                } else {
+                    data[i].show = false;
+                }
+            }
+
             $scope.posts = data;
         });
     };
@@ -31,23 +48,21 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         $scope.msg_content = "";
     };
 
-//##################pagination
+    //pagination
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+    };
 
-  $scope.totalItems = 64;
-  $scope.currentPage = 4;
-
-  $scope.setPage = function (pageNo) {
-    $scope.currentPage = pageNo;
-  };
-
-  $scope.pageChanged = function() {
-  };
-
-  $scope.maxSize = 5;
-  $scope.bigTotalItems = 175;
-  $scope.bigCurrentPage = 1;
-
-
+    $scope.pageChanged = function() {
+        for (var i = 0; i < $scope.posts.length; i++) {
+            if ((($scope.currentPage-1) * $scope.items_per_page <= i)
+            && (i < $scope.currentPage * $scope.items_per_page)) {
+                $scope.posts[i].show = true;
+            } else {
+                $scope.posts[i].show = false;
+            }
+        }
+    };
 }]);
 
 
@@ -61,8 +76,25 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
     $scope.toPostingID; // posting_id holder for application
     $scope.msg_content = "";
 
+    // pagination
+    $scope.totalItems = 0;
+    $scope.currentPage = 1;
+    $scope.items_per_page = 5;
+    $scope.maxSize = 5;
+
     $scope.search_sitter = function() {
         $http.get('/api/search_sitter').success(function(data){
+            $scope.totalItems = data.length;
+            $scope.currentPage = 1;
+
+            for (var i = 0; i < data.length; i++) {
+                if (i < $scope.items_per_page) {
+                    data[i].show = true;
+                } else {
+                    data[i].show = false;
+                }
+            }
+
             $scope.posts = data;
         });
     };
@@ -79,6 +111,22 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
     $scope.apply = function() {
         appService.apply($scope.userId, false, $scope.toPostingID, $scope.msg_content);
         $scope.msg_content = "";
+    };
+
+    //pagination
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+    };
+
+    $scope.pageChanged = function() {
+        for (var i = 0; i < $scope.posts.length; i++) {
+            if ((($scope.currentPage-1) * $scope.items_per_page <= i)
+            && (i < $scope.currentPage * $scope.items_per_page)) {
+                $scope.posts[i].show = true;
+            } else {
+                $scope.posts[i].show = false;
+            }
+        }
     };
 }]);
 

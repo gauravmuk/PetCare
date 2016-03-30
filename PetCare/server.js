@@ -216,6 +216,70 @@ var petPosting2 = new Pet_Posting({
 
 petPosting2.save();
 
+var petPosting3 = new Pet_Posting({
+    user: 1,
+    pet: 2,
+	title: 'this is posting 3',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: 'images/cat2.jpg',
+	status: 'open'
+});
+
+petPosting3.save();
+
+var petPosting4 = new Pet_Posting({
+    user: 1,
+    pet: 2,
+	title: 'this is posting 4',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: 'images/cat2.jpg',
+	status: 'open'
+});
+
+petPosting4.save();
+
+var petPosting5 = new Pet_Posting({
+    user: 1,
+    pet: 2,
+	title: 'this is posting 5',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: 'images/cat2.jpg',
+	status: 'open'
+});
+
+petPosting5.save();
+
+var petPosting6 = new Pet_Posting({
+    user: 1,
+    pet: 2,
+	title: 'this is posting 5',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: 'images/cat2.jpg',
+	status: 'open'
+});
+
+petPosting6.save();
+
 var sitterPosting1 = new Sitter_Posting({
     user: 1,
 	title: 'Cat/Dog Sitter Near Toronto',
@@ -247,8 +311,74 @@ var sitterPosting2 = new Sitter_Posting({
 	thumbnail: '/images/default-profile-pic.png',
 	status: 'open'
 });
-
 sitterPosting2.save();
+
+var sitterPosting3 = new Sitter_Posting({
+    user: 2,
+	title: '333',
+	types: 'Dogs, Cats, Birds',
+	duration: 'March 3rd to April 1st',
+	location: 'Downtown, Toronto, ON',
+	price: '20 - 25 per Day',
+	experience: '2 years',
+	supplies: 'Toys, Kennel, Clothes',
+	number_of_pets: 100,
+	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
+	thumbnail: '/images/default-profile-pic.png',
+	status: 'open'
+});
+sitterPosting3.save();
+
+var sitterPosting4 = new Sitter_Posting({
+    user: 2,
+	title: '4',
+	types: 'Dogs, Cats, Birds',
+	duration: 'March 3rd to April 1st',
+	location: 'Downtown, Toronto, ON',
+	price: '20 - 25 per Day',
+	experience: '2 years',
+	supplies: 'Toys, Kennel, Clothes',
+	number_of_pets: 100,
+	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
+	thumbnail: '/images/default-profile-pic.png',
+	status: 'open'
+});
+sitterPosting4.save();
+
+var sitterPosting5 = new Sitter_Posting({
+    user: 2,
+	title: '5',
+	types: 'Dogs, Cats, Birds',
+	duration: 'March 3rd to April 1st',
+	location: 'Downtown, Toronto, ON',
+	price: '20 - 25 per Day',
+	experience: '2 years',
+	supplies: 'Toys, Kennel, Clothes',
+	number_of_pets: 100,
+	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
+	thumbnail: '/images/default-profile-pic.png',
+	status: 'open'
+});
+sitterPosting5.save();
+
+var sitterPosting6 = new Sitter_Posting({
+    user: 2,
+	title: '6',
+	types: 'Dogs, Cats, Birds',
+	duration: 'March 3rd to April 1st',
+	location: 'Downtown, Toronto, ON',
+	price: '20 - 25 per Day',
+	experience: '2 years',
+	supplies: 'Toys, Kennel, Clothes',
+	number_of_pets: 100,
+	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
+	thumbnail: '/images/default-profile-pic.png',
+	status: 'open'
+});
+sitterPosting6.save();
+
+
+
 
 var report1 = new Report({
     to: 1,
