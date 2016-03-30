@@ -216,6 +216,54 @@ var petPosting2 = new Pet_Posting({
 
 petPosting2.save();
 
+var petPosting3 = new Pet_Posting({
+    user: 1,
+    pet: 2,
+	title: 'this is posting 3',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: 'images/cat2.jpg',
+	status: 'open'
+});
+
+petPosting3.save();
+
+var petPosting4 = new Pet_Posting({
+    user: 1,
+    pet: 2,
+	title: 'this is posting 4',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: 'images/cat2.jpg',
+	status: 'open'
+});
+
+petPosting4.save();
+
+var petPosting5 = new Pet_Posting({
+    user: 1,
+    pet: 2,
+	title: 'this is posting 5',
+	duration: '1 week',
+	location: 'Downtown, Toronto, ON',
+	price: '$110 per day',
+	supplies: 'Toys, Kennel, Clothes',
+	additional_info: 'N/A',
+	description: 'Looking for someone to take care of my cat while I am out of the country.',
+	thumbnail: 'images/cat2.jpg',
+	status: 'open'
+});
+
+petPosting5.save();
+
 var sitterPosting1 = new Sitter_Posting({
     user: 1,
 	title: 'Cat/Dog Sitter Near Toronto',

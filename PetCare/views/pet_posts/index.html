@@ -104,43 +104,10 @@
         </div>
     </div>
 
-
-
-
-
-
-    <div>
-
-
-        <div>
-            <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
-
-
-        </div>
-
-
-
-        <!--
-        <div class="container">
-            <ul>
-                <li class="arrow prev"><a href="#">&laquo;</a></li>
-                <li>
-                    <ol>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">6</a></li>
-                        <li><a href="#">7</a></li>
-                        <li><a href="#">8</a></li>
-                        <li><a href="#">9</a></li>
-                    </ol>
-                </li>
-                <li class="arrow next"><a href="#">&raquo;</a></li>
-            </ul>
-        </div>-->
-    </div>
+    <!-- Pagination -->
+    <div class="pagination">
+        <uib-pagination total-items="totalItems" ng-model="currentPage" ng-change="pageChanged()"></uib-pagination>
+    </div
 
     <!-- New Post Modal -->
     <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

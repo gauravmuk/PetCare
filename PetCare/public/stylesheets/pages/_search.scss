@@ -70,47 +70,12 @@
 
 
 .pagination {
-
 	text-align: center;
     display: block;
-
+    
 	ul {
     	display: inline-block;
-
-		li {
-			float: left;
-
-			a {
-			    color: $link-color;
-			    text-decoration: none;
-			    border-radius: 8px;
-			    position: relative;
-			    display: block;
-			    text-align: center;
-				margin: 0 2px;
-			    width: 28px;
-			    height: 28px;
-			    font-size: 15px;
-			    line-height: 26px;
-				@include transition(all 0.15s ease-in);
-
-			    &:hover {
-		    		color: $white;
-		    		background-color: $gray-dark;
-			    }
-			}
-		    &.active {
-
-		    	a {
-    				cursor: default;
-		    		color: $white;
-		    		background-color: #10C8CD;
-		    	}
-		    }
-		}
-
 	}
-
 }
 
 /* Small devices (tablets, 768px and up) */

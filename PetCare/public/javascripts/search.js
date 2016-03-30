@@ -33,19 +33,21 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
 
 //##################pagination
 
-  $scope.totalItems = 64;
-  $scope.currentPage = 4;
+    $scope.totalItems = 100;
+    $scope.currentPage = 1;
+    $scope.maxSize = 5;
 
-  $scope.setPage = function (pageNo) {
-    $scope.currentPage = pageNo;
-  };
+    $scope.isShow  = function(index) {
+        return $scope.currentPage < index ;
+    };
 
-  $scope.pageChanged = function() {
-  };
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+    };
 
-  $scope.maxSize = 5;
-  $scope.bigTotalItems = 175;
-  $scope.bigCurrentPage = 1;
+    $scope.pageChanged = function() {
+    };
+
 
 
 }]);
