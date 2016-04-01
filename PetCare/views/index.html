@@ -87,9 +87,9 @@
                                     {{ authService.getUserData().userName }}
                                 </a>
                                 <ul id="dropdown-menu" class="dropdown-menu" aria-labelledby="dropdownUserMenu">
-                                    <li><a href="/users/{{userId}}">Settings</a></li>
-                                    <li><a href="/users/{{userId}}/applications">Applications<div class="new">{{numb_new_app}}</div></a></li>
-                                    <li><a href="/users/{{userId}}/messages">Messages<div class="new">{{numb_new_msg}}</div></a></li>
+                                    <li><a href="/users/{{authService.getUserData().userID}}">Settings</a></li>
+                                    <li><a href="/users/{{authService.getUserData().userID}}/applications">Applications<div class="new">{{numb_new_app}}</div></a></li>
+                                    <li><a href="/users/{{authService.getUserData().userID}}/messages">Messages<div class="new">{{numb_new_msg}}</div></a></li>
                                     <li ng-if="authService.getUserData().userRole == 'admin'">
                                         <a href="/admin">Admin Console</a></li>
                                     </li>

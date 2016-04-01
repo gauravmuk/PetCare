@@ -214,7 +214,7 @@ var petPosting2 = new Pet_Posting({
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
 	thumbnail: 'images/cat2.jpg',
-	status: 'open'
+	status: 'closed'
 });
 
 petPosting2.save();
@@ -278,7 +278,7 @@ var petPosting6 = new Pet_Posting({
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
 	thumbnail: 'images/cat2.jpg',
-	status: 'open'
+	status: 'closed'
 });
 
 petPosting6.save();
@@ -328,7 +328,7 @@ var sitterPosting3 = new Sitter_Posting({
 	number_of_pets: 100,
 	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
 	thumbnail: '/images/default-profile-pic.png',
-	status: 'open'
+	status: 'closed'
 });
 sitterPosting3.save();
 
@@ -376,7 +376,7 @@ var sitterPosting6 = new Sitter_Posting({
 	number_of_pets: 100,
 	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
 	thumbnail: '/images/default-profile-pic.png',
-	status: 'open'
+	status: 'closed'
 });
 sitterPosting6.save();
 
@@ -624,6 +624,7 @@ app.put('/api/users/:id', function (req, res) {
 		    user.save(function (err) {
 		        if(err) {
 		        }
+    			res.status(200).send(null);
 		    });
 
 		});
@@ -982,6 +983,31 @@ app.put('/api/petpostings/:id', function (req, res) {
 		    petposting.save(function (err) {
 		        if(err) {
 		        }
+    			res.status(200).send(null);
+		    });
+
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
+}); 
+
+// Close a pet posting
+app.put('/api/petpostings/:id/close', function (req, res) {
+
+	if (isNumber(req.params.id)) {
+
+		Pet_Posting.findOne({_id: req.params.id}, function (err, petposting) {
+
+            petposting.status = 'closed';
+
+		    petposting.save(function (err) {
+		        if(err) {
+		        }
+				res.setHeader('Location', '/pet_posts/' + petposting._id);
+    			res.status(200).send(null);
 		    });
 
 		});
@@ -1087,6 +1113,31 @@ app.put('/api/sitterpostings/:id', function (req, res) {
 		    sitterposting.save(function (err) {
 		        if(err) {
 		        }
+    			res.status(200).send(null);
+		    });
+
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
+}); 
+
+// Close a sitter posting
+app.put('/api/sitterpostings/:id/close', function (req, res) {
+
+	if (isNumber(req.params.id)) {
+
+		Sitter_Posting.findOne({_id: req.params.id}, function (err, sitterposting) {
+
+            sitterposting.status = 'closed';
+
+		    sitterposting.save(function (err) {
+		        if(err) {
+		        }
+				res.setHeader('Location', '/petsitter_posts/' + sitterposting._id);
+    			res.status(200).send(null);
 		    });
 
 		});
@@ -1163,7 +1214,7 @@ app.get("/api/news/:userId", function(req, res){
 			if (err) {
 				throw err;
 			}
-			Application.find({to: req.params.userId}, function(err, messages) {
+			Application.find({to: req.params.userId}, function(err, applications) {
 				if (err) {
 					throw err;
 				}

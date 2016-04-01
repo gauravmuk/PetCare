@@ -94,6 +94,8 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 	$scope.toPostingID; // posting_id holder for application
 	$scope.msg_content = "";
 	$scope.userId = $cookies.get('userID');
+	$scope.ownPost = false;
+	$scope.closedPost = false;
 
 	$scope.rating = rating;
 	$scope.recomm_posts = [];
@@ -112,6 +114,14 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 	$http.get('/api/petpostings/' + $scope.postingID).success(function(data) {
 
 		$scope.petPosting = data;
+
+        if ($scope.petPosting.status == 'closed') {
+        	$scope.closedPost = true;
+        }
+
+        if ($scope.userId == $scope.petPosting.user._id) {
+        	$scope.ownPost = true;
+        }
 
 		// get the posting's pet number
 		var petID = $scope.petPosting.pet;
@@ -146,6 +156,21 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 		appService.apply($scope.userId, true, $scope.toPostingID, $scope.msg_content);
         $scope.msg_content = "";
 	};
+
+    $scope.closePosting = function(postId) {
+
+        // Make PUT request to /api/petpostings/:id/close
+        $http.put('/api/petpostings/' + postId + '/close', {})
+
+            .success(function(data, status, headers, config) {
+
+    			$scope.closedPost = true;
+
+            }).error(function(data, status, headers, config) {
+                
+        });
+    };
+    
 }]);
 
 pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$cookies', 

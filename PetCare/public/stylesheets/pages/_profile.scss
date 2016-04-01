@@ -39,8 +39,13 @@ $border-color: #CECECE;
 					margin-right: 40px;
     			}
 
-    			&:first-child {
+    			&:first-child, &.closedPost {
     				margin-bottom: 5px;
+    			}
+
+    			&.closedPost {
+					background-color: #B1B1B1;
+					cursor: default;
     			}
 
 				span {
@@ -223,7 +228,7 @@ $border-color: #CECECE;
 				.button {
 	    			margin: 0;
 
-	    			&:first-child {
+	    			&:first-child, &.closedPost {
 	    				margin-bottom: 10px;
 	    			}
 				}

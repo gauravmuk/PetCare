@@ -117,6 +117,25 @@
 	    padding-right: 0;
 	}
 
+	.button.closeButton {
+
+		position: relative !important;
+
+		.fa {
+			position: absolute;
+			left: 20px;
+			font-size: 20px;
+			top: 7px;
+		}
+
+		span {    
+			position: relative !important;
+		    top: -1px !important;
+		    right: -7px !important;
+		}
+
+	}
+
 }
 
 .recommendations {

@@ -65,13 +65,21 @@
                                 </span>
                             </div>
                             <div class="info-column right-corner">
-                                <button class="button apply" data-toggle="modal" data-target="#applyModal" ng-click="setPostingId(-1)">
+                                <button class="button apply" data-toggle="modal" data-target="#applyModal" ng-click="setPostingId(-1)" ng-hide="closedPost">
                                     <img class="icon" src="assets/icon-message.svg">
                                     <span>Apply</span>
                                 </button>
-                                <button class="button apply" data-toggle="modal" data-target="#reviewModal">
+                                <button class="button apply closedPost" ng-show="closedPost">
+                                    <img class="icon" src="assets/icon-message.svg">
+                                    <span>Closed</span>
+                                </button>
+                                <button class="button apply" data-toggle="modal" data-target="#reviewModal" ng-hide="ownPost">
                                     <img class="icon" src="assets/icon-comment.svg">
                                     <span>Review</span>
+                                </button>
+                                <button class="button apply closeButton" ng-show="ownPost && !closedPost" ng-click="closePosting(petPosting._id)">
+                                    <i class="fa fa-times"></i>
+                                    <span>Close Posting</span>
                                 </button>
                             </div>
                         </div>

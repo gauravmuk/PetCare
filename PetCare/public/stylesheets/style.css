@@ -534,8 +534,12 @@ footer .icons .fa:hover {
   float: left;
   margin-right: 40px;
 }
-.profile .user_info .right-corner .button:first-child {
+.profile .user_info .right-corner .button:first-child, .profile .user_info .right-corner .button.closedPost {
   margin-bottom: 5px;
+}
+.profile .user_info .right-corner .button.closedPost {
+  background-color: #B1B1B1;
+  cursor: default;
 }
 .profile .user_info .right-corner .button span {
   position: relative;
@@ -689,7 +693,7 @@ footer .icons .fa:hover {
   .profile .user_info .right-corner .button {
     margin: 0;
   }
-  .profile .user_info .right-corner .button:first-child {
+  .profile .user_info .right-corner .button:first-child, .profile .user_info .right-corner .button.closedPost {
     margin-bottom: 10px;
   }
   .profile .info {
@@ -962,6 +966,20 @@ footer .icons .fa:hover {
   width: 100px;
   padding-left: 0;
   padding-right: 0;
+}
+.post .button.closeButton {
+  position: relative !important;
+}
+.post .button.closeButton .fa {
+  position: absolute;
+  left: 20px;
+  font-size: 20px;
+  top: 7px;
+}
+.post .button.closeButton span {
+  position: relative !important;
+  top: -1px !important;
+  right: -7px !important;
 }
 
 .recommendations {

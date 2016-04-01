@@ -76,8 +76,8 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 
 }]);
 
-petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService',
-	function($http, $scope, $routeParams, $cookies, appService) {
+petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService', '$location',
+	function($http, $scope, $routeParams, $cookies, appService, $location) {
 	
 	$scope.sitterPosting = [];
 	$scope.postingID = $routeParams.id;
@@ -85,6 +85,8 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
 	$scope.toPostingID; // posting_id holder for application
 	$scope.msg_content = "";
 	$scope.userId = $cookies.get('userID');
+	$scope.ownPost = false;
+	$scope.closedPost = false;
 
 	$scope.rating = rating;
 	$scope.recomm_posts = [];
@@ -101,6 +103,14 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
 	$http.get('/api/sitterpostings/' + $scope.postingID).success(function(data) {
 
 		$scope.sitterPosting = data;
+
+        if ($scope.sitterPosting.status == 'closed') {
+        	$scope.closedPost = true;
+        }
+
+        if ($scope.userId == $scope.sitterPosting.user._id) {
+        	$scope.ownPost = true;
+        }
 
 		// If user has a rating, store it
 		if ($scope.sitterPosting.user) {
@@ -127,6 +137,21 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
 		appService.apply($scope.userId, false, $scope.toPostingID, $scope.msg_content);
         $scope.msg_content = "";
 	};
+
+    $scope.closePosting = function(postId) {
+
+        // Make PUT request to /api/petpostings/:id/close
+        $http.put('/api/sitterpostings/' + postId + '/close', {})
+
+            .success(function(data, status, headers, config) {
+
+    			$scope.closedPost = true;
+
+            }).error(function(data, status, headers, config) {
+                
+        });
+    };
+
 }]);
 
 
