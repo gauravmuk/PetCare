@@ -1806,14 +1806,27 @@ function getPetRating(petID){
 
 /* Functions for mocha testing */
 
+var mochaTestServer;
+
 exports.startServer = function(port) {
-    console.log('\nMocha Testing: Start Server on Port ' + port + '\n');
-    app.listen(port);
+    mochaTestServer = app.listen(port);
 };
 
 // close destroys the server.
-// exports.closeServer = function() {
-// 	console.log('Mocha Testing Ends: close server');
-//     app.close();
-// };
+exports.closeServer = function() {
+    mochaTestServer.close();
+};
+
+// Remove a given user at end of Mocha testing
+exports.removeMochaTestUser = function(userName) {
+	User.remove({ username:userName }, function(err, result){
+		if(err){
+			throw err;
+		}
+		else{
+			// On success, log result
+			console.log(result);
+		}
+	});
+}
 
