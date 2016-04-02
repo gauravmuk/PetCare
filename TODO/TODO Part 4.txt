@@ -1,0 +1,78 @@
+TODO Part 4
+
+Default data (to import)
+	Taewoo
+	- pet postings - 10 total (5 per user)
+	- sitter postings - 10 total (5 per user)
+	- applications - 4 total (2 per user)
+	- messages - 4 total (2 per user)
+
+	David
+	- forum posts - 4 total (2 per user)
+	- pets - 4 (2 per user)
+
+	Rahal
+	- users - 2 (2 regular, 1 admin - ID = 1)
+	- report - 2 total (2 per user)
+	- review - 4 total (2 per user)
+	- pet review - 4 total (2 per user)
+
+Rahal
+- mocha - Delete, put for admin
+- security - passport - hashing and salting, show how we hashed/salted
+- performance - gzip
+- separate test data into separate file
+- remove admin '@petcare.com'
+
+Taewoo
+- search page
+	- if not logged in - try to get location (or use Toronto)
+	- if logged in - use user location
+	- save query in cookie
+	- don't show closed postings
+- security - injection
+- tests for search, applications, messages
+- add any tests for REST API
+- fix test data for postings, message, applications
+
+
+Lisa
+- User profile page
+- Add edit user page
+- Add edit pet button
+- Add message if user is banned
+- Redirect buttons to login
+	Postings page
+		- apply
+		- review
+	Search page (both pages)
+		- apply
+	User profile
+		- message
+		- report
+		Postings
+			- apply
+- write MVC
+- setup Heroku
+- add any tests for REST API
+	- login
+	- facebook, twitter
+- login - display error message
+- separate routes
+- add .md readme
+
+David
+- Update form validation
+	- add datepicker to form
+- Performance - set expiry dates
+- Disable apply, review
+- Highlight posting type on search page
+- add any tests for REST API - pets, postings
+- fix data for pet, forum postings, report
+- make a test user (admin) (user id 1) - messages, postings, applications
+
+Everyone
+- mocha tests for REST API
+- Documentation for REST API
+	- method, url, parameters, description
+- Description of different sections and features

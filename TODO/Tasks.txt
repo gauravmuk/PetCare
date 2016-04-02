@@ -1,0 +1,71 @@
+Lisa
+- create files for SASS, AngularJS 2.0
+- Design user interface
+- Everything except login/registration
+- Create design in photoshop - add classes
+- settings pages
+
+David
+- front page
+- navigation
+- search in navigation bar - display all postings
+- pet - type, description, age, price, rating, pictures
+
+Taewoo
+- registration
+- sign in/log in - social network link
+- user profile - name, city, country, email, phone number, description, rating, add pets
+
+Rahal
+- 2 types of postings - one offer to take care of pet, one needs their pet taken care of
+- all postings
+- specific posting - pet (tag the pet), price, duration, date range, specific requirements, 
+	requirements form - food provided by owner (radio button), city
+- type 2 user - type of pet, date available, price range, location
+
+Example site:
+http://pic-collage.com/
+https://www.airbnb.ca/
+yelp.com
+https://www.studypool.com/
+
+Admin page
+	- all users
+	- remove users
+	- remove pets
+	- edit user info
+	- delete comments
+	- add if there is time
+
+- direct login for admin page
+- new, delete, all posts
+- rating system - stars
+- owners of similar pets will be grouped together, group based on location
+- notification for users in the navigation bar
+
+- group pages - sharing information about pets, upload ideas about pets
+- photo albums for pets, descriptions
+- subprofiles for pets
+
+- AngularJS 2.0
+- SASS
+- 1 User page for demo
+
+- create pull request if there is a conflict
+- use git stash if there is a conflict, git pull, git stash apply
+
+Phase 2 tasks:
+- Login and authentication - Lisa
+- REST API - Lisa
+- Set up backend and connect to DB - Rahal
+- Performance - David
+- Security - Taewoo
+- Testing - each person tests their own functions
+- mongoDB setup - Rahal
+
+Functionality
+User / Profiles / Authentication - Lisa
+Rates / Comments - Rahal
+Recommendation System / Search - Taewoo
+Social Network - David
+Admin - Rahal
