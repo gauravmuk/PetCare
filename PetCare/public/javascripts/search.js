@@ -17,8 +17,20 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
     $scope.items_per_page = 5;
     $scope.maxSize = 5;
 
+    // search queries
+    $scope.pet = "";
+    $scope.location = "";
+    $scope.min_price = "";
+
     $scope.search_pet = function() {
-        $http.get('/api/search_pet').success(function(data){
+        if ($scope.pet === "")
+            $scope.pet = "none";
+        if ($scope.location === "")
+            $scope.location = "none";
+        if ($scope.min_price === "")
+            $scope.min_price = "none";
+
+        $http.get('/api/search_pet/' + $scope.pet + "/" + $scope.location + "/" + $scope.min_price + "/" + $scope.userId).success(function(data){
             $scope.totalItems = data.length;
             $scope.currentPage = 1;
 
@@ -32,6 +44,13 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
 
             $scope.posts = data;
         });
+
+        if ($scope.pet === "none")
+            $scope.pet = "";
+        if ($scope.location === "none")
+            $scope.location = "";
+        if ($scope.min_price === "none")
+            $scope.min_price = "";
     };
 
     $scope.showDetailPost = function(postId) {

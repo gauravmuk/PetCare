@@ -1339,18 +1339,50 @@ app.get("/api/news/:userId", function(req, res){
 });
 
 // Search pet postings
-app.get("/api/search_pet", function(req, res){
+app.get("/api/search_pet/:pet/:location/:min_price/:userId", function(req, res){
 	var petposting = [];
+
+	var pet = req.params.pet;
+	var location = req.params.location;
+	var min_price = req.params.min_price;
+	var userId = req.params.userId;
 
 	Pet_Posting.find({}).populate('pet').exec(function(err, petposting) {
 		if (err) {
 			throw err;
 		}
 
+		var regex_pet = new RegExp(".*" + pet + ".*", "i");
+		var regex_location = new RegExp(".*" + location + ".*", "i");
+
 		// create JSON object
 		var data = [];
 		for (var i = 0; i < petposting.length; i++) {
+			var rank = 0;
+
+			if (pet === "none") {
+				rank += 1;
+			} else if (petposting[i]['pet']['type'].match(regex_pet)) {
+				console.log('it worked!!!');
+				rank += 2;
+			}
+
+			if (location === "none") {
+				rank += 1;
+			} else if (petposting[i]['location'].match(regex_location)) {
+				rank += 2;
+ 			}
+
+			if (min_price === "none") {
+				rank += 1;
+			} else if (Number(min_price) >= Number(petposting[i]['price'])) {
+				rank += 2;
+			} else {
+				continue;
+			}
+
 			data.push({
+				rank: rank,
 				posting_id: petposting[i]['_id'],
 				user_id: petposting[i]['user'],
 				pet_id: petposting[i]['pet']['_id'],
@@ -1366,7 +1398,7 @@ app.get("/api/search_pet", function(req, res){
 			});
 		}		
 
-		console.log(data);
+		//console.log(data);
 		res.json(data);
 	});
 });
@@ -1493,6 +1525,7 @@ app.get("/api/applications/:userId", function(req,res){
 // Post a new application
 app.post("/api/application", function(req, res){
 	var post = [];
+
 	Pet_Posting.find({_id: req.body.posting_id}, function(err, post){
 		if (err) {
 			throw err;
