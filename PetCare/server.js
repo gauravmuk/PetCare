@@ -508,6 +508,11 @@ function isNumber(value) {
     return /^\d+$/.test(value);
 };
 
+// Returns true if the value is a String
+function isString(value) {
+    return /^\w+$/.test(value);
+};
+
 /**********************************************************************/
 
 /* Application Routes */
@@ -693,14 +698,9 @@ app.put("/api/users/:id/ban", function(req, res){
 });
 
 // Return the pets for a given user
-app.get("/api/users/:id/pets", function(req,res){
-
+app.get("/api/users/:id/pets", function(req, res){
 	if (isNumber(req.params.id)) {
-
-		var inbox = [];
-		var sent = [];
-
-		Pet.find({user: req.params.id}).populate('user').exec(function(err, pet) {
+		Pet.find({ user: req.params.id }).populate('user').exec(function(err, pet) {
 			if (err) {
 				throw err;
 			}
@@ -712,6 +712,47 @@ app.get("/api/users/:id/pets", function(req,res){
 		res.status(400).send({ error: "Invalid ID" });
 	}
 
+});
+
+// Return the closed or open posts for a given user
+app.get("/api/users/:id/posts/:status", function(req, res){
+	if (isNumber(req.params.id) && isString(req.params.status)) {
+		var posts = [];
+		Sitter_Posting.find({ user: req.params.id, status: req.params.status }).populate('user').exec(function(err, sitter_post) {
+			if (err) {
+				throw err;
+			}
+			if (sitter_post.length > 0) {
+				posts = posts.concat(sitter_post);
+			}
+
+			Pet_Posting.find({ user: req.params.id, status: req.params.status }).populate('pet').exec(function(err, pet_post) {
+				if (err) {
+					throw err;
+				}
+
+				if (pet_post.length > 0) {
+					posts = posts.concat(pet_post);
+				}
+				res.json(posts);
+			});
+		});
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+});
+
+app.get("/api/users/:id/reviews", function(req, res){
+	if (isNumber(req.params.id)) {
+		Review.find({ to: req.params.id}).populate('from').exec(function(err, reviews) {
+			if (err) {
+				throw err;
+			}
+			res.json(reviews);
+		});
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
 });
 
 // Update user information

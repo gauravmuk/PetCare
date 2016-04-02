@@ -46,12 +46,12 @@
             </div>
 
             <!-- Pets -->
-            <div class="pets">
+            <div class="pets" ng-repeat="pet in pets">
                 <div class="pet">
                     <div class="info">
-                        <img class="profile-picture" src="/images/cat1.jpg" alt="pet picture"/>
+                        <img class="profile-picture" ng-src="{{ pet.photo }}" alt="pet picture"/>
                         <div class="left-info">
-                            <div class="title">Pudding</div>
+                            <div class="title">{{ pet.name }}</div>
                             <span class="rating">
                                 &#9733;&#9733;&#9733;&#9733;&#9734; 
                                 <a class='showReview'>13 Reviews</a>
@@ -60,281 +60,162 @@
                                 <div class="info-column">
                                     <span class="info-piece icon-span">
                                         <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
-                                        <span class="value">Cat</span>
+                                        <span class="value">{{ pet.type }}</span>
                                         </span>
                                         <span class="info-piece icon-span">
                                             <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
-                                            <span class="value">2 years old</span>
+                                            <span class="value">{{ pet.age }} years old</span>
                                         </span>
                                     </div>
                                     <div class="info-column">
                                         <span class="info-piece">
                                             <span class="name">Gender</span>
-                                            <span class="value">Neutered male</span>
+                                            <span class="value">{{ pet.gender }}</span>
                                         </span>
                                         <span class="info-piece">
                                             <span class="name">Breed</span>
-                                            <span class="value">Manx</span>
+                                            <span class="value">{{ pet.breed }}</span>
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <p class="description">
-                            He is my best buddy. He likes tuna.
-                        </p>
                     </div>
-                    <div class="pet">
-                        <div class="info">
-                            <img class="profile-picture" src="/images/cat2.jpg" alt="pet picture"/>
-                            <div class="left-info">
-                                <div class="title">Apple</div>
-                                <span class="rating">
-                                    &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
-                                </span>
-                                <div>
-                                    <div class="info-column">
-                                        <span class="info-piece icon-span">
-                                            <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
-                                            <span class="value">Cat</span>
-                                            </span>
-                                            <span class="info-piece icon-span">
-                                                <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
-                                                <span class="value">2 years old</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <span class="info-piece">
-                                                <span class="name">Gender</span>
-                                                <span class="value">Neutered male</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="name">Breed</span>
-                                                <span class="value">Manx</span>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="description">He is my second best buddy. He likes apple.</p>
-                        </div>
-                    </div>
-
-                    <!-- Postings -->
-                    <div class="postings">
-                        <div class="posting">
-                            <div class="info">
-                                <img class="profile-picture" src="/images/cat1.jpg" alt="pet picture"/>
-                                <div class="left-info">
-                                    <div class="title"><a href="/post_pet">Finding a kind pet sitter.</a></div>
-                                    <div>
-                                        <div class="info-column">
-                                            <span class="rating">
-                                                &#9733;&#9733;&#9733;&#9733;&#9734;
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
-                                                <span class="value">Cat</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-calendar.svg"></span>
-                                                <span class="value">March 3rd to April 1st</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-location.svg"></span>
-                                                <span class="value">Downtown, Toronto, ON</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-price.svg"></span>
-                                                <span class="value">25 per day</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
-                                                <span class="value">2 years old</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="description">
-                                I'm going to aboard for one month. My pet's name is Pudding. He is introvert and usually quiet. He likes to eat tuna but he can eat normal cat food...
-                                 <a href="/post_pet">See More</a>
-                             </p>
-                        </div>
-                        <div class="posting">
-                            <div class="info">
-                                <img class="profile-picture" src="/images/default-profile-pic.png" alt="profile picture"/>
-                                <div class="left-info">
-                                    <div class="title"><a href="/post_petsitter">Let me take care of your pet!</a></div>
-                                    <div>
-                                        <div class="info-column">
-                                            <span class="rating">
-                                                &#9733;&#9733;&#9733;&#9734;&#9734; 
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
-                                                <span class="value">Cats, Dogs, Hampsters</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-calendar.svg"></span>
-                                                <span class="value">March 3rd to April 1st</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-location.svg"></span>
-                                                <span class="value">Downtown, Toronto, ON</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-price.svg"></span>
-                                                <span class="value">20 ~ 25 per day</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
-                                                <span class="value">2 years experience</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="description">
-                                I'm really nice guy. You can see my reviews. Everyone satisfies with my service.
-                                100% safety guarantees. If you'd like to bring your own food for you pet, you...
-                                 <a href="/post_petsitter">See More</a>
-                             </p>
-                        </div>
-                    </div>
-
-                    <!-- History -->
-                    <div class="histories">
-                        <div class="history">
-                            <div class="info">
-                                <img class="profile-picture" src="/images/cat1.jpg" alt="pet picture"/>
-                                <div class="left-info">
-                                    <div class="title"><a href="/post_pet">Finding a kind pet sitter.</a></div>
-                                    <div>
-                                        <div class="info-column">
-                                            <span class="rating">
-                                                &#9733;&#9733;&#9733;&#9733;&#9734; 
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
-                                                <span class="value">Cat</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-calendar.svg"></span>
-                                                <span class="value">March 3rd to April 1st</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-location.svg"></span>
-                                                <span class="value">Downtown, Toronto, ON</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-price.svg"></span>
-                                                <span class="value">25 per day</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
-                                                <span class="value">2 years old</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <button class="closed">Closed</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="description">
-                                I'm going to aboard for one month. My pet's name is Pudding. He is introvert and usually quiet. He likes to eat tuna but he can eat normal cat food...
-                                 <a href="/post_pet">See More</a>
-                             </p>
-                        </div>
-                        <div class="history">
-                            <div class="info">
-                                <img class="profile-picture" src="/images/default-profile-pic.png" alt="profile picture"/>
-                                <div class="left-info">
-                                    <div class="title"><a href="/post_petsitter">Let me take care of your pet!</a></div>
-                                    <div>
-                                        <div class="info-column">
-                                            <span class="rating">
-                                                &#9733;&#9733;&#9733;&#9734;&#9734; 
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
-                                                <span class="value">Cats, Dogs, Hampsters</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-calendar.svg"></span>
-                                                <span class="value">March 3rd to April 1st</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-location.svg"></span>
-                                                <span class="value">Downtown, Toronto, ON</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-price.svg"></span>
-                                                <span class="value">20 ~ 25 per day</span>
-                                            </span>
-                                            <span class="info-piece">
-                                                <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
-                                                <span class="value">2 years experience</span>
-                                            </span>
-                                        </div>
-                                        <div class="info-column">
-                                            <button class="closed">Closed</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="description">
-                                I'm really nice guy. You can see my reviews. Everyone satisfies with my service.
-                                100% safety guarantees. If you'd like to bring your own food for you pet, you...
-                                 <a href="/post_petsitter">See More</a>
-                             </p>
-                        </div>
-                    </div>
-
-                    <!-- Reivews -->
-                    <div class="reviews">
-                        <div class="review">
-                            <div class="info">
-                                <img class="review-user-picture" src="/images/default-profile-pic.png" alt="pet picture"/>
-                                <div class="left-info review-info">
-                                    <div class="review-user-info">
-                                        <div class="name">
-                                            Eddie Redmayne
-                                        </div>
-                                        <div class="location">
-                                            Toronto, ON
-                                        </div>
-                                    </div>
-                                    <div class="comment">
-                                        <span class="rating review-rating">
-                                            &#9733;&#9733;&#9733;&#9733;&#9734; 
-                                        </span>
-                                        <span class="date">
-                                            1/13/2016
-                                        </span>
-                                        <p class="description review-description">
-                                            Great service! And the pets are adorable!
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <p class="description">
+                        {{ pet.description }}
+                    </p>
                 </div>
+            </div>
+
+
+            <!-- Postings -->
+            <div class="postings">
+                <div class="posting" ng-repeat="post in open_posts">
+                    <div class="info">
+                        <img class="profile-picture" ng-src="{{ post.thumbnail }}" alt="picture"/>
+                        <div class="left-info">
+                            <div class="title">
+                                <a ng-show="isNumber(post.user)" ng-href="/pet_posts/{{ post._id }}">{{ post.title }}</a>
+                                <a ng-show="!isNumber(post.user)" ng-href="/petsitter_posts/{{ post._id }}">{{ post.title }}</a>
+                            </div>
+                            <div>
+                                <div class="info-column">
+                                    <span class="rating">
+                                        &#9733;&#9733;&#9733;&#9733;&#9734;
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
+                                        <span class="value">{{ post.pet.type || post.types }}</span>
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-calendar.svg"></span>
+                                        <span class="value">{{ post.duration }}</span>
+                                    </span>
+                                </div>
+                                <div class="info-column">
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-location.svg"></span>
+                                        <span class="value">{{ post.location }}</span>
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-price.svg"></span>
+                                        <span class="value">{{ post.price }}</span>
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
+                                        <span class="value">{{ post.pet.age || post.experience }}</span>
+                                    </span>
+                                </div>
+                                <div class="info-column">
+                                    <button class="apply" data-toggle="modal" data-target="#applyModal">Apply</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="description">
+                        {{ post.description}}
+                        <a href="/post_pet">See More</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- History -->
+            <div class="histories">
+                <div class="history" ng-repeat="post in closed_posts">
+                    <div class="info">
+                        <img class="profile-picture" src="/images/cat1.jpg" alt="pet picture"/>
+                        <div class="left-info">
+                            <div class="title"><a href="/post_pet">{{ post.title }}</a></div>
+                            <div>
+                                <div class="info-column">
+                                    <span class="rating">
+                                        &#9733;&#9733;&#9733;&#9733;&#9734; 
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
+                                        <span class="value">{{ post.pet.type || post.types }}</span>
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-calendar.svg"></span>
+                                        <span class="value">{{ post.duration }}</span>
+                                    </span>
+                                </div>
+                                <div class="info-column">
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-location.svg"></span>
+                                        <span class="value">{{ post.location }}</span>
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-price.svg"></span>
+                                        <span class="value">{{ post.price }}</span>
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="/assets/icon-age.svg"></span>
+                                        <span class="value">{{ post.pet.age || post.experience }}</span>
+                                    </span>
+                                </div>
+                                <div class="info-column">
+                                    <button class="closed">Closed</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="description">
+                        {{ post.description }}
+                        <a href="/post_pet">See More</a>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Reivews -->
+            <div class="reviews">
+                <div class="review" ng-repeat="review in reviews">
+                    <div class="info">
+                        <img class="review-user-picture" ng-src="/images/default-profile-pic.png" alt="user picture"/>
+                        <div class="left-info review-info">
+                            <div class="review-user-info">
+                                <div class="name">
+                                    {{ review.from.name }}
+                                </div>
+                                <div class="location">
+                                    {{ review.from.location }}
+                                </div>
+                            </div>
+                            <div class="comment">
+                                <span class="rating review-rating">
+                                    {{ review.rating }}
+                                    &#9733;&#9733;&#9733;&#9733;&#9734; 
+                                </span>
+                                <span class="date">
+                                    {{ review.updated_at }}
+                                </span>
+                                <p class="description review-description">
+                                    {{ review.comment }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
