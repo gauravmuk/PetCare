@@ -1,17 +1,19 @@
-var express 		= require("express");
-var path 			= require("path");
-var mongoose 		= require("mongoose");
-var autoIncrement 	= require("mongoose-auto-increment");
-var bodyParser 		= require("body-parser");
-var cookieParser 	= require("cookie-parser");
-var multer 			= require("multer");
-var passport 		= require("passport");
-var LocalStrategy 	= require("passport-local");
-var session   		= require("express-session");
-var AWS 			= require('aws-sdk');
-var multiparty 		= require('multiparty');
-var fs 				= require('fs');
-var app				= express();
+var express 			= require("express");
+var path 				= require("path");
+var mongoose 			= require("mongoose");
+var autoIncrement 		= require("mongoose-auto-increment");
+var bodyParser 			= require("body-parser");
+var cookieParser 		= require("cookie-parser");
+var multer 				= require("multer");
+var passport 			= require("passport");
+var LocalStrategy 		= require("passport-local");
+var FacebookStrategy 	= require("passport-facebook")
+var session   			= require("express-session");
+var AWS 				= require('aws-sdk');
+var multiparty 			= require('multiparty');
+var fs 					= require('fs');
+var fbConfig			= require(__dirname + '/public/javascripts/fb_authenticate');
+var app					= express();
 /* Application Setup */ 
 
 // For parsing
@@ -51,8 +53,46 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new LocalStrategy(User.authenticate()));
-passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.serializeUser(function(user, done) {
+	done(null, user);
+});
+
+passport.deserializeUser(function(user, done) {
+	done(null, user);
+});
+
+passport.use(new FacebookStrategy({
+	clientID		: fbConfig.appID,
+	clientSecret	: fbConfig.appSecret,
+	callbackURL		: fbConfig.callbackUrl
+	},
+	function(accessToken, refreshToken, profile, done) {
+		process.nextTick(function() {
+			User.findOne({ 'facebook_id' : profile.id }, function(err, user) {
+				if (err) {
+					return done(err);
+				}
+				if (user) {
+					return done(null, user);
+				}
+				else {
+					var newUser = new User();
+					newUser.facebook_id				= profile.id;
+           			newUser.facebook_access_token 	= accessToken;                   
+            		newUser.name  					= profile.displayName;
+            		newUser.role  					= 'regular'
+            		// newUser.email = profile.emails[0].value;
+
+            		newUser.save(function(err) {
+              			if (err) {
+                			throw err;
+                		}
+              		return done(null, newUser);
+            		});
+				}
+			});
+		});
+	}));
 
 // Insert test data
 /**********************************************************************/
@@ -488,47 +528,53 @@ app.post('/api/register', function(req, res, next) {
 
 	// Make users who use '@petcare.com' eamils as Admins
 	var role;
-	var check = username.includes("@petcare.com");
-	check? role='admin':role='regular';
+	var role = (username.indexOf("@petcare.com") > 1)? 'admin':'regular';
 
 	User.register(new User({ username: username, name: name, rating: 0,	location: '',
 		description: '', role: role, photo: '', banned: false }), password, function(err) {
 		if (err) {
-			console.log("error when registering");
 			return next(err);
 		}
 
-		passport.authenticate('local')(req, res, function() {
-			res.send({ id: res.req.user.id, name: res.req.user.name, role: role });
+		passport.authenticate('local', { session: true })(req, res, function() {
+			res.send({ id: req.user.id, name: req.user.name, role: req.user.role });
 		});
 	});
 });
 
-app.post('/api/login', passport.authenticate('local'), function(req, res) {
-	User.findOne({_id: res.req.user.id}, function(err, user){
+app.post('/api/login', passport.authenticate('local', { session: true }), function(req, res) {
+	User.findOne({_id: req.user.id}, function(err, user){
 		if(err){
-			console.log('User Login Failed');
+			return next(err);
 		}
 		else{
-			res.send({ id: res.req.user.id, name: res.req.user.name, role: user.role });
+
+			res.send({ id: req.user.id, name: req.user.name, role: req.user.role });
 		}
 	});
 });
 
 app.get('/api/logout', function(req, res) {
 	req.logout();
-	console.log("logged out ok!")
-	res.send('Logged out!');
+	res.end();
 });
 
 app.get('/api/status', function(req, res) {
 	if (!req.isAuthenticated()) {
-		res.json(false);
+		res.json({ logged_in: false });
 	}
 	else {
-		res.json(true);
+		res.json({ logged_in: true, user: { id: req.user._id, name: req.user.name }});
 	}
-})
+});
+
+app.get('/auth/facebook', passport.authenticate('facebook', { session: true }));
+
+app.get('/auth/facebook/callback', 
+	passport.authenticate('facebook', { session: true, failureRedirect: '/signin' }),
+	function(req, res) {
+		res.redirect('/');
+	});
 
 /* REST API routes */
 app.get("/api/users/:id", function(req, res){

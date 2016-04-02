@@ -12,7 +12,9 @@ var UserSchema = new Schema(
 		rating: Number,
 		role: String,
 		photo: String,
-		banned: Boolean
+		banned: Boolean,
+		facebook_id: Number,
+		facebook_access_token: String
 	},
 	{
 	 	timestamps: { createdAt: 'created_at',

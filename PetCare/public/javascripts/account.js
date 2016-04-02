@@ -1,6 +1,6 @@
 var account = angular.module('account', []);
 
-account.controller('accountController', ['$http', '$scope', '$location', 'authService', function($http, $scope, $location, authService) {
+account.controller('accountController', ['$http', '$scope', '$location', 'authService', '$window', function($http, $scope, $location, authService, $window) {
 	
 	$scope.register = function(email, name, password) {
 		$scope.error = false;
@@ -37,5 +37,9 @@ account.controller('accountController', ['$http', '$scope', '$location', 'authSe
 			$scope.errorMessage = "Invalid username and/or password";
 			$scope.disabled = false;
 		});
+	};
+
+	$scope.facebook_login = function () {
+		$window.location = $window.location.protocol + "//" + $window.location.host + "/auth/facebook";
 	};
 }]);

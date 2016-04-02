@@ -25,7 +25,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 			userID: $cookies.get('userID'),
 			userName: $cookies.get('userName'),
 			userRole: $cookies.get('userRole')
-		};
+		}
 		return userData;
 	}
 
@@ -83,7 +83,12 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 		$http.get('/api/status')
 		  	// handle success
 		  	.success(function (data) {
-		      	user = data;
+		      	user = data.logged_in;
+		      	if (data.logged_in && $cookies.get('userID') == undefined) {
+		      		$cookies.put('userID', data.user.id);
+					$cookies.put('userName', data.user.name);
+					$cookies.put('userRole', data.user.role);
+		      	}
 		  	})
 		  // handle error
 		  	.error(function (data) {
@@ -100,8 +105,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 			$cookies.remove('userID');
 			$cookies.remove('userName');
 			$cookies.remove('userRole');
-				
-			user = true;
+			user = false;
 			deferred.resolve();
 		})
 		.error(function(data) {
