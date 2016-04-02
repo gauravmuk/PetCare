@@ -42,4 +42,8 @@ account.controller('accountController', ['$http', '$scope', '$location', 'authSe
 	$scope.facebook_login = function () {
 		$window.location = $window.location.protocol + "//" + $window.location.host + "/auth/facebook";
 	};
+
+	$scope.twitter_login = function () {
+		$window.location = $window.location.protocol + "//" + $window.location.host + "/auth/twitter";
+	};
 }]);

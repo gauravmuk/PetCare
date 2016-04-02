@@ -14,7 +14,9 @@ var UserSchema = new Schema(
 		photo: String,
 		banned: Boolean,
 		facebook_id: Number,
-		facebook_access_token: String
+		facebook_access_token: String,
+		twitter_id: Number,
+		twitter_access_token: String
 	},
 	{
 	 	timestamps: { createdAt: 'created_at',

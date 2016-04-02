@@ -8,11 +8,13 @@ var multer 				= require("multer");
 var passport 			= require("passport");
 var LocalStrategy 		= require("passport-local");
 var FacebookStrategy 	= require("passport-facebook")
+var TwitterStrategy 	= require("passport-twitter")
 var session   			= require("express-session");
 var AWS 				= require('aws-sdk');
 var multiparty 			= require('multiparty');
 var fs 					= require('fs');
 var fbConfig			= require(__dirname + '/public/javascripts/fb_authenticate');
+var twitterConfig		= require(__dirname + '/public/javascripts/twitter_authenticate');
 var app					= express();
 /* Application Setup */ 
 
@@ -92,7 +94,42 @@ passport.use(new FacebookStrategy({
 				}
 			});
 		});
-	}));
+	}
+));
+
+passport.use(new TwitterStrategy({
+	consumerKey		: twitterConfig.consumerKey,
+	consumerSecret	: twitterConfig.consumerSecret,
+	callbackURL		: twitterConfig.callbackUrl
+	},
+	function(accessToken, tokenSecret, profile, done) {
+		process.nextTick(function() {
+			User.findOne({ 'twitter_id' : profile.id }, function(err, user) {
+				if (err) {
+					return done(err);
+				}
+				if (user) {
+					return done(null, user);
+				}
+				else {
+					var newUser = new User();
+					newUser.twitter_id				= profile.id;
+           			newUser.twitter_access_token 	= accessToken;                   
+            		newUser.name  					= profile.displayName;
+            		newUser.role  					= 'regular'
+            		// newUser.email = profile.emails[0].value;
+
+            		newUser.save(function(err) {
+              			if (err) {
+                			throw err;
+                		}
+              		return done(null, newUser);
+            		});
+				}
+			});
+		});
+	}
+));
 
 // Insert test data
 /**********************************************************************/
@@ -568,13 +605,23 @@ app.get('/api/status', function(req, res) {
 	}
 });
 
+app.get('/auth/twitter', passport.authenticate('twitter', { session: true }));
+
+app.get('/auth/twitter/callback', 
+	passport.authenticate('twitter', { session: true, failureRedirect: '/signin' }),
+	function(req, res) {
+		res.redirect('/');
+	}
+);
+
 app.get('/auth/facebook', passport.authenticate('facebook', { session: true }));
 
 app.get('/auth/facebook/callback', 
 	passport.authenticate('facebook', { session: true, failureRedirect: '/signin' }),
 	function(req, res) {
 		res.redirect('/');
-	});
+	}
+);
 
 /* REST API routes */
 app.get("/api/users/:id", function(req, res){
