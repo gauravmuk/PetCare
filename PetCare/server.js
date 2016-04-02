@@ -222,7 +222,6 @@ petPosting2.save();
 var petPosting3 = new Pet_Posting({
     user: 1,
     pet: 2,
-	title: 'this is posting 3',
 	duration: '1 week',
 	location: 'Downtown, Toronto, ON',
 	price: '$110 per day',
@@ -318,7 +317,6 @@ sitterPosting2.save();
 
 var sitterPosting3 = new Sitter_Posting({
     user: 2,
-	title: '333',
 	types: 'Dogs, Cats, Birds',
 	duration: 'March 3rd to April 1st',
 	location: 'Downtown, Toronto, ON',
@@ -1232,12 +1230,13 @@ app.get("/api/news/:userId", function(req, res){
 						a_count++;
 				}
 
-				var data = "{" + JSON.stringify("messages") + ":" + JSON.stringify(m_count);
-				data += "," + JSON.stringify("applications") + ":" + JSON.stringify(a_count);
-				data += "}";
+				var data = {
+					messages: m_count,
+					applications: a_count
+				};
 
-				console.log(JSON.parse(data));
-				res.json(JSON.parse(data));
+				console.log(data);
+				res.json(data);
 			});
 		});
 
@@ -1256,27 +1255,26 @@ app.get("/api/search_pet", function(req, res){
 		}
 
 		// create JSON object
-		var data = "[";
+		var data = [];
 		for (var i = 0; i < petposting.length; i++) {
-			data += "{" + JSON.stringify("posting_id") + ":" + JSON.stringify(petposting[i]['_id']);
-			data += "," + JSON.stringify("user_id") + ":" + JSON.stringify(petposting[i]['user']);
-			data += "," + JSON.stringify("pet_id") + ":" + JSON.stringify(petposting[i]['pet']['_id']);
-			data += "," + JSON.stringify("title") + ":" + JSON.stringify(petposting[i]['title']);
-			data += "," + JSON.stringify("duration") + ":" + JSON.stringify(petposting[i]['duration']);
-			data += "," + JSON.stringify("location") + ":" + JSON.stringify(petposting[i]['location']);
-			data += "," + JSON.stringify("price") + ":" + JSON.stringify(petposting[i]['price']);
-			data += "," + JSON.stringify("description") + ":" + JSON.stringify(petposting[i]['description']);
-			data += "," + JSON.stringify("thumbnail") + ":" + JSON.stringify(petposting[i]['thumbnail']);
-			data += "," + JSON.stringify("pet_type") + ":" + JSON.stringify(petposting[i]['pet']['type']);
-			data += "," + JSON.stringify("rating") + ":" + JSON.stringify(petposting[i]['pet']['rating']);
-			data += "," + JSON.stringify("pet_age") + ":" + JSON.stringify(petposting[i]['pet']['age']);
-			data += "}";
-			if (i != petposting.length - 1) {data += ",";}
-		}
-		data += "]";
+			data.push({
+				posting_id: petposting[i]['_id'],
+				user_id: petposting[i]['user'],
+				pet_id: petposting[i]['pet']['_id'],
+				title: petposting[i]['title'],
+				duration: petposting[i]['duration'],
+				location: petposting[i]['location'],
+				price: petposting[i]['price'],
+				description: petposting[i]['description'],
+				thumbnail: petposting[i]['thumbnail'],
+				pet_type: petposting[i]['pet']['type'],
+				rating: petposting[i]['pet']['rating'],
+				pet_age: petposting[i]['pet']['age']
+			});
+		}		
 
-		console.log(JSON.parse(data));
-		res.json(JSON.parse(data));
+		console.log(data);
+		res.json(data);
 	});
 });
 
@@ -1290,26 +1288,25 @@ app.get("/api/search_sitter", function(req, res){
 		}
 
 		// create JSON object
-		var data = "[";
+		var data = [];
 		for (var i = 0; i < sitterPosting.length; i++) {
-			data += "{" + JSON.stringify("posting_id") + ":" + JSON.stringify(sitterPosting[i]['_id']);
-			data += "," + JSON.stringify("user_id") + ":" + JSON.stringify(sitterPosting[i]['user']['_id']);
-			data += "," + JSON.stringify("title") + ":" + JSON.stringify(sitterPosting[i]['title']);
-			data += "," + JSON.stringify("types") + ":" + JSON.stringify(sitterPosting[i]['types']);
-			data += "," + JSON.stringify("duration") + ":" + JSON.stringify(sitterPosting[i]['duration']);
-			data += "," + JSON.stringify("location") + ":" + JSON.stringify(sitterPosting[i]['location']);
-			data += "," + JSON.stringify("price") + ":" + JSON.stringify(sitterPosting[i]['price']);
-			data += "," + JSON.stringify("experience") + ":" + JSON.stringify(sitterPosting[i]['experience']);
-			data += "," + JSON.stringify("description") + ":" + JSON.stringify(sitterPosting[i]['description']);
-			data += "," + JSON.stringify("thumbnail") + ":" + JSON.stringify(sitterPosting[i]['thumbnail']);
-			data += "," + JSON.stringify("rating") + ":" + JSON.stringify(sitterPosting[i]['user']['rating']);
-			data += "}";
-			if (i != sitterPosting.length - 1) {data += ",";}
+			data.push({
+				posting_id: sitterPosting[i]['_id'],
+				user_id: sitterPosting[i]['user']['_id'],
+				title: sitterPosting[i]['title'],
+				types: sitterPosting[i]['types'],
+				duration: sitterPosting[i]['duration'],
+				location: sitterPosting[i]['location'],
+				price: sitterPosting[i]['price'],
+				experience: sitterPosting[i]['experience'],
+				description: sitterPosting[i]['description'],
+				thumbnail: sitterPosting[i]['thumbnail'],
+				rating: sitterPosting[i]['user']['rating']
+			});
 		}
-		data += "]";
 
-		console.log(JSON.parse(data));
-		res.json(JSON.parse(data));
+		console.log(data);
+		res.json(data);
 	});
 });
 
@@ -1343,7 +1340,9 @@ app.get("/api/applications/:userId", function(req,res){
 				}
 
 				// create JSON object
-				var data = "{" + JSON.stringify("received") + ": [";
+				var received_json = [];
+				var sent_json = [];
+
 				for (var i = 0; i < received.length; i++) {
 					if (received[i]['isPetPost']) {
 						var posting_id = received[i]['pet_posting'];
@@ -1353,18 +1352,18 @@ app.get("/api/applications/:userId", function(req,res){
 						var posting_id = received[i]['sitter_posting'];
 						var url = "/petsitter_posts/" + posting_id;
 					}
-					data += "{" + JSON.stringify("from") + ":" + JSON.stringify(received[i]['from']['name']);
-					data += "," + JSON.stringify("from_id") + ":" + JSON.stringify(received[i]['from']['_id']);
-					data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(received[i]['created_at']);
-					data += "," + JSON.stringify("message") + ":" + JSON.stringify(received[i]['message']);
-					data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
-					data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
-					data += "," + JSON.stringify("read") + ":" + JSON.stringify(received[i]['read']);
-					data += "," + JSON.stringify("app_id") + ":" + JSON.stringify(received[i]['_id']);
-					data += "}";
-					if (i != received.length - 1) {data += ",";}
+					received_json.push({
+						from: received[i]['from']['name'],
+						from_id: received[i]['from']['_id'],
+						created_at: received[i]['created_at'],
+						message: received[i]['message'],
+						url: url,
+						posting_id: posting_id,
+						read: received[i]['read'],
+						app_id: received[i]['_id']
+					});
 				}
-				data += "]," + JSON.stringify("sent") + ": ["
+
 				for (var i = 0; i < sent.length; i++) {
 					if (sent[i]['isPetPost']) {
 						var posting_id = sent[i]['pet_posting'];
@@ -1373,19 +1372,23 @@ app.get("/api/applications/:userId", function(req,res){
 						var posting_id = sent[i]['sitter_posting'];
 						var url = "/petsitter_posts/" + posting_id;
 					}
-					data += "{" + JSON.stringify("to") + ":" + JSON.stringify(sent[i]['to']['name']);
-					data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(sent[i]['created_at']);
-					data += "," + JSON.stringify("message") + ":" + JSON.stringify(sent[i]['message']);
-					data += "," + JSON.stringify("url") + ":" + JSON.stringify(url);
-					data += "," + JSON.stringify("posting_id") + ":" + JSON.stringify(posting_id);
-					data += "," + JSON.stringify("read") + ":" + JSON.stringify(sent[i]['read']);
-					data += "}";
-					if (i != sent.length - 1) {data += ",";}
+					sent_json.push({
+						to: sent[i]['to']['name'],
+						created_at: sent[i]['created_at'],
+						message: sent[i]['message'],
+						url: url,
+						posting_id: posting_id,
+						read: sent[i]['read']
+					});
 				}
-				data += "]}"
 
-				console.log(JSON.parse(data));
-				res.json(JSON.parse(data));
+				var data = {
+					received: received_json,
+					sent: sent_json
+				};
+
+				console.log(data);
+				res.json(data);
 			});
 		});
 
@@ -1449,29 +1452,36 @@ app.get("/api/messages/:userId", function(req,res){
 				}
 
 				// create JSON object
-				var data = "{" + JSON.stringify("inbox") + ": [";
+				var inbox_json = [];
+				var sent_json = [];
+
 				for (var i = 0; i < inbox.length; i++) {
-					data += "{" + JSON.stringify("from") + ":" + JSON.stringify(inbox[i]['from']['name']);
-					data += "," + JSON.stringify("from_id") + ":" + JSON.stringify(inbox[i]['from']['_id']);
-					data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(inbox[i]['created_at']);
-					data += "," + JSON.stringify("message") + ":" + JSON.stringify(inbox[i]['message']);
-					data += "," + JSON.stringify("read") + ":" + JSON.stringify(inbox[i]['read']);
-					data += "," + JSON.stringify("msg_id") + ":" + JSON.stringify(inbox[i]['_id']) + "}";
-					if (i != inbox.length - 1) {data += ",";}
-
+					inbox_json.push({
+						from: inbox[i]['from']['name'],
+						from_id: inbox[i]['from']['_id'],
+						created_at: inbox[i]['created_at'],
+						message: inbox[i]['message'],
+						read: inbox[i]['read'],
+						msg_id: inbox[i]['_id']
+					});
 				}
-				data += "]," + JSON.stringify("sent") + ": ["
+
 				for (var i = 0; i < sent.length; i++) {
-					data += "{" + JSON.stringify("to") + ":" + JSON.stringify(sent[i]['to']['name']);
-					data += "," + JSON.stringify("created_at") + ":" + JSON.stringify(sent[i]['created_at']);
-					data += "," + JSON.stringify("message") + ":" + JSON.stringify(sent[i]['message']);
-					data += "," + JSON.stringify("read") + ":" + JSON.stringify(sent[i]['read']) + "}";
-					if (i != sent.length - 1) {data += ",";}
+					sent_json.push({
+						to: sent[i]['to']['name'],
+						created_at: sent[i]['created_at'],
+						message: sent[i]['message'],
+						read: sent[i]['read']
+					});
 				}
-				data += "]}"
 
-				console.log(JSON.parse(data));
-				res.json(JSON.parse(data));
+				var data = {
+					inbox: inbox_json,
+					sent: sent_json
+				};
+
+				console.log(data);
+				res.json(data);
 			});
 		});
 
