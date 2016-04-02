@@ -264,13 +264,26 @@ var pet2 = new Pet({
 
 pet2.save();
 
+var pet3 = new Pet({
+	name: 'doggy',
+	user: 2,
+	type: 'dog',
+	breed: 'Persian',
+	gender: 'Male',
+	age: 5,
+	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
+	rating: 4
+});
+
+pet3.save();
+
 var petPosting1 = new Pet_Posting({
     user: 1,
     pet: 1,
 	title: 'Looking for a kind pet sitter.',
 	duration: '1 week',
 	location: 'Downtown, Toronto, ON',
-	price: '$110 per day',
+	price: '10',
 	supplies: 'Toys, Kennel, Clothes',
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
@@ -286,7 +299,7 @@ var petPosting2 = new Pet_Posting({
 	title: 'this is posting 2',
 	duration: '1 week',
 	location: 'Downtown, Toronto, ON',
-	price: '$110 per day',
+	price: '110',
 	supplies: 'Toys, Kennel, Clothes',
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
@@ -298,10 +311,10 @@ petPosting2.save();
 
 var petPosting3 = new Pet_Posting({
     user: 1,
-    pet: 2,
+    pet: 3,
 	duration: '1 week',
 	location: 'Downtown, Toronto, ON',
-	price: '$110 per day',
+	price: '110',
 	supplies: 'Toys, Kennel, Clothes',
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
@@ -313,11 +326,11 @@ petPosting3.save();
 
 var petPosting4 = new Pet_Posting({
     user: 1,
-    pet: 2,
+    pet: 3,
 	title: 'this is posting 4',
 	duration: '1 week',
 	location: 'Downtown, Toronto, ON',
-	price: '$110 per day',
+	price: '110',
 	supplies: 'Toys, Kennel, Clothes',
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
@@ -333,7 +346,7 @@ var petPosting5 = new Pet_Posting({
 	title: 'this is posting 5',
 	duration: '1 week',
 	location: 'Downtown, Toronto, ON',
-	price: '$110 per day',
+	price: '110',
 	supplies: 'Toys, Kennel, Clothes',
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
@@ -349,7 +362,7 @@ var petPosting6 = new Pet_Posting({
 	title: 'this is posting 5',
 	duration: '1 week',
 	location: 'Downtown, Toronto, ON',
-	price: '$110 per day',
+	price: '110',
 	supplies: 'Toys, Kennel, Clothes',
 	additional_info: 'N/A',
 	description: 'Looking for someone to take care of my cat while I am out of the country.',
@@ -365,7 +378,7 @@ var sitterPosting1 = new Sitter_Posting({
 	types: 'Dogs, Cats, Birds',
 	duration: 'March 3rd to April 1st',
 	location: 'Downtown, Toronto, ON',
-	price: '20 - 25 per Day',
+	price: '20 - 25',
 	experience: '2 years',
 	supplies: 'Toys, Kennel, Clothes',
 	number_of_pets: 2,
@@ -382,7 +395,7 @@ var sitterPosting2 = new Sitter_Posting({
 	types: 'Dogs, Cats, Birds',
 	duration: 'March 3rd to April 1st',
 	location: 'Downtown, Toronto, ON',
-	price: '20 - 25 per Day',
+	price: '2.0 - 2.5',
 	experience: '2 years',
 	supplies: 'Toys, Kennel, Clothes',
 	number_of_pets: 100,
@@ -397,7 +410,7 @@ var sitterPosting3 = new Sitter_Posting({
 	types: 'Dogs, Cats, Birds',
 	duration: 'March 3rd to April 1st',
 	location: 'Downtown, Toronto, ON',
-	price: '20 - 25 per Day',
+	price: '20 - 25',
 	experience: '2 years',
 	supplies: 'Toys, Kennel, Clothes',
 	number_of_pets: 100,
@@ -412,8 +425,8 @@ var sitterPosting4 = new Sitter_Posting({
 	title: '4',
 	types: 'Dogs, Cats, Birds',
 	duration: 'March 3rd to April 1st',
-	location: 'Downtown, Toronto, ON',
-	price: '20 - 25 per Day',
+	location: 'Downtown, Ottawa, ON',
+	price: '20321 - 20322',
 	experience: '2 years',
 	supplies: 'Toys, Kennel, Clothes',
 	number_of_pets: 100,
@@ -429,7 +442,7 @@ var sitterPosting5 = new Sitter_Posting({
 	types: 'Dogs, Cats, Birds',
 	duration: 'March 3rd to April 1st',
 	location: 'Downtown, Toronto, ON',
-	price: '20 - 25 per Day',
+	price: '20 - 25',
 	experience: '2 years',
 	supplies: 'Toys, Kennel, Clothes',
 	number_of_pets: 100,
@@ -444,8 +457,8 @@ var sitterPosting6 = new Sitter_Posting({
 	title: '6',
 	types: 'Dogs, Cats, Birds',
 	duration: 'March 3rd to April 1st',
-	location: 'Downtown, Toronto, ON',
-	price: '20 - 25 per Day',
+	location: 'Downtown, Ottawa, ON',
+	price: '20 - 25',
 	experience: '2 years',
 	supplies: 'Toys, Kennel, Clothes',
 	number_of_pets: 100,
@@ -1363,7 +1376,6 @@ app.get("/api/search_pet/:pet/:location/:min_price/:userId", function(req, res){
 			if (pet === "none") {
 				rank += 1;
 			} else if (petposting[i]['pet']['type'].match(regex_pet)) {
-				console.log('it worked!!!');
 				rank += 2;
 			}
 
@@ -1375,10 +1387,11 @@ app.get("/api/search_pet/:pet/:location/:min_price/:userId", function(req, res){
 
 			if (min_price === "none") {
 				rank += 1;
-			} else if (Number(min_price) >= Number(petposting[i]['price'])) {
-				rank += 2;
-			} else {
+			} else if (isNaN(min_price) || isNaN(petposting[i]['price'])
+				|| Number(min_price) > Number(petposting[i]['price'])) {
 				continue;
+			} else {
+				rank += 2;
 			}
 
 			data.push({
@@ -1404,18 +1417,52 @@ app.get("/api/search_pet/:pet/:location/:min_price/:userId", function(req, res){
 });
 
 // Search sitter postings
-app.get("/api/search_sitter", function(req, res){
+app.get("/api/search_sitter/:pet/:location/:max_price/:userId", function(req, res){
 	var sitterPosting = [];
+
+	var pet = req.params.pet;
+	var location = req.params.location;
+	var max_price = req.params.max_price;
+	var userId = req.params.userId;
 
 	Sitter_Posting.find({}).populate('user').exec(function(err, sitterPosting) {
 		if (err) {
 			throw err;
 		}
 
+		var regex_pet = new RegExp(".*" + pet + ".*", "i");
+		var regex_location = new RegExp(".*" + location + ".*", "i");
+
 		// create JSON object
 		var data = [];
 		for (var i = 0; i < sitterPosting.length; i++) {
+			var rank = 0;
+
+			if (pet === "none") {
+				rank += 1;
+			} else if (sitterPosting[i]['types'].match(regex_pet)) {
+				rank += 2;
+			}
+
+			if (location === "none") {
+				rank += 1;
+			} else if (sitterPosting[i]['location'].match(regex_location)) {
+				rank += 2;
+ 			}
+
+			var lower_price = "" + sitterPosting[i]['price'].match(/([^ ]+)/, "")[1];
+
+			if (max_price === "none") {
+				rank += 1;
+			} else if (isNaN(max_price) || isNaN(lower_price)
+				|| Number(max_price) < Number(lower_price)) {
+				continue;
+			} else {
+				rank += 2;
+			}
+
 			data.push({
+				rank: rank,
 				posting_id: sitterPosting[i]['_id'],
 				user_id: sitterPosting[i]['user']['_id'],
 				title: sitterPosting[i]['title'],
@@ -1434,7 +1481,6 @@ app.get("/api/search_sitter", function(req, res){
 		res.json(data);
 	});
 });
-
 
 // Search sitter postings
 app.get("/api/sitterpostings", function(req, res){

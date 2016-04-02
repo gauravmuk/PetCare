@@ -42,6 +42,21 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                 }
             }
 
+            data.sort(function(a, b) {
+                if (a.rank > b.rank) {
+                    return -1;
+                } else if (a.rank < b.rank) {
+                    return 1;
+                } else {
+                    if (a.rating > b.rating) {
+                        return -1;
+                    } else if (a.rating < b.rating) {
+                        return 1;
+                    }
+                }
+                return 0;
+            });
+
             $scope.posts = data;
         });
 
@@ -101,8 +116,20 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
     $scope.items_per_page = 5;
     $scope.maxSize = 5;
 
+    // search queries
+    $scope.pet = "";
+    $scope.location = "";
+    $scope.max_price = "";
+
     $scope.search_sitter = function() {
-        $http.get('/api/search_sitter').success(function(data){
+        if ($scope.pet === "")
+            $scope.pet = "none";
+        if ($scope.location === "")
+            $scope.location = "none";
+        if ($scope.max_price === "")
+            $scope.max_price = "none";
+
+        $http.get('/api/search_sitter/' + $scope.pet + "/" + $scope.location + "/" + $scope.max_price + "/" + $scope.userId).success(function(data){
             $scope.totalItems = data.length;
             $scope.currentPage = 1;
 
@@ -114,7 +141,29 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                 }
             }
 
+            data.sort(function(a, b) {
+                if (a.rank > b.rank) {
+                    return -1;
+                } else if (a.rank < b.rank) {
+                    return 1;
+                } else {
+                    if (a.rating > b.rating) {
+                        return -1;
+                    } else if (a.rating < b.rating) {
+                        return 1;
+                    }
+                }
+                return 0;
+            });
+
             $scope.posts = data;
+
+            if ($scope.pet === "none")
+                $scope.pet = "";
+            if ($scope.location === "none")
+                $scope.location = "";
+            if ($scope.max_price === "none")
+                $scope.max_price = "";
         });
     };
 

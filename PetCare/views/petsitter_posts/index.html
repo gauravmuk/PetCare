@@ -3,11 +3,15 @@
             <div class="search-container">
                 <div class="search">
                     <label for="pet-search"><span class="search-label">Pet</span></label>
-                    <input type="text" id="pet-search" placeholder="Enter pet type ..." />
+                    <input type="text" id="pet-search" placeholder="Enter pet type ..." ng-model="pet"/>
                 </div>
                 <div class="search">
-                    <label for="location-search"><span class="search-label">Location</span></label>
-                    <input type="text" id="location-search" placeholder="Enter location ..." />
+                    <label for="location-search"><span class="search-label">City</span></label>
+                    <input type="text" id="location-search" placeholder="Enter city ..." ng-model="location"/>
+                </div>
+                <div class="search">
+                    <label for="location-search"><span class="search-label">Price</span></label>
+                    <input type="text" id="location-search" placeholder="Enter maximum price ..." ng-model="max_price"/>
                 </div>
                 <a href="" class="button" ng-click="search_sitter()">
                     <span class="button-label">Search</span>
@@ -37,7 +41,7 @@
                         <div class="info">
                             <img class="profile-picture" ng-src="{{post.thumbnail}}" alt="profile picture"/>
                             <div class="left-info">
-                                <div class="title"><a href ="" ng-click="showDetailPost(post.posting_id)">{{post.title}}</a></div>
+                                <div class="title"><a href ="" ng-click="showDetailPost(post.posting_id)">{{post.title}} rank{{post.rank}}</a></div>
                                 <div>
                                     <div class="info-column">
                                         <span class="rating" id="rating{{$index}}">
