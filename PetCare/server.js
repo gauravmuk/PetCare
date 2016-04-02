@@ -1525,8 +1525,15 @@ app.get("/api/applications/:userId", function(req,res){
 // Post a new application
 app.post("/api/application", function(req, res){
 	var post = [];
+	var Posting; // either pet_posting or sitter_posting depends on posting type.
 
-	Pet_Posting.find({_id: req.body.posting_id}, function(err, post){
+	if (req.body.isPetPost) {
+		Posting = Pet_Posting;
+	} else {
+		Posting = Sitter_Posting;
+	}
+
+	Posting.find({_id: req.body.posting_id}, function(err, post){
 		if (err) {
 			throw err;
 		}
