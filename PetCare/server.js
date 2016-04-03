@@ -627,7 +627,7 @@ app.get('/api/status', function(req, res) {
 		res.json({ logged_in: false });
 	}
 	else {
-		res.json({ logged_in: true, user: { id: req.user._id, name: req.user.name }});
+		res.json({ logged_in: true, user: { id: req.user._id, name: req.user.name, role: req.user.role }});
 	}
 });
 
@@ -1701,12 +1701,11 @@ app.get("/api/messages/:userId", function(req,res){
 
 		var inbox = [];
 		var sent = [];
-
-		Message.find({to: req.params.userId}).populate('from').exec(function(err, inbox) {
+		Message.find({ to: req.params.userId }).populate('from').exec(function(err, inbox) {
 			if (err) {
 				throw err;
 			}
-			Message.find({from: req.params.userId}).populate('to').exec(function(err, sent) {
+			Message.find({ from: req.params.userId }).populate('to').exec(function(err, sent) {
 				if (err) {
 					throw err;
 				}

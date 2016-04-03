@@ -350,7 +350,7 @@ $border-color: #CECECE;
 				width: 33%;
 
 				&:nth-child(3) {
-					width: 33%;
+					width: 20%;
 				}
 			}
 
@@ -358,6 +358,7 @@ $border-color: #CECECE;
 		button.apply, button.closed {
 			float: right;
 			width: 100px;
+			margin-top: 25px;
 		}
 	}
 

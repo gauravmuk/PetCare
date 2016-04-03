@@ -43,6 +43,10 @@ table {
   border-spacing: 0;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
   background-color: #fefefe;
   font-family: "Lato", sans-serif;
@@ -787,11 +791,12 @@ footer .icons .fa:hover {
     width: 33%;
   }
   .profile .left-info .info-column:nth-child(3) {
-    width: 33%;
+    width: 20%;
   }
   .profile button.apply, .profile button.closed {
     float: right;
     width: 100px;
+    margin-top: 25px;
   }
 }
 .signup {
