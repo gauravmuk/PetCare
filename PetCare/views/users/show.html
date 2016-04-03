@@ -5,11 +5,18 @@
             <!-- User Info -->
             <div class="user_info">
                 <div class="info">
-                    <img class="profile-picture" src="/images/default-profile-pic.png" alt="profile picture"/>
+                    <div class="profile-picture"  ng-show="user.photo" ng-style="{ 'background-image': 'url(' + user.photo + ')' }" alt="profile picture"></div>
+                    <div class="profile-picture"  ng-hide="user.photo" ng-style="{ 'background-image': 'url(/images/default-profile-pic.png)' }" alt="profile picture"></div>
                         <div class="info-container">
                         <div class="title">{{ user.name }}</div>
                         <div class="rating">
-                            &#9733;&#9733;&#9733;&#9733;&#9734; <a class='showReview'>13 Reviews</a>
+                            <span ng-repeat="i in range(user.rating)">
+                                &#9733;
+                            </span>
+                            <span ng-repeat="i in range(5 - user.rating)">
+                                &#9734;
+                            </span>
+                            <a class="showReview" ng-click="select('review')">{{ userReviewTotal }} &nbsp;Reviews</a>
                         </div>
                         <span class="info-piece">
                             <span class="name">Location</span>
@@ -17,7 +24,7 @@
                         </span>
                         <span class="info-piece">
                             <span class="name">Email</span>
-                            <span class="value">{{ user.email }}</span>
+                            <span class="value">{{ user.username }}</span>
                         </span>
                     </div>
                     <div class="right-corner">
@@ -38,23 +45,36 @@
 
             <!-- nav bar for pets postings history -->
             <div class="nav-bar">
-                <button class="nav-item" id="pet" href="#pet">Pets</button>
-                <button class="nav-item" id="posting" href="#posting">Postings</button>
-                <button class="nav-item" id="history" href="#history">History</button>
-                <button class="nav-item" id='review' href="#review">Review</button>
+                <button class="nav-item" href="#pet" ng-style="checkTitleStyle('pet')" ng-click="select('pet')">
+                    Pets
+                </button>
+                <button class="nav-item" href="#posting" ng-style="checkTitleStyle('posting')" ng-click="select('posting')">
+                    Postings
+                </button>
+                <button class="nav-item" href="#history" ng-style="checkTitleStyle('history')" ng-click="select('history')">
+                    History
+                </button>
+                <button class="nav-item" href="#review" ng-style="checkTitleStyle('review')" ng-click="select('review')">
+                    Review
+                </button>
                 <span class="line"></span>
             </div>
 
             <!-- Pets -->
-            <div class="pets" ng-repeat="pet in pets">
+            <div class="pets" ng-repeat="pet in pets" ng-style="checkDisplayStyle('pet')">
                 <div class="pet">
                     <div class="info">
-                        <img class="profile-picture" ng-src="{{ pet.photo }}" alt="pet picture"/>
+                        <div class="profile-picture"  ng-show="pet.photo" ng-style="{ 'background-image': 'url(' + pet.photo + ')' }" alt="pet picture"></div>
                         <div class="left-info">
                             <div class="title">{{ pet.name }}</div>
                             <span class="rating">
-                                &#9733;&#9733;&#9733;&#9733;&#9734; 
-                                <a class='showReview'>13 Reviews</a>
+                                <span ng-repeat="i in range(pet.rating)">
+                                    &#9733;
+                                </span>
+                                <span ng-repeat="i in range(5 - pet.rating)">
+                                    &#9734;
+                                </span>
+                                <a class='showReview'>{{ pet.reviews.length }} &nbsp;Reviews</a>
                             </span>
                             <div>
                                 <div class="info-column">
@@ -88,19 +108,34 @@
 
 
             <!-- Postings -->
-            <div class="postings">
+            <div class="postings" ng-style="checkDisplayStyle('posting')">
                 <div class="posting" ng-repeat="post in open_posts">
                     <div class="info">
-                        <img class="profile-picture" ng-src="{{ post.thumbnail }}" alt="picture"/>
+                        <div class="profile-picture" ng-style="{ 'background-image': 'url(' + post.thumbnail + ')' }" alt="pet picture"></div>
                         <div class="left-info">
                             <div class="title">
-                                <a ng-show="isNumber(post.user)" ng-href="/pet_posts/{{ post._id }}">{{ post.title }}</a>
-                                <a ng-show="!isNumber(post.user)" ng-href="/petsitter_posts/{{ post._id }}">{{ post.title }}</a>
+                                <a ng-if="isNumber(post.user)" ng-href="/pet_posts/{{ post._id }}">{{ post.title }}</a>
+                                <a ng-if="!isNumber(post.user)" ng-href="/petsitter_posts/{{ post._id }}">{{ post.title }}</a>
                             </div>
                             <div>
                                 <div class="info-column">
-                                    <span class="rating">
-                                        &#9733;&#9733;&#9733;&#9733;&#9734;
+                                    <span class="rating" ng-if="isNumber(post.user)">
+                                        <span ng-repeat="i in range(post.pet.rating)">
+                                            &#9733;
+                                        </span>
+                                        <span ng-repeat="i in range(5 - post.pet.rating)">
+                                            &#9734;
+                                        </span>
+                                        <a class='showReview'>{{ post.pet.reviews.length }} &nbsp;Reviews</a>
+                                    </span>
+                                    <span class="rating" ng-if="!isNumber(post.user)">
+                                        <span ng-repeat="i in range(post.user.rating)">
+                                            &#9733;
+                                        </span>
+                                        <span ng-repeat="i in range(5 - post.user.rating)">
+                                            &#9734;
+                                        </span>
+                                        <a class="showReview" ng-click="select('review')">{{ userReviewTotal }} &nbsp;Reviews</a>
                                     </span>
                                     <span class="info-piece">
                                         <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
@@ -139,16 +174,34 @@
             </div>
 
             <!-- History -->
-            <div class="histories">
+            <div class="histories" ng-style="checkDisplayStyle('history')">
                 <div class="history" ng-repeat="post in closed_posts">
                     <div class="info">
-                        <img class="profile-picture" src="/images/cat1.jpg" alt="pet picture"/>
+                        <div class="profile-picture" ng-style="{ 'background-image': 'url(' + post.thumbnail + ')' }" alt="post picture"></div>
                         <div class="left-info">
-                            <div class="title"><a href="/post_pet">{{ post.title }}</a></div>
+                            <div class="title">
+                                <a ng-if="isNumber(post.user)" ng-href="/pet_posts/{{ post._id }}">{{ post.title }}</a>
+                                <a ng-if="!isNumber(post.user)" ng-href="/petsitter_posts/{{ post._id }}">{{ post.title }}</a>
+                            </div>
                             <div>
                                 <div class="info-column">
-                                    <span class="rating">
-                                        &#9733;&#9733;&#9733;&#9733;&#9734; 
+                                    <span class="rating" ng-if="isNumber(post.user)">
+                                        <span ng-repeat="i in range(post.pet.rating)">
+                                            &#9733;
+                                        </span>
+                                        <span ng-repeat="i in range(5 - post.pet.rating)">
+                                            &#9734;
+                                        </span>
+                                        <a class='showReview'>{{ post.pet.reviews.length }} &nbsp;Reviews</a>
+                                    </span>
+                                    <span class="rating" ng-if="!isNumber(post.user)">
+                                        <span ng-repeat="i in range(post.user.rating)">
+                                            &#9733;
+                                        </span>
+                                        <span ng-repeat="i in range(5 - post.user.rating)">
+                                            &#9734;
+                                        </span>
+                                        <a class="showReview" ng-click="select('review')">{{ userReviewTotal }} &nbsp;Reviews</a>
                                     </span>
                                     <span class="info-piece">
                                         <span class="icon"><img class="icon" src="/assets/icon-icon-pet.svg"></span>
@@ -187,14 +240,16 @@
             </div>
 
             <!-- Reivews -->
-            <div class="reviews">
+            <div class="reviews" ng-style="checkDisplayStyle('review')">
                 <div class="review" ng-repeat="review in reviews">
                     <div class="info">
                         <img class="review-user-picture" ng-src="/images/default-profile-pic.png" alt="user picture"/>
                         <div class="left-info review-info">
                             <div class="review-user-info">
                                 <div class="name">
-                                    {{ review.from.name }}
+                                    <a ng-href="/users/{{ review.from._id}}">
+                                        {{ review.from.name }}
+                                    </a>
                                 </div>
                                 <div class="location">
                                     {{ review.from.location }}
@@ -202,11 +257,15 @@
                             </div>
                             <div class="comment">
                                 <span class="rating review-rating">
-                                    {{ review.rating }}
-                                    &#9733;&#9733;&#9733;&#9733;&#9734; 
+                                    <span ng-repeat="i in range(review.rating)">
+                                        &#9733;
+                                    </span>
+                                    <span ng-repeat="i in range(5 - review.rating)">
+                                        &#9734;
+                                    </span>
                                 </span>
                                 <span class="date">
-                                    {{ review.updated_at }}
+                                    {{ review.updated_at | date: 'yyyy-MM-dd' }}
                                 </span>
                                 <p class="description review-description">
                                     {{ review.comment }}
@@ -309,69 +368,3 @@
         </div>
     </div>
 </div>
-<div>
-
-
-<script type="text/javascript">
-    $(document).ready(function(){
-        if (window.location.hash == '#review') {
-            showReview();
-        } else {
-            showPet();
-        }
-
-        $('#pet').on('click', showPet);
-        $('#posting').on('click', showPosting);
-        $('#history').on('click', showHistory);
-        $('#review').on('click', showReview);
-        $("a[class='showReview']").on('click', showReview);
-    });
-
-    function showPet() {
-        $('#pet').css("color", "#006e8c");
-        $('#posting').css("color", "#929292");
-        $('#history').css("color", "#929292");
-        $('#review').css("color", "#929292");
-
-        $('div.pets').css("display", "block");
-        $('div.postings').css("display", "none");
-        $('div.histories').css("display", "none");
-        $('div.reviews').css("display", "none");
-    }
-
-    function showPosting() {
-        $('#pet').css("color", "#929292");
-        $('#posting').css("color", "#006e8c");
-        $('#history').css("color", "#929292");
-        $('#review').css("color", "#929292");
-
-        $('div.pets').css("display", "none");
-        $('div.postings').css("display", "block");
-        $('div.histories').css("display", "none");
-        $('div.reviews').css("display", "none");
-    }
-
-    function showHistory() {
-        $('#pet').css("color", "#929292");
-        $('#posting').css("color", "#929292");
-        $('#history').css("color", "#006e8c");
-        $('#review').css("color", "#929292");
-
-        $('div.pets').css("display", "none");
-        $('div.postings').css("display", "none");
-        $('div.histories').css("display", "block");
-        $('div.reviews').css("display", "none");
-    }
-
-    function showReview() {
-        $('#pet').css("color", "#929292");
-        $('#posting').css("color", "#929292");
-        $('#history').css("color", "#929292");
-        $('#review').css("color", "#006e8c");
-
-        $('div.pets').css("display", "none");
-        $('div.postings').css("display", "none");
-        $('div.histories').css("display", "none");
-        $('div.reviews').css("display", "block");
-    }
-</script>

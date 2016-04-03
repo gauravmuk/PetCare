@@ -69,11 +69,19 @@ $border-color: #CECECE;
 		a {
 			font-size: 15px;
     		letter-spacing: initial;
+    		margin-left: 5px;
+    		cursor: pointer;
 		}
+	}
+
+	.date {
+		font-size: 14px;
+		margin-left: 5px;
 	}
 
 	.review-rating {
 		display: inline-block;
+		letter-spacing: 0;
 	}
 
 	.info {
@@ -92,6 +100,7 @@ $border-color: #CECECE;
 		}
 
 		.name {
+			font-size: 15px;
 			display: inline-block;
 			width: 70px;
 			font-weight: bold;
@@ -147,11 +156,14 @@ $border-color: #CECECE;
 	    top: 2px;
 	}
 
-	img.profile-picture {
-		height: 200px;
+	div.profile-picture {
+		height: 160px;
 		padding: 10px;
 		max-width: 160px;
-		height: auto;
+		background-size: cover;
+    	background-position: center;
+   		background-repeat: no-repeat;
+   		margin: 0 auto;
 	}
 
 	img.review-user-picture {
@@ -203,12 +215,12 @@ $border-color: #CECECE;
 }
 
 .rating {
-	font-size:20px;
+	font-size: 16px;
 	display: block;
 	color: #10c8cd;
 	margin-bottom: 10px;
 	cursor: default;
-	letter-spacing: 3px;
+	letter-spacing: 1px;
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -239,13 +251,17 @@ $border-color: #CECECE;
 	    	text-align: left;
 	    }
 
-		img.profile-picture {
+		div.profile-picture {
 			float: left;
 			height: 160px;
 			padding: 0;
 			margin-right: 20px;
     		max-width: 160px;
-    		height: auto;
+    		min-width: 160px;
+    		background-size: cover;
+    		background-position: center;
+    		background-repeat: no-repeat;
+    		display: inline-block;
 		}
 
 		.nav-bar .nav-item {
@@ -264,7 +280,7 @@ $border-color: #CECECE;
 		}
 
 		.title {
-			font-size: 23px;
+			font-size: 22px;
 		}
 
 		.description {
@@ -273,7 +289,7 @@ $border-color: #CECECE;
 
 		.left-info {
 			float: right;
-			width: calc(100% - 195px);
+			width: calc(100% - 185px);
 
 			.info-column {
 				width: 50%;

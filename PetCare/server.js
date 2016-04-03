@@ -66,7 +66,8 @@ passport.deserializeUser(function(user, done) {
 passport.use(new FacebookStrategy({
 	clientID		: fbConfig.appID,
 	clientSecret	: fbConfig.appSecret,
-	callbackURL		: fbConfig.callbackUrl
+	callbackURL		: fbConfig.callbackUrl,
+	profileFields: 	['id', 'displayName', 'picture.type(large)', 'email', 'location']
 	},
 	function(accessToken, refreshToken, profile, done) {
 		process.nextTick(function() {
@@ -83,7 +84,14 @@ passport.use(new FacebookStrategy({
            			newUser.facebook_access_token 	= accessToken;                   
             		newUser.name  					= profile.displayName;
             		newUser.role  					= 'regular'
-            		// newUser.email = profile.emails[0].value;
+            		newUser.photo					= profile.photos[0].value
+            		if (profile.emails) {
+            			newUser.username = profile.emails[0].value;
+            		}
+
+            		if (profile._json.location) {
+            			newUser.location = profile._json.location.name;
+            		}
 
             		newUser.save(function(err) {
               			if (err) {
@@ -632,7 +640,7 @@ app.get('/auth/twitter/callback',
 	}
 );
 
-app.get('/auth/facebook', passport.authenticate('facebook', { session: true }));
+app.get('/auth/facebook', passport.authenticate('facebook', { session: true, scope: ['email', 'user_location'] }));
 
 app.get('/auth/facebook/callback', 
 	passport.authenticate('facebook', { session: true, failureRedirect: '/signin' }),
@@ -700,7 +708,7 @@ app.put("/api/users/:id/ban", function(req, res){
 // Return the pets for a given user
 app.get("/api/users/:id/pets", function(req, res){
 	if (isNumber(req.params.id)) {
-		Pet.find({ user: req.params.id }).populate('user').exec(function(err, pet) {
+		Pet.find({ user: req.params.id }).populate('user').populate({ path: 'reviews', model: 'PetReview' }).exec(function(err, pet) {
 			if (err) {
 				throw err;
 			}
@@ -744,7 +752,7 @@ app.get("/api/users/:id/posts/:status", function(req, res){
 
 app.get("/api/users/:id/reviews", function(req, res){
 	if (isNumber(req.params.id)) {
-		Review.find({ to: req.params.id}).populate('from').exec(function(err, reviews) {
+		Review.find({ to: req.params.id }).populate('from').exec(function(err, reviews) {
 			if (err) {
 				throw err;
 			}
@@ -891,61 +899,57 @@ app.post("/api/petpostings/:id/reviews", function(req, res){
 
 	// Get Review information from the request body
 	var fromUser 		= req.body.data.from;
-	var reviewRating 	= req.body.data.rating;
+	var reviewRating 	= req.body.data.rating || 0;
 	var reviewComment 	= req.body.data.comment;
 	var postID 			= req.params.id;
 
 	// Get user Id who made the post
 	if (isNumber(postID)){
-		Pet_Posting.findOne({_id : postID}, function(err, post){
-			if(err){
-				console.log("error");
+		Pet_Posting.findOne({ _id : postID }, function(err, post){
+			if (err){
+				throw err;
 			}
 			// If found post successfully 
 			else{
 				// Get user pet id which we want to make the review to
 				var toPet = post.pet;
-				console.log("\npost");
-				console.log(post);
-
 				// Save Review information in the database 
-				Review.create({
+				Pet_Review.create({
 				to: toPet,
 				from: fromUser,
 				rating: reviewRating,
 				comment: reviewComment
 
 				}, function(err, review){
-				if(err){
-					console.log("Review.create(): error\n"+ err);
+				if (err){
+					throw err;
 				}
 				else{
 					// Successfully added a new review to the database
 					// Now calculate average rating for the 'to' user
-					console.log(review);
-
-					Review.find({to: toPet}, function(err, reviews){
+					Pet_Review.find({ to: toPet }, function(err, reviews){
 					if(err){
 						"Review.find(): error\n"+ err
 					}
-					else{
+					else {
 						// Successfully found all the reviews for the given user
 						// Now calulate the new average rating value for the user
 						var num = reviews.length;
 						var sum = 0;
-						for (var i=0; i<num; i++){
+						var reviewIds = [];
+
+						for (var i = 0; i < num; i++){
 							sum = sum + reviews[i].rating;
-						}
+							reviewIds.push(reviews[i]._id);
+						};
 
 						// Round the average rating to int
-						var newAvgRating = Math.round(sum/num)
-						console.log("Average rating for pet "+ toPet + " = " + newAvgRating);
-						console.log("From user "+ fromUser);
-					
+						var newAvgRating = Math.round(sum/num);
+
 						// Update new average rating on the user schema
-						Pet.update({_id: toPet}, {$set: {rating:newAvgRating}}, function(err, updatedPet){
-							if(err){
-								console.log(err);
+						Pet.update({ _id: toPet }, { $set: { rating: newAvgRating, reviews: reviewIds }}, function(err, updatedPet) {
+							if (err){
+								throw err;
 							}
 							else{
 								console.log(updatedPet);
@@ -1101,7 +1105,7 @@ app.post("/api/petpostings", function(req, res){
 		additional_info: req.body.data.additional_info,
 		description: req.body.data.description,
 		thumbnail: req.body.data.thumbnail,	// TODO: Get user image
-		pet: 1,
+		pet: req.body.data.pet,
 		status: 'open'
 	});
 
@@ -1109,7 +1113,6 @@ app.post("/api/petpostings", function(req, res){
 		res.setHeader('Location', '/pet_posts/' + newPost._id);
     	res.status(201).send(null);
 	});
-
 });
 
 app.put('/api/petpostings/:id', function (req, res) {
