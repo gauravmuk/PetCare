@@ -1392,10 +1392,12 @@ app.get("/api/news/:userId", function(req, res){
 	}
 });
 
-// Search pet postings
+// Search pet postings given user quieries
 app.get("/api/search_pet/:pet/:location/:min_price/:userId", function(req, res){
 	var petposting = [];
 	var application = [];
+	var users = [];
+	var pets = [];
 
 	var pet = req.params.pet;
 	var location = req.params.location;
@@ -1403,74 +1405,90 @@ app.get("/api/search_pet/:pet/:location/:min_price/:userId", function(req, res){
 	var userId = req.params.userId;
 
 	Pet_Posting.find({}).populate('pet').exec(function(err, petposting) {
-		if (err) {
-			throw err;
-		}
+		if (err) { throw err; }
 		Application.find({}, function(err, application) {
-			if (err) {
-				throw err;
-			}
+			if (err) { throw err; }
+			User.find({}, function(err, users){
+				if (err) { throw err; }
+				Pet.find({}, function(err, pets){
+					if (err) { throw err; }
 
-			var regex_pet = new RegExp(".*" + pet + ".*", "i");
-			var regex_location = new RegExp(".*" + location + ".*", "i");
+					var regex_pet = new RegExp(".*" + pet + ".*", "i");
+					var regex_location = new RegExp(".*" + location + ".*", "i");
 
-			// create JSON object
-			var data = [];
-			for (var i = 0; i < petposting.length; i++) {
-				if (petposting[i]['status'] === "closed" || petposting[i]['user'] == userId)
-					continue;
+					// create JSON object
+					var data = [];
+					for (var i = 0; i < petposting.length; i++) {
+						if (petposting[i]['status'] === "closed" || petposting[i]['user'] == userId)
+							continue;
 
-				var rank = 0;
+						var rank = 0;
 
-				if (pet === "none") {
-					rank += 1;
-				} else if (petposting[i]['pet']['type'].match(regex_pet)) {
-					rank += 2;
-				}
+						if (pet === "none") {
+							rank += 1;
+						} else if (petposting[i]['pet']['type'].match(regex_pet)) {
+							rank += 2;
+						} else if (pet === "user_data" && userId != 'undefined') {
+							for (var k = 0; k < pets.length; k++) {
+								if (pets[k]['user'] == userId && pets[k]['type'] == petposting[i]['pet']['type']) {
+									rank += 2;
+									break;
+								}
+							}
+						}
 
-				if (location === "none") {
-					rank += 1;
-				} else if (petposting[i]['location'].match(regex_location)) {
-					rank += 2;
-	 			}
+						if (location === "none") {
+							rank += 1;
+						} else if (petposting[i]['location'].match(regex_location)) {
+							rank += 2;
+			 			} else if (userId != 'undefined') {
+			 				for (var k = 0; k < users.length; k++) {
+			 					if (users[k]['_id'] == userId && users[k]['location'] == petposting[i]['location']) {
+			 						rank += 2;
+			 						break;
+			 					}
+			 				}
+			 			}
 
-				if (min_price === "none") {
-					rank += 1;
-				} else if (isNaN(min_price) || isNaN(petposting[i]['price'])
-					|| Number(min_price) > Number(petposting[i]['price'])) {
-					continue;
-				} else {
-					rank += 2;
-				}
+						if (min_price === "none") {
+							rank += 1;
+						} else if (isNaN(min_price) || isNaN(petposting[i]['price'])
+							|| Number(min_price) > Number(petposting[i]['price'])) {
+							continue;
+						} else {
+							rank += 2;
+						}
 
-				var applied = false;
-				for (var j = 0; j < application.length; j++) {
-					if (application[j]['isPetPost'] && application[j]['pet_posting'] == petposting[i]['_id']
-						&& application[j]['from'] == userId) {
-						applied = true;
-						break;
+						var applied = false;
+						for (var j = 0; j < application.length; j++) {
+							if (application[j]['isPetPost'] && application[j]['pet_posting'] == petposting[i]['_id']
+								&& application[j]['from'] == userId) {
+								applied = true;
+								break;
+							}
+						}
+
+						data.push({
+							rank: rank,
+							posting_id: petposting[i]['_id'],
+							user_id: petposting[i]['user'],
+							pet_id: petposting[i]['pet']['_id'],
+							title: petposting[i]['title'],
+							duration: petposting[i]['duration'],
+							location: petposting[i]['location'],
+							price: petposting[i]['price'],
+							description: petposting[i]['description'],
+							thumbnail: petposting[i]['thumbnail'],
+							pet_type: petposting[i]['pet']['type'],
+							rating: petposting[i]['pet']['rating'],
+							pet_age: petposting[i]['pet']['age'],
+							applied: applied
+						});
 					}
-				}
-
-				data.push({
-					rank: rank,
-					posting_id: petposting[i]['_id'],
-					user_id: petposting[i]['user'],
-					pet_id: petposting[i]['pet']['_id'],
-					title: petposting[i]['title'],
-					duration: petposting[i]['duration'],
-					location: petposting[i]['location'],
-					price: petposting[i]['price'],
-					description: petposting[i]['description'],
-					thumbnail: petposting[i]['thumbnail'],
-					pet_type: petposting[i]['pet']['type'],
-					rating: petposting[i]['pet']['rating'],
-					pet_age: petposting[i]['pet']['age'],
-					applied: applied
+					//console.log(data);
+					res.json(data);
 				});
-			}
-			console.log(data);
-			res.json(data);
+			});
 		});
 	});
 });
@@ -1479,6 +1497,8 @@ app.get("/api/search_pet/:pet/:location/:min_price/:userId", function(req, res){
 app.get("/api/search_sitter/:pet/:location/:max_price/:userId", function(req, res){
 	var sitterPosting = [];
 	var application = [];
+	var users = [];
+	var pets = [];
 
 	var pet = req.params.pet;
 	var location = req.params.location;
@@ -1486,76 +1506,95 @@ app.get("/api/search_sitter/:pet/:location/:max_price/:userId", function(req, re
 	var userId = req.params.userId;
 
 	Sitter_Posting.find({}).populate('user').exec(function(err, sitterPosting) {
-		if (err) {
-			throw err;
-		}
+		if (err) { throw err; }
 		Application.find({}, function(err, application) {
-			if (err) {
-				throw err;
-			}
+			if (err) { throw err; }
+			User.find({}, function(err, users){
+				if (err) { throw err; }
+				Pet.find({}, function(err, pets){
+					if (err) { throw err; }
 
-			var regex_pet = new RegExp(".*" + pet + ".*", "i");
-			var regex_location = new RegExp(".*" + location + ".*", "i");
+					var regex_pet = new RegExp(".*" + pet + ".*", "i");
+					var regex_location = new RegExp(".*" + location + ".*", "i");
 
-			// create JSON object
-			var data = [];
-			for (var i = 0; i < sitterPosting.length; i++) {
-				if (sitterPosting[i]['status'] === "closed" || sitterPosting[i]['user']['_id'] == userId)
-					continue;
+					// create JSON object
+					var data = [];
+					for (var i = 0; i < sitterPosting.length; i++) {
+						if (sitterPosting[i]['status'] === "closed" || sitterPosting[i]['user']['_id'] == userId)
+							continue;
 
-				var rank = 0;
+						var rank = 0;
 
-				if (pet === "none") {
-					rank += 1;
-				} else if (sitterPosting[i]['types'].match(regex_pet)) {
-					rank += 2;
-				}
+						if (pet === "none") {
+							rank += 1;
+						} else if (sitterPosting[i]['types'].match(regex_pet)) {
+							rank += 2;
+						} else if (pet === "user_data" && userId != 'undefined') {
+							for (var k = 0; k < pets.length; k++) {
+								if (pets[k]['user'] == userId) {
+									regex_pet = new RegExp(".*" + pets[k]['type'] + ".*", "i");
+									if (petposting[i]['pet']['type'].match(regex_pet)) {
+										rank += 2;
+										break;
+									}
+								}
+							}
+						}
 
-				if (location === "none") {
-					rank += 1;
-				} else if (sitterPosting[i]['location'].match(regex_location)) {
-					rank += 2;
-	 			}
+						if (location === "none") {
+							rank += 1;
+						} else if (sitterPosting[i]['location'].match(regex_location)) {
+							rank += 2;
+			 			} else if (userId != 'undefined') {
+			 				for (var k = 0; k < users.length; k++) {
+			 					if (users[k]['_id'] == userId && users[k]['location'] == sitterPosting[i]['location']) {
+			 						rank += 2;
+			 						break;
+			 					}
+			 				}
+			 			}
 
-				var lower_price = "" + sitterPosting[i]['price'].match(/([^ ]+)/, "")[1];
+						var lower_price = "" + sitterPosting[i]['price'].match(/([^ ]+)/, "")[1];
 
-				if (max_price === "none") {
-					rank += 1;
-				} else if (isNaN(max_price) || isNaN(lower_price)
-					|| Number(max_price) < Number(lower_price)) {
-					continue;
-				} else {
-					rank += 2;
-				}
+						if (max_price === "none") {
+							rank += 1;
+						} else if (isNaN(max_price) || isNaN(lower_price)
+							|| Number(max_price) < Number(lower_price)) {
+							continue;
+						} else {
+							rank += 2;
+						}
 
-				var applied = false;
-				for (var j = 0; j < application.length; j++) {
-					if (!application[j]['isPetPost'] && application[j]['sitter_posting'] == sitterPosting[i]['_id']
-						&& application[j]['from'] == userId) {
-						applied = true;
-						break;
+						var applied = false;
+						for (var j = 0; j < application.length; j++) {
+							if (!application[j]['isPetPost'] && application[j]['sitter_posting'] == sitterPosting[i]['_id']
+								&& application[j]['from'] == userId) {
+								applied = true;
+								break;
+							}
+						}
+
+						data.push({
+							rank: rank,
+							posting_id: sitterPosting[i]['_id'],
+							user_id: sitterPosting[i]['user']['_id'],
+							title: sitterPosting[i]['title'],
+							types: sitterPosting[i]['types'],
+							duration: sitterPosting[i]['duration'],
+							location: sitterPosting[i]['location'],
+							price: sitterPosting[i]['price'],
+							experience: sitterPosting[i]['experience'],
+							description: sitterPosting[i]['description'],
+							thumbnail: sitterPosting[i]['thumbnail'],
+							rating: sitterPosting[i]['user']['rating'],
+							applied: applied
+						});
 					}
-				}
 
-				data.push({
-					rank: rank,
-					posting_id: sitterPosting[i]['_id'],
-					user_id: sitterPosting[i]['user']['_id'],
-					title: sitterPosting[i]['title'],
-					types: sitterPosting[i]['types'],
-					duration: sitterPosting[i]['duration'],
-					location: sitterPosting[i]['location'],
-					price: sitterPosting[i]['price'],
-					experience: sitterPosting[i]['experience'],
-					description: sitterPosting[i]['description'],
-					thumbnail: sitterPosting[i]['thumbnail'],
-					rating: sitterPosting[i]['user']['rating'],
-					applied: applied
+					//console.log(data);
+					res.json(data);
 				});
-			}
-
-			console.log(data);
-			res.json(data);
+			});
 		});
 	});
 });
