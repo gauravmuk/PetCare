@@ -70,6 +70,13 @@ describe('GET Request Test Suite:   ', function() {
 // All the test cases that make http POSt requests to the server are written in this suite
 describe('Post Request Test Suite:   ', function() {
     
+    // Create user data object to be posted with the POST request
+    var mochaTestUser = {
+        username:   'AnnaSmith1988@gmail.com', 
+        password:   '1234',
+        name:       'Anna Smith'
+    }
+
     // The function passed to before() is called before running the test cases.
     before(function() {
         app.startServer(8989);
@@ -86,13 +93,6 @@ describe('Post Request Test Suite:   ', function() {
     describe('Make an http POST to /api/register', function() {
             it('Should create new user', function(done) {
 
-            // Create user data object to be posted with the POST request
-            mochaTestUser = {
-                username:   'AnnaSmith1988@gmail.com', 
-                password:   '1234',
-                name:       'Anna Smith'
-            }
-
             request.post(
                 {
                     url:     'http://localhost:8989/api/register',
@@ -108,6 +108,67 @@ describe('Post Request Test Suite:   ', function() {
                     done();  
                 });
 
+        });
+    });
+});
+
+
+
+// All the test cases that make http DELETE requests to the server are written in this suite
+describe('Delete Request Test Suite:   ', function() {
+    
+    var petPost = {
+        user        : 2,
+        pet         : 3,
+        title       : 'Max seed a pet sitter',
+        duration    : '2 days',
+        location    : 'Toronto',
+        price       : '$20/hr',
+        supplies    : 'None'
+    }
+
+    // before() is called before running the test cases.
+    before(function() {
+        app.startServer(8989);
+    });
+
+    // after() is called after running the test cases.
+    after(function() {
+        app.closeServer();
+    });
+
+    // `describe()` creates a suite of test cases
+    describe('Delete post', function() {
+        it('Should post and delete pet post', function(done) {
+
+        // Create post by doing an http POST request
+        request.post(
+            {
+                url:     'http://localhost:8989/api/petpostings',
+                form:    {data:petPost}
+            }, 
+            function(error, response, body){
+                var obj = JSON.parse(body);
+                // Get newly created post Id
+                var postID = obj._id;
+                // Status code 201 == Created
+                assert.equal(response.statusCode, 201);
+
+                // Make an http delete request
+                request({
+                    uri: 'http://localhost:8989/api/petpostings/' + postID,
+                    method: "DELETE"
+                },
+                function(error, response, body) {
+                    console.log(body);
+                    var obj = JSON.parse(body);
+                    // Assertd ok:1
+                    assert.equal(obj.ok, 1);
+                    // Status code 200 == OK
+                    assert.equal(response.statusCode, 200);    
+                    done();
+                });
+            });
         });
     });
 });

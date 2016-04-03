@@ -1105,9 +1105,9 @@ app.post("/api/petpostings", function(req, res){
 		status: 'open'
 	});
 
-	newPost.save(function(err) {
+	newPost.save(function(err, result) {
 		res.setHeader('Location', '/pet_posts/' + newPost._id);
-    	res.status(201).send(null);
+    	res.status(201).send({_id : result._id});
 	});
 
 });
@@ -1949,8 +1949,7 @@ exports.removeMochaTestUser = function(userName) {
 		}
 		else{
 			// On success, log result
-			console.log(result);
+			// console.log(result);
 		}
 	});
-}
-
+};
