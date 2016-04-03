@@ -7,9 +7,11 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
         $scope.userId = $cookies.get('userID');
     	$scope.profileUserId = $routeParams.id;
         $scope.animationEnabled = true;
-        
+        $scope.editMode = false;
+
     	$http.get('/api/users/' + $scope.profileUserId).success(function(data){
     		$scope.user = data;
+            $scope.setUserData(data);
     	});
 
         $http.get('/api/users/' + $scope.profileUserId + '/pets').success(function(data){
@@ -42,6 +44,31 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             $scope.reviews = data;
             $scope.userReviewTotal = data.length;
         });
+
+        $scope.toggleEditMode = function() {
+            $scope.editMode = !$scope.editMode;
+        }
+
+        $scope.exitEditMode = function(type) {
+            $scope.toggleEditMode()
+            if (type == "save") {
+                $http.put('/api/users/' + $scope.profileUserId, { data: $scope.editUserData }).success(function(data){
+                    $scope.user = data;
+                    $scope.setUserData(data);
+                    authService.setUserData(data.name);
+                })
+            } else {
+                $scope.setUserData($scope.user);
+            };
+        };
+
+        $scope.setUserData = function(data) {
+            $scope.editUserData = { name:           data.name, 
+                                    location:       data.location, 
+                                    email:          data.email, 
+                                    description:    data.description 
+            };
+        };
 
         $scope.isNumber = function(value) {
             return /^\d+$/.test(value);
@@ -78,7 +105,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             }
 
             // Make http post request to the server
-            $http.post('/api/reports/', {data:dataObj})
+            $http.post('/api/reports/', { data:dataObj })
                 .success(function(data, status, headers, config) {
                 }).error(function(data, status, headers, config) {
             });

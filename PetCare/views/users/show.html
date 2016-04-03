@@ -7,7 +7,12 @@
                     <div class="profile-picture"  ng-show="user.photo" ng-style="{ 'background-image': 'url(' + user.photo + ')' }" alt="profile picture"></div>
                     <div class="profile-picture"  ng-hide="user.photo" ng-style="{ 'background-image': 'url(/images/default-profile-pic.png)' }" alt="profile picture"></div>
                         <div class="info-container">
-                        <div class="title">{{ user.name }}</div>
+                        <div class="title" ng-if="!editMode">
+                            {{ user.name }}
+                        </div>
+                        <div class="title" ng-if="editMode">
+                            <input ng-model="editUserData.name" name="uesrName" class="form-control" type="text">
+                        </div>
                         <div class="rating">
                             <span ng-repeat="i in range(user.rating)">
                                 &#9733;
@@ -17,13 +22,23 @@
                             </span>
                             <a class="showReview" ng-click="select('review')">{{ userReviewTotal }} &nbsp;Reviews</a>
                         </div>
-                        <span class="info-piece">
-                            <span class="name">Location</span>
-                            <span class="value">{{ user.location }} </span>
+                        <span ng-if="!editMode">
+                            <span class="info-piece">
+                                <span class="name">Location</span>
+                                <span class="value">{{ user.location }} </span>
+                            </span>
+                            <span class="info-piece">
+                                <span class="name">Email</span>
+                                <span class="value">{{ user.email }}</span>
+                            </span>
                         </span>
-                        <span class="info-piece">
-                            <span class="name">Email</span>
-                            <span class="value">{{ user.username }}</span>
+                        <span ng-if="editMode">
+                            <span class="info-piece">
+                                <input ng-model="editUserData.location" name="userLocation" class="form-control" type="text" placeholder="Your Location">
+                            </span>
+                            <span class="info-piece">
+                                <input ng-model="editUserData.email" name="userEmail" class="form-control" type="text" placeholder="Your email">
+                            </span>
                         </span>
                     </div>
                     <div class="right-corner" ng-if="userId !== profileUserId">
@@ -36,15 +51,29 @@
                             <span>Report</span>
                         </button>
                     </div>
-                    <div class="right-corner" ng-if="userId === profileUserId">
-                        <button type="button" class="button">
+                    <div class="right-corner" ng-if="userId === profileUserId && !editMode">
+                        <button type="button" class="button" ng-click="toggleEditMode()">
                            <img class="icon" src="/assets/icon-settings.svg">
                            <span>Edit</span>
                         </button>
                     </div>
+                    <div class="right-corner" ng-if="userId === profileUserId && editMode">
+                        <button type="button" class="button" ng-click="exitEditMode('save')">
+                           <img class="icon" src="/assets/icon-save.svg">
+                           <span>Save</span>
+                        </button>
+                        <button type="button" class="button" ng-click="exitEditMode('cancel')">
+                           <img class="icon" src="/assets/icon-close.svg">
+                           <span>Cancel</span>
+                        </button>
+                    </div>
                 </div>
-                <p class="description">
+                <p class="description" ng-if="!editMode">
                     {{ user.description }}
+                </p>
+                <p class="description" ng-if="editMode">
+                    <textarea ng-model="editUserData.description" name="userDescription" class="form-control" placeholder="Please tell us more about yourself.">
+                    </textarea>
                 </p>
             </div>
 
@@ -170,7 +199,7 @@
                                 <div class="info-column" ng-if="userId !== profileUserId">
                                     <button class="apply" type="button" ng-click="openApplyModal('lg', isNumber(post.user), post._id)">Apply</button>
                                 </div>
-                                <div class="info-column" ng-if="userId == profileUserId">
+                                <div class="info-column" ng-if="userId == profileUserId ">
                                     <button class="apply" type="button">Edit</button>
                                 </div>
                             </div>

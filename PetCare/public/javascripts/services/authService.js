@@ -8,7 +8,8 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 		logout: logout,
 		register: register,
 		getUserStatus: getUserStatus,
-		getUserData: getUserData
+		getUserData: getUserData,
+		setUserData: setUserData
 	});
 
 	function isLoggedIn() {
@@ -27,7 +28,11 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 			userRole: $cookies.get('userRole')
 		}
 		return userData;
-	}
+	};
+
+	function setUserData(newName) {
+		$cookies.put('userName', newName);
+	};
 
 	function register(username, password, name) {
 		var deferred = $q.defer();

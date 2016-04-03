@@ -5,17 +5,18 @@ var Schema = mongoose.Schema;
 
 var UserSchema = new Schema(
 	{
-		name: String,
+		name: 	String,
 		username: String,
+		email: String,
 		location: String,
 		description: String,
 		rating: { type: Number, default: 0 },
 		role: String,
 		photo: String,
-		banned: Boolean,
+		banned: { type: Boolean, default: false },
 		facebook_id: Number,
-		facebook_access_token: String,
 		twitter_id: Number,
+		facebook_access_token: String,
 		twitter_access_token: String
 	},
 	{

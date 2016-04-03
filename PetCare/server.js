@@ -87,6 +87,7 @@ passport.use(new FacebookStrategy({
             		newUser.photo					= profile.photos[0].value
             		if (profile.emails) {
             			newUser.username = profile.emails[0].value;
+            			newUser.email = profile.emails[0].value;
             		}
 
             		if (profile._json.location) {
@@ -593,8 +594,8 @@ app.post('/api/register', function(req, res, next) {
 	var role;
 	var role = (username.indexOf("@petcare.com") > 1)? 'admin':'regular';
 
-	User.register(new User({ username: username, name: name, rating: 0,	location: '',
-		description: '', role: role, photo: '', banned: false }), password, function(err) {
+	User.register(new User({ username: username, email: username, name: name, location: '',
+		description: '', role: role, photo: '' }), password, function(err) {
 		if (err) {
 			return next(err);
 		}
@@ -772,21 +773,21 @@ app.get("/api/users/:id/reviews", function(req, res){
 app.put('/api/users/:id', function (req, res) {
 
 	if (isNumber(req.params.id)) {
+		User.findOne({ _id: req.params.id }, function (err, user) {
+		    user.name 			= req.body.data.name;
+		    user.email 			= req.body.data.email;
+		    user.location 		= req.body.data.location;
+		    user.description 	= req.body.data.description;
 
-		User.findOne({_id: req.params.id}, function (err, user) {
-
-		    user.name = req.body.data.name;
-		    user.location = req.body.data.location;
-		    user.description = req.body.data.description;
-
-		    user.save(function (err) {
-		        if(err) {
+		    user.save(function (err, user) {
+		        if (err) {
+		        	throw err;
 		        }
-    			res.status(200).send(null);
+    			res.status(200);
+    			res.json(user);
 		    });
 
 		});
-
 	} else {
 		res.status(400).send({ error: "Invalid ID" });
 	}
