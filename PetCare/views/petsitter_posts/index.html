@@ -39,7 +39,7 @@
                     <div class="posting" ng-repeat="post in posts" ng-show="post.show">
                         <p ng-show="post.applied">You applied for this posting.</p>
                         <div class="info">
-                            <img class="profile-picture" ng-src="{{post.thumbnail}}" alt="profile picture"/>
+                            <div class="profile-picture"  ng-style="{ 'background-image': 'url(' + post.thumbnail + ')' }" alt="profile picture"></div>
                             <div class="left-info">
                                 <div class="title"><a href ="" ng-click="showDetailPost(post.posting_id)">{{post.title}} rank{{post.rank}}</a></div>
                                 <div>

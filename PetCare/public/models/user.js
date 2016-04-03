@@ -9,7 +9,7 @@ var UserSchema = new Schema(
 		username: String,
 		location: String,
 		description: String,
-		rating: Number,
+		rating: { type: Number, default: 0 },
 		role: String,
 		photo: String,
 		banned: Boolean,

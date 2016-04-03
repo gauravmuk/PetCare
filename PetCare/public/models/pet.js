@@ -8,6 +8,10 @@ var PetSchema = new Schema(
 	        type: Number,
 	        ref: 'User'
 	    },
+	    reviews: [{
+			type: Number,
+			ref: 'PetReview'
+		}],
 		name: String,
 		type: String,
 		breed: String,

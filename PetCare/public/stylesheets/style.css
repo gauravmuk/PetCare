@@ -43,13 +43,17 @@ table {
   border-spacing: 0;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 body {
-  background-color: #FEFEFE;
+  background-color: #fefefe;
   font-family: "Lato", sans-serif;
 }
 
 .navbar {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
   position: fixed;
   z-index: 100;
   width: 100%;
@@ -66,9 +70,9 @@ body {
   margin-top: 8px;
   margin-right: 15px;
   margin-bottom: 8px;
-  background-color: #10C8CD;
+  background-color: #10c8cd;
   background-image: none;
-  border: 1px solid #FFF;
+  border: 1px solid white;
   border-radius: 4px;
   outline: 0;
   -webkit-transition: background-color 0.2s ease-in;
@@ -78,7 +82,7 @@ body {
   transition: background-color 0.2s ease-in;
 }
 .navbar .toggle:hover {
-  background-color: #0EA3AB;
+  background-color: #0ea3ab;
 }
 .navbar .toggle .icon-bar {
   display: block;
@@ -91,12 +95,12 @@ body {
   margin-top: 4px;
 }
 .navbar .collapse-bar {
-  border-top: 1px solid #DADADA;
+  border-top: 1px solid #dadada;
   margin-right: -15px;
   margin-left: -15px;
 }
 .navbar .logo {
-  color: #476D82;
+  color: #476d82;
   text-decoration: none;
   float: left;
   height: 50px;
@@ -124,7 +128,7 @@ body {
 }
 .navbar ul a {
   text-decoration: none;
-  color: #476D82;
+  color: #476d82;
   font-size: 14px;
   -webkit-transition: background-color 0.2s ease-in;
   -moz-transition: background-color 0.2s ease-in;
@@ -150,7 +154,7 @@ body {
   }
   .navbar .dropdown .dropdown-menu li a {
     padding: 10px 15px;
-    color: #476D82;
+    color: #476d82;
     font-size: 14px;
     -webkit-transition: background-color 0.2s ease-in;
     -moz-transition: background-color 0.2s ease-in;
@@ -171,8 +175,8 @@ body {
     margin-left: -15px;
   }
   .navbar .collapse-bar li a:hover, .navbar .collapse-bar li a:focus {
-    color: #273D4A;
-    background-color: #F8F8F8;
+    color: #273d4a;
+    background-color: #f8f8f8;
   }
   .navbar .collapse-bar .sign-up {
     padding-top: 7px;
@@ -180,8 +184,8 @@ body {
   .navbar .collapse-bar .sign-up > a, .navbar .collapse-bar .sign-up .dropdown > a {
     display: block;
     border-radius: 4px;
-    color: #FFF;
-    background-color: #10C8CD;
+    color: white;
+    background-color: #10c8cd;
     padding: 8px 16px;
     -webkit-transition: all 0.2s ease-in;
     -moz-transition: all 0.2s ease-in;
@@ -190,8 +194,8 @@ body {
     transition: all 0.2s ease-in;
   }
   .navbar .collapse-bar .sign-up > a:hover, .navbar .collapse-bar .sign-up > a:focus, .navbar .collapse-bar .sign-up .dropdown > a:hover, .navbar .collapse-bar .sign-up .dropdown > a:focus {
-    color: #FFF;
-    background-color: #0EA3AB;
+    color: white;
+    background-color: #0ea3ab;
   }
   .navbar .dropdown .dropdown-menu {
     top: 42px;
@@ -206,11 +210,11 @@ body {
 /* Large devices (large desktops, 1200px and up) */
 footer {
   background-color: rgba(0, 0, 0, 0.9);
-  color: #DADADA;
+  color: #dadada;
   padding: 20px 0;
 }
 footer .footer-label {
-  color: #FFF;
+  color: white;
   font-size: 18px;
   text-align: center;
   margin: 15px 0;
@@ -247,8 +251,8 @@ footer .icons .fa:hover {
 .button {
   text-decoration: none;
   border-radius: 4px;
-  color: #FFF;
-  background-color: #10C8CD;
+  color: white;
+  background-color: #10c8cd;
   padding: 8px 16px;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
@@ -257,8 +261,8 @@ footer .icons .fa:hover {
   transition: all 0.2s ease-in;
 }
 .button:hover, .button:focus {
-  color: #FFF;
-  background-color: #0EA3AB;
+  color: white;
+  background-color: #0ea3ab;
   text-decoration: none;
 }
 .button.large {
@@ -275,17 +279,17 @@ footer .icons .fa:hover {
   border-radius: 4px;
 }
 .modal button.btn-primary {
-  background-color: #10C8CD;
+  background-color: #10c8cd;
 }
 .modal button.btn-primary:hover, .modal button.btn-primary:focus {
-  background-color: #0EA3AB;
+  background-color: #0ea3ab;
 }
 
 .home-header {
   padding-top: 50px;
   padding-bottom: 50px;
   text-align: center;
-  color: #F8F8F8;
+  color: #f8f8f8;
   background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../images/intro-header-1.jpg) no-repeat center center;
   background-size: cover;
 }
@@ -310,8 +314,8 @@ footer .icons .fa:hover {
 }
 
 .home-features {
-  background-color: #10C8CD;
-  color: #FFF;
+  background-color: #10c8cd;
+  color: white;
   padding: 20px 0;
 }
 .home-features .features-label {
@@ -399,7 +403,7 @@ footer .icons .fa:hover {
 }
 .search-bar {
   background-color: rgba(0, 0, 0, 0.9);
-  color: #FFF;
+  color: white;
   padding-top: 50px;
 }
 .search-bar .search-container {
@@ -432,7 +436,7 @@ footer .icons .fa:hover {
 .search-results .search-term {
   font-size: 20px;
   font-weight: 700;
-  color: #476D82;
+  color: #476d82;
   margin: 30px 0;
   margin-bottom: 20px;
 }
@@ -504,7 +508,7 @@ footer .icons .fa:hover {
   width: 100%;
   padding: 1%;
   padding-bottom: 10px;
-  border: 1px solid #CECECE;
+  border: 1px solid #cecece;
 }
 .profile .user_info {
   margin-bottom: 10px;
@@ -525,7 +529,7 @@ footer .icons .fa:hover {
   transition: background-color 0.2s ease-in;
 }
 .profile .user_info .right-corner .button:hover {
-  background-color: #0EA3AB;
+  background-color: #0ea3ab;
 }
 .profile .user_info .right-corner .button:focus {
   outline: 0;
@@ -555,9 +559,16 @@ footer .icons .fa:hover {
 .profile .rating a {
   font-size: 15px;
   letter-spacing: initial;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.profile .date {
+  font-size: 14px;
+  margin-left: 5px;
 }
 .profile .review-rating {
   display: inline-block;
+  letter-spacing: 0;
 }
 .profile .info {
   text-align: center;
@@ -572,6 +583,7 @@ footer .icons .fa:hover {
   line-height: 14px;
 }
 .profile .info-piece .name {
+  font-size: 15px;
   display: inline-block;
   width: 70px;
   font-weight: bold;
@@ -607,7 +619,7 @@ footer .icons .fa:hover {
   margin-left: auto;
   width: 100%;
   padding: 1%;
-  border: 1px solid #CECECE;
+  border: 1px solid #cecece;
   overflow: hidden;
 }
 .profile img.icon {
@@ -616,11 +628,14 @@ footer .icons .fa:hover {
   position: relative;
   top: 2px;
 }
-.profile img.profile-picture {
-  height: 200px;
+.profile div.profile-picture {
+  height: 160px;
   padding: 10px;
   max-width: 160px;
-  height: auto;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0 auto;
 }
 .profile img.review-user-picture {
   height: 120px;
@@ -634,7 +649,7 @@ footer .icons .fa:hover {
   transition: background-color 0.2s ease-in;
 }
 .profile button.apply:hover {
-  background-color: #0EA3AB;
+  background-color: #0ea3ab;
 }
 .profile button.apply, .profile button.closed {
   width: 80px;
@@ -667,12 +682,12 @@ footer .icons .fa:hover {
 }
 
 .rating {
-  font-size: 20px;
+  font-size: 16px;
   display: block;
   color: #10c8cd;
   margin-bottom: 10px;
   cursor: default;
-  letter-spacing: 3px;
+  letter-spacing: 1px;
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -699,13 +714,17 @@ footer .icons .fa:hover {
   .profile .info {
     text-align: left;
   }
-  .profile img.profile-picture {
+  .profile div.profile-picture {
     float: left;
     height: 160px;
     padding: 0;
     margin-right: 20px;
     max-width: 160px;
-    height: auto;
+    min-width: 160px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: inline-block;
   }
   .profile .nav-bar .nav-item {
     font-size: 20px;
@@ -720,14 +739,14 @@ footer .icons .fa:hover {
     padding: 30px;
   }
   .profile .title {
-    font-size: 23px;
+    font-size: 22px;
   }
   .profile .description {
     padding: 15px 0 0;
   }
   .profile .left-info {
     float: right;
-    width: calc(100% - 195px);
+    width: calc(100% - 185px);
   }
   .profile .left-info .info-column {
     width: 50%;
@@ -772,11 +791,12 @@ footer .icons .fa:hover {
     width: 33%;
   }
   .profile .left-info .info-column:nth-child(3) {
-    width: 33%;
+    width: 20%;
   }
   .profile button.apply, .profile button.closed {
     float: right;
     width: 100px;
+    margin-top: 25px;
   }
 }
 .signup {
@@ -785,7 +805,7 @@ footer .icons .fa:hover {
   margin-right: auto;
   margin-left: auto;
   width: 100%;
-  border: 1px solid #CECECE;
+  border: 1px solid #cecece;
   border-radius: 5px;
   padding: 5%;
 }
@@ -795,7 +815,7 @@ footer .icons .fa:hover {
   line-height: 45px;
   padding-left: 2%;
   margin-bottom: 15px;
-  border: 1px solid #CECECE;
+  border: 1px solid #cecece;
   border-radius: 5px;
   color: #929292;
   vertical-align: middle;
@@ -826,7 +846,7 @@ footer .icons .fa:hover {
   display: inline-block;
   width: 43%;
   height: 1px;
-  border: 1px solid #CECECE;
+  border: 1px solid #cecece;
   margin-bottom: 3px;
   margin-left: 1%;
   margin-right: 1%;
@@ -909,7 +929,7 @@ footer .icons .fa:hover {
   margin-right: auto;
   margin-left: auto;
   width: 100%;
-  border: 1px solid #CECECE;
+  border: 1px solid #cecece;
   border-radius: 5px;
   padding: 5%;
 }
@@ -988,7 +1008,7 @@ footer .icons .fa:hover {
   margin-top: 0;
 }
 .recommendations .consider {
-  color: #476D82;
+  color: #476d82;
   font-size: 20px;
   font-weight: 700;
   text-align: center;
@@ -1061,7 +1081,7 @@ footer .icons .fa:hover {
   float: left;
 }
 .admin .dashboard .notifications .notice .icon .fa {
-  color: #FFF;
+  color: white;
   position: relative;
   font-size: 32px;
   top: 13px;
@@ -1173,7 +1193,7 @@ footer .icons .fa:hover {
   padding: 0;
 }
 .messages .message-container .message {
-  border-bottom: 1px solid #DADADA;
+  border-bottom: 1px solid #dadada;
 }
 .messages .message-container .message .info {
   cursor: pointer;
@@ -1226,7 +1246,7 @@ footer .icons .fa:hover {
   cursor: pointer;
   padding: 8px 8px;
   box-sizing: border-box;
-  border: 1px solid #DADADA;
+  border: 1px solid #dadada;
   border-radius: 6px;
   font-size: 12px;
   margin-top: 10px;
@@ -1237,7 +1257,7 @@ footer .icons .fa:hover {
   transition: background-color 0.2s ease-in;
 }
 .messages .message-container .message .content .reply:hover {
-  background-color: #F8F8F8;
+  background-color: #f8f8f8;
 }
 
 /* Small devices (tablets, 768px and up) */
@@ -1266,7 +1286,7 @@ footer .icons .fa:hover {
 .forum .title {
   text-align: center;
   padding: 30px 0 10px;
-  color: #10C8CD;
+  color: #10c8cd;
 }
 .forum .title span {
   font-size: 24px;
@@ -1274,7 +1294,7 @@ footer .icons .fa:hover {
 .forum .new-post {
   font-size: 14px;
   background-color: #DCF2F3;
-  border: 1px solid #DADADA;
+  border: 1px solid #dadada;
   border-radius: 0;
   padding: 10px;
   margin: 0;
@@ -1320,7 +1340,7 @@ footer .icons .fa:hover {
 }
 .forum .post-container .post {
   background-color: #FFF;
-  border: 1px solid #DADADA;
+  border: 1px solid #dadada;
   border-radius: 0;
   padding: 15px 15px;
   margin: 0;
@@ -1338,7 +1358,7 @@ footer .icons .fa:hover {
 }
 .forum .post-container .post .info .left .name {
   font-weight: 700;
-  color: #10C8CD;
+  color: #10c8cd;
 }
 .forum .post-container .post .info .left .action {
   color: #888;
@@ -1432,5 +1452,3 @@ footer .icons .fa:hover {
 }
 /* Medium devices (desktops, 992px and up) */
 /* Large devices (large desktops, 1200px and up) */
-
-/*# sourceMappingURL=style.css.map */
