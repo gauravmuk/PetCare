@@ -22,6 +22,23 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
     $scope.location = "";
     $scope.min_price = "";
 
+    $http.get("/api/search_pet/user_defined/user_defined/user_defined/" + $scope.userId).success(function(data){
+        $scope.totalItems = data.length;
+        $scope.currentPage = 1;
+
+        for (var i = 0; i < data.length; i++) {
+            if (i < $scope.items_per_page) {
+                data[i].show = true;
+            } else {
+                data[i].show = false;
+            }
+        }
+
+        data.sort(compare);
+
+        $scope.posts = data;
+    });
+
     $scope.search_pet = function() {
         if ($scope.pet === "")
             $scope.pet = "none";
@@ -42,20 +59,7 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                 }
             }
 
-            data.sort(function(a, b) {
-                if (a.rank > b.rank) {
-                    return -1;
-                } else if (a.rank < b.rank) {
-                    return 1;
-                } else {
-                    if (a.rating > b.rating) {
-                        return -1;
-                    } else if (a.rating < b.rating) {
-                        return 1;
-                    }
-                }
-                return 0;
-            });
+            data.sort(compare);
 
             $scope.posts = data;
         });
@@ -141,20 +145,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                 }
             }
 
-            data.sort(function(a, b) {
-                if (a.rank > b.rank) {
-                    return -1;
-                } else if (a.rank < b.rank) {
-                    return 1;
-                } else {
-                    if (a.rating > b.rating) {
-                        return -1;
-                    } else if (a.rating < b.rating) {
-                        return 1;
-                    }
-                }
-                return 0;
-            });
+            data.sort(compare);
 
             $scope.posts = data;
 
@@ -209,4 +200,20 @@ function rating(numOfStar, index) {
         }
     }
     $('#rating'+index).html(res);
+}
+
+
+function compare(a, b) {
+    if (a.rank > b.rank) {
+        return -1;
+    } else if (a.rank < b.rank) {
+        return 1;
+    } else {
+        if (a.rating > b.rating) {
+            return -1;
+        } else if (a.rating < b.rating) {
+            return 1;
+        }
+    }
+    return 0;
 }
