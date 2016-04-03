@@ -72,13 +72,13 @@
                         <li>
                             <a href="/">Home</a>
                         </li>
-                        <li>
-                            <a href="forum">View Forum</a>
+                        <li ng-class="forumActive">
+                            <a href="/forum">View Forum</a>
                         </li>
-                        <li>
-                            <a href="petsitter_posts">Hire a Pet Sitter</a>
+                        <li ng-class="sitterPostingActive">
+                            <a href="/petsitter_posts">Hire a Pet Sitter</a>
                         </li>
-                        <li>
+                        <li ng-class="petPostingActive">
                             <a href="/pet_posts">Offer Pet Sitting</a>
                         </li>
                         <li ng-hide="authService.getUserData().userName" class="sign-up">

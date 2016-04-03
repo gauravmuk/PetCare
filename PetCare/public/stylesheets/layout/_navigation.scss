@@ -91,6 +91,11 @@
     ul {
     	margin: 0;
 
+    	li {
+    		cursor: pointer;
+  			@include transition(background-color 0.2s ease-in);
+    	}
+
     	a {
     		text-decoration: none;
     		color: $link-color;
@@ -98,12 +103,16 @@
   			@include transition(background-color 0.2s ease-in);
 
   			&:hover {
-		  		background-color: #EEE;
+		  		background-color: transparent;
   			}
     	}
 
     }
 
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: transparent;
 }
 
 @media (max-width: $screen-xs-max) {
@@ -155,12 +164,23 @@
 			margin-right: -15px;
 			margin-left: -15px;
 
-			li a {
+			> ul >li {
+				
+				height: 50px;
 
-				&:hover, &:focus {
-					color: $link-dark;
-					background-color: $gray;
+				&.active, &.active:focus {
+					background-color: #EEE;
+					border-top: 3px solid #10C8CD;
+
+					a {
+						top: -3px;
+					}
 				}
+
+				&:hover {
+					background-color: #EEE;
+				}
+
 			}
 
 			.sign-up {

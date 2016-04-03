@@ -16,45 +16,46 @@
                     <div class="form-group">
                         <label for="inputTitle">Name</label>
                         <input type="text" class="form-control" name="inputName" id="inputName" ng-model="name" required>
-                        <span ng-show="petForm.inputName.$touched && petForm.inputName.$invalid">This field is required.</span>
+                        <span ng-show="petForm.inputName.$touched && petForm.inputName.$invalid" class="form-error">This field is required.</span>
                     </div>
 
                     <div class="form-group">
                         <label for="inputType">Type</label>
                         <input type="text" class="form-control" name="inputType" id="inputType" ng-model="type" required>
-                        <span ng-show="petForm.inputType.$touched && petForm.inputType.$invalid">This field is required.</span>
+                        <span ng-show="petForm.inputType.$touched && petForm.inputType.$invalid" class="form-error">This field is required.</span>
                     </div>
 
                     <div class="form-group">
                         <label for="inputAge">Age</label>
-                        <input type="text" class="form-control" name="inputAge" id="inputAge" ng-model="age" required>
-                        <span ng-show="petForm.inputAge.$touched && petForm.inputAge.$invalid">This field is required.</span>
+                        <input type="number" class="form-control" name="inputAge" id="inputAge" ng-model="age" required>
+                        <span ng-show="petForm.inputAge.$touched && petForm.inputAge.$invalid" class="form-error">This field is required.</span>
                     </div>
 
                     <div class="form-group">
-                        <label >Gender</label>
-                        <select class="form-control" ng-model="gender" required>
+                        <label>Gender</label>
+                        <select class="form-control" ng-model="gender" name="gender" required>
                           <option value="Intact Male">Intact Male</option>
                           <option value="Neutered Male">Neutered Male</option>
                           <option value="Intact Female">Intact Female</option>
                           <option value="Speyed Female">Speyed Female</option>
                         </select>
+                        <span ng-show="petForm.gender.$touched && petForm.gender.$invalid" class="form-error">This field is required.</span>
                     </div>
 
                     <div class="form-group">
                         <label for="inputBreed">Breed</label>
                         <input type="text" class="form-control" name="inputBreed" id="inputBreed" ng-model="breed" required>
-                        <span ng-show="petForm.inputBreed.$touched && petForm.inputBreed.$invalid">This field is required.</span>
+                        <span ng-show="petForm.inputBreed.$touched && petForm.inputBreed.$invalid" class="form-error">This field is required.</span>
                     </div>
 
                     <div class="form-group">
                         <label for="inputDescription">Description</label>
                         <textarea row="10" class="form-control" name="inputDescription" id="inputDescription" ng-model="description" required></textarea>
-                        <span ng-show="petForm.inputDescription.$touched && petForm.inputDescription.$invalid">This field is required.</span>
+                        <span ng-show="petForm.inputDescription.$touched && petForm.inputDescription.$invalid" class="form-error">This field is required.</span>
                     </div>
 
-                    <div ng-messages="petForm.$error" style="color:maroon" role="alert">
-                        <div ng-message="required">Please enter all fields.</div>
+                    <div ng-messages="petForm.$error" role="alert">
+                        <div ng-message="required" class="form-error">Please enter all fields.</div>
                     </div>
             
                     <button ng-click="createPet(petForm.$valid)" type="button" class="post-button">Submit</button>

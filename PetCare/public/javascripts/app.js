@@ -119,9 +119,10 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		});
 }]);
 
-app.run(function ($rootScope, $location, $route, authService) {
+app.run(function ($rootScope, $location, $route, authService, activeLinkService) {
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
 	    authService.getUserStatus();
+        activeLinkService.prepForBroadcast($location.path());
 		if (next.access.restricted) {
 			if (!authService.isLoggedIn()) {
 	        	$location.path('/signin');
@@ -135,12 +136,22 @@ app.controller('mainController', function() {
 
 });
 
-app.controller('navController', ['$scope', '$location', 'authService', '$cookies', '$http',
-	function($scope, $location, authService, $cookies, $http) {
+app.controller('navController', ['$scope', '$location', 'authService', '$cookies', '$http', 'activeLinkService',
+	function($scope, $location, authService, $cookies, $http, activeLinkService) {
 
 	$scope.authService = authService;
 	$scope.numb_new_msg = 0;
 	$scope.numb_new_app = 0;
+
+	$scope.forumActive = false;
+	$scope.sitterPostingActive = false;
+	$scope.petPostingActive = false;
+
+    $scope.$on('handleBroadcast', function() {
+		$scope.forumActive = activeLinkService.forumActive;
+		$scope.sitterPostingActive = activeLinkService.sitterPostingActive;
+		$scope.petPostingActive = activeLinkService.petPostingActive;
+    });
 
 	$scope.logout = function() {
 		authService.logout().then(function () {
@@ -157,6 +168,7 @@ app.controller('navController', ['$scope', '$location', 'authService', '$cookies
 	        $scope.numb_new_app = data.applications;
 	    });
 	};
+
 }]);
 
 // call jQuery functions after rendering finishes

@@ -83,6 +83,24 @@
 	form {
 		font-size: 14px;
 
+		input.price {
+			display: inline;
+			width: 120px;
+
+			&.low {
+				margin-right: 5px;
+			}
+
+			&.high {
+				margin-left: 5px;
+			}
+
+		}
+
+	}
+
+	.form-error {
+		color: #E02D2D;
 	}
 
 	label {
@@ -178,6 +196,15 @@
 				margin-right: 8px !important;
 			}
 		}
+
+		form {
+
+			input.price {
+				width: 150px;
+			}
+
+		}
+
 	}
 
 	.recommendations {

@@ -1697,7 +1697,7 @@ app.post("/api/application", function(req, res){
 	var post = [];
 	var Posting; // either pet_posting or sitter_posting depends on posting type.
 
-	if (req.body.isPetPost) {
+	if (req.body.isPetPost == 'true') {
 		Posting = Pet_Posting;
 	} else {
 		Posting = Sitter_Posting;

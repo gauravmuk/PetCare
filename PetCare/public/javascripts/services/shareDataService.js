@@ -18,3 +18,37 @@ app.service('shareDataService', function() {
   	};
 
 });
+
+app.factory('activeLinkService', function($rootScope) {
+    var activeLinkService = {};
+    
+    activeLinkService.forumActive = '';
+    activeLinkService.sitterPostingActive = '';
+    activeLinkService.petPostingActive = '';
+
+    activeLinkService.prepForBroadcast = function(path) {
+
+      activeLinkService.forumActive = '';
+      activeLinkService.sitterPostingActive = '';
+      activeLinkService.petPostingActive = '';
+
+      console.log(path);
+
+      if (path == '/forum') {
+        this.forumActive = 'active';
+      } else if (path == '/petsitter_posts') {
+        this.sitterPostingActive = 'active';
+      } else if (path == '/pet_posts') {
+        this.petPostingActive = 'active';
+      }
+
+      this.broadcastItem();
+
+    };
+
+    activeLinkService.broadcastItem = function() {
+        $rootScope.$broadcast('handleBroadcast');
+    };
+
+    return activeLinkService;
+});

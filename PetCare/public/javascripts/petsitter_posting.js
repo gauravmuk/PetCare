@@ -44,6 +44,9 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 
 	function sendPost(userThumbnail) {
 
+		var priceString = $scope.priceLow + " - " + $scope.priceHigh;
+		console.log(priceString);
+
 		// Create object to be sent through the POST request
 		var dataObj = {
 		    user: $cookies.get('userID'),
@@ -51,7 +54,7 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 			types: $scope.types,
 			duration: $scope.duration,
 			location: $scope.location,
-			price: $scope.price,
+			price: priceString,
 			experience: $scope.experience,
 			supplies: $scope.supplies,
 			number_of_pets: $scope.number_of_pets,
