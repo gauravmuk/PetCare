@@ -67,7 +67,7 @@ describe('GET Request Test Suite:   ', function() {
     });
 });
 
-// All the test cases that make http POSt requests to the server are written in this suite
+// All the test cases that make http POST requests to the server are written in this suite
 describe('Post Request Test Suite:   ', function() {
     
     // Create user data object to be posted with the POST request
@@ -111,8 +111,6 @@ describe('Post Request Test Suite:   ', function() {
         });
     });
 });
-
-
 
 // All the test cases that make http DELETE requests to the server are written in this suite
 describe('Delete Request Test Suite:   ', function() {
@@ -162,7 +160,7 @@ describe('Delete Request Test Suite:   ', function() {
                 function(error, response, body) {
                     console.log(body);
                     var obj = JSON.parse(body);
-                    // Assertd ok:1
+                    // Assert ok:1
                     assert.equal(obj.ok, 1);
                     // Status code 200 == OK
                     assert.equal(response.statusCode, 200);    
@@ -173,4 +171,66 @@ describe('Delete Request Test Suite:   ', function() {
     });
 });
 
+// All the test cases that make http PUT requests to the server are written in this suite
+describe('Post Request Test Suite:   ', function() {
+    
+    // Create user data object to be posted with the POST request
+    var mochaTestUser = {
+        username:   'michaeljackson@gmail.com', 
+        password:   '1234',
+        name:       'Michael Jackson'
+    }
+
+    // The function passed to before() is called before running the test cases.
+    before(function() {
+        app.startServer(8989);
+    });
+
+    // The function passed to after() is called after running the test cases.
+    after(function() {
+        // Remove tese user we added in this test suite form the database
+        app.removeMochaTestUser(mochaTestUser.username);
+        app.closeServer();
+    });
+
+    // `describe()` creates a suite of test cases
+    describe('Ban a user', function() {
+            it('Should create new user and ban that user', function(done) {
+
+            request.post(
+                {
+                    url:     'http://localhost:8989/api/register',
+                    form:    mochaTestUser
+                }, 
+                function(error, response, body){
+                    // Convert the body string into a JavaScript object
+                    var obj = JSON.parse(body);
+                    // Assert the user role, user name and status code
+                    assert.equal(obj.role, 'regular');
+                    assert.equal(obj.name, mochaTestUser.name);
+                    assert.equal(response.statusCode, 200);
+
+                    var userID = obj.id;
+
+                    // Now do a PUT request to ban this user
+                    request({
+                        uri: 'http://localhost:8989/api/users/' + userID + '/ban',
+                        method: "PUT"
+                    },
+                    function(error, response, body) {
+                        
+                        var obj = JSON.parse(body);
+                        // Assert ok:1
+                        assert.equal(obj.ok, 1);
+                        // Assert nModified:1
+                        assert.equal(obj.nModified, 1);
+                        // Status code 200 == OK
+                        assert.equal(response.statusCode, 200);    
+                        done();
+                    });
+                });
+
+        });
+    });
+});
 
