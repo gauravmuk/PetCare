@@ -34,7 +34,7 @@ app.engine("html", require("ejs").renderFile);
 /* Database Setup */
 // Connect to a database
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
-var connection = mongoose.connect("mongodb://localhost/testDB");
+var connection = mongoose.connect("mongodb://localhost/testDB");// TO-DO: ALSO CHANGE 'testDB' in  default-data.js 
 autoIncrement.initialize(connection);
 
 // Import Database schema
