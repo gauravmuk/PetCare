@@ -1,4 +1,4 @@
-var petsitter_posting = angular.module('petsitter_posting', []);
+var petsitter_posting = angular.module('petsitter_posting', ['ngAnimate', 'ui.bootstrap']);
 
 petsitter_posting.controller('sitterPostingFormController', ['$http', '$location', '$scope', '$cookies',
 	function($http, $location, $scope, $cookies) {
@@ -91,14 +91,30 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
 	$scope.rating = rating;
 	$scope.recomm_posts = [];
 
-	if ($cookies.get('posts')) {
-		$scope.posts = JSON.parse($cookies.get('posts'));
+    // pagination
+    $scope.totalItems = 0;
+    $scope.currentPage = 1;
+    $scope.items_per_page = 3;
+    $scope.maxSize = 5;
 
-	    for (var i = 0; i < $scope.posts.length; i++) {
-	        if ($scope.posts[i].posting_id != $scope.postingID)
-	            $scope.recomm_posts.push($scope.posts[i]);
+    $http.get("/api/search_sitter/" + $cookies.get('pet') + "/" + $cookies.get('location') + "/" + $cookies.get('price') + "/" + $scope.userId).success(function(data){
+        $scope.totalItems = data.length - 1;
+        $scope.currentPage = 1;
+
+        data.sort(compare);
+	    for (var i = 0; i < data.length; i++) {
+	        if (data[i].posting_id != $scope.postingID)
+	            $scope.recomm_posts.push(data[i]);
 	    }
-	}
+
+        for (var i = 0; i < $scope.recomm_posts.length; i++) {
+            if (i < $scope.items_per_page) {
+                $scope.recomm_posts[i].show = true;
+            } else {
+                $scope.recomm_posts[i].show = false;
+            }
+        }
+    });
 
 	$http.get('/api/sitterpostings/' + $scope.postingID).success(function(data) {
 
@@ -152,6 +168,21 @@ petsitter_posting.controller('sitterPostingController', ['$http', '$scope', '$ro
         });
     };
 
+    //pagination
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+    };
+
+    $scope.pageChanged = function() {
+        for (var i = 0; i < $scope.recomm_posts.length; i++) {
+            if ((($scope.currentPage-1) * $scope.items_per_page <= i)
+            && (i < $scope.currentPage * $scope.items_per_page)) {
+                $scope.recomm_posts[i].show = true;
+            } else {
+                $scope.recomm_posts[i].show = false;
+            }
+        }
+    };
 }]);
 
 

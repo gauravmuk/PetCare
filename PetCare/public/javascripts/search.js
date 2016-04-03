@@ -2,8 +2,8 @@
 var search = angular.module('search', ['ngAnimate', 'ui.bootstrap']);
 
 // Controller for pet_posts
-search.controller('HireController', ['$http', '$scope', '$cookies', '$location', 'appService',
-    function($http, $scope, $cookies, $location, appService){
+search.controller('HireController', ['$http', '$scope', '$cookies', '$location', 'appService', 'authService',
+    function($http, $scope, $cookies, $location, appService, authService){
 
     $scope.posts = [];
     $scope.rating = rating;
@@ -36,6 +36,12 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                 }
             }
 
+            if (authService.isLoggedIn()) {
+                $scope.search_term = "Recommendations near your location.";
+            } else {
+                $scope.search_term = "Recommendations near " + $scope.location + ".";
+            }
+
             $http.get("/api/search_pet/user_data/"+$scope.location+"/none/" + $scope.userId).success(function(data){
                 $scope.totalItems = data.length;
                 $scope.currentPage = 1;
@@ -49,13 +55,14 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                 }
 
                 data.sort(compare);
-
                 $scope.posts = data;
+                $scope.location = "";
             });
         });
     });
 
     $scope.search_pet = function() {
+        $scope.search_term = "";
         if ($scope.pet === "")
             $scope.pet = "none";
         if ($scope.location === "")
@@ -89,7 +96,22 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
     };
 
     $scope.showDetailPost = function(postId) {
-        $cookies.put('posts', JSON.stringify($scope.posts));
+        if ($scope.pet === "") {
+            $cookies.put('pet', "none");
+        } else {
+            $cookies.put('pet', $scope.pet);
+        }
+        if ($scope.location === "") {
+            $cookies.put('location', "none");
+        } else {
+            $cookies.put('location', $scope.location);
+        }
+        if ($scope.min_price === "") {
+            $cookies.put('price', "none");
+        } else {
+            $cookies.put('price', $min_price.pet);
+        }
+
         $location.path("/pet_posts/" + postId);
     };
 
@@ -121,14 +143,15 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
 
 
  // Controller for petsitter_posts
-search.controller('OfferController', ['$http', '$scope', '$cookies', '$location', 'appService',
-    function($http, $scope, $cookies, $location, appService){
+search.controller('OfferController', ['$http', '$scope', '$cookies', '$location', 'appService', 'authService',
+    function($http, $scope, $cookies, $location, appService, authService){
 
     $scope.posts = [];
     $scope.rating = rating;
     $scope.userId = $cookies.get('userID');
     $scope.toPostingID; // posting_id holder for application
     $scope.msg_content = "";
+    $scope.search_term = "";
 
     // pagination
     $scope.totalItems = 0;
@@ -155,6 +178,12 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                 }
             }
 
+            if (authService.isLoggedIn()) {
+                $scope.search_term = "Recommendations near your location.";
+            } else {
+                $scope.search_term = "Recommendations near " + $scope.location + ".";
+            }
+
             $http.get("/api/search_sitter/user_data/"+$scope.location+"/none/" + $scope.userId).success(function(data){
                 $scope.totalItems = data.length;
                 $scope.currentPage = 1;
@@ -168,13 +197,14 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                 }
 
                 data.sort(compare);
-
                 $scope.posts = data;
+                $scope.location = "";
             });
         });
     });
 
     $scope.search_sitter = function() {
+        $scope.search_term = "";
         if ($scope.pet === "")
             $scope.pet = "none";
         if ($scope.location === "")
@@ -208,7 +238,22 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
     };
 
     $scope.showDetailPost = function(postId) {
-        $cookies.put('posts', JSON.stringify($scope.posts));
+        if ($scope.pet === "") {
+            $cookies.put('pet', "none");
+        } else {
+            $cookies.put('pet', $scope.pet);
+        }
+        if ($scope.location === "") {
+            $cookies.put('location', "none");
+        } else {
+            $cookies.put('location', $scope.location);
+        }
+        if ($scope.max_price === "") {
+            $cookies.put('price', "none");
+        } else {
+            $cookies.put('price', $max_price.pet);
+        }
+
         $location.path("/petsitter_posts/" + postId);
     };
 

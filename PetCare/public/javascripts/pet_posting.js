@@ -1,4 +1,4 @@
-var pet_posting = angular.module('pet_posting', []);
+var pet_posting = angular.module('pet_posting', ['ngAnimate', 'ui.bootstrap']);
 
 pet_posting.controller('petPostingFormController', ['$http', '$location', '$scope', '$cookies', 
 	function($http, $location, $scope, $cookies) {
@@ -100,14 +100,30 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 	$scope.rating = rating;
 	$scope.recomm_posts = [];
 
-	if ($cookies.get('posts')) {
-		$scope.posts = JSON.parse($cookies.get('posts'));
+    // pagination
+    $scope.totalItems = 0;
+    $scope.currentPage = 1;
+    $scope.items_per_page = 3;
+    $scope.maxSize = 5;
 
-	    for (var i = 0; i < $scope.posts.length; i++) {
-	        if ($scope.posts[i].posting_id != $scope.postingID)
-	            $scope.recomm_posts.push($scope.posts[i]);
+    $http.get("/api/search_pet/" + $cookies.get('pet') + "/" + $cookies.get('location') + "/" + $cookies.get('price') + "/" + $scope.userId).success(function(data){
+        $scope.totalItems = data.length;
+        $scope.currentPage = 1;
+
+        data.sort(compare);
+	    for (var i = 0; i < data.length; i++) {
+	        if (data[i].posting_id != $scope.postingID)
+	            $scope.recomm_posts.push(data[i]);
 	    }
-	}
+
+        for (var i = 0; i < $scope.recomm_posts.length; i++) {
+            if (i < $scope.items_per_page) {
+                $scope.recomm_posts[i].show = true;
+            } else {
+                $scope.recomm_posts[i].show = false;
+            }
+        }
+    });
 
 	// TODO: Display message if id not found
 
@@ -140,7 +156,6 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 	});
 
     $scope.showDetailPost = function(postId) {
-        $cookies.put('posts', JSON.stringify($scope.posts));
         window.location="/pet_posts/" + postId;
     };
 
@@ -170,7 +185,22 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
                 
         });
     };
-    
+
+    //pagination
+    $scope.setPage = function (pageNo) {
+        $scope.currentPage = pageNo;
+    };
+
+    $scope.pageChanged = function() {
+        for (var i = 0; i < $scope.recomm_posts.length; i++) {
+            if ((($scope.currentPage-1) * $scope.items_per_page <= i)
+            && (i < $scope.currentPage * $scope.items_per_page)) {
+                $scope.recomm_posts[i].show = true;
+            } else {
+                $scope.recomm_posts[i].show = false;
+            }
+        }
+    };
 }]);
 
 pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$cookies', 

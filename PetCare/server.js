@@ -1508,6 +1508,8 @@ app.get("/api/search_sitter/:pet/:location/:max_price/:userId", function(req, re
 	var max_price = req.params.max_price;
 	var userId = req.params.userId;
 
+	console.log(pet +" "+location+" "+ max_price+" " +userId);
+
 	Sitter_Posting.find({}).populate('user').exec(function(err, sitterPosting) {
 		if (err) { throw err; }
 		Application.find({}, function(err, application) {

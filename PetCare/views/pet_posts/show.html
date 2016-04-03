@@ -140,7 +140,8 @@
         </div>
         <!-- Recommendations -->
         <div class="recommend">
-            <div class="posting" ng-repeat="post in recomm_posts">
+            <div class="posting" ng-repeat="post in recomm_posts" ng-show="post.show">
+                <p class="applied-msg" ng-show="post.applied">You already applied for this posting.</p>
                 <div class="info">
                     <img class="profile-picture" ng-src="{{post.thumbnail}}" alt="pet picture"/>
                     <div class="left-info">
@@ -185,6 +186,9 @@
                  </p>
             </div>
         </div>
+    </div>
+    <div class="pagination">
+        <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" boundary-link-numbers="true" items-per-page="items_per_page" ng-change="pageChanged()"></uib-pagination>
     </div>
 </div>    	
 

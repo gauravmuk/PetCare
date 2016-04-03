@@ -24,6 +24,7 @@
     <div class="search-results">
         <div class="container">
             <div class="search-term">
+                {{search_term}}
             </div>
             <a href="new_petsitter_posts" class="new-post-link">
                 <div class="button new-post-btn">
@@ -37,7 +38,7 @@
             <div class="profile">
                 <div class="recommend">
                     <div class="posting" ng-repeat="post in posts" ng-show="post.show">
-                        <p ng-show="post.applied">You applied for this posting.</p>
+                        <p class="applied-msg" ng-show="post.applied">You already applied for this posting.</p>
                         <div class="info">
                             <div class="profile-picture"  ng-style="{ 'background-image': 'url(' + post.thumbnail + ')' }" alt="profile picture"></div>
                             <div class="left-info">
