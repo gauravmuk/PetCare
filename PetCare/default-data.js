@@ -64,6 +64,8 @@ async.series([
 			banned	: false,
 			location: 'Toronto, ON',
 			role	: 'admin',
+			description: '', 
+			photo: '/images/default-profile-pic.png'
 		});
 
 		var password = '12345'
@@ -86,6 +88,8 @@ async.series([
 			banned	: false,
 			location: 'Toronto, ON',
 			role	: 'regular',
+			description: '', 
+			photo: '/images/default-profile-pic.png'
 		});
 
 		var password = '12345'
@@ -108,6 +112,8 @@ async.series([
 			banned	: false,
 			location: 'Toronto, ON',
 			role	: 'regular',
+			description: '', 
+			photo: '/images/default-profile-pic.png'
 		});
 
 		var password = '12345'
@@ -118,6 +124,97 @@ async.series([
 			}
 			callback();
 		});
+    },
+
+    function(callback) {		// Adding pet to userId=2
+    	
+    	var pet = new Pet({
+			name: 'Max',
+			user: 2,
+			type: 'Dog',
+			breed: 'Labrador Retriever',
+			gender: 'Male',
+			age: 2,
+			description: 'Max is a Labrador Retriever.',
+			rating: 3,
+			photo: 'http://elelur.com/data_images/dog-breeds/labrador-retriever/labrador-retriever-06.jpg'
+		});
+
+        pet.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet to userId=2
+    	
+    	var pet = new Pet({
+			name: 'Chloe',
+			user: 2,
+			type: 'Dog',
+			breed: 'Border Terrier',
+			gender: 'Female',
+			age: 1,
+			description: 'Chloe is my favourite pet.',
+			rating: 5,
+			photo: 'http://germanhuntingterrier.com/images/dog/border_terrier_03.jpg'
+		});
+
+        pet.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+
+    },
+
+    function(callback) {		// Adding pet to userId=3
+    	
+    	var pet = new Pet({
+			name: 'Polly',
+			user: 3,
+			type: 'Bird',
+			breed: 'Parrot',
+			gender: 'Male',
+			age: 4,
+			description: 'Polly likes to talk.',
+			rating: 4,
+			photo: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg'
+		});
+
+        pet.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+
+    },
+
+    function(callback) {		// Adding pet to userId=3
+    	
+    	var pet = new Pet({
+			name: 'Oliver',
+			user: 3,
+			type: 'Cat',
+			breed: 'Siamese',
+			gender: 'Male',
+			age: 4,
+			description: 'This is my favourite pet.',
+			rating: 2,
+			photo: 'http://www.delightibles.com/wp-content/uploads/2015/07/2015.07.10_delightibles-1.jpg'
+		});
+
+        pet.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+
     },
 
     function(callback) {		// Adding report from userId=3 to userId=2
@@ -278,7 +375,79 @@ async.series([
 			}
 			callback();
 		});
-    }
+    },
+
+    function(callback) {		// Adding forum post to userId=2
+    	
+    	var forumpost = new ForumPost({
+		    user: 2,
+			type: 'image',
+			message: '',
+			image: 'http://bebusinessed.com/wp-content/uploads/2014/03/734899052_13956580111.jpg',
+			likes: 12
+		});
+
+        forumpost.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding forum post to userId=2
+    	
+    	var forumpost = new ForumPost({
+		    user: 2,
+			type: 'message',
+			message: 'Check out the pictures of my pets.',
+			image: '',
+			likes: 6
+		});
+
+        forumpost.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding forum post to userId=3
+    	
+    	var forumpost = new ForumPost({
+		    user: 3,
+			type: 'message',
+			message: 'I am looking for a dog park in Toronto.',
+			image: '',
+			likes: 4
+		});
+
+        forumpost.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding forum post to userId=3
+    	
+    	var forumpost = new ForumPost({
+		    user: 3,
+			type: 'image',
+			message: '',
+			image: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg',
+			likes: 8
+		});
+
+        forumpost.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
 
 
 // At the end of the script call process.exit()

@@ -81,6 +81,17 @@
 	}
 }
 
+@media (max-width: $screen-xs-max) {
+
+	.pagination {
+		li a {
+		    padding: 6px 8px;
+		    font-size: 12px;
+		}
+	}
+
+}
+
 /* Small devices (tablets, 768px and up) */
 @media (min-width: $screen-sm-min) {
 	.search-bar {

@@ -53,12 +53,18 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 
 	function sendPost(userThumbnail) {
 
+		var startDate = $scope.dt1.toString();
+		var endDate = $scope.dt2.toString();
+
+		var duration = startDate.split(' ')[1] + ' ' + startDate.split(' ')[2] + ' ' + startDate.split(' ')[3] + 
+			" to " + endDate.split(' ')[1] + ' ' + endDate.split(' ')[2] + ' ' + endDate.split(' ')[3];
+
 		// Create object to be sent through the POST request
 		var dataObj = {
 		    user: $cookies.get('userID'),
     		pet: $scope.inputPet,
 			title: $scope.title,
-			duration: $scope.duration,
+			duration: duration,
 			location: $scope.location,
 			price: $scope.price,
 			supplies: $scope.supplies,
@@ -80,6 +86,48 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
     			
 		});
 
+	};
+
+	// Datepicker
+	$scope.today = function() {
+		$scope.dt1 = new Date();
+		$scope.dt2 = new Date();
+	};
+	$scope.today();
+
+	$scope.clear = function() {
+		$scope.dt1 = null;
+		$scope.dt2 = null;
+	};
+
+	$scope.dateOptions = {
+		formatYear: 'yy',
+		minDate: new Date(),
+		startingDay: 1,
+    	showWeeks: true
+	};
+
+	$scope.open1 = function() {
+		$scope.popup1.opened = true;
+	};
+
+	$scope.open2 = function() {
+		$scope.popup2.opened = true;
+	};
+
+	$scope.setDate = function(year, month, day) {
+		$scope.dt1 = new Date(year, month, day);
+		$scope.dt2 = new Date(year, month, day);
+	};
+
+	$scope.format = 'dd MMMM yyyy';
+
+	$scope.popup1 = {
+		opened: false
+	};
+
+	$scope.popup2 = {
+		opened: false
 	};
 
 }]);
@@ -201,6 +249,7 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
             }
         }
     };
+
 }]);
 
 pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$cookies', 

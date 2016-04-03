@@ -32,11 +32,28 @@
                         <span ng-show="postingForm.inputPetType.$touched && postingForm.inputPetType.$invalid" class="form-error">This field is required.</span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="inputDuration">Duration</label>
-                        <input type="text" class="form-control" name="inputDuration" id="inputDuration"  ng-model="duration" required/>
-                        <span ng-show="postingForm.inputDuration.$touched && postingForm.inputDuration.$invalid" class="form-error">This field is required.</span>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Begin date</h4>
+                            <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt1" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" name="dt1" required/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                            </p>
+                        </div>
+
+                        <div class="col-md-6">
+                            <h4>End date</h4>
+                            <p class="input-group">
+                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" name="dt2" required/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
+                            </p>
+                        </div>
                     </div>
+                    <span ng-show="(postingForm.dt1.$touched && postingForm.dt1.$invalid) || (postingForm.dt2.$touched && postingForm.dt2.$invalid)" class="form-error">This field is required.</span>
 
                     <div class="form-group">
                         <label for="inputLocation">Location</label>

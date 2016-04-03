@@ -12,6 +12,6 @@ HOW TO RUN
 	1. Open two terminals.
 	2. cd into the 'PetCare' directory.
 	3. In one terminal, start the mongoDB daemon by running 'mongod --dbpath ./mongodb_data'
-	4. TODO: In the second terminal, import the default data.
+	4. In the second terminal, import the data by running 'node default-data.js'
 	5. In the second terminal, start the nodeJS server by running 'npm start'
 	6. Type http://localhost:3000/ in a browser to view the application.

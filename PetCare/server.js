@@ -255,7 +255,8 @@ var pet1 = new Pet({
 	gender: 'Male',
 	age: 2,
 	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
-	rating: 2
+	rating: 2,
+	photo: 'images/cat1.jpg'
 });
 
 pet1.save();
@@ -268,7 +269,8 @@ var pet2 = new Pet({
 	gender: 'Male',
 	age: 5,
 	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
-	rating: 3
+	rating: 3,
+	photo: 'images/cat1.jpg'
 });
 
 pet2.save();
@@ -281,7 +283,8 @@ var pet3 = new Pet({
 	gender: 'Male',
 	age: 5,
 	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
-	rating: 4
+	rating: 4,
+	photo: 'images/cat1.jpg'
 });
 
 pet3.save();

@@ -42,7 +42,7 @@
                     <div class="info">
                         <div class="left">
                             <span class="name">
-                                {{ post.user.name }}
+                                <a href="/users/{{ post.user._id }}">{{ post.user.name }}</a>
                             </span>
                             <span class="action">
                                 posted a {{ post.type }}

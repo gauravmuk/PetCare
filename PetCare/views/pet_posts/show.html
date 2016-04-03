@@ -121,7 +121,7 @@
             <div class="posting" ng-repeat="post in recomm_posts" ng-show="post.show">
                 <p class="applied-msg" ng-show="post.applied">You already applied for this posting.</p>
                 <div class="info">
-                    <img class="profile-picture" ng-src="{{post.thumbnail}}" alt="pet picture"/>
+                    <div class="profile-picture"  ng-style="{ 'background-image': 'url(' + post.thumbnail + ')' }" alt="profile picture"></div>
                     <div class="left-info">
                         <div class="title"><a href ="" ng-click="showDetailPost(post.posting_id)">{{post.title}}</a></div>
                         <div>

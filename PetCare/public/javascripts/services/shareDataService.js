@@ -32,8 +32,6 @@ app.factory('activeLinkService', function($rootScope) {
       activeLinkService.sitterPostingActive = '';
       activeLinkService.petPostingActive = '';
 
-      console.log(path);
-
       if (path == '/forum') {
         this.forumActive = 'active';
       } else if (path == '/petsitter_posts') {

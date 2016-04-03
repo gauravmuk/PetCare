@@ -490,6 +490,12 @@ footer .icons .fa:hover {
   display: inline-block;
 }
 
+@media (max-width: 767px) {
+  .pagination li a {
+    padding: 6px 8px;
+    font-size: 12px;
+  }
+}
 /* Small devices (tablets, 768px and up) */
 @media (min-width: 768px) {
   .search-bar .search-container {
@@ -1457,7 +1463,7 @@ footer .icons .fa:hover {
 .forum .post-container .post .info .left {
   float: left;
 }
-.forum .post-container .post .info .left .name {
+.forum .post-container .post .info .left .name a {
   font-weight: 700;
   color: #10C8CD;
 }
