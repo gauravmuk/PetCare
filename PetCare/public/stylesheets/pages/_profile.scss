@@ -234,6 +234,7 @@ $border-color: #CECECE;
 
 			.info-container {
 				float: left;
+				min-width: 300px;
 			}
 			.right-corner {
 				float: right;
@@ -330,12 +331,63 @@ $border-color: #CECECE;
 	}
 }
 
+.modal-body {
+	.pet-review-info {
+		width: 90%;
+    	margin: 0 auto;
+    	border: 1px solid #cecece;
+    	padding: 20px;
+    	margin-bottom: 20px;
+	}
+
+	div.pet-review-picture {
+		display: inline-block;
+		height: 100px;
+		padding: 10px;
+		max-width: 100px;
+		min-width: 100px;
+		background-size: cover;
+    	background-position: center;
+   		background-repeat: no-repeat;
+   		margin: 0 auto;
+	}
+
+	div.info {
+		float: right;
+		width: calc(100% - 115px);
+		font-size: 14px;
+	}
+
+	.review-user-info {
+		float:left;
+		font-size: 14px;
+		margin: 5px 0;
+		.name {
+			color: #337ab7;
+			margin-bottom: 5px;
+		}
+	}
+
+	.review-comment {
+		float:right;
+		width: calc(100% - 150px);
+	}
+
+	.review-rating {
+		display: inline-block;
+		letter-spacing: 0;
+	}
+
+	.date {
+		margin-left: 5px;
+	}
+}
+
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: $screen-md-min) {
 	.profile {
 		padding: 50px;
 		padding-bottom: 10px;
-
 	}
 }
 

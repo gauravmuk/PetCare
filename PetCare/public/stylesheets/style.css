@@ -706,6 +706,7 @@ footer .icons .fa:hover {
   }
   .profile .user_info .info-container {
     float: left;
+    min-width: 300px;
   }
   .profile .user_info .right-corner {
     float: right;
@@ -783,6 +784,50 @@ footer .icons .fa:hover {
     padding: 0;
   }
 }
+.modal-body .pet-review-info {
+  width: 90%;
+  margin: 0 auto;
+  border: 1px solid #cecece;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+.modal-body div.pet-review-picture {
+  display: inline-block;
+  height: 100px;
+  padding: 10px;
+  max-width: 100px;
+  min-width: 100px;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  margin: 0 auto;
+}
+.modal-body div.info {
+  float: right;
+  width: calc(100% - 115px);
+  font-size: 14px;
+}
+.modal-body .review-user-info {
+  float: left;
+  font-size: 14px;
+  margin: 5px 0;
+}
+.modal-body .review-user-info .name {
+  color: #337ab7;
+  margin-bottom: 5px;
+}
+.modal-body .review-comment {
+  float: right;
+  width: calc(100% - 150px);
+}
+.modal-body .review-rating {
+  display: inline-block;
+  letter-spacing: 0;
+}
+.modal-body .date {
+  margin-left: 5px;
+}
+
 /* Medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
   .profile {

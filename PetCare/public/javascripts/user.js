@@ -1,19 +1,33 @@
 var user = angular.module('user', ['ngAnimate', 'ui.bootstrap']);
 
-user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies', '$window', '$uibModal', 'msgService', 'appService',
-    function($http, $scope, $routeParams, $cookies, $window, $uibModal, msgService, appService) {    
+user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies', '$window', '$location', '$uibModal', 'authService','msgService', 'appService',
+    function($http, $scope, $routeParams, $cookies, $window, $location, $uibModal, authService, msgService, appService) {    
     	$scope.user = [];
         $scope.pets = []
         $scope.userId = $cookies.get('userID');
     	$scope.profileUserId = $routeParams.id;
         $scope.animationEnabled = true;
-
+        
     	$http.get('/api/users/' + $scope.profileUserId).success(function(data){
     		$scope.user = data;
     	});
 
         $http.get('/api/users/' + $scope.profileUserId + '/pets').success(function(data){
             $scope.pets = data;
+            if ($window.location.hash == '#review') {
+                $scope.selected = 'review';
+            }
+            else {
+                $scope.selected = 'pet';
+                var petID = $window.location.hash.match(/\d+/g);
+                if (petID) {
+                    for (i = 0; i < data.length; i++) {
+                        if (petID[0] == $scope.pets[i]._id) {
+                            $scope.openPetReviewModal('lg', $scope.pets[i].reviews);
+                        }
+                    }
+                }
+            };
         });
 
         $http.get('/api/users/' + $scope.profileUserId + '/posts/open').success(function(data){
@@ -28,12 +42,6 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             $scope.reviews = data;
             $scope.userReviewTotal = data.length;
         });
-
-        if ($window.location.hash == '#review') {
-            $scope.selected = 'review';
-        } else {
-            $scope.selected = 'pet';
-        };
 
         $scope.isNumber = function(value) {
             return /^\d+$/.test(value);
@@ -99,43 +107,74 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
         };
 
         $scope.openMessageModal = function(size) {
-            var modalInstance = $uibModal.open({
-                animation: $scope.animationEnabled,
-                templateUrl: 'messageModalContent.html',
-                controller: 'messageUserController',
-                size: size
-            });
-            modalInstance.result.then(function (message) {
-                $scope.message = message;
-                $scope.sendMsg();
-            });
+            if (!authService.isLoggedIn()) {
+                $location.path('/signin');
+            }
+            else {
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationEnabled,
+                    templateUrl: 'messageModalContent.html',
+                    controller: 'messageUserController',
+                    size: size
+                });
+                modalInstance.result.then(function (message) {
+                    $scope.message = message;
+                    $scope.sendMsg();
+                });
+            };
         };
 
         $scope.openReportModal = function(size) {
-            var modalInstance = $uibModal.open({
-                animation: $scope.animationEnabled,
-                templateUrl: 'reportModalContent.html',
-                controller: 'reportUserController',
-                size: size
-            });
-            modalInstance.result.then(function (reportMsg) {
-                $scope.reportMsg = reportMsg;
-                $scope.sendReport();
-            });
+            if (!authService.isLoggedIn()) {
+                $location.path('/signin');
+            }
+            else {
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationEnabled,
+                    templateUrl: 'reportModalContent.html',
+                    controller: 'reportUserController',
+                    size: size
+                });
+                modalInstance.result.then(function (reportMsg) {
+                    $scope.reportMsg = reportMsg;
+                    $scope.sendReport();
+                });
+            }
         };
 
         $scope.openApplyModal = function(size, isPetPost, postID) {
-            $scope.isPetPost = isPetPost;
-            $scope.toPostingID = postID;
+            if (!authService.isLoggedIn()) {
+                $location.path('/signin');
+            }
+            else {
+                $scope.isPetPost = isPetPost;
+                $scope.toPostingID = postID;
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationEnabled,
+                    templateUrl: 'applyModalContent.html',
+                    controller: 'applyController',
+                    size: size
+                });
+                modalInstance.result.then(function (applicationMsg) {
+                    $scope.applicationMsg = applicationMsg;
+                    $scope.sendApplication();
+                });
+            };
+        };
+
+        $scope.openPetReviewModal = function(size, reviews) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationEnabled,
-                templateUrl: 'applyModalContent.html',
-                controller: 'applyController',
-                size: size
+                templateUrl: 'petReviewModalContent.html',
+                controller: 'petReviewController',
+                size: size,
+                resolve: {
+                    reviews: function() {
+                        return reviews;
+                    }
+                }
             });
-            modalInstance.result.then(function (applicationMsg) {
-                $scope.applicationMsg = applicationMsg;
-                $scope.sendApplication();
+            modalInstance.result.then(function () {
             });
         };
 
@@ -175,5 +214,22 @@ user.controller('applyController', ['$http', '$scope', '$uibModalInstance',
 
         $scope.close = function () {
             $uibModalInstance.dismiss('cancel');
+        };
+}]);
+
+user.controller('petReviewController', ['$http', '$scope', '$uibModalInstance', 'reviews',
+    function($http, $scope, $uibModalInstance, reviews) {
+        $scope.reviews = reviews;
+        console.log(reviews)
+        $scope.ok = function () {
+            $uibModalInstance.close();
+        };
+
+        $scope.range = function(value) {
+            var ratings = [];
+            for (var i = 1; i <= value; i++) {
+                ratings.push(i)
+            }
+            return ratings
         };
 }]);

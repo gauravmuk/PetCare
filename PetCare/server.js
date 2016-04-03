@@ -708,7 +708,10 @@ app.put("/api/users/:id/ban", function(req, res){
 // Return the pets for a given user
 app.get("/api/users/:id/pets", function(req, res){
 	if (isNumber(req.params.id)) {
-		Pet.find({ user: req.params.id }).populate('user').populate({ path: 'reviews', model: 'PetReview' }).exec(function(err, pet) {
+		Pet.find({ user: req.params.id })
+		.populate('user')
+		.populate({ path: 'reviews', populate:{ path: 'from', model: 'User' }})
+		.exec(function(err, pet) {
 			if (err) {
 				throw err;
 			}
@@ -734,7 +737,9 @@ app.get("/api/users/:id/posts/:status", function(req, res){
 				posts = posts.concat(sitter_post);
 			}
 
-			Pet_Posting.find({ user: req.params.id, status: req.params.status }).populate('pet').exec(function(err, pet_post) {
+			Pet_Posting.find({ user: req.params.id, status: req.params.status })
+			.populate({ path: 'pet', populate: { path: 'reviews', model: 'PetReview', populate: { path: 'from', model: 'User'} }})
+			.exec(function(err, pet_post) {
 				if (err) {
 					throw err;
 				}
