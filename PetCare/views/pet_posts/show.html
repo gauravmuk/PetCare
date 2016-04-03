@@ -30,7 +30,7 @@
             <!-- User Info -->
             <div class="user_info">
                 <div class="info">
-                    <img class="profile-picture" ng-src="{{ petPosting.thumbnail }}" alt="pet picture"/>
+                    <div class="profile-picture" ng-style="{ 'background-image': 'url(' + petPosting.thumbnail + ')' }" alt="profile picture"></div>
                     <div class="left-info">
                         <div class="title">{{ petPosting.title }}</div>
                         <div>
