@@ -22,21 +22,37 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
     $scope.location = "";
     $scope.min_price = "";
 
-    $http.get("/api/search_pet/user_data/user_data/none/" + $scope.userId).success(function(data){
-        $scope.totalItems = data.length;
-        $scope.currentPage = 1;
+    navigator.geolocation.getCurrentPosition(function(position){
+        var x = position.coords.latitude;
+        var y = position.coords.longitude;
 
-        for (var i = 0; i < data.length; i++) {
-            if (i < $scope.items_per_page) {
-                data[i].show = true;
-            } else {
-                data[i].show = false;
+        $http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+x+','+y+'&sensor=true').success(function(data){
+            var address_components = data.results[0].address_components;
+
+            for(var i = 0; i < address_components.length; i++) {
+                if (address_components[i].types == "locality,political") {
+                    $scope.location = address_components[i].long_name;
+                    break;
+                }
             }
-        }
 
-        data.sort(compare);
+            $http.get("/api/search_pet/user_data/"+$scope.location+"/none/" + $scope.userId).success(function(data){
+                $scope.totalItems = data.length;
+                $scope.currentPage = 1;
 
-        $scope.posts = data;
+                for (var i = 0; i < data.length; i++) {
+                    if (i < $scope.items_per_page) {
+                        data[i].show = true;
+                    } else {
+                        data[i].show = false;
+                    }
+                }
+
+                data.sort(compare);
+
+                $scope.posts = data;
+            });
+        });
     });
 
     $scope.search_pet = function() {
@@ -125,21 +141,37 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
     $scope.location = "";
     $scope.max_price = "";
 
-    $http.get("/api/search_sitter/user_data/user_data/none/" + $scope.userId).success(function(data){
-        $scope.totalItems = data.length;
-        $scope.currentPage = 1;
+    navigator.geolocation.getCurrentPosition(function(position){
+        var x = position.coords.latitude;
+        var y = position.coords.longitude;
 
-        for (var i = 0; i < data.length; i++) {
-            if (i < $scope.items_per_page) {
-                data[i].show = true;
-            } else {
-                data[i].show = false;
+        $http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+x+','+y+'&sensor=true').success(function(data){
+            var address_components = data.results[0].address_components;
+
+            for(var i = 0; i < address_components.length; i++) {
+                if (address_components[i].types == "locality,political") {
+                    $scope.location = address_components[i].long_name;
+                    break;
+                }
             }
-        }
-        
-        data.sort(compare);
 
-        $scope.posts = data;
+            $http.get("/api/search_sitter/user_data/"+$scope.location+"/none/" + $scope.userId).success(function(data){
+                $scope.totalItems = data.length;
+                $scope.currentPage = 1;
+
+                for (var i = 0; i < data.length; i++) {
+                    if (i < $scope.items_per_page) {
+                        data[i].show = true;
+                    } else {
+                        data[i].show = false;
+                    }
+                }
+
+                data.sort(compare);
+
+                $scope.posts = data;
+            });
+        });
     });
 
     $scope.search_sitter = function() {
@@ -234,3 +266,37 @@ function compare(a, b) {
     }
     return 0;
 }
+
+
+
+
+
+
+//#######################
+    function displayLocation(latitude,longitude){
+        alert('start');
+        var request = new XMLHttpRequest();
+
+        var method = 'GET';
+        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
+        var async = true;
+
+        request.open(method, url, async);
+        request.onreadystatechange = function(){
+            if(request.readyState == 4 && request.status == 200){
+                var data = JSON.parse(request.responseText);
+                alert(request.responseText); // check under which type your city is stored, later comment this line
+                var addressComponents = data.results[0].address_components;
+                for(i=0;i<addressComponents.length;i++){
+                    var types = addressComponents[i].types
+                    //alert(types);
+                    if(types=="locality,political"){
+                        alert(addressComponents[i].long_name); // this should be your city, depending on where you are
+                    }
+                }
+            //alert(address.city.short_name);
+            }
+        };
+        request.send();
+    }
+
