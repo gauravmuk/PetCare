@@ -590,12 +590,8 @@ app.post('/api/register', function(req, res, next) {
 	var password 	= req.body.password;
 	var name 		= req.body.name;
 
-	// Make users who use '@petcare.com' eamils as Admins
-	var role;
-	var role = (username.indexOf("@petcare.com") > 1)? 'admin':'regular';
-
 	User.register(new User({ username: username, email: username, name: name, location: '',
-		description: '', role: role, photo: '' }), password, function(err) {
+		description: '', role: 'regular', photo: '' }), password, function(err) {
 		if (err) {
 			return next(err);
 		}
