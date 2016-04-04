@@ -35,7 +35,13 @@ app.engine("html", require("ejs").renderFile);
 /* Database Setup */
 // Connect to a database
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
-var connection = mongoose.connect("mongodb://localhost/testDB");// TO-DO: ALSO CHANGE 'testDB' in  default-data.js 
+var connection = mongoose.connect("mongodb://localhost/testDB", function(err) {
+    if (err) {
+		console.log("Error connecting to the mongo database. Please make sure you are running mongo in another terminal.");
+    	console.log(err);
+    	throw err;
+    }
+});// TO-DO: ALSO CHANGE 'testDB' in  default-data.js 
 autoIncrement.initialize(connection);
 
 // Helmet helps you secure your Express apps by setting various HTTP headers
@@ -330,6 +336,7 @@ petPosting2.save();
 var petPosting3 = new Pet_Posting({
     user: 1,
     pet: 3,
+	title: 'this is posting 3',
 	duration: '1 week',
 	location: 'Downtown, Toronto, ON',
 	price: '110',
@@ -1061,9 +1068,8 @@ app.post("/api/pets", function(req, res){
 	});
 
 	newPet.save(function(err) {
-		console.log(newPet);
 		res.setHeader('Location', '/users/' + newPet.user);
-    	res.status(201).send(null);
+    	res.status(201).send({ id: newPet._id, name: newPet.name, type: newPet.type, breed: newPet.breed });
 	});
 
 });
@@ -1142,7 +1148,8 @@ app.post("/api/petpostings", function(req, res){
 
 	newPost.save(function(err, result) {
 		res.setHeader('Location', '/pet_posts/' + newPost._id);
-    	res.status(201).send({_id : result._id});
+    	res.status(201).send({_id : result._id, title : result.title, duration : result.duration,
+    	price : result.price});
 	});
 });
 
@@ -1261,7 +1268,7 @@ app.post("/api/sitterpostings", function(req, res){
 		duration: req.body.data.duration,
 		location: req.body.data.location,
 		price: req.body.data.price,
-		experience: req.body.data.price,
+		experience: req.body.data.experience,
 		supplies: req.body.data.supplies,
 		number_of_pets: req.body.data.number_of_pets,
 		description: req.body.data.description,
@@ -1271,8 +1278,8 @@ app.post("/api/sitterpostings", function(req, res){
 
 	newPost.save(function(err) {
 		res.setHeader('Location', '/petsitter_posts/' + newPost._id);
-		console.log(newPost._id);
-    	res.status(201).send(null);
+    	res.status(201).send({_id : newPost._id, title : newPost.title, duration : newPost.duration,
+    	price : newPost.price});
 	});
 
 });
@@ -1833,6 +1840,7 @@ app.put("/api/read_msg/:msg_id", function(req, res){
 
 		Message.findByIdAndUpdate(req.params.msg_id, {$set: {read:true}}, function(err, msg){
 			if (err) throw err;
+    		res.status(201).send(null);
 		});
 
 	} else {
@@ -2027,6 +2035,38 @@ exports.removeMochaTestUser = function(userName) {
 		else{
 			// On success, log result
 			// console.log(result);
+		}
+	});
+};
+
+// Remove a pet at end of Mocha testing
+exports.removeMochaPet = function(petName) {
+	Pet.remove({ name:petName }, function(err, result){
+		if(err){
+			throw err;
+		}
+		else{
+		}
+	});
+};
+
+
+// Remove a pet at end of Mocha testing
+exports.removePosting = function(type, title) {
+
+	var PostingType;
+
+	if (type == 'petPosting') {
+		PostingType = Pet_Posting;
+	} else {
+		PostingType = Sitter_Posting;
+	}
+
+	PostingType.remove({ title:title }, function(err, result){
+		if(err){
+			throw err;
+		}
+		else{
 		}
 	});
 };
