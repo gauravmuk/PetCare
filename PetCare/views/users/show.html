@@ -131,6 +131,9 @@
                                             <span class="value">{{ pet.breed }}</span>
                                         </span>
                                     </div>
+                                    <div class="info-column" ng-if="userId == profileUserId ">
+                                        <button class="apply" type="button" ng-click="openEditPetModal('lg', pet)">Edit</button>
+                                    </div>
                                 </div>
                             </div>
                     </div>
@@ -322,3 +325,4 @@
 <div ng-include src="'/modals/messageModal.html'"></div>
 <div ng-include src="'/modals/applyModal.html'"></div>
 <div ng-include src="'/modals/reportModal.html'"></div>
+<div ng-include src="'/modals/editPetModal.html'"></div>

@@ -614,6 +614,10 @@ app.get("/modals/reviewModal.html", function(req, res){
 	res.render("modals/reviewModal.html");
 });
 
+app.get("/modals/editPetModal.html", function(req, res){
+	res.render("modals/editPetModal.html");
+});
+
 app.post('/api/register', function(req, res, next) {
 	var username 	= req.body.username;
 	var password 	= req.body.password;
@@ -1067,6 +1071,35 @@ app.post("/api/pets", function(req, res){
 	});
 
 });
+
+// Update pet information
+app.put("/api/pets/:id", function (req, res) {
+
+	if (isNumber(req.params.id)) {
+		Pet.findOne({ _id: req.params.id }, function (err, pet) {
+		    pet.name 			= req.body.data.name;
+		    pet.type 	 		= req.body.data.type;
+		    pet.age				= req.body.data.age;
+		    pet.gender 			= req.body.data.gender;
+		    pet.breed 			= req.body.data.breed;
+		    pet.description 	= req.body.data.description;
+		    if (req.body.data.photo) {
+		    	pet.photo = req.body.data.photo;
+		    }
+
+		    pet.save(function (err, pet) {
+		        if (err) {
+		        	throw err;
+		        }
+    			res.status(200);
+    			res.json(pet);
+		    });
+		});
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+
+}); 
 
 app.get("/api/petpostings/:id", function(req, res){
 
