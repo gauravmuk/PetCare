@@ -17,7 +17,7 @@
             <div class="panel-body">
                 <div class="message-container">
                     <div class="message" ng-repeat="message in inbox | filter:query | orderBy: '-created_at' ">
-                        <div class="info" ng-click="setRead(message.msg_id)">
+                        <div class="info" id="inbox{{$index}}" ng-click="setRead(message.msg_id, $index)">
                             <div class="user">{{message.from}}</div>
                             <div class="read {{message.read}}">{{isReadInbox(message.read)}}</div>
                             <div class="date">{{message.created_at|date:'MM/dd/yyyy hh:mma'}}</div>
@@ -43,8 +43,8 @@
 
             <div class="panel-body">
                 <div class="message-container">
-                    <div class="message" ng-repeat="message in sent | filter:query | orderBy: '-created_at' " on-finish-render>
-                        <div class="info">
+                    <div class="message" ng-repeat="message in sent | filter:query | orderBy: '-created_at' ">
+                        <div class="info" id="sent{{$index}}" ng-click="showContent($index)">
                             <div class="user">{{message.to}}</div>
                             <div class="read {{message.read}}">{{isReadSent(message.read)}}</div>
                             <div class="date">{{message.created_at|date:'MM/dd/yyyy hh:mma'}}</div>

@@ -20,9 +20,20 @@ application.controller('applicationController', ['$http', '$scope', '$cookies', 
 
     $scope.isReadSent = msgService.isReadSent;
 
+    $scope.showContent = function(index) {
+        $("#sent" + index).siblings(".content").slideToggle("fast", function() {});
+    }
+
     // Update message status in database to read
-    $scope.setRead = function(appId) {
+    $scope.setRead = function(appId, index) {
         $http.put('/api/read_application/' + appId);
+
+        // Update read status for messages
+        $("#received" + index).find(".read").text("READ");
+        $("#received" + index).find(".read").addClass("true");
+
+        // show message content
+        $("#received" + index).siblings(".content").slideToggle("fast", function() {});
     };
 
     $scope.reply = function(userId) {

@@ -159,26 +159,11 @@ app.controller('navController', ['$scope', '$location', 'authService', '$cookies
         });
 	};
 
-	$scope.userId = $cookies.get('userID');
-
 	$scope.getNews = function() {
 
-	    $http.get('/api/news/' + $scope.userId).success(function(data){
+	    $http.get('/api/news/' + $cookies.get('userID')).success(function(data){
 	        $scope.numb_new_msg = data.messages;
 	        $scope.numb_new_app = data.applications;
 	    });
 	};
-
 }]);
-
-// call jQuery functions after rendering finishes
-app.directive('onFinishRender', function () {
-    return {
-        restrict: 'A',
-        link: function (scope, element, attr) {
-            if (scope.$last === true) {
-                ready();
-            }
-        }
-    };
-});

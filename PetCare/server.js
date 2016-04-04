@@ -1365,7 +1365,7 @@ app.post("/api/reports/", function(req, res){
 // Get the number of new messages and applications
 app.get("/api/news/:userId", function(req, res){
 	if (req.params.userId != 'undefined' && isNumber(req.params.userId)) {
-
+console.log(req.params.userId);
 		var messages = [];
 		var applications = [];
 
@@ -1708,7 +1708,6 @@ app.post("/api/application", function(req, res){
 	var Posting; // either pet_posting or sitter_posting depends on posting type.
 
 	if (req.body.isPetPost == 'true') {
-		console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 		Posting = Pet_Posting;
 	} else {
 		Posting = Sitter_Posting;

@@ -19,9 +19,20 @@ message.controller('messageController', ['$http', '$scope', '$cookies', 'msgServ
 
     $scope.isReadSent = msgService.isReadSent;
 
+    $scope.showContent = function(index) {
+        $("#sent" + index).siblings(".content").slideToggle("fast", function() {});
+    }
+
     // Update message status in database to read
-    $scope.setRead = function(msgId) {
+    $scope.setRead = function(msgId, index) {
         $http.put('/api/read_msg/' + msgId);
+
+        // Update read status for messages
+        $("#inbox" + index).find(".read").text("READ");
+        $("#inbox" + index).find(".read").addClass("true");
+
+        // show message content
+        $("#inbox" + index).siblings(".content").slideToggle("fast", function() {});
     };
 
     $scope.reply = function(userId) {
@@ -72,30 +83,3 @@ app.factory('msgService', ['$http', function($http){
         $http.post('/api/message', data, config);
     };
 }]);
-
-
-function ready() {
-
-    // Click to show messages and applications
-    $(".message .info").click(function() {
-
-        $(this).siblings(".content").slideToggle("fast", function() {
-        });
-    });
-
-    // Update read status for messages
-    $(".inbox .message .info").click(function() {
-
-        // Change message status to read
-        $(this).find(".read").text("READ");
-        $(this).find(".read").addClass("true");
-    });
-
-    // Update read status for messages
-    $(".application .received .message .info").click(function() {
-
-        // Change message status to read
-        $(this).find(".read").text("READ");
-        $(this).find(".read").addClass("true");
-    });
-}
