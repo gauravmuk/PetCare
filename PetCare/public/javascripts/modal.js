@@ -35,7 +35,6 @@ modal.controller('applyModalController', ['$http', '$scope', '$uibModalInstance'
         };
 }]);
 
-
 modal.controller('petReviewModalController', ['$http', '$scope', '$uibModalInstance', 'reviews',
     function($http, $scope, $uibModalInstance, reviews) {
         $scope.reviews = reviews;
@@ -49,5 +48,29 @@ modal.controller('petReviewModalController', ['$http', '$scope', '$uibModalInsta
                 ratings.push(i)
             }
             return ratings
+        };
+}]);
+
+modal.controller('userReviewModalController', ['$http', '$scope', '$uibModalInstance',
+    function($http, $scope, $uibModalInstance) {
+        $scope.submitStar = function(rating){
+            // Set rating to the rating level user selected
+            $scope.rating = rating;
+            // Note: Rating = Star Index
+            var starIndex = rating;
+            for (var i = 1; i <= starIndex; i++) {
+                $('#star' + i).html('&#9733;');
+            }
+            for (var i = starIndex + 1; i <= 5; i++) {
+                $('#star' + i).html('&#9734;');
+            }
+        };
+
+        $scope.ok = function () {
+            $uibModalInstance.close({ rating: $scope.rating, comment: $scope.reviewComment });
+        };
+
+        $scope.close = function () {
+            $uibModalInstance.dismiss('cancel');
         };
 }]);

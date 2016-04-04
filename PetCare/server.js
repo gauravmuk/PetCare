@@ -610,6 +610,10 @@ app.get("/modals/reportModal.html", function(req, res){
 	res.render("modals/reportModal.html");
 });
 
+app.get("/modals/reviewModal.html", function(req, res){
+	res.render("modals/reviewModal.html");
+});
+
 app.post('/api/register', function(req, res, next) {
 	var username 	= req.body.username;
 	var password 	= req.body.password;

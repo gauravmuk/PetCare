@@ -127,8 +127,8 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 }]);
 
 petsitter_posting.controller('sitterPostingController', 
-	['$http', '$scope', '$routeParams', '$cookies', 'appService', '$location', '$uibModal', 'authService',
-	function($http, $scope, $routeParams, $cookies, appService, $location, $uibModal, authService) {
+	['$http', '$scope', '$routeParams', '$cookies', 'appService', '$location', '$uibModal', 'authService', 'reviewService',
+	function($http, $scope, $routeParams, $cookies, appService, $location, $uibModal, authService, reviewService) {
 
 	$scope.sitterPosting = [];
 	$scope.postingID = $routeParams.id;
@@ -192,7 +192,6 @@ petsitter_posting.controller('sitterPostingController',
     }
 
     $scope.closePosting = function(postId) {
-
         // Make PUT request to /api/petpostings/:id/close
         $http.put('/api/sitterpostings/' + postId + '/close', {})
 
@@ -238,6 +237,23 @@ petsitter_posting.controller('sitterPostingController',
                 appService.apply($scope.userId, $scope.isPetPost, $scope.toPostingID, applicationMsg);
             });
         };
+    };
+
+    $scope.openReviewModal = function(size, typeOfReview, postID) {
+        if (!authService.isLoggedIn()) {
+            $location.path('/signin');
+        }
+        else {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationEnabled,
+                templateUrl: 'reviewModalContent.html',
+                controller: 'userReviewModalController',
+                size: size
+           	});
+            modalInstance.result.then(function (reviewData) {
+                reviewService.sendReview(typeOfReview, reviewData.comment, reviewData.rating, postID, $scope.userId)
+            });
+        }
     };
 
     $scope.toggleAnimation = function () {

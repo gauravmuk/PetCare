@@ -69,7 +69,7 @@
                                     <img class="icon" src="assets/icon-message.svg">
                                     <span>Closed</span>
                                 </button>
-                                <button class="button apply" data-toggle="modal" data-target="#reviewModal" ng-hide="ownPost">
+                                <button class="button apply" ng-click="openReviewModal('lg', 'petSitter', sitterPosting._id)" ng-hide="ownPost">
                                     <img class="icon" src="assets/icon-comment.svg">
                                     <span>Review</span>
                                 </button>
@@ -158,36 +158,4 @@
 <div ng-include src="'/modals/applyModal.html'"></div>
 
 <!-- Review Modal -->
-<div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Review</h4>
-            </div>
-            <form ng-controller="reviewController">
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label for="name">Rating:
-                            <span class="rating">
-                                <span class="star" id="star1" ng-click="submitStar(1)">&#9734;</span>
-                                <span class="star" id="star2" ng-click="submitStar(2)">&#9734;</span>
-                                <span class="star" id="star3" ng-click="submitStar(3)">&#9734;</span>
-                                <span class="star" id="star4" ng-click="submitStar(4)">&#9734;</span>
-                                <span class="star" id="star5" ng-click="submitStar(5)">&#9734;</span>
-                            </span>
-                        </label>
-                    </div>
-                    <div class="form-group">
-                        <label for="review">Review:</label>
-                        <textarea id="review" ng-model="reviewComment"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button ng-click="submitReview('petSitter')" type="button" class="btn btn-primary" data-dismiss="modal">Submit</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
+<div ng-include src="'/modals/reviewModal.html'"></div>
