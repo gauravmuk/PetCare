@@ -14,23 +14,27 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             $scope.setUserData(data);
     	});
 
-        $http.get('/api/users/' + $scope.profileUserId + '/pets').success(function(data){
-            $scope.pets = data;
-            if ($window.location.hash == '#review') {
-                $scope.selected = 'review';
-            }
-            else {
-                $scope.selected = 'pet';
-                var petID = $window.location.hash.match(/\d+/g);
-                if (petID) {
-                    for (i = 0; i < data.length; i++) {
-                        if (petID[0] == $scope.pets[i]._id) {
-                            $scope.openPetReviewModal('lg', $scope.pets[i].reviews);
+        $scope.getPetData = function() {
+            $http.get('/api/users/' + $scope.profileUserId + '/pets').success(function(data){
+                $scope.pets = data;
+                if ($window.location.hash == '#review') {
+                    $scope.selected = 'review';
+                }
+                else {
+                    $scope.selected = 'pet';
+                    var petID = $window.location.hash.match(/\d+/g);
+                    if (petID) {
+                        for (i = 0; i < data.length; i++) {
+                            if (petID[0] == $scope.pets[i]._id) {
+                                $scope.openPetReviewModal('lg', $scope.pets[i].reviews);
+                            }
                         }
                     }
-                }
-            };
-        });
+                };
+            });
+        };
+
+        $scope.getPetData();
 
         $http.get('/api/users/' + $scope.profileUserId + '/posts/open').success(function(data){
             $scope.open_posts = data;
@@ -101,6 +105,67 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                 .success(function(data, status, headers, config) {
                 }).error(function(data, status, headers, config) {
             });
+        };
+
+        $scope.createPet = function (pet, isValid, imageFile) {
+            // Check if form information is valid   
+            console.log(pet);
+            console.log(isValid);
+            console.log(imageFile);
+
+            if (isValid) {
+                var file = imageFile;
+
+                // If user selected a file, upload it
+                if (file) {
+                    var fd = new FormData();
+                    fd.append('file', file);
+
+                    $http.post('/api/upload', fd, {
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}
+                    })
+                    .success(function(data) {
+                        console.log(data);
+                        if (data.url != null) {
+                            thumbnail = data.url;
+                            editPet(pet, thumbnail);
+                        }
+                    });
+                }
+                else {
+                    editPet(pet, null);
+                }
+            }
+
+        };
+
+        function editPet(pet, petThumbnail) {
+            console.log('edit')
+            console.log(pet)
+            console.log(petThumbnail)
+            // Create object to be sent through the POST request
+            var dataObj = {
+                name:           pet.name,
+                type:           pet.type,
+                breed:          pet.breed,
+                gender:         pet.gender,
+                age:            pet.age,
+                description:    pet.description,
+            };
+            if (petThumbnail) {
+                dataObj.photo = petThumbnail;
+            }
+            debugger
+
+            //Make POST request to the /petpostings
+            $http.put('/api/pets/' + pet.id, { data: dataObj })
+                .success(function(data, status, headers, config) {
+                    $scope.getPetData();
+                }).error(function(data, status, headers, config) {
+                    
+            });
+
         };
 
         $scope.select = function(section) {
@@ -192,6 +257,30 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                 }
             });
             modalInstance.result.then(function () {
+            });
+        };
+
+        $scope.openEditPetModal = function(size, pet) {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationEnabled,
+                templateUrl: 'editPetModalContent.html',
+                controller: 'editPetModalController',
+                size: size,
+                resolve: {
+                    pet: function() {
+                        return {    id:             pet._id,
+                                    name:           pet.name,
+                                    breed:          pet.breed,
+                                    type:           pet.type,
+                                    age:            pet.age,
+                                    gender:         pet.gender,
+                                    description:    pet.description
+                        };
+                    }
+                }
+            });
+            modalInstance.result.then(function (petData) {
+                $scope.createPet(petData.pet, petData.isValid, petData.file);
             });
         };
 

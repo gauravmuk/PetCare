@@ -13,7 +13,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 	});
 
 	function isLoggedIn() {
-		if (user) {
+		if (user || $cookies.get('userID') != undefined) {
 			return true;
 		}
 		else {
