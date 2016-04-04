@@ -1364,7 +1364,7 @@ app.post("/api/reports/", function(req, res){
 
 // Get the number of new messages and applications
 app.get("/api/news/:userId", function(req, res){
-	if (isNumber(req.params.userId)) {
+	if (req.params.userId != 'undefined' && isNumber(req.params.userId)) {
 
 		var messages = [];
 		var applications = [];
@@ -1548,8 +1548,9 @@ app.get("/api/search_sitter/:pet/:location/:max_price/:userId", function(req, re
 						} else if (pet === "user_data" && userId != 'undefined') {
 							for (var k = 0; k < pets.length; k++) {
 								if (pets[k]['user'] == userId) {
+
 									regex_pet = new RegExp(".*" + pets[k]['type'] + ".*", "i");
-									if (petposting[i]['pet']['type'].match(regex_pet)) {
+									if (sitterPosting[i]['types'].match(regex_pet)) {
 										rank += 2;
 										break;
 									}
@@ -1707,6 +1708,7 @@ app.post("/api/application", function(req, res){
 	var Posting; // either pet_posting or sitter_posting depends on posting type.
 
 	if (req.body.isPetPost == 'true') {
+		console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
 		Posting = Pet_Posting;
 	} else {
 		Posting = Sitter_Posting;

@@ -109,7 +109,7 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         if ($scope.min_price === "") {
             $cookies.put('price', "none");
         } else {
-            $cookies.put('price', $min_price.pet);
+            $cookies.put('price', $scope.min_price);
         }
 
         $location.path("/pet_posts/" + postId);
@@ -251,7 +251,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
         if ($scope.max_price === "") {
             $cookies.put('price', "none");
         } else {
-            $cookies.put('price', $max_price.pet);
+            $cookies.put('price', $scope.max_price);
         }
 
         $location.path("/petsitter_posts/" + postId);
