@@ -13,6 +13,7 @@ var session   			= require("express-session");
 var AWS 				= require('aws-sdk');
 var multiparty 			= require('multiparty');
 var fs 					= require('fs');
+var helmet 				= require('helmet');
 var fbConfig			= require(__dirname + '/public/javascripts/fb_authenticate');
 var twitterConfig		= require(__dirname + '/public/javascripts/twitter_authenticate');
 var app					= express();
@@ -36,6 +37,11 @@ app.engine("html", require("ejs").renderFile);
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
 var connection = mongoose.connect("mongodb://localhost/testDB");// TO-DO: ALSO CHANGE 'testDB' in  default-data.js 
 autoIncrement.initialize(connection);
+
+// Helmet helps you secure your Express apps by setting various HTTP headers
+app.use(helmet());
+app.use(helmet.xssFilter());
+app.use(helmet.xssFilter({ setOnOldIE: true }));
 
 // Import Database schema
 var Application 	= require(__dirname + '/public/models/Application');
