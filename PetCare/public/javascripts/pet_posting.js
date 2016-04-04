@@ -133,14 +133,12 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 }]);
 
 
-pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService',
-	function($http, $scope, $routeParams, $cookies, appService) {
+pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService', '$uibModal', 'authService',
+	function($http, $scope, $routeParams, $cookies, appService, $uibModal, authService) {
 
 	$scope.petPosting = []
 	$scope.pet = []
 	$scope.postingID = $routeParams.id;
-	$scope.toPostingID; // posting_id holder for application
-	$scope.msg_content = "";
 	$scope.userId = $cookies.get('userID');
 	$scope.ownPost = false;
 	$scope.closedPost = false;
@@ -207,19 +205,6 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
         window.location="/pet_posts/" + postId;
     };
 
-   	$scope.setPostingId = function(postId) {
-		if (postId == -1) {
-			$scope.toPostingID = $scope.postingID;
-		} else {
-			$scope.toPostingID = postId;
-		}
-	}
-
-	$scope.apply = function() {
-		appService.apply($scope.userId, true, $scope.toPostingID, $scope.msg_content);
-        $scope.msg_content = "";
-	};
-
     $scope.closePosting = function(postId) {
 
         // Make PUT request to /api/petpostings/:id/close
@@ -250,6 +235,28 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
         }
     };
 
+    $scope.openApplyModal = function(size, isPetPost, postID) {
+    	if (!authService.isLoggedIn()) {
+            $location.path('/signin');
+        }
+        else {
+            $scope.isPetPost = isPetPost;
+            $scope.toPostingID = postID;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationEnabled,
+                templateUrl: 'applyModalContent.html',
+                controller: 'applyModalController',
+                size: size
+            });
+            modalInstance.result.then(function (applicationMsg) {
+                appService.apply($scope.userId, $scope.isPetPost, $scope.toPostingID, applicationMsg);
+            });
+        };
+    };
+
+    $scope.toggleAnimation = function () {
+    	$scope.animationEnabled = !$scope.animationEnabled;
+    };
 }]);
 
 pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$cookies', 
