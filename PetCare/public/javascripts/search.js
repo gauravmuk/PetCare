@@ -2,14 +2,12 @@
 var search = angular.module('search', ['ngAnimate', 'ui.bootstrap']);
 
 // Controller for pet_posts
-search.controller('HireController', ['$http', '$scope', '$cookies', '$location', 'appService', 'authService',
-    function($http, $scope, $cookies, $location, appService, authService){
+search.controller('HireController', ['$http', '$scope', '$cookies', '$location', 'appService', 'authService', '$uibModal', 
+    function($http, $scope, $cookies, $location, appService, authService, $uibModal){
 
     $scope.posts = [];
     $scope.rating = rating;
     $scope.userId = $cookies.get('userID');
-    $scope.toPostingID; // posting_id holder for application
-    $scope.msg_content = "";
 
     // pagination
     $scope.totalItems = 0;
@@ -115,13 +113,27 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         $location.path("/pet_posts/" + postId);
     };
 
-    $scope.setPostingId = function(postId) {;
-        $scope.toPostingID = postId;
-    }
+    $scope.openApplyModal = function(size, isPetPost, postID) {
+        if (!authService.isLoggedIn()) {
+            $location.path('/signin');
+        }
+        else {
+            $scope.isPetPost = isPetPost;
+            $scope.toPostingID = postID;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationEnabled,
+                templateUrl: 'applyModalContent.html',
+                controller: 'applyModalController',
+                size: size
+            });
+            modalInstance.result.then(function (applicationMsg) {
+                appService.apply($scope.userId, $scope.isPetPost, $scope.toPostingID, applicationMsg);
+            });
+        };
+    };
 
-    $scope.apply = function() {
-        appService.apply($scope.userId, true, $scope.toPostingID, $scope.msg_content);
-        $scope.msg_content = "";
+    $scope.toggleAnimation = function () {
+        $scope.animationEnabled = !$scope.animationEnabled;
     };
 
     //pagination
@@ -143,14 +155,12 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
 
 
  // Controller for petsitter_posts
-search.controller('OfferController', ['$http', '$scope', '$cookies', '$location', 'appService', 'authService',
-    function($http, $scope, $cookies, $location, appService, authService){
+search.controller('OfferController', ['$http', '$scope', '$cookies', '$location', 'appService', 'authService', '$uibModal', 
+    function($http, $scope, $cookies, $location, appService, authService, $uibModal){
 
     $scope.posts = [];
     $scope.rating = rating;
     $scope.userId = $cookies.get('userID');
-    $scope.toPostingID; // posting_id holder for application
-    $scope.msg_content = "";
     $scope.search_term = "";
 
     // pagination
@@ -257,13 +267,27 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
         $location.path("/petsitter_posts/" + postId);
     };
 
-    $scope.setPostingId = function(postId) {
-        $scope.toPostingID = postId;
-    }
+    $scope.openApplyModal = function(size, isPetPost, postID) {
+        if (!authService.isLoggedIn()) {
+            $location.path('/signin');
+        }
+        else {
+            $scope.isPetPost = isPetPost;
+            $scope.toPostingID = postID;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationEnabled,
+                templateUrl: 'applyModalContent.html',
+                controller: 'applyModalController',
+                size: size
+            });
+            modalInstance.result.then(function (applicationMsg) {
+                appService.apply($scope.userId, $scope.isPetPost, $scope.toPostingID, applicationMsg);
+            });
+        };
+    };
 
-    $scope.apply = function() {
-        appService.apply($scope.userId, false, $scope.toPostingID, $scope.msg_content);
-        $scope.msg_content = "";
+    $scope.toggleAnimation = function () {
+        $scope.animationEnabled = !$scope.animationEnabled;
     };
 
     //pagination

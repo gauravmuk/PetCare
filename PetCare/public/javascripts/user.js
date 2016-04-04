@@ -82,14 +82,6 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             return ratings
         };
 
-        $scope.sendMsg = function() {
-            msgService.sendMsg($scope.userId, $scope.profileUserId, $scope.message);
-        };
-
-        $scope.sendApplication = function() {
-            appService.apply($scope.userId, $scope.isPetPost, $scope.toPostingID, $scope.applicationMsg);
-        };
-
         $scope.sendReport = function() {
             // Get user IDs of user who is making the report and the ID of the user reporting against 
             var from            = $cookies.get('userID');
@@ -141,12 +133,11 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                 var modalInstance = $uibModal.open({
                     animation: $scope.animationEnabled,
                     templateUrl: 'messageModalContent.html',
-                    controller: 'messageUserController',
+                    controller: 'messageUserModalController',
                     size: size
                 });
                 modalInstance.result.then(function (message) {
-                    $scope.message = message;
-                    $scope.sendMsg();
+                    msgService.sendMsg($scope.userId, $scope.profileUserId, message);
                 });
             };
         };
@@ -159,7 +150,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                 var modalInstance = $uibModal.open({
                     animation: $scope.animationEnabled,
                     templateUrl: 'reportModalContent.html',
-                    controller: 'reportUserController',
+                    controller: 'reportUserModalController',
                     size: size
                 });
                 modalInstance.result.then(function (reportMsg) {
@@ -179,12 +170,11 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                 var modalInstance = $uibModal.open({
                     animation: $scope.animationEnabled,
                     templateUrl: 'applyModalContent.html',
-                    controller: 'applyController',
+                    controller: 'applyModalController',
                     size: size
                 });
                 modalInstance.result.then(function (applicationMsg) {
-                    $scope.applicationMsg = applicationMsg;
-                    $scope.sendApplication();
+                    appService.apply($scope.userId, $scope.isPetPost, $scope.toPostingID, applicationMsg);
                 });
             };
         };
@@ -193,7 +183,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             var modalInstance = $uibModal.open({
                 animation: $scope.animationEnabled,
                 templateUrl: 'petReviewModalContent.html',
-                controller: 'petReviewController',
+                controller: 'petReviewModalController',
                 size: size,
                 resolve: {
                     reviews: function() {
@@ -210,53 +200,3 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
         };
     }
 ]);
-
-user.controller('messageUserController', ['$http', '$scope', '$uibModalInstance', 
-    function($http, $scope, $uibModalInstance) {
-        $scope.ok = function () {
-            $uibModalInstance.close($scope.message);
-        };
-
-        $scope.close = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-}]);
-
-user.controller('reportUserController', ['$http', '$scope', '$uibModalInstance', 
-    function($http, $scope, $uibModalInstance) {
-        $scope.ok = function () {
-            $uibModalInstance.close($scope.reportMsg);
-        };
-
-        $scope.close = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-}]);
-
-user.controller('applyController', ['$http', '$scope', '$uibModalInstance', 
-    function($http, $scope, $uibModalInstance) {
-        $scope.ok = function () {
-            $uibModalInstance.close($scope.applicationMsg);
-        };
-
-        $scope.close = function () {
-            $uibModalInstance.dismiss('cancel');
-        };
-}]);
-
-user.controller('petReviewController', ['$http', '$scope', '$uibModalInstance', 'reviews',
-    function($http, $scope, $uibModalInstance, reviews) {
-        $scope.reviews = reviews;
-        console.log(reviews)
-        $scope.ok = function () {
-            $uibModalInstance.close();
-        };
-
-        $scope.range = function(value) {
-            var ratings = [];
-            for (var i = 1; i <= value; i++) {
-                ratings.push(i)
-            }
-            return ratings
-        };
-}]);

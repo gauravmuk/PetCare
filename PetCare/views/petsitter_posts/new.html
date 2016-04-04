@@ -1,104 +1,103 @@
-    <div class="content">
-        <div class="container">
+<div class="content">
+    <div class="container">
+        <div class="post-header">
+            <ul class="buttons">
+                <div class="floatleft">
+                    <li>
+                        <a href="petsitter_posts" class="button large">
+                            <span class="button-label">Go Back To Posting</span>
+                        </a>
+                    </li>
+                </div>
+            </ul>
+        </div>
 
-            <div class="post-header">
-                <ul class="buttons">
-                    <div class="floatleft">
-                        <li>
-                            <a href="petsitter_posts" class="button large">
-                                <span class="button-label">Go Back To Posting</span>
-                            </a>
-                        </li>
-                    </div>
-                </ul>
-            </div>
+        <div class="post">
+            <form ng-controller="sitterPostingFormController" name="postingForm">
+                <div class="form-group">
+                    <label for="userImageToUpload">Upload your picture:</label>
+                    <input type="file" class="file-input" name="userImageToUpload" id="userImageToUpload" ng-model="thumbnail" file-model="imageFile">
+                </div>
 
-            <div class="post">
-                <form ng-controller="sitterPostingFormController" name="postingForm">
-                    <div class="form-group">
-                        <label for="userImageToUpload">Upload your picture:</label>
-                        <input type="file" class="file-input" name="userImageToUpload" id="userImageToUpload" ng-model="thumbnail" file-model="imageFile">
-                    </div>
+                <div class="form-group">
+                    <label for="inputTitle">Title</label>
+                    <input type="text" class="form-control" name="inputTitle" id="inputTitle" ng-model="title" required>
+                    <span ng-show="postingForm.inputTitle.$touched && postingForm.inputTitle.$invalid" class="form-error">This field is required.</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="inputPetType">Pet Type(s)</label>
+                    <input type="text" class="form-control" name="inputPetType" id="inputPetType" ng-model="types" required>
+                    <span ng-show="postingForm.inputPetType.$touched && postingForm.inputPetType.$invalid" class="form-error">This field is required.</span>
+                </div>
 
-                    <div class="form-group">
-                        <label for="inputTitle">Title</label>
-                        <input type="text" class="form-control" name="inputTitle" id="inputTitle" ng-model="title" required>
-                        <span ng-show="postingForm.inputTitle.$touched && postingForm.inputTitle.$invalid" class="form-error">This field is required.</span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="inputPetType">Pet Type(s)</label>
-                        <input type="text" class="form-control" name="inputPetType" id="inputPetType" ng-model="types" required>
-                        <span ng-show="postingForm.inputPetType.$touched && postingForm.inputPetType.$invalid" class="form-error">This field is required.</span>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>Begin date</h4>
-                            <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt1" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" name="dt1" required/>
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
-                            </p>
-                        </div>
-
-                        <div class="col-md-6">
-                            <h4>End date</h4>
-                            <p class="input-group">
-                            <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" name="dt2" required/>
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
-                            </span>
-                            </p>
-                        </div>
-                    </div>
-                    <span ng-show="(postingForm.dt1.$touched && postingForm.dt1.$invalid) || (postingForm.dt2.$touched && postingForm.dt2.$invalid)" class="form-error">This field is required.</span>
-
-                    <div class="form-group">
-                        <label for="inputLocation">Location</label>
-                        <input type="text" class="form-control" name="inputLocation" id="inputLocation" ng-model="location" required>
-                        <span ng-show="postingForm.inputLocation.$touched && postingForm.inputLocation.$invalid" class="form-error">This field is required.</span>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h4>Begin date</h4>
+                        <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt1" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" name="dt1" required/>
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        </p>
                     </div>
 
-                    <div class="form-group">
-                        <label for="inputPrice">Price Range ($ per day)</label>
-                        <div></div>
-                        <input type="number" class="form-control price low" name="inputPriceLow" id="inputPriceLow" ng-model="priceLow" required> to
-                        <input type="number" class="form-control price high" name="inputPriceHigh" id="inputPriceHigh" ng-model="priceHigh" required>
-                        <span ng-show="(postingForm.inputPriceLow.$touched && postingForm.inputPriceLow.$invalid) || (postingForm.inputPriceHigh.$touched && postingForm.inputPriceHigh.$invalid)" class="form-error">This field is required.</span>
+                    <div class="col-md-6">
+                        <h4>End date</h4>
+                        <p class="input-group">
+                        <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="dt2" is-open="popup2.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" name="dt2" required/>
+                        <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-click="open2()"><i class="glyphicon glyphicon-calendar"></i></button>
+                        </span>
+                        </p>
                     </div>
+                </div>
+                <span ng-show="(postingForm.dt1.$touched && postingForm.dt1.$invalid) || (postingForm.dt2.$touched && postingForm.dt2.$invalid)" class="form-error">This field is required.</span>
 
-                    <div class="form-group">
-                        <label for="inputPetAge">Experience</label>
-                        <input type="text" class="form-control" name="inputPetAge" id="inputPetAge" ng-model="experience" required>
-                        <span ng-show="postingForm.inputPetAge.$touched && postingForm.inputPetAge.$invalid" class="form-error">This field is required.</span>
-                    </div>
+                <div class="form-group">
+                    <label for="inputLocation">Location</label>
+                    <input type="text" class="form-control" name="inputLocation" id="inputLocation" ng-model="location" required>
+                    <span ng-show="postingForm.inputLocation.$touched && postingForm.inputLocation.$invalid" class="form-error">This field is required.</span>
+                </div>
 
-                    <div class="form-group">
-                        <label for="inputPetSupplies">Pet supplies at home</label>
-                        <input type="text" class="form-control" name="inputPetSupplies" id="inputPetSupplies" ng-model="supplies" required>
-                        <span ng-show="postingForm.inputPetSupplies.$touched && postingForm.inputPetSupplies.$invalid" class="form-error">This field is required.</span>
-                    </div>
+                <div class="form-group">
+                    <label for="inputPrice">Price Range ($ per day)</label>
+                    <div></div>
+                    <input type="number" class="form-control price low" name="inputPriceLow" id="inputPriceLow" ng-model="priceLow" required> to
+                    <input type="number" class="form-control price high" name="inputPriceHigh" id="inputPriceHigh" ng-model="priceHigh" required>
+                    <span ng-show="(postingForm.inputPriceLow.$touched && postingForm.inputPriceLow.$invalid) || (postingForm.inputPriceHigh.$touched && postingForm.inputPriceHigh.$invalid)" class="form-error">This field is required.</span>
+                </div>
 
-                    <div class="form-group">
-                        <label for="inputPetAtHome">Number of Pets</label>
-                        <input type="number" class="form-control" name="inputPetAtHome" id="inputPetAtHome" ng-model="number_of_pets" type="number" required>
-                        <span ng-show="postingForm.inputPetAtHome.$touched && postingForm.inputPetAtHome.$invalid" class="form-error">This field is required.</span>
-                    </div>
+                <div class="form-group">
+                    <label for="inputPetAge">Experience</label>
+                    <input type="text" class="form-control" name="inputPetAge" id="inputPetAge" ng-model="experience" required>
+                    <span ng-show="postingForm.inputPetAge.$touched && postingForm.inputPetAge.$invalid" class="form-error">This field is required.</span>
+                </div>
 
-                    <div class="form-group">
-                        <label for="inputDescription">Description</label>
-                        <textarea row="10" class="form-control" name="inputDescription" id="inputDescription" ng-model="description" required></textarea>
-                        <span ng-show="postingForm.inputDescription.$touched && postingForm.inputDescription.$invalid" class="form-error">This field is required.</span>
-                    </div>
+                <div class="form-group">
+                    <label for="inputPetSupplies">Pet supplies at home</label>
+                    <input type="text" class="form-control" name="inputPetSupplies" id="inputPetSupplies" ng-model="supplies" required>
+                    <span ng-show="postingForm.inputPetSupplies.$touched && postingForm.inputPetSupplies.$invalid" class="form-error">This field is required.</span>
+                </div>
 
-                    <div ng-messages="postingForm.$error" role="alert">
-                        <div ng-message="required" class="form-error">Please enter all fields.</div>
-                    </div>
-                    <button ng-click="createPosting(postingForm.$valid)" type="button" class="post-button">Submit</button>
+                <div class="form-group">
+                    <label for="inputPetAtHome">Number of Pets</label>
+                    <input type="number" class="form-control" name="inputPetAtHome" id="inputPetAtHome" ng-model="number_of_pets" type="number" required>
+                    <span ng-show="postingForm.inputPetAtHome.$touched && postingForm.inputPetAtHome.$invalid" class="form-error">This field is required.</span>
+                </div>
 
-                </form>
-            </div>
+                <div class="form-group">
+                    <label for="inputDescription">Description</label>
+                    <textarea row="10" class="form-control" name="inputDescription" id="inputDescription" ng-model="description" required></textarea>
+                    <span ng-show="postingForm.inputDescription.$touched && postingForm.inputDescription.$invalid" class="form-error">This field is required.</span>
+                </div>
+
+                <div ng-messages="postingForm.$error" role="alert">
+                    <div ng-message="required" class="form-error">Please enter all fields.</div>
+                </div>
+                <button ng-click="createPosting(postingForm.$valid)" type="button" class="post-button">Submit</button>
+
+            </form>
         </div>
     </div>
+</div>

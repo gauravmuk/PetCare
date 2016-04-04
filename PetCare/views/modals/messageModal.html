@@ -1,0 +1,16 @@
+<script id="messageModalContent.html" type="text/ng-template">
+    <div class="modal-header">
+        <h4 class="modal-title">Message</h4>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <textarea name="comment" ng-model="message"></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="ok()">Send</button>
+    </div>
+</script>

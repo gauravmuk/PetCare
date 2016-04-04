@@ -1,0 +1,18 @@
+<!-- Apply Modal -->
+<script id="applyModalContent.html" type="text/ng-template">
+    <div class="modal-header">
+        <h4 class="modal-title">Application</h4>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea name="message" ng-model="applicationMsg"></textarea>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="ok()">Apply</button>
+    </div>
+</script>

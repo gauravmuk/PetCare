@@ -1,0 +1,18 @@
+<!-- Report Modal -->
+<script id="reportModalContent.html" type="text/ng-template">
+    <div class="modal-header">
+        <h4 class="modal-title">Report</h4>
+    </div>
+    <div class="modal-body">
+        <form>
+            <div class="form-group">
+                <textarea name="comment" placeholder="Please briefly describe what you are reporting for." ng-model="reportMsg">
+                </textarea>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="ok()">Report</button>
+    </div>
+</script>
