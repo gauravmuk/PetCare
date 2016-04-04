@@ -594,6 +594,22 @@ app.get("/admin/admin.html", function(req, res){
 	res.render("admin/admin.html");
 });
 
+app.get("/modals/petReviewModal.html", function(req, res){
+	res.render("modals/petReviewModal.html");
+});
+
+app.get("/modals/applyModal.html", function(req, res){
+	res.render("modals/applyModal.html");
+});
+
+app.get("/modals/messageModal.html", function(req, res){
+	res.render("modals/messageModal.html");
+});
+
+app.get("/modals/reportModal.html", function(req, res){
+	res.render("modals/reportModal.html");
+});
+
 app.post('/api/register', function(req, res, next) {
 	var username 	= req.body.username;
 	var password 	= req.body.password;
@@ -1738,7 +1754,9 @@ app.put("/api/read_application/:app_id", function(req, res){
 		var app = [];
 
 		Application.findByIdAndUpdate(req.params.app_id, {$set: {read:true}}, function(err, app){
-			if (err) throw err;
+			if (err) 
+				throw err;
+			res.status(200).send(null);
 		});
 
 	} else {

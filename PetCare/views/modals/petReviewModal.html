@@ -1,0 +1,43 @@
+<!-- PetReview Modal -->
+<script id="petReviewModalContent.html" type="text/ng-template">
+    <div class="modal-header">
+        <h4 class="modal-title">Reviews for </h4>
+    </div>
+    <div class="modal-body">
+        <div class="pet-review-info" ng-repeat="review in reviews">
+            <div class="pet-review-picture" ng-style="{ 'background-image': 'url(/images/default-profile-pic.png)' }" alt="user picture">
+            </div>
+            <div class="info">
+                <div class="review-user-info">
+                    <div class="name" ng-click="close()">
+                        <a ng-href="/users/{{ review.from._id}}">
+                            {{ review.from.name }}
+                        </a>
+                    </div>
+                    <div class="location">
+                        {{ review.from.location }}
+                    </div>
+                </div>
+                <div class="review-comment">
+                    <span class="rating review-rating">
+                        <span ng-repeat="i in range(review.rating)">
+                            &#9733;
+                        </span>
+                        <span ng-repeat="i in range(5 - review.rating)">
+                            &#9734;
+                        </span>
+                    </span>
+                    <span class="date">
+                        {{ review.updated_at | date: 'yyyy-MM-dd' }}
+                    </span>
+                    <p class="description review-description">
+                        {{ review.comment }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="ok()">Close</button>
+    </div>
+</script>

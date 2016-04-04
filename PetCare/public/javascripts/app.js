@@ -11,7 +11,8 @@ var app = angular.module('petCare',	['ngRoute',
 									 'review',
 									 'search', 
 									 'user', 
-									 'forum']);
+									 'forum',
+									 'modal']);
 
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);

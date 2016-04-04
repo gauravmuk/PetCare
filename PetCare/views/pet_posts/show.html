@@ -1,12 +1,9 @@
-
 <!-- Post -->
 <div class="content">
     <div class="container">
-
         <!-- Two buttons on the top of the page -->
         <div class="post-header">
             <ul class="buttons">
-
                 <div class="floatleft">
                     <li>
                         <a href="pet_posts" class="button large">
@@ -65,7 +62,7 @@
                                 </span>
                             </div>
                             <div class="info-column right-corner">
-                                <button class="button apply" data-toggle="modal" data-target="#applyModal" ng-click="setPostingId(-1)" ng-hide="closedPost">
+                                <button class="button apply" ng-click="openApplyModal('lg', true, petPosting._id)" ng-hide="closedPost">
                                     <img class="icon" src="assets/icon-message.svg">
                                     <span>Apply</span>
                                 </button>
@@ -153,7 +150,7 @@
                                 </span>
                             </div>
                             <div class="info-column">
-                                <button class="apply" data-toggle="modal" data-target="#applyModal" ng-click="setPostingId(post.posting_id)">Apply</button>
+                                <button class="apply" ng-click="openApplyModal('lg', true, post.posting_id)">Apply</button>
                             </div>
                         </div>
                     </div>
@@ -165,34 +162,10 @@
             </div>
         </div>
     </div>
-    <div class="pagination">
-        <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" boundary-link-numbers="true" items-per-page="items_per_page" ng-change="pageChanged()"></uib-pagination>
-    </div>
 </div>    	
 
 <!-- Apply Modal -->
-<div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Application</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form">
-                    <div class="form-group">
-                        <label for="comment">Comments:</label>
-                        <textarea name="comment" ng-model="msg_content"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="apply()">Apply</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div ng-include src="'/modals/applyModal.html'"></div>
 
 <!-- Review Modal -->
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

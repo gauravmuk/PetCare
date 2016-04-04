@@ -1,11 +1,8 @@
-<!-- Post -->
-<div class="content" ng-controller="sitterPostingController">
+<div class="content"><!-- Post -->
     <div class="container">
-
         <!-- Two buttons on the top of the page -->
         <div class="post-header">
             <ul class="buttons">
-
                 <div class="floatleft">
                     <li>
                         <a href="petsitter_posts" class="button large">
@@ -23,7 +20,7 @@
                 </div>
             </ul>
         </div>
-        
+            
         <!-- Details of the specific post -->
         <div class="post profile">
             <!-- User Info -->
@@ -64,7 +61,7 @@
                                 </span>
                             </div>
                             <div class="info-column right-corner">
-                                <button class="button apply" data-toggle="modal" data-target="#applyModal" ng-click="setPostingId(-1)" ng-hide="closedPost">
+                                <button class="button apply" ng-click="openApplyModal('lg', false, sitterPosting._id)" ng-hide="closedPost">
                                     <img class="icon" src="assets/icon-message.svg">
                                     <span>Apply</span>
                                 </button>
@@ -96,94 +93,69 @@
                     </span>
                 </div>
             </div>    
-
             <p class="description">
                 {{ sitterPosting.description }}
             </p>
+        </div>
 
-          </div>
-
-        <div class="recommendations profile">
-            <div class="consider">
-                You might also consider
-            </div>
-            <!-- Recommendations -->
-            <div class="recommend">
-                <div class="posting" ng-repeat="post in recomm_posts" ng-show="post.show">
-                    <p class="applied-msg" ng-show="post.applied">You already applied for this posting.</p>
-                    <div class="info">
-                        <div class="profile-picture"  ng-style="{ 'background-image': 'url(' + post.thumbnail + ')' }" alt="profile picture"></div>
-                        <div class="left-info">
-                            <div class="title"><a href ="" ng-click="showDetailPost(post.posting_id)">{{post.title}}</a></div>
-                            <div>
-                                <div class="info-column">
-                                    <span class="rating" id="rating{{$index}}">
-                                        {{rating(post.rating, $index)}}
-                                    </span>
-                                    <span class="info-piece">
-                                        <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
-                                        <span class="value">{{post.types}}</span>
-                                    </span>
-                                    <span class="info-piece">
-                                        <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
-                                        <span class="value">{{post.duration}}</span>
-                                    </span>
-                                </div>
-                                <div class="info-column">
-                                    <span class="info-piece">
-                                        <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
-                                        <span class="value">{{post.location}}</span>
-                                    </span>
-                                    <span class="info-piece">
-                                        <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
-                                        <span class="value">{{post.price}} per day</span>
-                                    </span>
-                                    <span class="info-piece">
-                                        <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
-                                        <span class="value">{{post.experience}} experience</span>
-                                    </span>
-                                </div>
-                                <div class="info-column">
-                                    <button class="apply" data-toggle="modal" data-target="#applyModal" ng-click="setPostingId(post.posting_id)">Apply</button>
-                                </div>
+            <div class="recommendations profile">
+                <div class="consider">
+                    You might also consider
+                </div>
+                <!-- Recommendations -->
+                <div class="recommend">
+                    <div class="posting" ng-repeat="post in recomm_posts" ng-show="post.show">
+                        <p class="applied-msg" ng-show="post.applied">You already applied for this posting.</p>
+                        <div class="info">
+                            <div class="profile-picture"  ng-style="{ 'background-image': 'url(' + post.thumbnail + ')' }" alt="profile picture"></div>
+                            <div class="left-info">
+                                <div class="title"><a href ="" ng-click="showDetailPost(post.posting_id)">{{post.title}}</a></div>
+                                <div>
+                                    <div class="info-column">
+                                        <span class="rating" id="rating{{$index}}">
+                                            {{rating(post.rating, $index)}}
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
+                                            <span class="value">{{post.types}}</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
+                                            <span class="value">{{post.duration}}</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
+                                            <span class="value">{{post.location}}</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
+                                            <span class="value">{{post.price}} per day</span>
+                                        </span>
+                                        <span class="info-piece">
+                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
+                                            <span class="value">{{post.experience}} experience</span>
+                                        </span>
+                                    </div>
+                                    <div class="info-column">
+                                        <button class="apply" ng-click="openApplyModal('lg', false, post.posting_id)">Apply</button>
+                                    </div>
                             </div>
                         </div>
                     </div>
                     <p class="description">
                         {{post.description | limitTo: 200}}...
                          <a href="" ng-click="showDetailPost(post.posting_id)">See More</a>
-                     </p>
+                    </p>
                 </div>
             </div>
         </div>
-        <div class="pagination">
-            <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" boundary-link-numbers="true" items-per-page="items_per_page" ng-change="pageChanged()"></uib-pagination>
-        </div>
-  </div>    	
+    </div>    
+</div>	
 
 <!-- Apply Modal -->
-<div class="modal fade" id="applyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Application</h4>
-            </div>
-            <div class="modal-body">
-                <form role="form">
-                    <div class="form-group">
-                        <label for="comment">Comments:</label>
-                        <textarea name="comment" ng-model="msg_content"></textarea>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="apply()">Apply</button>
-            </div>
-        </div>
-    </div>
-</div>
+<div ng-include src="'/modals/applyModal.html'"></div>
 
 <!-- Review Modal -->
 <div class="modal fade" id="reviewModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
