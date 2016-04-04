@@ -58,7 +58,7 @@ async.series([
         var user = new User({
         	_id		: 1,
 			name	: 'Ben Affleck',
-			username: 'Ben',
+			username: 'admin@gmail.com',
 			email	: 'admin@gmail.com',
 			rating	: 0,
 			banned	: false,
@@ -68,7 +68,7 @@ async.series([
 			photo: '/images/default-profile-pic.png'
 		});
 
-		var password = '12345'
+		var password = 'admin'
 
         User.register(user, password, function(err) {
 			if (err) {
@@ -82,7 +82,7 @@ async.series([
     	var user = new User({
         	_id		: 2,
 			name	: 'Jennifer Lawrence',
-			username: 'Jenniffer',
+			username: 'Jenniffer@gmail.com',
 			email	: 'Jenniffer@gmail.com',
 			rating	: 4,
 			banned	: false,
@@ -106,7 +106,7 @@ async.series([
     	var user = new User({
         	_id		: 3,
 			name	: 'Christian Bale',
-			username: 'Bale',
+			username: 'Bale@gmail.com',
 			email	: 'Bale@gmail.com',
 			rating	: 3,
 			banned	: false,
