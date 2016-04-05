@@ -40,6 +40,7 @@ var Review			= require(__dirname + '/public/models/Review');
 var Pet_Review		= require(__dirname + '/public/models/Pet_Review');
 var User			= require(__dirname + '/public/models/User');
 var ForumPost		= require(__dirname + '/public/models/Forum_Post');
+var Authentication  = require(__dirname + '/public/models/Authentication');
 
 // Drop all collections in the db
 User.collection.drop();
@@ -62,6 +63,7 @@ Pet_Review.collection.drop();
 Pet_Review.resetCount(function(err, response) {});
 ForumPost.collection.drop();
 ForumPost.resetCount(function(err, response) {});
+Authentication.collection.drop();
 
 // Call functions in a series and at the end call process.exit()
 async.series([
