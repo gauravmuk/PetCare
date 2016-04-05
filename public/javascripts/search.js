@@ -20,10 +20,14 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
     $scope.location = "";
     $scope.min_price = "";
 
+    // get default search result
+    // use user's data when user is logged in.
+    // use geolocation when user is not logged in.
     navigator.geolocation.getCurrentPosition(function(position){
         var x = position.coords.latitude;
         var y = position.coords.longitude;
 
+        // get city from geolocation
         $http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+x+','+y+'&sensor=true').success(function(data){
             var address_components = data.results[0].address_components;
 
@@ -34,16 +38,19 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                 }
             }
 
+            // display query for default search
             if (authService.isLoggedIn()) {
                 $scope.search_term = "Recommendations near your location.";
             } else {
                 $scope.search_term = "Recommendations near " + $scope.location + ".";
             }
 
+            // get search with default values
             $http.get("/api/search_pet/user_data/"+$scope.location+"/none/" + $scope.userId).success(function(data){
                 $scope.totalItems = data.length;
                 $scope.currentPage = 1;
 
+                // pagination
                 for (var i = 0; i < data.length; i++) {
                     if (i < $scope.items_per_page) {
                         data[i].show = true;
@@ -52,6 +59,7 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                     }
                 }
 
+                // sort the result postings by its rank
                 data.sort(compare);
                 $scope.posts = data;
                 $scope.location = "";
@@ -59,7 +67,10 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         });
     });
 
+    // get search results given three queries: pet type, location, and price
     $scope.search_pet = function() {
+
+        // set default values to queries if not given from user
         $scope.search_term = "";
         if ($scope.pet === "")
             $scope.pet = "none";
@@ -68,10 +79,12 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         if ($scope.min_price === "")
             $scope.min_price = "none";
 
+        // get search result
         $http.get('/api/search_pet/' + $scope.pet + "/" + $scope.location + "/" + $scope.min_price + "/" + $scope.userId).success(function(data){
             $scope.totalItems = data.length;
             $scope.currentPage = 1;
 
+            // pagination
             for (var i = 0; i < data.length; i++) {
                 if (i < $scope.items_per_page) {
                     data[i].show = true;
@@ -80,11 +93,12 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                 }
             }
 
+            // sort the result postings by its rank
             data.sort(compare);
-
             $scope.posts = data;
         });
 
+        // reset queries if they were none
         if ($scope.pet === "none")
             $scope.pet = "";
         if ($scope.location === "none")
@@ -93,7 +107,10 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
             $scope.min_price = "";
     };
 
+    // goto detail posting page
     $scope.showDetailPost = function(postId) {
+
+        // store search queries in cookies for recommendation postings
         if ($scope.pet === "") {
             $cookies.put('pet', "none");
         } else {
@@ -110,6 +127,7 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
             $cookies.put('price', $scope.min_price);
         }
 
+        // switch page
         $location.path("/pet_posts/" + postId);
     };
 
@@ -136,11 +154,12 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         $scope.animationEnabled = !$scope.animationEnabled;
     };
 
-    //pagination
+    //pagination: set current page
     $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
     };
 
+    //pagination: display corresponding postings
     $scope.pageChanged = function() {
         for (var i = 0; i < $scope.posts.length; i++) {
             if ((($scope.currentPage-1) * $scope.items_per_page <= i)
@@ -174,10 +193,14 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
     $scope.location = "";
     $scope.max_price = "";
 
+    // get default search result
+    // use user's data when user is logged in.
+    // use geolocation when user is not logged in.
     navigator.geolocation.getCurrentPosition(function(position){
         var x = position.coords.latitude;
         var y = position.coords.longitude;
 
+        // get city from geolocation
         $http.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+x+','+y+'&sensor=true').success(function(data){
             var address_components = data.results[0].address_components;
 
@@ -188,16 +211,19 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                 }
             }
 
+            // display query for default search
             if (authService.isLoggedIn()) {
                 $scope.search_term = "Recommendations near your location.";
             } else {
                 $scope.search_term = "Recommendations near " + $scope.location + ".";
             }
 
+            // get search with default values
             $http.get("/api/search_sitter/user_data/"+$scope.location+"/none/" + $scope.userId).success(function(data){
                 $scope.totalItems = data.length;
                 $scope.currentPage = 1;
 
+                // pagination
                 for (var i = 0; i < data.length; i++) {
                     if (i < $scope.items_per_page) {
                         data[i].show = true;
@@ -206,6 +232,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                     }
                 }
 
+                // sort the result postings by its rank
                 data.sort(compare);
                 $scope.posts = data;
                 $scope.location = "";
@@ -213,7 +240,10 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
         });
     });
 
+    // get search results given three queries: pet type, location, and price
     $scope.search_sitter = function() {
+
+        // set default values to queries if not given from user
         $scope.search_term = "";
         if ($scope.pet === "")
             $scope.pet = "none";
@@ -222,6 +252,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
         if ($scope.max_price === "")
             $scope.max_price = "none";
 
+        // get search result
         $http.get('/api/search_sitter/' + $scope.pet + "/" + $scope.location + "/" + $scope.max_price + "/" + $scope.userId).success(function(data){
             $scope.totalItems = data.length;
             $scope.currentPage = 1;
@@ -234,10 +265,11 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                 }
             }
 
+            // sort the result postings by its rank
             data.sort(compare);
-
             $scope.posts = data;
 
+            // reset queries if they were none
             if ($scope.pet === "none")
                 $scope.pet = "";
             if ($scope.location === "none")
@@ -247,7 +279,10 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
         });
     };
 
+    // goto detail posting page
     $scope.showDetailPost = function(postId) {
+
+        // store search queries in cookies for recommendation postings
         if ($scope.pet === "") {
             $cookies.put('pet', "none");
         } else {
@@ -264,6 +299,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
             $cookies.put('price', $scope.max_price);
         }
 
+        // switch page
         $location.path("/petsitter_posts/" + postId);
     };
 
@@ -290,11 +326,12 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
         $scope.animationEnabled = !$scope.animationEnabled;
     };
 
-    //pagination
+    //pagination: set current page
     $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
     };
 
+    //pagination: display corresponding postings
     $scope.pageChanged = function() {
         for (var i = 0; i < $scope.posts.length; i++) {
             if ((($scope.currentPage-1) * $scope.items_per_page <= i)
@@ -307,7 +344,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
     };
 }]);
 
-// Show rating
+// Return rating stars
 function rating(numOfStar, index) {
     var res = '';
     for (var i = 0; i < 5; i++) {
@@ -320,7 +357,9 @@ function rating(numOfStar, index) {
     $('#rating'+index).html(res);
 }
 
-
+// compare function for sorting
+// sort in non-increasing order of rank
+// if ranks are the same, sort in non-increasing order of rating
 function compare(a, b) {
     if (a.rank > b.rank) {
         return -1;
@@ -335,37 +374,4 @@ function compare(a, b) {
     }
     return 0;
 }
-
-
-
-
-
-
-//#######################
-    function displayLocation(latitude,longitude){
-        alert('start');
-        var request = new XMLHttpRequest();
-
-        var method = 'GET';
-        var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
-        var async = true;
-
-        request.open(method, url, async);
-        request.onreadystatechange = function(){
-            if(request.readyState == 4 && request.status == 200){
-                var data = JSON.parse(request.responseText);
-                alert(request.responseText); // check under which type your city is stored, later comment this line
-                var addressComponents = data.results[0].address_components;
-                for(i=0;i<addressComponents.length;i++){
-                    var types = addressComponents[i].types
-                    //alert(types);
-                    if(types=="locality,political"){
-                        alert(addressComponents[i].long_name); // this should be your city, depending on where you are
-                    }
-                }
-            //alert(address.city.short_name);
-            }
-        };
-        request.send();
-    }
 

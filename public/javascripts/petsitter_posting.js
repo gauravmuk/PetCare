@@ -148,16 +148,20 @@ petsitter_posting.controller('sitterPostingController',
     $scope.items_per_page = 3;
     $scope.maxSize = 5;
 
+    // search recommendation postings given three queries: pet type, location, and price
     $http.get("/api/search_sitter/" + $cookies.get('pet') + "/" + $cookies.get('location') + "/" + $cookies.get('price') + "/" + $scope.userId).success(function(data){
         $scope.totalItems = data.length - 1;
         $scope.currentPage = 1;
 
-        data.sort(compare);
+        data.sort(compare);	// sort the result postings by its rank
+
+        // exclude current posting in recommendation
 	    for (var i = 0; i < data.length; i++) {
 	        if (data[i].posting_id != $scope.postingID)
 	            $scope.recomm_posts.push(data[i]);
 	    }
 
+	    // pagination
         for (var i = 0; i < $scope.recomm_posts.length; i++) {
             if (i < $scope.items_per_page) {
                 $scope.recomm_posts[i].show = true;
@@ -165,10 +169,6 @@ petsitter_posting.controller('sitterPostingController',
                 $scope.recomm_posts[i].show = false;
             }
         }
-
-		$cookies.put('pet', "none");
-		$cookies.put('location', "none");
-		$cookies.put('price', "none");
     });
 
 	$http.get('/api/sitterpostings/' + $scope.postingID).success(function(data) {
@@ -195,6 +195,7 @@ petsitter_posting.controller('sitterPostingController',
 	    });
 	});
 
+	// switch to another posting
     $scope.showDetailPost = function(postId) {
         $cookies.put('posts', JSON.stringify($scope.posts));
         window.location="/petsitter_posts/" + postId;
@@ -213,11 +214,12 @@ petsitter_posting.controller('sitterPostingController',
         });
     };
 
-    //pagination
+    //pagination: set current page
     $scope.setPage = function (pageNo) {
         $scope.currentPage = pageNo;
     };
 
+    //pagination: display corresponding postings
     $scope.pageChanged = function() {
         for (var i = 0; i < $scope.recomm_posts.length; i++) {
             if ((($scope.currentPage-1) * $scope.items_per_page <= i)
