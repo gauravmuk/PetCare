@@ -46,7 +46,7 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
             }
 
             // get search with default values
-            $http.get("/api/search_pet/user_data/"+$scope.location+"/none/" + $scope.userId).success(function(data){
+            $http.get("/api/pet_postings/user_data/"+$scope.location+"/none/" + $scope.userId).success(function(data){
                 $scope.totalItems = data.length;
                 $scope.currentPage = 1;
 
@@ -79,8 +79,9 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         if ($scope.min_price === "")
             $scope.min_price = "none";
 
+
         // get search result
-        $http.get('/api/search_pet/' + $scope.pet + "/" + $scope.location + "/" + $scope.min_price + "/" + $scope.userId).success(function(data){
+        $http.get('/api/pet_postings/' + $scope.pet + "/" + $scope.location + "/" + $scope.min_price + "/" + $scope.userId).success(function(data){
             $scope.totalItems = data.length;
             $scope.currentPage = 1;
 
@@ -219,7 +220,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
             }
 
             // get search with default values
-            $http.get("/api/search_sitter/user_data/"+$scope.location+"/none/" + $scope.userId).success(function(data){
+            $http.get('/api/sitter_postings/user_data/' + $scope.location+ '/none/' + $scope.userId).success(function(data){ 
                 $scope.totalItems = data.length;
                 $scope.currentPage = 1;
 
@@ -253,7 +254,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
             $scope.max_price = "none";
 
         // get search result
-        $http.get('/api/search_sitter/' + $scope.pet + "/" + $scope.location + "/" + $scope.max_price + "/" + $scope.userId).success(function(data){
+        $http.get('/api/sitter_postings/' + $scope.pet + "/" + $scope.location + "/" + $scope.max_price + "/" + $scope.userId).success(function(data){
             $scope.totalItems = data.length;
             $scope.currentPage = 1;
 
@@ -262,9 +263,8 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                     data[i].show = true;
                 } else {
                     data[i].show = false;
-                }
+                                    }
             }
-
             // sort the result postings by its rank
             data.sort(compare);
             $scope.posts = data;

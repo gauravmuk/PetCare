@@ -20,13 +20,13 @@ admin.controller('adminController', ['$rootScope', '$anchorScroll', '$location',
         $scope.num_users = Object.keys($scope.users).length;
     });
 
-    $http.get('/api/petpostings').success(function(data){
+    $http.get('/api/pet_postings').success(function(data){
         $scope.petPostings = data;
         $scope.num_petPostings = Object.keys($scope.petPostings).length;
         $scope.num_postings += $scope.num_petPostings;
     });
 
-    $http.get('/api/sitterpostings').success(function(data){
+    $http.get('/api/sitter_postings').success(function(data){
         $scope.sitterPostings = data;
         $scope.num_sitterPostings = Object.keys($scope.sitterPostings).length;
         $scope.num_postings += $scope.num_sitterPostings;
@@ -97,10 +97,10 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
 
     	console.log("app.js: Delete post " + postID + " from " + postType);
 
-        // If type is sitter_posting, make an API call to delete /api/sitterpostings/:id
+        // If type is sitter_posting, make an API call to delete /api/sitter_postings/:id
         if (postType === 'sitter_posting'){
             // Make an http delete request to delete post with a given id
-            $http.delete('/api/sitterpostings/'+ postID)
+            $http.delete('/api/sitter_postings/'+ postID)
                 .success(function(data, status, headers, config) {
                     // If delete request was successful, update the view (i.e hide post)
                     $('#sitter-post-'+postID).hide();
@@ -108,10 +108,10 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
                     console.log("error");
                 });
         }
-        // If type is pet_posting, make an API call to delete /api/petpostings/:id
+        // If type is pet_posting, make an API call to delete /api/pet_postings/:id
         if(postType === 'pet_posting'){
             // Make an http delete request to delete post with a given id
-            $http.delete('/api/petpostings/'+ postID)
+            $http.delete('/api/pet_postings/'+ postID)
                 .success(function(data, status, headers, config) {
                     // If delete request was successful, update the view (i.e hide post)
                     $('#pet-post-'+postID).hide();

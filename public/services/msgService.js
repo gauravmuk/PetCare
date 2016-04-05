@@ -38,6 +38,6 @@ app.factory('msgService', ['$http', '$cookies', function($http, $cookies){
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
-        $http.post('/api/message', data, config);
+        $http.post('/api/messages', data, config);
     };
 }]);

@@ -68,9 +68,9 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 			status: 'open',
 		};
 
-		// Make POST request to the /sitterpostings
+		// Make POST request to the /sitter_postings
 
-		$http.post('/api/sitterpostings', {data: dataObj})
+		$http.post('/api/sitter_postings', {data: dataObj})
 
 			.success(function(data, status, headers, config) {
 
@@ -171,7 +171,7 @@ petsitter_posting.controller('sitterPostingController',
         }
     });
 
-	$http.get('/api/sitterpostings/' + $scope.postingID).success(function(data) {
+	$http.get('/api/sitter_postings/' + $scope.postingID).success(function(data) {
 
 		$scope.sitterPosting = data;
 
@@ -202,8 +202,8 @@ petsitter_posting.controller('sitterPostingController',
     }
 
     $scope.closePosting = function(postId) {
-        // Make PUT request to /api/petpostings/:id/close
-        $http.put('/api/sitterpostings/' + postId + '/close', {})
+        // Make PUT request to /api/pet_postings/:id/close
+        $http.put('/api/sitter_postings/' + postId + '/close', {})
 
             .success(function(data, status, headers, config) {
 

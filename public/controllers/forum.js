@@ -53,7 +53,7 @@ forum.controller('forumController', ['$http', '$location', '$scope', '$cookies',
 				likes: 0
 			};
 
-			// Make POST request to the /petpostings
+			// Make POST request to the /pet_postings
 			$http.post('/api/forumposts', {data: dataObj})
 
 				.success(function(data, status, headers, config) {

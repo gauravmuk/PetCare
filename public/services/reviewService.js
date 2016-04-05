@@ -19,7 +19,7 @@ app.factory('reviewService', ['$http', '$cookies', function($http, $cookies){
 
         if (typeOfReview === 'petSitter'){
             // Make a http post request to the server
-            $http.post('/api/sitterpostings/'+ postID +'/reviews', { data:dataObj })
+            $http.post('/api/sitter_postings/'+ postID +'/reviews', { data:dataObj })
             .success(function(data, status, headers, config) {
                 
             }).error(function(data, status, headers, config) {
@@ -29,7 +29,7 @@ app.factory('reviewService', ['$http', '$cookies', function($http, $cookies){
         
         if (typeOfReview === 'pet'){
             // Make a http post request to the server
-            $http.post('/api/petpostings/'+ postID +'/reviews', { data:dataObj })
+            $http.post('/api/pet_postings/'+ postID +'/reviews', { data:dataObj })
             .success(function(data, status, headers, config) {
                 
             }).error(function(data, status, headers, config) {

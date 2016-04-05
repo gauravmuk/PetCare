@@ -74,9 +74,9 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 			status: 'open',
 		};
 
-		// Make POST request to the /petpostings
+		// Make POST request to the /pet_postings
 
-		$http.post('/api/petpostings', {data: dataObj})
+		$http.post('/api/pet_postings', {data: dataObj})
 
 			.success(function(data, status, headers, config) {
 
@@ -179,7 +179,7 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 
 	// TODO: Display message if id not found
 
-	$http.get('/api/petpostings/' + $scope.postingID).success(function(data) {
+	$http.get('/api/pet_postings/' + $scope.postingID).success(function(data) {
 
 		$scope.petPosting = data;
 
@@ -214,8 +214,8 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 
     $scope.closePosting = function(postId) {
 
-        // Make PUT request to /api/petpostings/:id/close
-        $http.put('/api/petpostings/' + postId + '/close', {})
+        // Make PUT request to /api/pet_postings/:id/close
+        $http.put('/api/pet_postings/' + postId + '/close', {})
 
             .success(function(data, status, headers, config) {
 
@@ -342,7 +342,7 @@ pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$c
 			photo: userThumbnail
 		};
 
-		// Make POST request to the /petpostings
+		// Make POST request to the /pet_postings
 		$http.post('/api/pets', {data: dataObj})
 
 			.success(function(data, status, headers, config) {
