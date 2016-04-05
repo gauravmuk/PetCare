@@ -165,9 +165,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             if (petThumbnail) {
                 dataObj.photo = petThumbnail;
             }
-            debugger
 
-            //Make POST request to the /petpostings
             $http.put('/api/pets/' + pet.id, { data: dataObj })
                 .success(function(data, status, headers, config) {
                     $scope.getPetData();

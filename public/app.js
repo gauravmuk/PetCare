@@ -68,10 +68,10 @@ app.controller('navController', ['$scope', '$location', 'authService', '$cookies
 	// Get the number of unread (new) messages and applications
 	$scope.getNews = function() {
 		if (authService.isLoggedIn()) {
-		    $http.get('/api/news/' + $cookies.get('userID') + "/" + $cookies.get('token')).success(function(data){
-		        $scope.numb_new_msg = data.messages;
-		        $scope.numb_new_app = data.applications;
-		    });
+		    $http.get('/api/users/' + $cookies.get('userID') + "/" + $cookies.get('token') + "/news").success(function(data){
+	        	$scope.numb_new_msg = data.messages;
+	        	$scope.numb_new_app = data.applications;
+	    	});
 		}
 	};
 }]);

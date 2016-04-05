@@ -42,7 +42,6 @@ account.controller('accountController', ['$http', '$scope', '$location', 'authSe
 		if (isValid) {
 			$scope.error = false;
 	      	$scope.disabled = true;
-	      	// console.log('res')
 
 			authService.login(email, password)
 			.then(function() {

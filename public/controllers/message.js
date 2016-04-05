@@ -28,7 +28,7 @@ message.controller('messageController', ['$http', '$scope', '$cookies', 'msgServ
 
     // update read status of msgId in database
     $scope.setRead = function(msgId, index) {
-        $http.put('/api/read_msg/' + msgId);
+        $http.put('/api/messages/' + msgId + '/read');
 
         // change read status of msgId in html
         $("#inbox" + index).find(".read").text("READ");

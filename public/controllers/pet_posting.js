@@ -342,7 +342,7 @@ pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$c
 			photo: userThumbnail
 		};
 
-		// Make POST request to the /petpostings
+		// Make POST request to the /pet_postings
 		$http.post('/api/pets', {data: dataObj})
 
 			.success(function(data, status, headers, config) {

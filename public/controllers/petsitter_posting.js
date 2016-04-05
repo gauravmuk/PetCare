@@ -68,7 +68,7 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 			status: 'open',
 		};
 
-		// Make POST request to the /sitterpostings
+		// Make POST request to the /sitter_postings
 
 		$http.post('/api/sitterpostings', {data: dataObj})
 

@@ -28,7 +28,7 @@ application.controller('applicationController', ['$http', '$scope', '$cookies', 
 
     // update read status of appId in database
     $scope.setRead = function(appId, index) {
-        $http.put('/api/read_application/' + appId);
+        $http.put('/api/applications/' + appId + '/read');
 
         // change read status of appId in html
         $("#received" + index).find(".read").text("READ");

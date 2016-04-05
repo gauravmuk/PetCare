@@ -19,6 +19,6 @@ app.factory('appService', ['$http','$cookies', function($http, $cookies){
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
-        $http.post('/api/application', data, config);
+        $http.post('/api/applications', data, config);
     };
 }]);
