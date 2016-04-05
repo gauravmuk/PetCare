@@ -528,11 +528,11 @@ app.post("/api/sitterpostings/:id/reviews", function(req, res){
 	console.log("/api/sitterpostings/:id/reviews");
 
 	// check userId matches with token
-	Authentication.findOne({user: req.body.from}, function(err, authen){
+	Authentication.findOne({user: req.body.data.from}, function(err, authen){
 		if(err) {
 			throw err;
 		}
-		if (authen == null || authen.token != req.body.token) {
+		if (authen == null || authen.token != req.body.data.token) {
 			res.status(401).send({ error: "Token does not match." });
 		} else {
 
@@ -643,11 +643,11 @@ app.post("/api/petpostings/:id/reviews", function(req, res){
 	console.log("/api/petpostings/:id/reviews");
 
 	// check userId matches with token
-	Authentication.findOne({user: req.body.from}, function(err, authen){
+	Authentication.findOne({user: req.body.data.from}, function(err, authen){
 		if(err) {
 			throw err;
 		}
-		if (authen == null || authen.token != req.body.token) {
+		if (authen == null || authen.token != req.body.data.token) {
 			res.status(401).send({ error: "Token does not match." });
 		} else {
 

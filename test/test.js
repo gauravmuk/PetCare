@@ -62,7 +62,7 @@ var mochaTestPetPosting = {
     title       : 'Mocha Max needs a pet sitter',
     duration    : '2 days',
     location    : 'Toronto',
-    price       : '$20/hr',
+    price       : '20',
     supplies    : 'None',
     additional_info: 'N/A',
     description: 'Looking for someone to take care of my cat while I am out of the country.',

@@ -1,4 +1,4 @@
-app.factory('reviewService', ['$http', function($http){
+app.factory('reviewService', ['$http', '$cookies', function($http, $cookies){
     return({
         sendReview: sendReview
     });

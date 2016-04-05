@@ -1,4 +1,4 @@
-app.factory('msgService', ['$http', function($http){
+app.factory('msgService', ['$http', '$cookies', function($http, $cookies){
 
     return({
         isReadInbox: isReadInbox,
