@@ -50,6 +50,9 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                 $scope.totalItems = data.length;
                 $scope.currentPage = 1;
 
+                // sort the result postings by its rank
+                data.sort(compare);
+
                 // pagination
                 for (var i = 0; i < data.length; i++) {
                     if (i < $scope.items_per_page) {
@@ -59,8 +62,6 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                     }
                 }
 
-                // sort the result postings by its rank
-                data.sort(compare);
                 $scope.posts = data;
                 $scope.location = "";
             });
@@ -85,6 +86,9 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
             $scope.totalItems = data.length;
             $scope.currentPage = 1;
 
+            // sort the result postings by its rank
+            data.sort(compare);
+
             // pagination
             for (var i = 0; i < data.length; i++) {
                 if (i < $scope.items_per_page) {
@@ -94,18 +98,16 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
                 }
             }
 
-            // sort the result postings by its rank
-            data.sort(compare);
             $scope.posts = data;
-        });
 
-        // reset queries if they were none
-        if ($scope.pet === "none")
-            $scope.pet = "";
-        if ($scope.location === "none")
-            $scope.location = "";
-        if ($scope.min_price === "none")
-            $scope.min_price = "";
+            // reset queries if they were none
+            if ($scope.pet === "none")
+                $scope.pet = "";
+            if ($scope.location === "none")
+                $scope.location = "";
+            if ($scope.min_price === "none")
+                $scope.min_price = "";
+        });
     };
 
     // goto detail posting page
@@ -224,6 +226,9 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                 $scope.totalItems = data.length;
                 $scope.currentPage = 1;
 
+                // sort the result postings by its rank
+                data.sort(compare);
+
                 // pagination
                 for (var i = 0; i < data.length; i++) {
                     if (i < $scope.items_per_page) {
@@ -233,8 +238,6 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                     }
                 }
 
-                // sort the result postings by its rank
-                data.sort(compare);
                 $scope.posts = data;
                 $scope.location = "";
             });
@@ -258,6 +261,10 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
             $scope.totalItems = data.length;
             $scope.currentPage = 1;
 
+            // sort the result postings by its rank
+            data.sort(compare);
+
+            //pagination
             for (var i = 0; i < data.length; i++) {
                 if (i < $scope.items_per_page) {
                     data[i].show = true;
@@ -265,8 +272,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                     data[i].show = false;
                                     }
             }
-            // sort the result postings by its rank
-            data.sort(compare);
+
             $scope.posts = data;
 
             // reset queries if they were none
