@@ -1,13 +1,16 @@
 /*
 Installing packages
-    cd tp PetCare directory
+    cd in to the PetCare directory
     npm install 
 
 How to Install Mocha
 	sudo npm install mocha -g 
 
 How to run tests
-	cd to PetCare/test directory
+    Close the PetCare application if it is running in a different terminal
+    start the mongo daemon by typing 'mongod --dbpath ./mongodb_data' if you havent done so already
+    open a new terminal
+    cd in to PetCare/test directory
 	mocha test.js
 
 NOTE: 
