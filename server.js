@@ -345,8 +345,15 @@ app.post('/api/login', passport.authenticate('local', { session: true, failWithE
 
 
 app.get('/api/logout', function(req, res) {
-	req.logout();
-	res.end();
+	// Remove mapping between userId and token
+	Authentication.remove({user: req.user._id}, function(err, result){
+		if(err) {
+			throw err;
+		} else {
+			req.logout();
+			res.end();
+		}
+	});
 });
 
 app.get('/api/status', function(req, res) {

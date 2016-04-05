@@ -138,6 +138,7 @@ app.run(function ($rootScope, $location, $route, authService, activeLinkService,
         }
   	});
 
+  	// default search query values
 	$cookies.put('pet', "none");
 	$cookies.put('location', "none");
 	$cookies.put('price', "none");
@@ -170,8 +171,8 @@ app.controller('navController', ['$scope', '$location', 'authService', '$cookies
         });
 	};
 
+	// Get the number of unread (new) messages and applications
 	$scope.getNews = function() {
-
 	    $http.get('/api/news/' + $cookies.get('userID') + "/" + $cookies.get('token')).success(function(data){
 	        $scope.numb_new_msg = data.messages;
 	        $scope.numb_new_app = data.applications;

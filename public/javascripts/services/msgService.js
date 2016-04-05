@@ -1,3 +1,4 @@
+// Message service for sending messages
 app.factory('msgService', ['$http', '$cookies', function($http, $cookies){
 
     return({
@@ -6,6 +7,7 @@ app.factory('msgService', ['$http', '$cookies', function($http, $cookies){
         sendMsg: sendMsg
     });
 
+    // display read status for inbox messages
     function isReadInbox(read) {
         if (read) {
             return 'READ';
@@ -14,6 +16,7 @@ app.factory('msgService', ['$http', '$cookies', function($http, $cookies){
         }
     };
 
+    // display read status for sent messages
     function isReadSent(read) {
         if (read) {
             return 'SEEN';
@@ -22,6 +25,7 @@ app.factory('msgService', ['$http', '$cookies', function($http, $cookies){
         }
     };
 
+    // post message
     function sendMsg(from, to, content) {
         var data = $.param({
             from: from,

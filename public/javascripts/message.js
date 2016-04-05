@@ -1,3 +1,4 @@
+/* Message module for viewing messages */
 var message = angular.module('message', []);
 
 message.controller('messageController', ['$http', '$scope', '$cookies', 'msgService',
@@ -7,27 +8,29 @@ message.controller('messageController', ['$http', '$scope', '$cookies', 'msgServ
     $scope.inbox = [];
     $scope.sent = [];
 
-    $scope.toId; //hold userId to send message
+    $scope.toId; //hold recipient userId to send message
     $scope.msg_content = "";
 
+    // get messages of the userId
     $http.get('/api/messages/' + $scope.userId + "/" + $cookies.get('token')).success(function(data){
         $scope.inbox = data.inbox;
         $scope.sent = data.sent;
     });
 
+    // show read status
     $scope.isReadInbox = msgService.isReadInbox;
-
     $scope.isReadSent = msgService.isReadSent;
 
+    // slide toggle for message content
     $scope.showContent = function(index) {
         $("#sent" + index).siblings(".content").slideToggle("fast", function() {});
     }
 
-    // Update message status in database to read
+    // update read status of msgId in database
     $scope.setRead = function(msgId, index) {
         $http.put('/api/read_msg/' + msgId);
 
-        // Update read status for messages
+        // change read status of msgId in html
         $("#inbox" + index).find(".read").text("READ");
         $("#inbox" + index).find(".read").addClass("true");
 
@@ -35,10 +38,12 @@ message.controller('messageController', ['$http', '$scope', '$cookies', 'msgServ
         $("#inbox" + index).siblings(".content").slideToggle("fast", function() {});
     };
 
+    // set recipient user id for sending message
     $scope.reply = function(userId) {
         $scope.toId = userId;
     };
 
+    // send message
     $scope.sendMsg  = function() {
         msgService.sendMsg($scope.userId, $scope.toId, $scope.msg_content);
         $scope.msg_content = "";
