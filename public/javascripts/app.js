@@ -127,7 +127,6 @@ app.run(function ($rootScope, $location, $route, authService, activeLinkService,
 		if (next.access.restricted) {
 			if (!authService.isLoggedIn()) {
 				$rootScope.loginRequired = true;
-				console.log($rootScope.loginRequired)
 	        	$location.path('/signin');
 	        	$route.reload();
 	        }
