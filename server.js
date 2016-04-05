@@ -50,16 +50,16 @@ app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }));
 
 // Import Database schema
-var Application 	= require(__dirname + '/public/models/Application');
-var Message 		= require(__dirname + '/public/models/Message');
-var Pet 			= require(__dirname + '/public/models/Pet');
-var Pet_Posting 	= require(__dirname + '/public/models/Pet_Posting');
-var Sitter_Posting	= require(__dirname + '/public/models/Sitter_Posting');
-var Report			= require(__dirname + '/public/models/Report');
-var Review			= require(__dirname + '/public/models/Review');
-var Pet_Review		= require(__dirname + '/public/models/Pet_Review');
-var User			= require(__dirname + '/public/models/User');
-var ForumPost		= require(__dirname + '/public/models/Forum_Post');
+var Application 	= require('./public/models/Application');
+var Message 		= require('./public/models/Message');
+var Pet 			= require('./public/models/Pet');
+var Pet_Posting 	= require('./public/models/Pet_Posting');
+var Sitter_Posting	= require('./public/models/Sitter_Posting');
+var Report			= require('./public/models/Report');
+var Review			= require('./public/models/Review');
+var Pet_Review		= require('./public/models/Pet_Review');
+var User			= require('./public/models/User');
+var ForumPost		= require('./public/models/Forum_Post');
 
 // Authentication
 app.use(session({ secret: 'Session Key' }));
@@ -91,26 +91,43 @@ passport.use(new FacebookStrategy({
 					return done(null, user);
 				}
 				else {
-					var newUser = new User();
-					newUser.facebook_id				= profile.id;
-           			newUser.facebook_access_token 	= accessToken;                   
-            		newUser.name  					= profile.displayName;
-            		newUser.role  					= 'regular'
-            		newUser.photo					= profile.photos[0].value
-            		if (profile.emails) {
-            			newUser.username = profile.emails[0].value;
-            			newUser.email = profile.emails[0].value;
-            		}
+					User.findOne({ 'username': profile.emails[0].value }, function(err, user) {
+						if (err) {
+							return done(err);
+						}
+						if (user) {
+							user.facebook_id = profile.id;
+							user.facebook_access_token = accessToken;
+							user.save(function(err) {
+								if (err) {
+									throw (err);
+								}
+								return done(null, user);
+							})
+						}
+						else {
+							var newUser = new User();
+							newUser.facebook_id				= profile.id;
+		           			newUser.facebook_access_token 	= accessToken;                   
+		            		newUser.name  					= profile.displayName;
+		            		newUser.role  					= 'regular'
+		            		newUser.photo					= profile.photos[0].value
+		            		if (profile.emails) {
+		            			newUser.username = profile.emails[0].value;
+		            			newUser.email = profile.emails[0].value;
+		            		}
 
-            		if (profile._json.location) {
-            			newUser.location = profile._json.location.name;
-            		}
+		            		if (profile._json.location) {
+		            			newUser.location = profile._json.location.name;
+		            		}
 
-            		newUser.save(function(err) {
-              			if (err) {
-                			throw err;
-                		}
-              		return done(null, newUser);
+		            		newUser.save(function(err) {
+		              			if (err) {
+		                			throw err;
+		                		}
+		              			return done(null, newUser);
+							})
+						}
             		});
 				}
 			});
@@ -633,26 +650,32 @@ app.post('/api/register', function(req, res, next) {
 	User.register(new User({ username: username, email: username, name: name, location: '',
 		description: '', role: 'regular', photo: '' }), password, function(err) {
 		if (err) {
-			return next(err);
+			res.json({ err: err });
 		}
-
-		passport.authenticate('local', { session: true })(req, res, function() {
-			res.send({ id: req.user.id, name: req.user.name, role: req.user.role });
-		});
-	});
-});
-
-app.post('/api/login', passport.authenticate('local', { session: true }), function(req, res) {
-	User.findOne({_id: req.user.id}, function(err, user){
-		if(err){
-			return next(err);
-		}
-		else{
-
-			res.send({ id: req.user.id, name: req.user.name, role: req.user.role });
+		else {
+			passport.authenticate('local', { session: true })(req, res, function() {
+				res.send({ id: req.user.id, name: req.user.name, role: req.user.role });
+			});
 		}
 	});
 });
+
+app.post('/api/login', passport.authenticate('local', { session: true, failWithError: true}), 
+	function(req, res, next) {
+		User.findOne({_id: req.user.id}, function(err, user){
+			if(err){
+				return next(err);
+			}
+			else{
+				res.send({ id: req.user.id, name: req.user.name, role: req.user.role });
+			}
+		});	
+	},
+	function(err, req, res, next) {
+		res.status(200).json({ err: err });
+	}
+);
+
 
 app.get('/api/logout', function(req, res) {
 	req.logout();

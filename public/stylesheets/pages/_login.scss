@@ -18,7 +18,8 @@ $input-height: 45px;
 			height: $input-height;
 			line-height: $input-height;
 			padding-left: 2%;
-			margin-bottom: 15px;
+			margin-top: 15px;
+			margin-bottom: 2px;
 			border: 1px solid $border-color;
 			border-radius: 5px;
 			color: $text-color;
@@ -35,6 +36,11 @@ $input-height: 45px;
 				vertical-align: bottom;
 				color: black;
 			}
+		}
+
+		.form-error {
+			font-size: 14px;
+			color: #E02D2D;
 		}
 
 		.center {
@@ -84,7 +90,8 @@ $input-height: 45px;
 		}
 
 		.remember-me {
-			font-weight: bold;
+			margin-top: 10px;
+			font-size: 14px;
 
 			input[type="checkbox"] {
 				margin-right: 8px;

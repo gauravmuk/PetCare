@@ -45,16 +45,22 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 
 		$http.post('/api/register', userData)
 			.success(function(data) {
-				userData = data;
-				$cookies.put('userID', data.id);
-				$cookies.put('userName', data.name);
-				$cookies.put('userRole', data.role);
-				user = true;
-				deferred.resolve();
+				if (data.err) {
+					user = false;
+					deferred.reject(data.err);
+				}
+				else {
+					userData = data;
+					$cookies.put('userID', data.id);
+					$cookies.put('userName', data.name);
+					$cookies.put('userRole', data.role);
+					user = true;
+					deferred.resolve();
+				}
 			})
 			.error(function(data) {
 				user = false;
-				deferred.reject();
+				deferred.reject(data);
 		});
 		return deferred.promise;
 	}
@@ -69,12 +75,18 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 		
 		$http.post('/api/login', userData)
 		.success(function(data) {
-			userData = data;
-			$cookies.put('userID', data.id);
-			$cookies.put('userName', data.name);
-			$cookies.put('userRole', data.role);
-			user = true;
-			deferred.resolve(data);
+			if (data.err) {
+				user = false;
+				deferred.reject(data.err);
+			}
+			else {
+				userData = data;
+				$cookies.put('userID', data.id);
+				$cookies.put('userName', data.name);
+				$cookies.put('userRole', data.role);
+				user = true;
+				deferred.resolve();
+			}
 		})
 		.error(function(data) {
 			user = false;
