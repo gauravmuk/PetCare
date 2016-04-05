@@ -61,7 +61,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                     headers: {'Content-Type': undefined}
                 })
                 .success(function(data) {
-                    console.log(data.url)
+                    // console.log(data.url)
                     if (data.url != null) {
                         $scope.editUserData.photo = data.url;
                     }
@@ -143,7 +143,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                         headers: {'Content-Type': undefined}
                     })
                     .success(function(data) {
-                        console.log(data);
+                        // console.log(data);
                         if (data.url != null) {
                             thumbnail = data.url;
                             editPet(pet, thumbnail);
@@ -158,9 +158,6 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
         };
 
         function editPet(pet, petThumbnail) {
-            console.log('edit')
-            console.log(pet)
-            console.log(petThumbnail)
             // Create object to be sent through the POST request
             var dataObj = {
                 name:           pet.name,

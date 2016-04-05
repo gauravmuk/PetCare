@@ -45,7 +45,7 @@ admin.controller('adminController', ['$rootScope', '$anchorScroll', '$location',
     // Admin Actions
 
     $scope.setUserId = function(userID){
-        console.log("setUserId = " + userID);
+        // console.log("setUserId = " + userID);
         shareDataService.setData(userID);
     }
 
@@ -55,8 +55,8 @@ admin.controller('adminController', ['$rootScope', '$anchorScroll', '$location',
             postingType : postingType,
             postingID : postingID
         }
-        console.log("setPostingId");
-        console.log(obj);
+        // console.log("setPostingId");
+        // console.log(obj);
         shareDataService.setData(obj);
     }
 
@@ -73,7 +73,7 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
 	// Make http request to ban the user
     $scope.ConfirmBan = function(){
     	var userID = shareDataService.getData();
-    	console.log("app.js: Ban user " + userID);
+    	// console.log("app.js: Ban user " + userID);
 
     	// Creare object to be sent through the put request 
     	var dataObj = {
@@ -86,7 +86,7 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
 				// If update request was successful, update the view (i.e change from 'Ban' to 'Banned')
     			$('#ban-btn-'+userID).html('Banned');
 			}).error(function(data, status, headers, config) {
-    			console.log("error");
+    			// console.log("error");
 			});
     }
 
@@ -95,7 +95,7 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
     	var postID   = shareDataService.getData().postingID;
     	var postType = shareDataService.getData().postingType;
 
-    	console.log("app.js: Delete post " + postID + " from " + postType);
+    	// console.log("app.js: Delete post " + postID + " from " + postType);
 
         // If type is sitter_posting, make an API call to delete /api/sitterpostings/:id
         if (postType === 'sitter_posting'){
@@ -105,7 +105,7 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
                     // If delete request was successful, update the view (i.e hide post)
                     $('#sitter-post-'+postID).hide();
                 }).error(function(data, status, headers, config) {
-                    console.log("error");
+                    // console.log("error");
                 });
         }
         // If type is pet_posting, make an API call to delete /api/petpostings/:id
@@ -116,7 +116,7 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
                     // If delete request was successful, update the view (i.e hide post)
                     $('#pet-post-'+postID).hide();
                 }).error(function(data, status, headers, config) {
-                    console.log("error");
+                    // console.log("error");
                 });
         } 
     }
@@ -140,7 +140,7 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }
-        console.log(data);
+        // console.log(data);
         $http.post('/api/message', data, config);
         $scope.msg_content = "";
     };

@@ -32,7 +32,7 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 				})
 
 				.success(function(data) {
-					console.log(data);
+					// console.log(data);
 
 					if (data.url != null) {
 						thumbnail = data.url;
@@ -308,7 +308,7 @@ pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$c
 				})
 
 				.success(function(data) {
-					console.log(data);
+					// console.log(data);
 
 					if (data.url != null) {
 						thumbnail = data.url;

@@ -23,7 +23,7 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 				})
 
 				.success(function(data) {
-					console.log(data);
+					// console.log(data);
 
 					if (data.url != null) {
 						thumbnail = data.url;
