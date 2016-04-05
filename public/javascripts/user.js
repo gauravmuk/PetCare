@@ -49,6 +49,26 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             $scope.userReviewTotal = data.length;
         });
 
+        $scope.uploadUserImage = function (imageFile) {
+            // If user selected a file, upload it
+            if (imageFile) {
+
+                var fd = new FormData();
+                fd.append('file', imageFile.files[0]);
+
+                $http.post('/api/upload', fd, {
+                    transformRequest: angular.identity,
+                    headers: {'Content-Type': undefined}
+                })
+                .success(function(data) {
+                    console.log(data.url)
+                    if (data.url != null) {
+                        $scope.editUserData.photo = data.url;
+                    }
+                });
+            }   
+        };
+
         $scope.toggleEditMode = function() {
             $scope.editMode = !$scope.editMode;
         }
@@ -70,7 +90,8 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             $scope.editUserData = { name:           data.name, 
                                     location:       data.location, 
                                     email:          data.email, 
-                                    description:    data.description 
+                                    description:    data.description,
+                                    photo:          data.photo 
             };
         };
 
@@ -109,10 +130,6 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
 
         $scope.createPet = function (pet, isValid, imageFile) {
             // Check if form information is valid   
-            console.log(pet);
-            console.log(isValid);
-            console.log(imageFile);
-
             if (isValid) {
                 var file = imageFile;
 

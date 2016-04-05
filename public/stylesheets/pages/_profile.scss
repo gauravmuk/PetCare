@@ -55,6 +55,14 @@ $border-color: #CECECE;
 				}
 			}
 		}
+		img.add-photo-icon {
+			position: absolute; 
+			margin-left: 50px; 
+			top: 205px;
+    		margin-left: 320px;
+			border-radius: 25px; 
+			background-color: #10c8cd;
+		}
 	}
 
 	.title {
@@ -234,7 +242,7 @@ $border-color: #CECECE;
 
 			.info-container {
 				float: left;
-				min-width: 300px;
+				min-width: 250px;
 			}
 			.right-corner {
 				float: right;
@@ -245,6 +253,10 @@ $border-color: #CECECE;
 	    				margin-bottom: 10px;
 	    			}
 				}
+			}
+			img.add-photo-icon {
+				top: 230px; 
+				margin-left: 50px; 
 			}
 		}
 
@@ -388,6 +400,11 @@ $border-color: #CECECE;
 	.profile {
 		padding: 50px;
 		padding-bottom: 10px;
+		.user_info {
+			img.add-photo-icon {
+				top: 250px; 
+			}
+		}
 	}
 }
 

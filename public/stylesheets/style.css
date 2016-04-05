@@ -596,6 +596,14 @@ footer .icons .fa:hover {
   right: 25px;
   top: 1px;
 }
+.profile .user_info img.add-photo-icon {
+  position: absolute;
+  margin-left: 50px;
+  top: 205px;
+  margin-left: 320px;
+  border-radius: 25px;
+  background-color: #10c8cd;
+}
 .profile .title {
   font-size: 20px;
   font-weight: bold;
@@ -747,7 +755,7 @@ footer .icons .fa:hover {
   }
   .profile .user_info .info-container {
     float: left;
-    min-width: 300px;
+    min-width: 250px;
   }
   .profile .user_info .right-corner {
     float: right;
@@ -757,6 +765,10 @@ footer .icons .fa:hover {
   }
   .profile .user_info .right-corner .button:first-child, .profile .user_info .right-corner .button.closedPost {
     margin-bottom: 10px;
+  }
+  .profile .user_info img.add-photo-icon {
+    top: 230px;
+    margin-left: 50px;
   }
   .profile .info {
     text-align: left;
@@ -874,6 +886,9 @@ footer .icons .fa:hover {
   .profile {
     padding: 50px;
     padding-bottom: 10px;
+  }
+  .profile .user_info img.add-photo-icon {
+    top: 250px;
   }
 }
 /* Large devices (large desktops, 1200px and up) */
