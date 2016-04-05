@@ -78,8 +78,8 @@ async.series([
 			banned	: false,
 			location: 'Toronto, ON',
 			role	: 'admin',
-			description: '', 
-			photo: '/images/default-profile-pic.png'
+			description: 'I joined the PetCare team last month. Now I work as their system admin. Please contact me for any issues', 
+			photo: 'https://s3.amazonaws.com/pet.care/benAffleck.jpg'
 		});
 
 		var password = 'admin123'
@@ -102,8 +102,8 @@ async.series([
 			banned	: false,
 			location: 'Toronto, ON',
 			role	: 'regular',
-			description: '', 
-			photo: '/images/default-profile-pic.png'
+			description: 'Hi my name is Jennifer. I offer pet sitting during week days. Golden Retrievers are my favourite', 
+			photo: 'https://s3.amazonaws.com/pet.care/jenifferL.jpeg'
 		});
 
 		var password = '12345678'
@@ -126,8 +126,8 @@ async.series([
 			banned	: false,
 			location: 'Toronto, ON',
 			role	: 'regular',
-			description: '', 
-			photo: '/images/default-profile-pic.png'
+			description: 'I love the PetCare.com service. Check out my posts and contact me if you\'re interested. Thanks', 
+			photo: 'https://s3.amazonaws.com/pet.care/Bale.jpeg'
 		});
 
 		var password = '12345678'
@@ -824,7 +824,7 @@ async.series([
     	var sitter_posting = new Sitter_Posting({
     		_id: 1,
 		    user: 1,
-			title: 'I love pets.',
+			title: 'Experienced pet sitter in Downtown Toronto',
 			types: 'Dog, Cat',
 			duration: 'May 01 2016 to May 30 2016',
 			location: 'Downtown, Toronto, ON',
@@ -833,7 +833,7 @@ async.series([
 			supplies: 'Educational toys',
 			number_of_pets: 5,
 			description: 'Hi everyone. I love pets especially dogs and cats. I would like to take care of your pets. Please contact me for more information.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/benAffleck.jpg',
 			status: 'open'
 		});
 
@@ -850,7 +850,7 @@ async.series([
     	var sitter_posting = new Sitter_Posting({
     		_id: 2,
 		    user: 1,
-			title: 'I love pets.',
+			title: 'I will look after your dogs and cats during weekdays',
 			types: 'Dog, Cat',
 			duration: 'May 01 2015 to May 30 2015',
 			location: 'Downtown, Toronto, ON',
@@ -859,7 +859,7 @@ async.series([
 			supplies: 'Educational toys',
 			number_of_pets: 5,
 			description: 'Hi everyone. I love pets especially dogs and cats. I would like to take care of your pets. Please contact me for more information.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/benAffleck.jpg',
 			status: 'closed'
 		});
 
@@ -876,7 +876,7 @@ async.series([
     	var sitter_posting = new Sitter_Posting({
     		_id: 3,
 		    user: 2,
-			title: 'Sitter Near Calgary',
+			title: 'Experienced pet sitter Near Calgary',
 			types: 'Dog, Cat, Bird, Rabit, Fish',
 			duration: 'May 01 2016 to May 30 2016',
 			location: 'Calgary',
@@ -885,7 +885,7 @@ async.series([
 			supplies: 'Food, Toys',
 			number_of_pets: 10,
 			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/jenifferL.jpeg',
 			status: 'open'
 		});
 
@@ -902,7 +902,7 @@ async.series([
     	var sitter_posting = new Sitter_Posting({
     		_id: 4,
 		    user: 2,
-			title: 'Sitter Near Toronto',
+			title: 'Pet Sitter Near Toronto. I offer pet sitting in the GTA area',
 			types: 'Dog, Cat, Bird, Rabit, Fish',
 			duration: 'May 01 2016 to May 30 2016',
 			location: 'Toronto',
@@ -911,7 +911,7 @@ async.series([
 			supplies: 'Food, Toys',
 			number_of_pets: 10,
 			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/jenifferL.jpeg',
 			status: 'open'
 		});
 
@@ -928,7 +928,7 @@ async.series([
     	var sitter_posting = new Sitter_Posting({
     		_id: 5,
 		    user: 2,
-			title: 'Sitter Near Ottawa',
+			title: 'Sitter Near Ottawa. Contact me for more details',
 			types: 'Dog, Cat, Bird, Rabit, Fish',
 			duration: 'May 01 2016 to May 30 2016',
 			location: 'Ottawa',
@@ -937,7 +937,7 @@ async.series([
 			supplies: 'Food, Toys',
 			number_of_pets: 10,
 			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/jenifferL.jpeg',
 			status: 'open'
 		});
 
@@ -954,7 +954,7 @@ async.series([
     	var sitter_posting = new Sitter_Posting({
     		_id: 6,
 		    user: 2,
-			title: 'Sitter Near Vancuber',
+			title: 'I offer pet sitting near Vancouver',
 			types: 'Dog, Cat, Bird, Rabit, Fish',
 			duration: 'May 01 2016 to May 30 2016',
 			location: 'Vancuber',
@@ -963,7 +963,7 @@ async.series([
 			supplies: 'Food, Toys',
 			number_of_pets: 10,
 			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/jenifferL.jpeg',
 			status: 'open'
 		});
 
@@ -989,7 +989,7 @@ async.series([
 			supplies: 'Food, Toys',
 			number_of_pets: 10,
 			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/jenifferL.jpeg',
 			status: 'open'
 		});
 
@@ -1006,7 +1006,7 @@ async.series([
     	var sitter_posting = new Sitter_Posting({
     		_id: 8,
 		    user: 3,
-			title: 'Donkey Donkey Farm offers pet sitter',
+			title: 'I will look after your pets. Please contact me',
 			types: 'Horse, Sheep, Chicken, Rabbit, Donkey',
 			duration: 'Apr 01 2016 to Aug 30 2016',
 			location: 'Vancuber',
@@ -1015,7 +1015,7 @@ async.series([
 			supplies: 'Food, Toys, Spacious yard',
 			number_of_pets: 10,
 			description: 'Hello folks. Donkey Donkey Farm would like to take care of your pets. We have very spacious yard so we can accomodate big pets.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/Bale.jpeg',
 			status: 'open'
 		});
 
@@ -1032,7 +1032,7 @@ async.series([
     	var sitter_posting = new Sitter_Posting({
     		_id: 9,
 		    user: 3,
-			title: 'Donkey Donkey Farm offers pet sitter',
+			title: 'Donkey Donkey Farm offers pet sitters for low rates',
 			types: 'Horse, Sheep, Chicken, Rabbit, Donkey',
 			duration: 'Apr 01 2015 to Aug 30 2015',
 			location: 'Vancuber',
@@ -1041,7 +1041,7 @@ async.series([
 			supplies: 'Food, Toys, Spacious yard',
 			number_of_pets: 9,
 			description: 'Hello folks. Donkey Donkey Farm would like to take care of your pets. We have very spacious yard so we can accomodate big pets.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/Bale.jpeg',
 			status: 'closed'
 		});
 
@@ -1058,7 +1058,7 @@ async.series([
     	var sitter_posting = new Sitter_Posting({
     		_id: 10,
 		    user: 3,
-			title: 'Donkey Donkey Farm in Toronto',
+			title: 'Donkey Donkey Farm in Toronto - I will look after your pets',
 			types: 'Horse, Sheep, Chicken, Rabbit, Donkey',
 			duration: 'Oct 01 2016 to Oct 30 2016',
 			location: 'Toronto',
@@ -1067,7 +1067,7 @@ async.series([
 			supplies: 'Food, Toys, Spacious yard',
 			number_of_pets: 9,
 			description: 'Hello folks. Donkey Donkey Farm would like to take care of your pets. We will start new farm in Toronto and offer pet sitters as well.',
-			thumbnail: '/images/default-profile-pic.png',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/Bale.jpeg',
 			status: 'open'
 		});
 
