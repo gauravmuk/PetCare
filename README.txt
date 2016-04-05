@@ -15,3 +15,18 @@ HOW TO RUN
 	4. In the second terminal, import the data by running 'node default-data.js'
 	5. In the second terminal, start the nodeJS server by running 'npm start'
 	6. Type http://localhost:3000/ in a browser to view the application.
+
+
+Admin and other user credentials
+
+Admin Credentials
+	email: 		admin@gmail.com
+	password:	admin123
+
+Default user 1 credentials
+	email:		jennifer@gmail.com
+	password:	12345678
+
+Default user 2 credentials
+	email:		bale@gmail.com
+	password:	12345678

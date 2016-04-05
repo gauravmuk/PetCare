@@ -18,3 +18,18 @@ PetCare is an online service where individuals who are looking for someone to ta
 3. In the second terminal, run `node default-data.js` to import the data    
     And then run `npm start` to start the nodeJS serve
 4. Go to http://localhost:3000/ for the interface.
+
+
+### Admin and other user credentials
+
+Admin Credentials
+	email: 		admin@gmail.com
+	password:	admin123
+
+Default user 1 credentials
+	email:		jennifer@gmail.com
+	password:	12345678
+
+Default user 2 credentials
+	email:		bale@gmail.com
+	password:	12345678
