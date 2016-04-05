@@ -35,7 +35,11 @@ app.engine("html", require("ejs").renderFile);
 /* Database Setup */
 // Connect to a database
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
-var connection = mongoose.connect("mongodb://localhost/testDB", function(err) {
+var uristring = process.env.MONGOLAB_URI || 
+				process.env.MONGOHQ_URL ||
+				"mongodb://localhost/testDB"
+
+var connection = mongoose.connect(uristring, function(err) {
     if (err) {
 		console.log("Error connecting to the mongo database. Please make sure you are running mongo in another terminal.");
     	console.log(err);
@@ -50,16 +54,16 @@ app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }));
 
 // Import Database schema
-var Application 	= require('./public/models/Application');
-var Message 		= require('./public/models/Message');
-var Pet 			= require('./public/models/Pet');
-var Pet_Posting 	= require('./public/models/Pet_Posting');
-var Sitter_Posting	= require('./public/models/Sitter_Posting');
-var Report			= require('./public/models/Report');
-var Review			= require('./public/models/Review');
-var Pet_Review		= require('./public/models/Pet_Review');
-var User			= require('./public/models/User');
-var ForumPost		= require('./public/models/Forum_Post');
+var Application 	= require(__dirname + '/' + 'public/models/Application');
+var Message 		= require(__dirname + '/' + 'public/models/Message');
+var Pet 			= require(__dirname + '/' + 'public/models/Pet');
+var Pet_Posting 	= require(__dirname + '/' + 'public/models/Pet_Posting');
+var Sitter_Posting	= require(__dirname + '/' + 'public/models/Sitter_Posting');
+var Report			= require(__dirname + '/' + 'public/models/Report');
+var Review			= require(__dirname + '/' + 'public/models/Review');
+var Pet_Review		= require(__dirname + '/' + 'public/models/Pet_Review');
+var User			= require(__dirname + '/' + 'public/models/User');
+var ForumPost		= require(__dirname + '/' + 'public/models/Forum_Post');
 
 // Authentication
 app.use(session({ secret: 'Session Key', resave: true, saveUninitialized: true }));
