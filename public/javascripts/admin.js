@@ -132,7 +132,8 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
         var data = $.param({
             from: from,
             to: to,
-            message: $scope.msg_content
+            message: $scope.msg_content,
+            token: $cookies.get('token')
         });
         var config = {
             headers : {
