@@ -464,6 +464,671 @@ async.series([
     },
 
 
+
+
+
+
+
+
+
+    function(callback) {		// Adding pet posting userId = 2, petId = 1
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 1,
+		    user: 2,
+		    pet: 1,
+			title: 'Looking for a kind pet sitter.',
+			duration: 'May 15 2016 to May 30 2016',
+			location: 'Toronto, ON',
+			price: '50',
+			supplies: 'Toys, Kennel, Clothes',
+			additional_info: 'N/A',
+			description: 'Looking for someone to take care of my dog while I am out of the country.',
+			thumbnail: 'http://elelur.com/data_images/dog-breeds/labrador-retriever/labrador-retriever-06.jpg',
+			status: 'open'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet posting userId = 2, petId = 1
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 2,
+		    user: 2,
+		    pet: 1,
+			title: 'Looking for a kind pet sitter.',
+			duration: 'Feb 01 2016 to Feb 07 2016',
+			location: 'Toronto, ON',
+			price: '50',
+			supplies: 'Toys, Kennel, Clothes',
+			additional_info: 'N/A',
+			description: 'Looking for someone to take care of my cat while I am out of the country.',
+			thumbnail: 'http://elelur.com/data_images/dog-breeds/labrador-retriever/labrador-retriever-06.jpg',
+			status: 'closed'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet posting userId = 2, petId = 1
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 3,
+		    user: 2,
+		    pet: 1,
+			title: 'Urgent! Looking for a pet sitter for one day',
+			duration: 'Apr 08 2016 to Apr 08 2016',
+			location: 'Toronto, ON',
+			price: '100',
+			supplies: 'Toys, Kennel, Clothes',
+			additional_info: 'N/A',
+			description: 'I have urgent meeting this Friday in Ottawa. Looking for a pet sitter just for one day from morning to night.',
+			thumbnail: 'http://elelur.com/data_images/dog-breeds/labrador-retriever/labrador-retriever-06.jpg',
+			status: 'open'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet posting userId = 2, petId = 2
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 4,
+		    user: 2,
+		    pet: 2,
+			title: 'Somone who likes a dog',
+			duration: 'May 01 2016 to July 30 2016',
+			location: 'Ottawa',
+			price: '15',
+			supplies: 'Toys, Kennel, Clothes',
+			additional_info: 'N/A',
+			description: 'I have one dog in Ottawa and I am going to another city for this summer. Unfortunately, I can\'t go with her. Looking for someone who likes dog and would like to spend this summer with her.',
+			thumbnail: 'http://germanhuntingterrier.com/images/dog/border_terrier_03.jpg',
+			status: 'open'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet posting userId = 2, petId = 2
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 5,
+		    user: 2,
+		    pet: 2,
+			title: 'Looking for a kind pet sitter.',
+			duration: 'Feb 01 2016 to Feb 07 2016',
+			location: 'Ottawa',
+			price: '65',
+			supplies: 'Toys, Kennel, Clothes',
+			additional_info: 'N/A',
+			description: 'Looking for someone to take care of my dog while I am out of the country.',
+			thumbnail: 'http://germanhuntingterrier.com/images/dog/border_terrier_03.jpg',
+			status: 'closed'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet posting userId = 3, petId = 3
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 6,
+		    user: 3,
+		    pet: 3,
+			title: 'Looking for a bird sitter.',
+			duration: 'May 01 2016 to May 07 2016',
+			location: 'Toronto',
+			price: '40',
+			supplies: 'Birdcage, Food',
+			additional_info: 'N/A',
+			description: 'I have special meeting every month. When you apply, please also let me know whether you want to do this every month.',
+			thumbnail: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg',
+			status: 'open'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet posting userId = 3, petId = 3
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 7,
+		    user: 3,
+		    pet: 3,
+			title: 'Looking for a bird sitter.',
+			duration: 'Apr 01 2016 to Apr 07 2016',
+			location: 'Toronto',
+			price: '40',
+			supplies: 'Birdcage, Food',
+			additional_info: 'N/A',
+			description: 'I have special meeting every month. When you apply, please also let me know whether you want to do this every month.',
+			thumbnail: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg',
+			status: 'open'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet posting userId = 3, petId = 3
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 8,
+		    user: 3,
+		    pet: 3,
+			title: 'Looking for a kind pet sitter.',
+			duration: 'Oct 01 2015 to Oct 07 2015',
+			location: 'Calgary',
+			price: '40',
+			supplies: 'Birdcage, Food',
+			additional_info: 'N/A',
+			description: 'Looking for someone to take care of my bird while I am out of the country.',
+			thumbnail: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg',
+			status: 'closed'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet posting userId = 3, petId = 4
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 9,
+		    user: 3,
+		    pet: 4,
+			title: 'Looking for a kind cat sitter in Vancuber.',
+			duration: 'May 27 2016 to May 30 2016',
+			location: 'Vancuber',
+			price: '75',
+			supplies: 'Birdcage, Food',
+			additional_info: 'N/A',
+			description: 'I will traverl Vancuber with my cat but I want to travel alone for just a few days.',
+			thumbnail: 'http://www.delightibles.com/wp-content/uploads/2015/07/2015.07.10_delightibles-1.jpg',
+			status: 'open'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding pet posting userId = 3, petId = 4
+    	
+    	var pet_posting = new Pet_Posting({
+    		_id: 10,
+		    user: 3,
+		    pet: 4,
+			title: 'Looking for a kind cat sitter in Calgary.',
+			duration: 'Apr 27 2016 to Apr 30 2016',
+			location: 'Calgary',
+			price: '70',
+			supplies: 'Birdcage, Food',
+			additional_info: 'N/A',
+			description: 'I will traverl Calgary with my cat but I want to travel alone for just a few days.',
+			thumbnail: 'http://www.delightibles.com/wp-content/uploads/2015/07/2015.07.10_delightibles-1.jpg',
+			status: 'open'
+		});
+
+        pet_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 1
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 1,
+		    user: 1,
+			title: 'I love pets.',
+			types: 'Dog, Cat',
+			duration: 'May 01 2016 to May 30 2016',
+			location: 'Downtown, Toronto, ON',
+			price: '20 - 25',
+			experience: '2 years',
+			supplies: 'Educational toys',
+			number_of_pets: 5,
+			description: 'Hi everyone. I love pets especially dogs and cats. I would like to take care of your pets. Please contact me for more information.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'open'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 1
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 2,
+		    user: 1,
+			title: 'I love pets.',
+			types: 'Dog, Cat',
+			duration: 'May 01 2015 to May 30 2015',
+			location: 'Downtown, Toronto, ON',
+			price: '20 - 25',
+			experience: '1 year',
+			supplies: 'Educational toys',
+			number_of_pets: 5,
+			description: 'Hi everyone. I love pets especially dogs and cats. I would like to take care of your pets. Please contact me for more information.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'closed'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 2
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 3,
+		    user: 2,
+			title: 'Sitter Near Calgary',
+			types: 'Dog, Cat, Bird, Rabit, Fish',
+			duration: 'May 01 2016 to May 30 2016',
+			location: 'Calgary',
+			price: '20 - 50',
+			experience: '5 years',
+			supplies: 'Food, Toys',
+			number_of_pets: 10,
+			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'open'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 2
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 4,
+		    user: 2,
+			title: 'Sitter Near Toronto',
+			types: 'Dog, Cat, Bird, Rabit, Fish',
+			duration: 'May 01 2016 to May 30 2016',
+			location: 'Toronto',
+			price: '20 - 50',
+			experience: '5 years',
+			supplies: 'Food, Toys',
+			number_of_pets: 10,
+			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'open'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 2
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 5,
+		    user: 2,
+			title: 'Sitter Near Ottawa',
+			types: 'Dog, Cat, Bird, Rabit, Fish',
+			duration: 'May 01 2016 to May 30 2016',
+			location: 'Ottawa',
+			price: '20 - 50',
+			experience: '5 years',
+			supplies: 'Food, Toys',
+			number_of_pets: 10,
+			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'open'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 2
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 6,
+		    user: 2,
+			title: 'Sitter Near Vancuber',
+			types: 'Dog, Cat, Bird, Rabit, Fish',
+			duration: 'May 01 2016 to May 30 2016',
+			location: 'Vancuber',
+			price: '20 - 50',
+			experience: '5 years',
+			supplies: 'Food, Toys',
+			number_of_pets: 10,
+			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'open'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 2
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 7,
+		    user: 2,
+			title: 'Sitter Near Montreal',
+			types: 'Dog, Cat, Bird, Rabit, Fish',
+			duration: 'May 01 2016 to May 30 2016',
+			location: 'Montreal',
+			price: '20 - 50',
+			experience: '5 years',
+			supplies: 'Food, Toys',
+			number_of_pets: 10,
+			description: 'I have raised many types of pets. This May, my friends and I are going to offer pet sitters. We plan to offer this in any place in Canada.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'open'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 3
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 8,
+		    user: 3,
+			title: 'Donkey Donkey Farm offers pet sitter',
+			types: 'Horse, Sheep, Chicken, Rabbit, Donkey',
+			duration: 'Apr 01 2016 to Aug 30 2016',
+			location: 'Vancuber',
+			price: '40 - 60',
+			experience: '10 years',
+			supplies: 'Food, Toys, Spacious yard',
+			number_of_pets: 10,
+			description: 'Hello folks. Donkey Donkey Farm would like to take care of your pets. We have very spacious yard so we can accomodate big pets.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'open'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 3
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 9,
+		    user: 3,
+			title: 'Donkey Donkey Farm offers pet sitter',
+			types: 'Horse, Sheep, Chicken, Rabbit, Donkey',
+			duration: 'Apr 01 2015 to Aug 30 2015',
+			location: 'Vancuber',
+			price: '30 - 50',
+			experience: '10 years',
+			supplies: 'Food, Toys, Spacious yard',
+			number_of_pets: 9,
+			description: 'Hello folks. Donkey Donkey Farm would like to take care of your pets. We have very spacious yard so we can accomodate big pets.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'closed'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding sitter posting userId = 3
+    	
+    	var sitter_posting = new Sitter_Posting({
+    		_id: 10,
+		    user: 3,
+			title: 'Donkey Donkey Farm in Toronto',
+			types: 'Horse, Sheep, Chicken, Rabbit, Donkey',
+			duration: 'Oct 01 2016 to Oct 30 2016',
+			location: 'Toronto',
+			price: '50 - 70',
+			experience: '10 years',
+			supplies: 'Food, Toys, Spacious yard',
+			number_of_pets: 9,
+			description: 'Hello folks. Donkey Donkey Farm would like to take care of your pets. We will start new farm in Toronto and offer pet sitters as well.',
+			thumbnail: '/images/default-profile-pic.png',
+			status: 'open'
+		});
+
+        sitter_posting.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding application from userId 1 to userId 2
+    	
+    	var application = new Application({
+			to: 2,
+			from: 1,
+			isPetPost: true,
+			pet_posting: 1,
+			pet_posting: 1,
+			read: true,
+			message: 'Hi. I would like to take care of your dog while you are out the country.',
+		});
+
+        application.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding application from userId 1 to userId 3
+    	
+    	var application = new Application({
+			to: 3,
+			from: 1,
+			isPetPost: false,
+			pet_posting: 8,
+			pet_posting: 8,
+			read: false,
+			message: 'Hi. My cousin has a sheep and he asked me to take care of it. I think I found a wonderful place!',
+		});
+
+        application.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding application from userId 2 to userId 1
+    	
+    	var application = new Application({
+			to: 1,
+			from: 2,
+			isPetPost: false,
+			pet_posting: 1,
+			sitter_posting: 1,
+			read: false,
+			message: 'Hello pet lover. Can you take care of my dog?',
+		});
+
+        application.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding application from userId 2 to userId 3
+    	
+    	var application = new Application({
+			to: 3,
+			from: 2,
+			isPetPost: true,
+			pet_posting: 6,
+			sitter_posting: 6,
+			read: false,
+			message: 'Hi. I can take care of your bird.',
+		});
+
+        application.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding message from userId 2 to userId 1
+    	
+    	var meessage = new Message({
+			to: 1,
+			from: 2,
+			message: 'How are you doing today?',
+			read: true,
+		});
+
+        meessage.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding message from userId 2 to userId 1
+    	
+    	var meessage = new Message({
+			to: 1,
+			from: 2,
+			message: 'Thanks for the offer. Is $50 per day okay with you?',
+			read: false,
+		});
+
+        meessage.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding message from userId 1 to userId 2
+    	
+    	var meessage = new Message({
+			to: 2,
+			from: 1,
+			message: 'I am good today. Thanks!',
+			read: true,
+		});
+
+        meessage.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
+    function(callback) {		// Adding message from userId 1 to userId 3
+    	
+    	var meessage = new Message({
+			to: 3,
+			from: 1,
+			message: 'Thank you for joining our website. We hope this site is useful to you.',
+			read: false,
+		});
+
+        meessage.save(function(err, report) {
+			if(err){
+				console.log(err);
+			}
+			callback();
+		});
+    },
+
 // At the end of the script call process.exit()
 ], function(err, result){
 	if (err){ 
