@@ -38,6 +38,16 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
 
         $http.get('/api/users/' + $scope.profileUserId + '/posts/open').success(function(data){
             $scope.open_posts = data;
+
+            // exclude current posting in recommendation
+            for (var i = 0; i < $scope.open_posts.length; i++) {
+                if ($scope.open_posts[i].pet) {
+                    $scope.open_posts[i].postingType = 'petPosting';
+                } else {
+                    $scope.open_posts[i].postingType = 'sitterPosting';
+                }
+            }
+            
         });
 
         $http.get('/api/users/' + $scope.profileUserId + '/posts/closed').success(function(data){
