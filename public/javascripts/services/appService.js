@@ -1,4 +1,4 @@
-app.factory('appService', ['$http', function($http){
+app.factory('appService', ['$http','$cookies', function($http, $cookies){
 
     return({
         apply: apply
@@ -9,7 +9,8 @@ app.factory('appService', ['$http', function($http){
             from: from,
             isPetPost: isPetPost,
             posting_id: posting_id,
-            message: content
+            message: content,
+            token: $cookies.get('token')
         });
         var config = {
             headers : {

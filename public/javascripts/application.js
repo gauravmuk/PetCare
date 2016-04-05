@@ -11,7 +11,7 @@ application.controller('applicationController', ['$http', '$scope', '$cookies', 
     $scope.msg_content = "";
 
 
-    $http.get('/api/applications/' + $scope.userId).success(function(data){
+    $http.get('/api/applications/' + $scope.userId + "/" + $cookies.get('token')).success(function(data){
         $scope.receivedApps = data.received;
         $scope.sentApps = data.sent;
     });

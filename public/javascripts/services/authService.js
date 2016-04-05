@@ -96,6 +96,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 				$cookies.put('userID', data.id);
 				$cookies.put('userName', data.name);
 				$cookies.put('userRole', data.role);
+				$cookies.put('token', data.token)
 				user = true;
 				deferred.resolve();
 			}
