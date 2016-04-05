@@ -297,7 +297,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             $scope.animationEnabled = !$scope.animationEnabled;
         };
 
-
+        // Make http DELETE requests for the given post ids
         $scope.deletePost = function (postID, postingType) {
             
 
@@ -324,6 +324,63 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
 
         };
 
+        // Make http PUT requests for the given post idsto close it
+        $scope.closePost = function (postID, postingType) {
+            
+            // If type is sitterPosting, make an API call to chage status to 'close'
+            if (postingType === 'sitterPosting'){
+                // Make an http delete request to delete post with a given id
+                $http.put('/api/sitterpostings/' + postID + '/close')
+                    .success(function(data, status, headers, config) {
+                        refreshOpenedPost();
+                        refreshClosedPost();
+                    }).error(function(data, status, headers, config) {
+
+                    });
+            }
+            // If type is pet_posting, make an API call to chage status to 'close'
+            if(postingType === 'petPosting'){
+                // Make an http delete request to delete post with a given id
+                $http.put('/api/petpostings/' + postID + '/close')
+                    .success(function(data, status, headers, config) {
+                        refreshOpenedPost();
+                        refreshClosedPost();
+                    }).error(function(data, status, headers, config) {
+
+                    });
+            } 
+
+        };
+        
+        // Make http PUT requests for the given post id to open it
+        $scope.reopenPost = function (postID, postingType) {
+            console.log(postingType);
+
+            // If type is sitterPosting, make an API call to chage status to 'close'
+            if (postingType === 'sitterPosting'){
+                // Make an http delete request to delete post with a given id
+                $http.put('/api/sitterpostings/' + postID + '/open')
+                    .success(function(data, status, headers, config) {
+                        refreshOpenedPost();
+                        refreshClosedPost();
+                    }).error(function(data, status, headers, config) {
+
+                    });
+            }
+            // If type is pet_posting, make an API call to chage status to 'close'
+            if(postingType === 'petPosting'){
+                // Make an http delete request to delete post with a given id
+                $http.put('/api/petpostings/' + postID + '/open')
+                    .success(function(data, status, headers, config) {
+                        refreshOpenedPost();
+                        refreshClosedPost();
+                    }).error(function(data, status, headers, config) {
+
+                    });
+            } 
+
+        };
+
 
         function refreshOpenedPost (){
             $http.get('/api/users/' + $scope.profileUserId + '/posts/open').success(function(data){
@@ -343,6 +400,16 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
         function refreshClosedPost (){
             $http.get('/api/users/' + $scope.profileUserId + '/posts/closed').success(function(data){
                 $scope.closed_posts = data;
+
+                // exclude current posting in recommendation
+                for (var i = 0; i < $scope.closed_posts.length; i++) {
+                    if ($scope.closed_posts[i].pet) {
+                        $scope.closed_posts[i].postingType = 'petPosting';
+                    } else {
+                        $scope.closed_posts[i].postingType = 'sitterPosting';
+                    }
+                }
+                
             });
         }
     }

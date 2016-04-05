@@ -208,7 +208,7 @@
                                 </div>
                                 <div class="info-column" ng-if="userId == profileUserId ">
                                     <button class="apply own" type="button">Edit</button>
-                                    <button class="apply own closeButton" type="button">Close</button>
+                                    <button class="apply own closeButton" type="button" ng-click="closePost(post._id, post.postingType)">Close</button>
                                     <button class="apply own delete" type="button" ng-click="deletePost(post._id, post.postingType)">Delete</button>
                                 </div>
                             </div>
@@ -279,7 +279,7 @@
                                 </div>
                                 <div class="info-column" ng-if="userId == profileUserId ">
                                     <button class="closed ownClose">Closed</button>
-                                    <button class="apply ownClose" type="button">Reopen</button>
+                                    <button class="apply ownClose" type="button" ng-click="reopenPost(post._id, post.postingType)">Reopen</button>
                                 </div>
                             </div>
                         </div>
