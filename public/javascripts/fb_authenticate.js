@@ -1,5 +1,5 @@
 module.exports = {
-	'appID'			: '605409222968354',
-	'appSecret' 	: '0b67d68f6edced848b030bd8e1ccf5a3',
+	'appID'			: process.env.FB_APP_ID || '509195005931801',
+	'appSecret' 	: process.env.FB_SECRET || 'e8a939fe8230ca0729a8279473ff0825',
 	'callbackUrl' 	: process.env.FB_CALLBACK_URL || 'http://localhost:3000/auth/facebook/callback'
 }
