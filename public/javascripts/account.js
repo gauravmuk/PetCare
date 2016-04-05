@@ -2,41 +2,46 @@ var account = angular.module('account', []);
 
 account.controller('accountController', ['$http', '$scope', '$location', 'authService', '$window', function($http, $scope, $location, authService, $window) {
 	
-	$scope.register = function(email, name, password) {
-		$scope.error = false;
-      	$scope.disabled = true;
+	$scope.register = function(isValid, email, name, password) {
+		if (isValid) {
+			$scope.error = false;
+	      	$scope.disabled = true;
 
-      	var promise = authService.register(email, password, name);
+	      	var promise = authService.register(email, password, name);
 
-		promise.then(function() {
-				console.log("success Register");
+			promise.then(function() {
+					$location.path('/');
+					$scope.disabled = false;
+				})
+				.catch(function(err) {
+					if (err.name == "UserExistsError") {
+						$scope.errorMsg = "A user with the given email is already registered";
+					}
+					$scope.error = true;
+					$scope.disabled = false;
+			});
+		}
+	};
+
+	$scope.login = function(isValid, email, password) {
+		if (isValid) {
+			$scope.error = false;
+	      	$scope.disabled = true;
+	      	console.log('res')
+
+			authService.login(email, password)
+			.then(function() {
 				$location.path('/');
 				$scope.disabled = false;
 			})
-			.catch(function() {
-				console.log("Error Register");
+			.catch(function(err) {
+				if (err.name == "AuthenticationError") {
+					$scope.errorMsg = "Incorrent email and/or password";
+				}
 				$scope.error = true;
-				$scope.errorMessage = "Invalid username and/or password";
 				$scope.disabled = false;
-		});
-	};
-
-	$scope.login = function(email, password) {
-		$scope.error = false;
-      	$scope.disabled = true;
-
-		authService.login(email, password)
-		.then(function() {
-			console.log("success Login");
-			$location.path('/');
-			$scope.disabled = false;
-		})
-		.catch(function() {
-			console.log("Error Login");
-			$scope.error = true;
-			$scope.errorMessage = "Invalid username and/or password";
-			$scope.disabled = false;
-		});
+			});
+		}
 	};
 
 	$scope.facebook_login = function () {

@@ -2,17 +2,31 @@
 <div class="content">
     <div class="container">
         <div class="signup">
-            <form >
+            <form name="form" novalidate>
                 <div class="signup-input">
-                    Email: <input type="text" name="email" ng-model="email" placeholder="example@email.com">
+                    Email: <input type="email" name="email" ng-model="email" placeholder="example@email.com" required="">
                 </div>
+                <span ng-if="error" class="form-error">{{ errorMsg }}</span>
+                <span ng-show="form.email.$touched || form.$submitted">
+                    <span ng-show="form.email.$error.required" class="form-error">This field is required.</span>
+                    <span ng-show="form.email.$error.email" class="form-error">This is not a valid email.</span>
+                </span>
                 <div class="signup-input">
-                    Name: <input type="text" name="name" ng-model="name" placeholder="Minimum 4 characters">
+                    Name: <input type="text" name="name" ng-model="name" placeholder="Minimum 4 characters" required="" ng-minlength="4">
                 </div>
+                <span ng-show="form.email.$touched || form.$submitted">
+                    <span ng-show="form.name.$error.required" class="form-error">This field is required.</span>
+                    <span ng-show="form.name.$error.minlength" class="form-error">Name must be at least 4 characters.</span>
+                </span>
                 <div class="signup-input">
-                    Password: <input type="password" name="password" ng-model="password" placeholder="Minimum 8 characters">
+                    Password: <input type="password" name="password" ng-model="password" placeholder="Minimum 8 characters" required="" ng-minlength="8">
                 </div>
-                <input class="signup-button" type="submit" value="Sign Up" ng-click="register(email, name, password)">
+                <span ng-show="form.email.$touched || form.$submitted">
+                    <span ng-show="form.password.$error.required" class="form-error">This field is required.</span>
+                    <span ng-show="form.password.$error.minlength" class="form-error">Password must be at least 8 characters.</span>
+                </span>
+
+                <input class="signup-button" type="submit" value="Sign Up" ng-click="register(form.$valid, email, name, password)">
                 <span class="center">Already have an account? <a href="signin">Log In</a></span>
                 <span class="center">
                     <span class="line"></span>or<span class="line"></span>
