@@ -948,13 +948,19 @@ app.put('/api/petpostings/:id', function (req, res) {
 }); 
 
 // Close a pet posting
-app.put('/api/petpostings/:id/close', function (req, res) {
+app.put('/api/petpostings/:id/:status', function (req, res) {
 
-	if (isNumber(req.params.id)) {
+	if (isNumber(req.params.id) && isString(req.params.status)) {
 
 		Pet_Posting.findOne({_id: req.params.id}, function (err, petposting) {
 
-            petposting.status = 'closed';
+			if (req.params.status == 'close') {
+	            petposting.status = 'closed';
+	        	console.log('closed posting');
+	        } else if (req.params.status == 'open') {
+	            petposting.status = 'open';
+	       		console.log('opened posting');
+	        }
 
 		    petposting.save(function (err) {
 		        if(err) {
@@ -1080,13 +1086,19 @@ app.put('/api/sitterpostings/:id', function (req, res) {
 }); 
 
 // Close a sitter posting
-app.put('/api/sitterpostings/:id/close', function (req, res) {
+app.put('/api/sitterpostings/:id/:status', function (req, res) {
 
-	if (isNumber(req.params.id)) {
+	if (isNumber(req.params.id) && isString(req.params.status)) {
 
 		Sitter_Posting.findOne({_id: req.params.id}, function (err, sitterposting) {
 
-            sitterposting.status = 'closed';
+			if (req.params.status == 'close') {
+	            sitterposting.status = 'closed';
+	        	console.log('closed posting');
+	        } else if (req.params.status == 'open') {
+	            sitterposting.status = 'open';
+	       		console.log('opened posting');
+	        }
 
 		    sitterposting.save(function (err) {
 		        if(err) {
