@@ -4,18 +4,19 @@
         <div class="signup">
             <form name="form" novalidate>
                 <div class="signup-input">
-                    Email: <input type="text" name="email" ng-model="email" placeholder="Email" required="">
+                    Email: <input type="text" name="email" ng-model="email" placeholder="Email" required="" ng-focus="focus=true">
                 </div>
                 <span ng-show="form.email.$touched || form.$submitted">
                     <span ng-show="form.email.$error.required" class="form-error">This field is required.</span>
                 </span>
                 <div class="signup-input">
-                    Password: <input type="password" name="password" ng-model="password" placeholder="required" required="">
+                    Password: <input type="password" name="password" ng-model="password" placeholder="required" required="" ng-focus="focus=true">
                 </div>
-                <span ng-show="form.email.$touched || form.$submitted">
+                <span ng-show="form.password.$touched || form.$submitted">
                     <span ng-show="form.password.$error.required" class="form-error">This field is required.</span>
                 </span>
-                <span ng-if="error" class="form-error">{{ errorMsg }}</span>
+                <span ng-if="error" class="form-error" ng-hide="focus">{{ errorMsg }}</span>
+                 <span ng-if="error" class="form-error" ng-hide="focus">{{ errorLoginMsg }}</span>
                 <div class="remember-me">
                     <label><input type="checkbox" name="remember-me" />Remember me</label>
                     <a href="#forgot-pw">Forgot Password?</a>

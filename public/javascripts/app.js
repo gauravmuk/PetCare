@@ -119,17 +119,26 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		});
 }]);
 
-app.run(function ($rootScope, $location, $route, authService, activeLinkService) {
+app.run(function ($rootScope, $location, $route, authService, activeLinkService, $window) {
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
 	    authService.getUserStatus();
         activeLinkService.prepForBroadcast($location.path());
+        
 		if (next.access.restricted) {
 			if (!authService.isLoggedIn()) {
+				$rootScope.loginRequired = true;
+				console.log($rootScope.loginRequired)
 	        	$location.path('/signin');
 	        	$route.reload();
 	        }
 	    };
   	});
+  	$rootScope.$on('$routeChangeSuccess', function (event, next, current) {   
+        if (authService.isBanned()) {
+        	$location.path('/signin');
+        }
+  	});
+
 });
 
 app.controller('mainController', function() {

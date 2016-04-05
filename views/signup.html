@@ -14,14 +14,14 @@
                 <div class="signup-input">
                     Name: <input type="text" name="name" ng-model="name" placeholder="Minimum 4 characters" required="" ng-minlength="4">
                 </div>
-                <span ng-show="form.email.$touched || form.$submitted">
+                <span ng-show="form.name.$touched || form.$submitted">
                     <span ng-show="form.name.$error.required" class="form-error">This field is required.</span>
                     <span ng-show="form.name.$error.minlength" class="form-error">Name must be at least 4 characters.</span>
                 </span>
                 <div class="signup-input">
                     Password: <input type="password" name="password" ng-model="password" placeholder="Minimum 8 characters" required="" ng-minlength="8">
                 </div>
-                <span ng-show="form.email.$touched || form.$submitted">
+                <span ng-show="form.password.$touched || form.$submitted">
                     <span ng-show="form.password.$error.required" class="form-error">This field is required.</span>
                     <span ng-show="form.password.$error.minlength" class="form-error">Password must be at least 8 characters.</span>
                 </span>

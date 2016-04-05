@@ -1,7 +1,8 @@
 var account = angular.module('account', []);
 
-account.controller('accountController', ['$http', '$scope', '$location', 'authService', '$window', function($http, $scope, $location, authService, $window) {
-	
+account.controller('accountController', ['$http', '$scope', '$location', 'authService', '$window', '$rootScope',
+	function($http, $scope, $location, authService, $window, $rootScope) {
+
 	$scope.register = function(isValid, email, name, password) {
 		if (isValid) {
 			$scope.error = false;
@@ -23,6 +24,20 @@ account.controller('accountController', ['$http', '$scope', '$location', 'authSe
 		}
 	};
 
+	$scope.checkLoginStatus = function() {
+		if (authService.isBanned()) {
+			authService.logout();
+			$scope.error = true;
+			$scope.errorMsg = 'This account is banned.';
+		} 
+		else if ($rootScope.loginRequired){
+			$scope.error = true;
+			$scope.errorLoginMsg = 'Please login to continue.';
+		}
+	};
+
+	$scope.checkLoginStatus();
+
 	$scope.login = function(isValid, email, password) {
 		if (isValid) {
 			$scope.error = false;
@@ -37,6 +52,9 @@ account.controller('accountController', ['$http', '$scope', '$location', 'authSe
 			.catch(function(err) {
 				if (err.name == "AuthenticationError") {
 					$scope.errorMsg = "Incorrent email and/or password";
+				}
+				else {
+					$scope.errorMsg = err;
 				}
 				$scope.error = true;
 				$scope.disabled = false;

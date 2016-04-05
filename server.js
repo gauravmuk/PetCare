@@ -663,11 +663,16 @@ app.post('/api/register', function(req, res, next) {
 app.post('/api/login', passport.authenticate('local', { session: true, failWithError: true}), 
 	function(req, res, next) {
 		User.findOne({_id: req.user.id}, function(err, user){
-			if(err){
+			if(err) {
 				return next(err);
 			}
-			else{
-				res.send({ id: req.user.id, name: req.user.name, role: req.user.role });
+			else {
+				if (user.banned) {
+					res.json({ err: 'This account has been banned'})
+				} 
+				else {
+					res.json({ id: req.user.id, name: req.user.name, role: req.user.role });
+				}
 			}
 		});	
 	},
@@ -687,7 +692,7 @@ app.get('/api/status', function(req, res) {
 		res.json({ logged_in: false });
 	}
 	else {
-		res.json({ logged_in: true, user: { id: req.user._id, name: req.user.name, role: req.user.role }});
+		res.json({ logged_in: true, is_banned: req.user.banned, user: { id: req.user._id, name: req.user.name, role: req.user.role }});
 	}
 });
 

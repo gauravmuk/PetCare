@@ -1,9 +1,11 @@
-app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $timeout, $http, $cookies) {
+app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, $timeout, $http, $cookies) {
 	var user = null;
+	var user_banned = null;
 	var userData = {};
 
 	return({
 		isLoggedIn: isLoggedIn,
+		isBanned: isBanned,
 		login: login,
 		logout: logout,
 		register: register,
@@ -14,6 +16,15 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 
 	function isLoggedIn() {
 		if (user || $cookies.get('userID') != undefined) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	function isBanned() {
+		if (user_banned) {
 			return true;
 		}
 		else {
@@ -81,6 +92,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 			}
 			else {
 				userData = data;
+				user_banned = data.banned;
 				$cookies.put('userID', data.id);
 				$cookies.put('userName', data.name);
 				$cookies.put('userRole', data.role);
@@ -90,6 +102,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 		})
 		.error(function(data) {
 			user = false;
+
 			deferred.reject(data);
 		});
 
@@ -101,13 +114,14 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 		  	// handle success
 		  	.success(function (data) {
 		      	user = data.logged_in;
+		      	user_banned = data.is_banned;
 		      	if (data.logged_in && $cookies.get('userID') == undefined) {
 		      		$cookies.put('userID', data.user.id);
 					$cookies.put('userName', data.user.name);
 					$cookies.put('userRole', data.user.role);
 		      	}
 		  	})
-		  // handle error
+		  	// handle error
 		  	.error(function (data) {
 		    	user = false;
 	  	});
@@ -123,10 +137,12 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies',function($q, $
 			$cookies.remove('userName');
 			$cookies.remove('userRole');
 			user = false;
+			user_banned = false;
 			deferred.resolve();
 		})
 		.error(function(data) {
 			user = false;
+			user_banned = false;
 			deferred.reject();
 			
 		});
