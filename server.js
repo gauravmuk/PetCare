@@ -16,6 +16,7 @@ var fs 					= require('fs');
 var helmet 				= require('helmet');
 var fbConfig			= require('./server/config/fb_authenticate');
 var twitterConfig		= require('./server/config/twitter_authenticate');
+var database 			= require('./server/config/database');
 var app					= express();
 /* Application Setup */ 
 
@@ -32,20 +33,11 @@ app.set("views", __dirname + "/views");
 app.set("view engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 
-/* Database Setup */
-// Connect to a database
-// NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
-var uristring = process.env.MONGOLAB_URI || 
-				process.env.MONGOHQ_URL ||
-				"mongodb://localhost/testDB"
+/* Amazon S3 Upload */
+// connect to existing bucket
+var s3bucket = new AWS.S3({ params: { Bucket: 'pet.care' }});
 
-var connection = mongoose.connect(uristring, function(err) {
-    if (err) {
-		console.log("Error connecting to the mongo database. Please make sure you are running mongo in another terminal.");
-    	console.log(err);
-    	throw err;
-    }
-});// TO-DO: ALSO CHANGE 'testDB' in  default-data.js 
+//Initialize autoIncrement for _id fields of models
 autoIncrement.initialize(connection);
 
 // Helmet helps you secure your Express apps by setting various HTTP headers
@@ -53,18 +45,28 @@ app.use(helmet());
 app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }));
 
+/* Database Setup */
+// Connect to a database
+var connection = mongoose.connect(database.uri, function(err) {
+    if (err) {
+		console.log("Error connecting to the mongo database. Please make sure you are running mongo in another terminal.");
+    	console.log(err);
+    	throw err;
+    }
+});
+
 // Import Database schema
-var Application 	= require('./public/models/Application');
-var Message 		= require('./public/models/Message');
-var Pet 			= require('./public/models/Pet');
-var Pet_Posting 	= require('./public/models/Pet_Posting');
-var Sitter_Posting	= require('./public/models/Sitter_Posting');
-var Report			= require('./public/models/Report');
-var Review			= require('./public/models/Review');
-var Pet_Review		= require('./public/models/Pet_Review');
-var User			= require('./public/models/User');
-var ForumPost		= require('./public/models/Forum_Post');
-var Authentication  = require('./public/models/Authentication');
+var Application 	= require('./server/models/Application');
+var Message 		= require('./server/models/Message');
+var Pet 			= require('./server/models/Pet');
+var Pet_Posting 	= require('./server/models/Pet_Posting');
+var Sitter_Posting	= require('./server/models/Sitter_Posting');
+var Report			= require('./server/models/Report');
+var Review			= require('./server/models/Review');
+var Pet_Review		= require('./server/models/Pet_Review');
+var User			= require('./server/models/User');
+var ForumPost		= require('./server/models/Forum_Post');
+var Authentication  = require('./server/models/Authentication');
 
 // Authentication
 app.use(session({ secret: 'Session Key', resave: true, saveUninitialized: true }));
@@ -1717,10 +1719,6 @@ app.put('/api/forumposts/:id/like', function (req, res) {
 
 }); 
 
-/* Amazon S3 Upload */
-// connect to existing bucket
-var s3bucket = new AWS.S3({params: {Bucket: 'pet.care'}});
-
 // Uploads a file to Amazon S3 and return the URL
 app.post("/api/upload", function(req, res){
 
@@ -1784,6 +1782,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 var theport = process.env.PORT || 3000;
 /* Start server */ 
