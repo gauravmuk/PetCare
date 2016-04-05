@@ -504,7 +504,9 @@ app.put('/api/users/:id', function (req, res) {
 		    user.email 			= req.body.data.email;
 		    user.location 		= req.body.data.location;
 		    user.description 	= req.body.data.description;
-
+		    if (req.body.data.photo) {
+		    	user.photo = req.body.data.photo;
+		    }
 		    user.save(function (err, user) {
 		        if (err) {
 		        	throw err;

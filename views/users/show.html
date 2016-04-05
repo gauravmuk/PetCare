@@ -3,9 +3,13 @@
         <div class="profile">
             <!-- User Info -->
             <div class="user_info">
+                <img ng-if="editMode" class="add-photo-icon" src="/assets/icon-add-a-photo.png">
                 <div class="info">
-                    <div class="profile-picture"  ng-show="user.photo" ng-style="{ 'background-image': 'url(' + user.photo + ')' }" alt="profile picture"></div>
-                    <div class="profile-picture"  ng-hide="user.photo" ng-style="{ 'background-image': 'url(/images/default-profile-pic.png)' }" alt="profile picture"></div>
+                    <div class="profile-picture" ng-if="!editMode" ng-style="{ 'background-image': 'url(' + user.photo + ')' }" alt="profile picture">
+                    </div>
+                    <div ng-if="editMode" class="profile-picture" ng-style="{ 'background-image': 'url(' + editUserData.photo + ')' }" alt="profile picture">
+                        <input type="file" style="opacity: 0;width: 100%;height: 100%;" ng-model="thumbnail" file-model="imageFile" onchange="angular.element(this).scope().uploadUserImage(this)">
+                    </div>
                         <div class="info-container">
                         <div class="title" ng-if="!editMode">
                             {{ user.name }}
