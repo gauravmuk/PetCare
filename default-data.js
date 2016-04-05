@@ -78,7 +78,7 @@ async.series([
 			photo: '/images/default-profile-pic.png'
 		});
 
-		var password = 'admin'
+		var password = 'admin123'
 
         User.register(user, password, function(err) {
 			if (err) {
@@ -102,7 +102,7 @@ async.series([
 			photo: '/images/default-profile-pic.png'
 		});
 
-		var password = '12345'
+		var password = '12345678'
 
         User.register(user, password, function(err) {
 			if (err) {
@@ -126,7 +126,7 @@ async.series([
 			photo: '/images/default-profile-pic.png'
 		});
 
-		var password = '12345'
+		var password = '12345678'
 
         User.register(user, password, function(err) {
 			if (err) {
