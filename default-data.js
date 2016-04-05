@@ -92,8 +92,8 @@ async.series([
     	var user = new User({
         	_id		: 2,
 			name	: 'Jennifer Lawrence',
-			username: 'Jenniffer@gmail.com',
-			email	: 'Jenniffer@gmail.com',
+			username: 'jennifer@gmail.com',
+			email	: 'jennifer@gmail.com',
 			rating	: 4,
 			banned	: false,
 			location: 'Toronto, ON',
@@ -116,8 +116,8 @@ async.series([
     	var user = new User({
         	_id		: 3,
 			name	: 'Christian Bale',
-			username: 'Bale@gmail.com',
-			email	: 'Bale@gmail.com',
+			username: 'bale@gmail.com',
+			email	: 'bale@gmail.com',
 			rating	: 3,
 			banned	: false,
 			location: 'Toronto, ON',

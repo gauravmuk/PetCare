@@ -133,7 +133,7 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 }]);
 
 
-pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService', '$uibModal', 'authService', 'reviewService', '$location'
+pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService', '$uibModal', 'authService', 'reviewService', '$location',
 	function($http, $scope, $routeParams, $cookies, appService, $uibModal, authService, reviewService, $location) {
 
 	$scope.petPosting = []
@@ -193,7 +193,6 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 		// make AJAX call to get pet info
 		$http.get('/api/pets/' + petID).success(function(data) {
 			$scope.pet = data;
-			console.log(data);
 		});
 
 		// If user has a rating, store it

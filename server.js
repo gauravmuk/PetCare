@@ -62,7 +62,7 @@ var User			= require('./public/models/User');
 var ForumPost		= require('./public/models/Forum_Post');
 
 // Authentication
-app.use(session({ secret: 'Session Key' }));
+app.use(session({ secret: 'Session Key', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -168,379 +168,6 @@ passport.use(new TwitterStrategy({
 		});
 	}
 ));
-
-// Insert test data
-/**********************************************************************/
-var user1 = new User({
-	name: 'John Doe',
-	email: 'john@gmail.com',
-	rating: 4,
-	banned: false,
-	location: "Toronto, ON"
-});
-
-user1.save();
-
-var user2 = new User({
-	name: 'Leonardo DiCaprio',
-	email: 'leo@gmail.com',
-	rating: 3,
-	banned: false,
-	location: "New York, NY"
-});
-
-user2.save();
-
-var user3 = new User({
-	name: 'Taewoo Kim',
-	email: 'rlaxodn@gmail.com',
-	rating: 0,
-	banned: true,
-	location: "Ottawa, ON"
-});
-
-user3.save();
-
-var msg1 = new Message({
-	to: 1,
-	from: 2,
-	message: 'Where are you?',
-	read: false,
-});
-
-msg1.save();
-
-var msg2 = new Message({
-	to: 2,
-	from: 1,
-	message: 'somewhere ...',
-	read: true,
-});
-
-msg2.save();
-
-var msg3 = new Message({
-	to: 1,
-	from: 3,
-	message: 'yo',
-	read: true,
-});
-
-msg3.save();
-
-var msg4 = new Message({
-	to: 3,
-	from: 1,
-	message: 'blablabla',
-	read: true,
-});
-
-msg4.save();
-
-var msg5 = new Message({
-	to: 3,
-	from: 2,
-	message: '...',
-	read: true,
-});
-
-msg5.save();
-
-var app1 = new Application({
-	to: 1,
-	from: 2,
-	isPetPost: true,
-	pet_posting: 1,
-	read: true,
-	message: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et,',
-});
-app1.save();
-
-var app2 = new Application({
-	to: 1,
-	from: 3,
-	isPetPost: false,
-	sitter_posting: 1,
-	read: false,
-	message: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et,',
-});
-app2.save();
-
-var app3 = new Application({
-	to: 2,
-	from: 1,
-	isPetPost: true,
-	pet_posting: 1,
-	read: true,
-	message: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et,',
-});
-app3.save();
-
-var pet1 = new Pet({
-	name: 'Kitty',
-	user: 1,
-	type: 'Cat',
-	breed: 'Persian',
-	gender: 'Male',
-	age: 2,
-	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
-	rating: 2,
-	photo: 'images/cat1.jpg'
-});
-
-pet1.save();
-
-var pet2 = new Pet({
-	name: 'Mango',
-	user: 1,
-	type: 'Cat',
-	breed: 'Persian',
-	gender: 'Male',
-	age: 5,
-	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
-	rating: 3,
-	photo: 'images/cat1.jpg'
-});
-
-pet2.save();
-
-var pet3 = new Pet({
-	name: 'doggy',
-	user: 2,
-	type: 'dog',
-	breed: 'Persian',
-	gender: 'Male',
-	age: 5,
-	description: 'Lorem ipsum dolor sit amet, vim id assum assueverit. Mazim appellantur interpretaris ius et, ex meis principes neglegentur eos. Vel tractatos repudiare expetendis in. Aeque inermis eu nec. His libris noster tacimates ne, enim stet vis ex. Ei mel populo causae liberavisse, ei eos iisque erroribus.',
-	rating: 4,
-	photo: 'images/cat1.jpg'
-});
-
-pet3.save();
-
-var petPosting1 = new Pet_Posting({
-    user: 1,
-    pet: 1,
-	title: 'Looking for a kind pet sitter.',
-	duration: '1 week',
-	location: 'Downtown, Toronto, ON',
-	price: '10',
-	supplies: 'Toys, Kennel, Clothes',
-	additional_info: 'N/A',
-	description: 'Looking for someone to take care of my cat while I am out of the country.',
-	thumbnail: 'images/cat1.jpg',
-	status: 'open'
-});
-
-petPosting1.save();
-
-var petPosting2 = new Pet_Posting({
-    user: 1,
-    pet: 2,
-	title: 'this is posting 2',
-	duration: '1 week',
-	location: 'Downtown, Toronto, ON',
-	price: '110',
-	supplies: 'Toys, Kennel, Clothes',
-	additional_info: 'N/A',
-	description: 'Looking for someone to take care of my cat while I am out of the country.',
-	thumbnail: 'images/cat2.jpg',
-	status: 'closed'
-});
-
-petPosting2.save();
-
-var petPosting3 = new Pet_Posting({
-    user: 1,
-    pet: 3,
-	title: 'this is posting 3',
-	duration: '1 week',
-	location: 'Downtown, Toronto, ON',
-	price: '110',
-	supplies: 'Toys, Kennel, Clothes',
-	additional_info: 'N/A',
-	description: 'Looking for someone to take care of my cat while I am out of the country.',
-	thumbnail: 'images/cat2.jpg',
-	status: 'open'
-});
-
-petPosting3.save();
-
-var petPosting4 = new Pet_Posting({
-    user: 1,
-    pet: 3,
-	title: 'this is posting 4',
-	duration: '1 week',
-	location: 'Downtown, Toronto, ON',
-	price: '110',
-	supplies: 'Toys, Kennel, Clothes',
-	additional_info: 'N/A',
-	description: 'Looking for someone to take care of my cat while I am out of the country.',
-	thumbnail: 'images/cat2.jpg',
-	status: 'open'
-});
-
-petPosting4.save();
-
-var petPosting5 = new Pet_Posting({
-    user: 1,
-    pet: 2,
-	title: 'this is posting 5',
-	duration: '1 week',
-	location: 'Downtown, Toronto, ON',
-	price: '110',
-	supplies: 'Toys, Kennel, Clothes',
-	additional_info: 'N/A',
-	description: 'Looking for someone to take care of my cat while I am out of the country.',
-	thumbnail: 'images/cat2.jpg',
-	status: 'open'
-});
-
-petPosting5.save();
-
-var petPosting6 = new Pet_Posting({
-    user: 1,
-    pet: 2,
-	title: 'this is posting 5',
-	duration: '1 week',
-	location: 'Downtown, Toronto, ON',
-	price: '110',
-	supplies: 'Toys, Kennel, Clothes',
-	additional_info: 'N/A',
-	description: 'Looking for someone to take care of my cat while I am out of the country.',
-	thumbnail: 'images/cat2.jpg',
-	status: 'closed'
-});
-
-petPosting6.save();
-
-var sitterPosting1 = new Sitter_Posting({
-    user: 1,
-	title: 'Cat/Dog Sitter Near Toronto',
-	types: 'Dogs, Cats, Birds',
-	duration: 'March 3rd to April 1st',
-	location: 'Downtown, Toronto, ON',
-	price: '20 - 25',
-	experience: '2 years',
-	supplies: 'Toys, Kennel, Clothes',
-	number_of_pets: 2,
-	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
-	thumbnail: '/images/default-profile-pic.png',
-	status: 'open'
-});
-
-sitterPosting1.save();
-
-var sitterPosting2 = new Sitter_Posting({
-    user: 2,
-	title: '222222222222222222',
-	types: 'Dogs, Cats, Birds',
-	duration: 'March 3rd to April 1st',
-	location: 'Downtown, Toronto, ON',
-	price: '2.0 - 2.5',
-	experience: '2 years',
-	supplies: 'Toys, Kennel, Clothes',
-	number_of_pets: 100,
-	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
-	thumbnail: '/images/default-profile-pic.png',
-	status: 'open'
-});
-sitterPosting2.save();
-
-var sitterPosting3 = new Sitter_Posting({
-    user: 2,
-	types: 'Dogs, Cats, Birds',
-	duration: 'March 3rd to April 1st',
-	location: 'Downtown, Toronto, ON',
-	price: '20 - 25',
-	experience: '2 years',
-	supplies: 'Toys, Kennel, Clothes',
-	number_of_pets: 100,
-	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
-	thumbnail: '/images/default-profile-pic.png',
-	status: 'closed'
-});
-sitterPosting3.save();
-
-var sitterPosting4 = new Sitter_Posting({
-    user: 2,
-	title: '4',
-	types: 'Dogs, Cats, Birds',
-	duration: 'March 3rd to April 1st',
-	location: 'Downtown, Ottawa, ON',
-	price: '20321 - 20322',
-	experience: '2 years',
-	supplies: 'Toys, Kennel, Clothes',
-	number_of_pets: 100,
-	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
-	thumbnail: '/images/default-profile-pic.png',
-	status: 'open'
-});
-sitterPosting4.save();
-
-var sitterPosting5 = new Sitter_Posting({
-    user: 2,
-	title: '5',
-	types: 'Dogs, Cats, Birds',
-	duration: 'March 3rd to April 1st',
-	location: 'Downtown, Toronto, ON',
-	price: '20 - 25',
-	experience: '2 years',
-	supplies: 'Toys, Kennel, Clothes',
-	number_of_pets: 100,
-	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
-	thumbnail: '/images/default-profile-pic.png',
-	status: 'open'
-});
-sitterPosting5.save();
-
-var sitterPosting6 = new Sitter_Posting({
-    user: 2,
-	title: '6',
-	types: 'Dogs, Cats, Birds',
-	duration: 'March 3rd to April 1st',
-	location: 'Downtown, Ottawa, ON',
-	price: '20 - 25',
-	experience: '2 years',
-	supplies: 'Toys, Kennel, Clothes',
-	number_of_pets: 100,
-	description: 'I will look after your pets for $25 per hour. Please contact me for more information',
-	thumbnail: '/images/default-profile-pic.png',
-	status: 'closed'
-});
-sitterPosting6.save();
-
-
-
-
-var report1 = new Report({
-    to: 1,
-    from: 2,
-	message: "I would like to report user 1.",
-    resolve: false
-});
-
-report1.save();
-
-var forumPost1 = new ForumPost({
-    user: 1,
-	type: 'message',
-	message: 'I have 2 dogs!',
-	image: '',
-	likes: 0
-});
-
-forumPost1.save();
-
-var forumPost2 = new ForumPost({
-    user: 2,
-	type: 'image',
-	message: '',
-	image: 'http://bebusinessed.com/wp-content/uploads/2014/03/734899052_13956580111.jpg',
-	likes: 12
-});
-
-forumPost2.save();
 
 /**********************************************************************/
 
@@ -760,7 +387,7 @@ app.put("/api/users/:id/ban", function(req, res){
 			}
 			else{
 				// On Success return info
-				console.log(updatedUser);
+				//console.log(updatedUser);
 				res.json(updatedUser);
 			}
 		});
@@ -1172,7 +799,7 @@ app.delete("/api/petpostings/:id", function(req, res){
 
 		// Get params from the request
 		var postID = req.params.id;
-		console.log("delete sitter posting " + postID);
+		//console.log("delete sitter posting " + postID);
 		// remove a pet posting with a given ID from the datbase
 		Pet_Posting.remove({ _id:postID }, function(err, result){
 			if(err){
@@ -1180,7 +807,7 @@ app.delete("/api/petpostings/:id", function(req, res){
 			}
 			else{
 				// On success, log and return response
-				console.log("sitter posting deleted " + result);
+				//console.log("sitter posting deleted " + result);
 				res.json(result);
 			}
 		});
@@ -1210,7 +837,7 @@ app.post("/api/petpostings", function(req, res){
 	newPost.save(function(err, result) {
 		res.setHeader('Location', '/pet_posts/' + newPost._id);
     	res.status(201).send({_id : result._id, title : result.title, duration : result.duration,
-    	price : result.price});
+    	price : result.price, status : result.status});
 	});
 });
 
@@ -1230,7 +857,8 @@ app.put('/api/petpostings/:id', function (req, res) {
 		    petposting.save(function (err) {
 		        if(err) {
 		        }
-    			res.status(200).send(null);
+    			res.status(200).send({_id : petposting._id, title : petposting.title, duration : petposting.duration,
+    				price : petposting.price, status : petposting.status});
 		    });
 
 		});
@@ -1254,7 +882,8 @@ app.put('/api/petpostings/:id/close', function (req, res) {
 		        if(err) {
 		        }
 				res.setHeader('Location', '/pet_posts/' + petposting._id);
-    			res.status(200).send(null);
+    			res.status(200).send({_id : petposting._id, title : petposting.title, duration : petposting.duration,
+    				price : petposting.price, status : petposting.status});
 		    });
 
 		});
@@ -1290,7 +919,7 @@ app.delete("/api/sitterpostings/:id", function(req, res){
 
 		// Get params from the request
 		var postID = req.params.id;
-		console.log("delete sitter posting " + postID);
+		//console.log("delete sitter posting " + postID);
 		// remove a sitter posting with a given ID from the datbase
 		Sitter_Posting.remove({ _id:postID }, function(err, result){
 			if(err){
@@ -1298,7 +927,7 @@ app.delete("/api/sitterpostings/:id", function(req, res){
 			}
 			else{
 				// On success, log and return response
-				console.log("sitter posting deleted " + result);
+				//console.log("sitter posting deleted " + result);
 				res.json(result);
 			}
 		});
@@ -1340,7 +969,7 @@ app.post("/api/sitterpostings", function(req, res){
 	newPost.save(function(err) {
 		res.setHeader('Location', '/petsitter_posts/' + newPost._id);
     	res.status(201).send({_id : newPost._id, title : newPost.title, duration : newPost.duration,
-    	price : newPost.price});
+    	price : newPost.price, status : newPost.status});
 	});
 
 });
@@ -1360,7 +989,8 @@ app.put('/api/sitterpostings/:id', function (req, res) {
 		    sitterposting.save(function (err) {
 		        if(err) {
 		        }
-    			res.status(200).send(null);
+    			res.status(200).send({_id : sitterposting._id, title : sitterposting.title, duration : sitterposting.duration,
+    				price : sitterposting.price, status : sitterposting.status});
 		    });
 
 		});
@@ -1384,7 +1014,8 @@ app.put('/api/sitterpostings/:id/close', function (req, res) {
 		        if(err) {
 		        }
 				res.setHeader('Location', '/petsitter_posts/' + sitterposting._id);
-    			res.status(200).send(null);
+    			res.status(200).send({_id : sitterposting._id, title : sitterposting.title, duration : sitterposting.duration,
+    				price : sitterposting.price, status : sitterposting.status});
 		    });
 
 		});
@@ -1814,7 +1445,9 @@ app.post("/api/application", function(req, res){
 			isPetPost: req.body.isPetPost,
 			read: false
 		});
-		application.save();
+		application.save(function(err) {
+	    	res.status(201).send(null);
+		});
 	});
 });
 
@@ -1919,7 +1552,9 @@ app.post("/api/message", function(req, res){
 		read: false,
 	});
 
-	msg.save();
+	msg.save(function(err) {
+    	res.status(201).send(null);
+	});
 });
 
 // Return all forum posts
@@ -1946,10 +1581,8 @@ app.post("/api/forumposts", function(req, res){
 	});
 
 	forumpost.save(function(err) {
-		console.log(forumpost);
-    	res.status(201).send(null);
+    	res.status(201).send({ _id: forumpost._id, message: forumpost.message, image: forumpost.image, likes: forumpost.likes });
 	});
-
 
 });
 
@@ -1963,7 +1596,7 @@ app.put('/api/forumposts/:id/like', function (req, res) {
 		    forumpost.likes = forumpost.likes + 1;
 
 		    forumpost.save(function(err) {
-		    	res.status(200).send(null);
+    			res.status(200).send({ _id: forumpost._id, message: forumpost.message, image: forumpost.image, likes: forumpost.likes });
 			});
 
 		});
@@ -2045,7 +1678,7 @@ app.use(function(req, res, next) {
 
 /* Start server */ 
 app.listen(3000, function(){
-	console.log("PetCare server listening on port 3000");
+	console.log("PetCare server running at http://localhost:3000/");
 });
 
 /* Helper Functions */
@@ -2111,8 +1744,7 @@ exports.removeMochaPet = function(petName) {
 	});
 };
 
-
-// Remove a pet at end of Mocha testing
+// Remove a posting at end of Mocha testing
 exports.removePosting = function(type, title) {
 
 	var PostingType;
@@ -2131,3 +1763,18 @@ exports.removePosting = function(type, title) {
 		}
 	});
 };
+
+// Remove a forum posting at end of Mocha testing
+exports.removeForumPost = function(message) {
+
+	ForumPost.remove({ message:message }, function(err, result){
+		if(err){
+			throw err;
+		}
+		else{
+		}
+	});
+};
+
+// export the isNumber() function for Mocha testing
+exports.isInt = isNumber;

@@ -12,7 +12,7 @@ How to run tests
 
 NOTE: 
     You cannot run the PetCare application and the Mocha test cases at the same time 
-    because mongoDB by defualt is trying to connect to the same port. 
+    because mongoDB by default is trying to connect to the same port. 
 */
 
 
@@ -68,6 +68,15 @@ var mochaTestPetPosting = {
     description: 'Looking for someone to take care of my cat while I am out of the country.',
     thumbnail: 'images/cat2.jpg',
     status: 'closed'
+}
+
+// Forum post data
+var mochaTestForumPost = {
+    user: 2,
+    type: 'message',
+    message: 'Mocha: I am looking for a dog park in Toronto.',
+    image: '',
+    likes: 4
 }
 
 // `describe()` creates a suite of test cases
@@ -152,7 +161,7 @@ describe('GET Request Test Suite:   ', function() {
 });
 
 // All the test cases that make http POST requests to the server are written in this suite
-describe('Post Request Test Suite:   ', function() {
+describe('POST Request Test Suite:   ', function() {
     
     // Create user data object to be posted with the POST request
     var mochaTestUser = {
@@ -250,7 +259,7 @@ describe('Post Request Test Suite:   ', function() {
 });
 
 // All the test cases that make http DELETE requests to the server are written in this suite
-describe('Delete Request Test Suite:   ', function() {
+describe('DELETE Request Test Suite:   ', function() {
     
     // before() is called before running the test cases.
     before(function() {
@@ -285,7 +294,7 @@ describe('Delete Request Test Suite:   ', function() {
                     method: "DELETE"
                 },
                 function(error, response, body) {
-                    console.log(body);
+                    
                     var obj = JSON.parse(body);
                     // Assert ok:1
                     assert.equal(obj.ok, 1);
@@ -299,7 +308,7 @@ describe('Delete Request Test Suite:   ', function() {
 });
 
 // All the test cases that make http PUT requests to the server are written in this suite
-describe('Post Request Test Suite:   ', function() {
+describe('PUT Request Test Suite:   ', function() {
     
     // Create user data object to be posted with the POST request
     var mochaTestUser = {
@@ -317,6 +326,8 @@ describe('Post Request Test Suite:   ', function() {
     after(function() {
         // Remove tese user we added in this test suite form the database
         app.removeMochaTestUser(mochaTestUser.username);
+        app.removePosting('sitterPosting', mochaTestSitterPosting.title);
+        app.removeForumPost(mochaTestForumPost.message);
         app.closeServer();
     });
 
@@ -360,5 +371,102 @@ describe('Post Request Test Suite:   ', function() {
         });
     });
 
+    describe('Like a forum post', function() {
+            it('should increase the like on a forum post by 1', function(done) {
+
+            // create the forum post
+            request.post(
+                {
+                    url:     'http://localhost:8989/api/forumposts',
+                    form:    {data: mochaTestForumPost}
+                }, 
+                function(error, response, body){
+                    var obj = JSON.parse(body);
+                    // Get newly created post Id
+                    var forumID = obj._id;
+                    // Assert the data and status code
+                    assert.equal(obj.message, mochaTestForumPost.message);
+                    assert.equal(obj.likes, mochaTestForumPost.likes);
+                    assert.equal(response.statusCode, 201);
+
+                    // Make a PUT request to 'like' this forum post
+                    request({
+                        uri: 'http://localhost:8989/api/forumposts/' + forumID + '/like',
+                        method: "PUT"
+                    },
+                    function(error, response, body) {
+                        
+                        var obj = JSON.parse(body);
+                        // Assert likes
+                        assert.equal(obj.likes, mochaTestForumPost.likes + 1);
+                        // Status code 200 == OK
+                        assert.equal(response.statusCode, 200);    
+                        done();
+                    });
+                });
+
+        });
+    });
+
+    describe('Close a sitter posting', function() {
+            it('should set a sitter posting status to closed', function(done) {
+
+            request.post(
+                {
+                    url:     'http://localhost:8989/api/sitterpostings',
+                    form:    {data: mochaTestSitterPosting}
+                }, 
+                function(error, response, body){
+                    // Convert the body string into a JavaScript object
+                    var obj = JSON.parse(body);
+                    var postingID = obj._id;
+
+                    // Assert the response data and status code
+                    assert.equal(obj.status, mochaTestSitterPosting.status);
+                    assert.equal(response.statusCode, 201);
+
+                    // Make a PUT request to close this posting
+                    request({
+                        uri: 'http://localhost:8989/api/sitterpostings/' + postingID + '/close',
+                        method: "PUT"
+                    },
+                    function(error, response, body) {
+                        
+                        var obj = JSON.parse(body);
+                        // Assert status
+                        assert.equal(obj.status, 'closed');
+                        // Status code 200 == OK
+                        assert.equal(response.statusCode, 200);    
+                        done();
+                    });
+                });
+
+        });
+    });
+
 });
 
+// Test cases testing the isInt() function
+describe('Valid Integer Test Suite', function() {
+
+    describe('Valid integer tests', function() {
+
+        it('should return true if value is an integer', function(done) {
+            assert.equal(true, app.isInt(0));
+            assert.equal(true, app.isInt('1'));
+            assert.equal(true, app.isInt('100'));
+            done();
+        });
+    });
+
+    describe('Invalid integer tests', function() {
+
+        it('should return true if value is an integer', function(done) {
+            assert.equal(false, app.isInt('10.2'));
+            assert.equal(false, app.isInt('123abc'));
+            assert.equal(false, app.isInt('hello world'));
+            done();
+        });
+    });
+
+});
