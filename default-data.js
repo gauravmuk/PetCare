@@ -22,7 +22,11 @@ var async 				= require('async');
 /* Database Setup */
 // Connect to a database
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
-var connection = mongoose.connect("mongodb://localhost/testDB");
+var uristring = process.env.MONGOLAB_URI || 
+				process.env.MONGOHQ_URL ||
+				"mongodb://localhost/testDB"
+
+var connection = mongoose.connect(uristring);
 autoIncrement.initialize(connection);
 
 // Import Database schema
