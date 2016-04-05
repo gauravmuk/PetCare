@@ -152,7 +152,7 @@ async.series([
 			age: 2,
 			description: 'Max is a Labrador Retriever.',
 			rating: 3,
-			photo: 'http://elelur.com/data_images/dog-breeds/labrador-retriever/labrador-retriever-06.jpg'
+			photo: 'https://s3.amazonaws.com/pet.care/dog1.jpg'
 		});
 
         pet.save(function(err, report) {
@@ -175,7 +175,7 @@ async.series([
 			age: 1,
 			description: 'Chloe is my favourite pet.',
 			rating: 5,
-			photo: 'http://germanhuntingterrier.com/images/dog/border_terrier_03.jpg'
+			photo: 'https://s3.amazonaws.com/pet.care/terrier1.jpg'
 		});
 
         pet.save(function(err, report) {
@@ -199,7 +199,7 @@ async.series([
 			age: 4,
 			description: 'Polly likes to talk.',
 			rating: 4,
-			photo: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg'
+			photo: 'https://s3.amazonaws.com/pet.care/parrot1.jpg'
 		});
 
         pet.save(function(err, report) {
@@ -223,7 +223,7 @@ async.series([
 			age: 4,
 			description: 'This is my favourite pet.',
 			rating: 2,
-			photo: 'http://www.delightibles.com/wp-content/uploads/2015/07/2015.07.10_delightibles-1.jpg'
+			photo: 'https://s3.amazonaws.com/pet.care/siamese1.jpg'
 		});
 
         pet.save(function(err, report) {
@@ -343,8 +343,35 @@ async.series([
 			if(err){
 				console.log(err);
 			}
+
+			// Add the review to the pet's reviews
+			Pet_Review.find({ to: review.to }, function(err, reviews){
+				if(err) err
+				else {
+
+					// Now calculate the new average rating value for the pet
+					var num = reviews.length;
+					var sum = 0;
+					var reviewIds = [];
+
+					for (var i = 0; i < num; i++){
+						sum = sum + reviews[i].rating;
+						reviewIds.push(reviews[i]._id);
+					};
+
+					// Round the average rating to int
+					var newAvgRating = Math.round(sum/num);
+
+					// Update new average rating on the pet schema
+					Pet.update({ _id: review.to }, { $set: { rating: newAvgRating, reviews: reviewIds }}, function(err, updatedPet) {
+						if (err) throw err;
+					});
+				}
+			}); 
+
 			callback();
 		});
+
     },
 
     function(callback) {		// Pet Review from userId=3 to petId=2
@@ -352,36 +379,86 @@ async.series([
     		to 		: 2,  // petId=2
 			from 	: 3,
 			rating 	: 3,
-			comment : 'I had no trouble looking after him. Im giving 3 stars'
+			comment : 'I had no trouble looking after her. Im giving 3 stars'
     	});
 
     	review.save(function(err, report) {
 			if(err){
 				console.log(err);
 			}
+
+			// Add the review to the pet's reviews
+			Pet_Review.find({ to: review.to }, function(err, reviews){
+				if(err) err
+				else {
+
+					// Now calculate the new average rating value for the pet
+					var num = reviews.length;
+					var sum = 0;
+					var reviewIds = [];
+
+					for (var i = 0; i < num; i++){
+						sum = sum + reviews[i].rating;
+						reviewIds.push(reviews[i]._id);
+					};
+
+					// Round the average rating to int
+					var newAvgRating = Math.round(sum/num);
+
+					// Update new average rating on the pet schema
+					Pet.update({ _id: review.to }, { $set: { rating: newAvgRating, reviews: reviewIds }}, function(err, updatedPet) {
+						if (err) throw err;
+					});
+				}
+			}); 
 			callback();
 		});
     },
 
-    function(callback) {		// Pet Review from userId=2 to petId=1
+    function(callback) {		// Pet Review from userId=2 to petId=3
     	var review = new Pet_Review({
-    		to 		: 1,  // petId=1
+    		to 		: 3,  // petId=3
 			from 	: 2,
 			rating 	: 4,
-			comment : 'Has a cheerful, tail-wagging nature. I love him'
+			comment : 'Has a cheerful, talkative nature. I love him'
     	});
 
     	review.save(function(err, report) {
 			if(err){
 				console.log(err);
 			}
+
+			// Add the review to the pet's reviews
+			Pet_Review.find({ to: review.to }, function(err, reviews){
+				if(err) err
+				else {
+
+					// Now calculate the new average rating value for the pet
+					var num = reviews.length;
+					var sum = 0;
+					var reviewIds = [];
+
+					for (var i = 0; i < num; i++){
+						sum = sum + reviews[i].rating;
+						reviewIds.push(reviews[i]._id);
+					};
+
+					// Round the average rating to int
+					var newAvgRating = Math.round(sum/num);
+
+					// Update new average rating on the pet schema
+					Pet.update({ _id: review.to }, { $set: { rating: newAvgRating, reviews: reviewIds }}, function(err, updatedPet) {
+						if (err) throw err;
+					});
+				}
+			}); 
 			callback();
 		});
     },
 
-    function(callback) {		// Pet Review from userId=2 to petId=2
+    function(callback) {		// Pet Review from userId=2 to petId=4
     	var review = new Pet_Review({
-    		to 		: 2,  // petId=2
+    		to 		: 4,  // petId=4
 			from 	: 2,
 			rating 	: 4,
 			comment : 'A little bit grumpy. But I like him. I rate 4/5'
@@ -391,6 +468,31 @@ async.series([
 			if(err){
 				console.log(err);
 			}
+
+			// Add the review to the pet's reviews
+			Pet_Review.find({ to: review.to }, function(err, reviews){
+				if(err) err
+				else {
+
+					// Now calculate the new average rating value for the pet
+					var num = reviews.length;
+					var sum = 0;
+					var reviewIds = [];
+
+					for (var i = 0; i < num; i++){
+						sum = sum + reviews[i].rating;
+						reviewIds.push(reviews[i]._id);
+					};
+
+					// Round the average rating to int
+					var newAvgRating = Math.round(sum/num);
+
+					// Update new average rating on the pet schema
+					Pet.update({ _id: review.to }, { $set: { rating: newAvgRating, reviews: reviewIds }}, function(err, updatedPet) {
+						if (err) throw err;
+					});
+				}
+			}); 
 			callback();
 		});
     },
@@ -401,7 +503,7 @@ async.series([
 		    user: 2,
 			type: 'image',
 			message: '',
-			image: 'http://bebusinessed.com/wp-content/uploads/2014/03/734899052_13956580111.jpg',
+			image: 'https://s3.amazonaws.com/pet.care/dog1.jpg',
 			likes: 12
 		});
 
@@ -455,7 +557,7 @@ async.series([
 		    user: 3,
 			type: 'image',
 			message: '',
-			image: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg',
+			image: 'https://s3.amazonaws.com/pet.care/parrot1.jpg',
 			likes: 8
 		});
 
@@ -480,7 +582,7 @@ async.series([
 			supplies: 'Toys, Kennel, Clothes',
 			additional_info: 'N/A',
 			description: 'Looking for someone to take care of my dog while I am out of the country.',
-			thumbnail: 'http://elelur.com/data_images/dog-breeds/labrador-retriever/labrador-retriever-06.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/dog1.jpg',
 			status: 'open'
 		});
 
@@ -505,7 +607,7 @@ async.series([
 			supplies: 'Toys, Kennel, Clothes',
 			additional_info: 'N/A',
 			description: 'Looking for someone to take care of my cat while I am out of the country.',
-			thumbnail: 'http://elelur.com/data_images/dog-breeds/labrador-retriever/labrador-retriever-06.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/dog1.jpg',
 			status: 'closed'
 		});
 
@@ -530,7 +632,7 @@ async.series([
 			supplies: 'Toys, Kennel, Clothes',
 			additional_info: 'N/A',
 			description: 'I have urgent meeting this Friday in Ottawa. Looking for a pet sitter just for one day from morning to night.',
-			thumbnail: 'http://elelur.com/data_images/dog-breeds/labrador-retriever/labrador-retriever-06.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/dog1.jpg',
 			status: 'open'
 		});
 
@@ -555,7 +657,7 @@ async.series([
 			supplies: 'Toys, Kennel, Clothes',
 			additional_info: 'N/A',
 			description: 'I have one dog in Ottawa and I am going to another city for this summer. Unfortunately, I can\'t go with her. Looking for someone who likes dog and would like to spend this summer with her.',
-			thumbnail: 'http://germanhuntingterrier.com/images/dog/border_terrier_03.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/terrier1.jpg',
 			status: 'open'
 		});
 
@@ -580,7 +682,7 @@ async.series([
 			supplies: 'Toys, Kennel, Clothes',
 			additional_info: 'N/A',
 			description: 'Looking for someone to take care of my dog while I am out of the country.',
-			thumbnail: 'http://germanhuntingterrier.com/images/dog/border_terrier_03.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/terrier1.jpg',
 			status: 'closed'
 		});
 
@@ -605,7 +707,7 @@ async.series([
 			supplies: 'Birdcage, Food',
 			additional_info: 'N/A',
 			description: 'I have special meeting every month. When you apply, please also let me know whether you want to do this every month.',
-			thumbnail: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/parrot1.jpg',
 			status: 'open'
 		});
 
@@ -630,7 +732,7 @@ async.series([
 			supplies: 'Birdcage, Food',
 			additional_info: 'N/A',
 			description: 'I have special meeting every month. When you apply, please also let me know whether you want to do this every month.',
-			thumbnail: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/parrot1.jpg',
 			status: 'open'
 		});
 
@@ -655,7 +757,7 @@ async.series([
 			supplies: 'Birdcage, Food',
 			additional_info: 'N/A',
 			description: 'Looking for someone to take care of my bird while I am out of the country.',
-			thumbnail: 'http://weknowyourdreamz.com/images/parrot/parrot-08.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/parrot1.jpg',
 			status: 'closed'
 		});
 
@@ -680,7 +782,7 @@ async.series([
 			supplies: 'Birdcage, Food',
 			additional_info: 'N/A',
 			description: 'I will traverl Vancuber with my cat but I want to travel alone for just a few days.',
-			thumbnail: 'http://www.delightibles.com/wp-content/uploads/2015/07/2015.07.10_delightibles-1.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/siamese1.jpg',
 			status: 'open'
 		});
 
@@ -705,7 +807,7 @@ async.series([
 			supplies: 'Birdcage, Food',
 			additional_info: 'N/A',
 			description: 'I will traverl Calgary with my cat but I want to travel alone for just a few days.',
-			thumbnail: 'http://www.delightibles.com/wp-content/uploads/2015/07/2015.07.10_delightibles-1.jpg',
+			thumbnail: 'https://s3.amazonaws.com/pet.care/siamese1.jpg',
 			status: 'open'
 		});
 
@@ -1130,6 +1232,6 @@ async.series([
 	if (err){ 
 		throw err; 
 	}
-    console.info('Completed successfully!');  
+    console.info('Successfully imported data!');  
     process.exit();
 });
