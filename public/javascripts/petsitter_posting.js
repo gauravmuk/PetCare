@@ -165,6 +165,10 @@ petsitter_posting.controller('sitterPostingController',
                 $scope.recomm_posts[i].show = false;
             }
         }
+
+		$cookies.put('pet', "none");
+		$cookies.put('location', "none");
+		$cookies.put('price', "none");
     });
 
 	$http.get('/api/sitterpostings/' + $scope.postingID).success(function(data) {

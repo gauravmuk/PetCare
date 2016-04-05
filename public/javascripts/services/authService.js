@@ -65,6 +65,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 					$cookies.put('userID', data.id);
 					$cookies.put('userName', data.name);
 					$cookies.put('userRole', data.role);
+					$cookies.put('token', data.token);
 					user = true;
 					deferred.resolve();
 				}
@@ -96,7 +97,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 				$cookies.put('userID', data.id);
 				$cookies.put('userName', data.name);
 				$cookies.put('userRole', data.role);
-				$cookies.put('token', data.token)
+				$cookies.put('token', data.token);
 				user = true;
 				deferred.resolve();
 			}
@@ -137,6 +138,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 			$cookies.remove('userID');
 			$cookies.remove('userName');
 			$cookies.remove('userRole');
+			$cookies.remove('token');
 			user = false;
 			user_banned = false;
 			deferred.resolve();

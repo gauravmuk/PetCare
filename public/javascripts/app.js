@@ -119,7 +119,7 @@ app.config(['$routeProvider', '$locationProvider', function($routeProvider, $loc
 		});
 }]);
 
-app.run(function ($rootScope, $location, $route, authService, activeLinkService, $window) {
+app.run(function ($rootScope, $location, $route, authService, activeLinkService, $window, $cookies) {
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
 	    authService.getUserStatus();
         activeLinkService.prepForBroadcast($location.path());
@@ -138,6 +138,9 @@ app.run(function ($rootScope, $location, $route, authService, activeLinkService,
         }
   	});
 
+	$cookies.put('pet', "none");
+	$cookies.put('location', "none");
+	$cookies.put('price', "none");
 });
 
 app.controller('mainController', function() {
@@ -169,7 +172,7 @@ app.controller('navController', ['$scope', '$location', 'authService', '$cookies
 
 	$scope.getNews = function() {
 
-	    $http.get('/api/news/' + $cookies.get('userID')).success(function(data){
+	    $http.get('/api/news/' + $cookies.get('userID') + "/" + $cookies.get('token')).success(function(data){
 	        $scope.numb_new_msg = data.messages;
 	        $scope.numb_new_app = data.applications;
 	    });

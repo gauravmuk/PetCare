@@ -26,7 +26,8 @@ app.factory('msgService', ['$http', function($http){
         var data = $.param({
             from: from,
             to: to,
-            message: content
+            message: content,
+            token: $cookies.get('token')
         });
         var config = {
             headers : {

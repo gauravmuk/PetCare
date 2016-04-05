@@ -527,74 +527,85 @@ app.put('/api/users/:id', function (req, res) {
 app.post("/api/sitterpostings/:id/reviews", function(req, res){
 	console.log("/api/sitterpostings/:id/reviews");
 
-	// Get Review information from the request body
-	var fromUser 		= req.body.data.from;
-	var reviewRating 	= req.body.data.rating;
-	var reviewComment 	= req.body.data.comment;
-	var postID 			= req.params.id;
+	// check userId matches with token
+	Authentication.findOne({user: req.body.from}, function(err, authen){
+		if(err) {
+			throw err;
+		}
+		if (authen == null || authen.token != req.body.token) {
+			res.status(401).send({ error: "Token does not match." });
+		} else {
 
-	// Get user Id who made the post
-	if (isNumber(postID)){
-		Sitter_Posting.findOne({_id : postID}, function(err, post){
-			if(err){
-				console.log("error");
-			}
-			// If found post successfully 
-			else{
-				// Get user Id who made the post from this post we found
-				var toUser = post.user;
+			// Get Review information from the request body
+			var fromUser 		= req.body.data.from;
+			var reviewRating 	= req.body.data.rating;
+			var reviewComment 	= req.body.data.comment;
+			var postID 			= req.params.id;
 
-				// Save Review information in the database 
-				Review.create({
-				to: toUser,
-				from: fromUser,
-				rating: reviewRating,
-				comment: reviewComment
-
-				}, function(err, review){
-				if(err){
-					console.log("Review.create(): error\n"+ err);
-				}
-				else{
-					// Successfully added a new review to the database
-					// Now calculate average rating for the 'to' user
-					Review.find({to: toUser}, function(err, reviews){
+			// Get user Id who made the post
+			if (isNumber(postID)){
+				Sitter_Posting.findOne({_id : postID}, function(err, post){
 					if(err){
-						"Review.find(): error\n"+ err
+						console.log("error");
 					}
+					// If found post successfully 
 					else{
-						// Successfully found all the reviews for the given user
-						// Now calulate the new average rating value for the user
-						var num = reviews.length;
-						var sum = 0;
-						for (var i=0; i<num; i++){
-							sum = sum + reviews[i].rating;
-						}
+						// Get user Id who made the post from this post we found
+						var toUser = post.user;
 
-						// Round the average rating to int
-						var newAvgRating = Math.round(sum/num)
-						console.log("Average rating for user "+ toUser + " = " + newAvgRating);
-						console.log("From user "+ fromUser);
-					
-						// Update new average rating on the user schema
-						User.update({_id: toUser}, {$set: {rating:newAvgRating}}, function(err, updatedUser){
+						// Save Review information in the database 
+						Review.create({
+						to: toUser,
+						from: fromUser,
+						rating: reviewRating,
+						comment: reviewComment
+
+						}, function(err, review){
+						if(err){
+							console.log("Review.create(): error\n"+ err);
+						}
+						else{
+							// Successfully added a new review to the database
+							// Now calculate average rating for the 'to' user
+							Review.find({to: toUser}, function(err, reviews){
 							if(err){
-								console.log(err);
+								"Review.find(): error\n"+ err
 							}
 							else{
-								console.log(updatedUser);
+								// Successfully found all the reviews for the given user
+								// Now calulate the new average rating value for the user
+								var num = reviews.length;
+								var sum = 0;
+								for (var i=0; i<num; i++){
+									sum = sum + reviews[i].rating;
+								}
+
+								// Round the average rating to int
+								var newAvgRating = Math.round(sum/num)
+								console.log("Average rating for user "+ toUser + " = " + newAvgRating);
+								console.log("From user "+ fromUser);
+							
+								// Update new average rating on the user schema
+								User.update({_id: toUser}, {$set: {rating:newAvgRating}}, function(err, updatedUser){
+									if(err){
+										console.log(err);
+									}
+									else{
+										console.log(updatedUser);
+									}
+								});
 							}
+							}); 
+						}
 						});
 					}
-					}); 
-				}
 				});
 			}
-		});
-	}
 
-	// Send back a response or end response
-	res.json({resData: "data"});
+			// Send back a response or end response
+			res.json({resData: "data"});
+		}
+	});
 });
 
 // Given a post ID, return the avg rating of the person who made the post(User/Sitter)
@@ -631,74 +642,85 @@ app.get("/api/sitterpostings/:id/rating", function(req, res){
 app.post("/api/petpostings/:id/reviews", function(req, res){
 	console.log("/api/petpostings/:id/reviews");
 
-	// Get Review information from the request body
-	var fromUser 		= req.body.data.from;
-	var reviewRating 	= req.body.data.rating || 0;
-	var reviewComment 	= req.body.data.comment;
-	var postID 			= req.params.id;
+	// check userId matches with token
+	Authentication.findOne({user: req.body.from}, function(err, authen){
+		if(err) {
+			throw err;
+		}
+		if (authen == null || authen.token != req.body.token) {
+			res.status(401).send({ error: "Token does not match." });
+		} else {
 
-	// Get user Id who made the post
-	if (isNumber(postID)){
-		Pet_Posting.findOne({ _id : postID }, function(err, post){
-			if (err){
-				throw err;
-			}
-			// If found post successfully 
-			else{
-				// Get user pet id which we want to make the review to
-				var toPet = post.pet;
-				// Save Review information in the database 
-				Pet_Review.create({
-				to: toPet,
-				from: fromUser,
-				rating: reviewRating,
-				comment: reviewComment
+			// Get Review information from the request body
+			var fromUser 		= req.body.data.from;
+			var reviewRating 	= req.body.data.rating || 0;
+			var reviewComment 	= req.body.data.comment;
+			var postID 			= req.params.id;
 
-				}, function(err, review){
-				if (err){
-					throw err;
-				}
-				else{
-					// Successfully added a new review to the database
-					// Now calculate average rating for the 'to' user
-					Pet_Review.find({ to: toPet }, function(err, reviews){
-					if(err){
-						"Review.find(): error\n"+ err
+			// Get user Id who made the post
+			if (isNumber(postID)){
+				Pet_Posting.findOne({ _id : postID }, function(err, post){
+					if (err){
+						throw err;
 					}
-					else {
-						// Successfully found all the reviews for the given user
-						// Now calulate the new average rating value for the user
-						var num = reviews.length;
-						var sum = 0;
-						var reviewIds = [];
+					// If found post successfully 
+					else{
+						// Get user pet id which we want to make the review to
+						var toPet = post.pet;
+						// Save Review information in the database 
+						Pet_Review.create({
+						to: toPet,
+						from: fromUser,
+						rating: reviewRating,
+						comment: reviewComment
 
-						for (var i = 0; i < num; i++){
-							sum = sum + reviews[i].rating;
-							reviewIds.push(reviews[i]._id);
-						};
-
-						// Round the average rating to int
-						var newAvgRating = Math.round(sum/num);
-
-						// Update new average rating on the user schema
-						Pet.update({ _id: toPet }, { $set: { rating: newAvgRating, reviews: reviewIds }}, function(err, updatedPet) {
-							if (err){
-								throw err;
+						}, function(err, review){
+						if (err){
+							throw err;
+						}
+						else{
+							// Successfully added a new review to the database
+							// Now calculate average rating for the 'to' user
+							Pet_Review.find({ to: toPet }, function(err, reviews){
+							if(err){
+								"Review.find(): error\n"+ err
 							}
-							else{
-								console.log(updatedPet);
+							else {
+								// Successfully found all the reviews for the given user
+								// Now calulate the new average rating value for the user
+								var num = reviews.length;
+								var sum = 0;
+								var reviewIds = [];
+
+								for (var i = 0; i < num; i++){
+									sum = sum + reviews[i].rating;
+									reviewIds.push(reviews[i]._id);
+								};
+
+								// Round the average rating to int
+								var newAvgRating = Math.round(sum/num);
+
+								// Update new average rating on the user schema
+								Pet.update({ _id: toPet }, { $set: { rating: newAvgRating, reviews: reviewIds }}, function(err, updatedPet) {
+									if (err){
+										throw err;
+									}
+									else{
+										console.log(updatedPet);
+									}
+								});
 							}
+							}); 
+						}
 						});
 					}
-					}); 
-				}
 				});
 			}
-		});
-	}
 
-	// Send back a response or end response
-	res.json({resData: "data"});
+			// Send back a response or end response
+			res.json({resData: "data"});
+		}
+	});
 });
 
 // Given a post ID, return the avg rating of the pet reffered to by the post
@@ -1119,44 +1141,54 @@ app.post("/api/reports/", function(req, res){
 });
 
 // Get the number of new messages and applications
-app.get("/api/news/:userId", function(req, res){
+app.get("/api/news/:userId/:token", function(req, res){
 	if (req.params.userId != 'undefined' && isNumber(req.params.userId)) {
-console.log(req.params.userId);
-		var messages = [];
-		var applications = [];
 
-		Message.find({to: req.params.userId}, function(err, messages) {
-			if (err) {
+		// check userId matches with token
+		Authentication.findOne({user: req.params.userId}, function(err, authen){
+			if(err) {
 				throw err;
 			}
-			Application.find({to: req.params.userId}, function(err, applications) {
-				if (err) {
-					throw err;
-				}
+			if (authen == null || authen.token != req.params.token) {
+				res.status(401).send({ error: "Token does not match." });
+			} else {
 
-				var m_count = 0;
-				var a_count = 0;
+				var messages = [];
+				var applications = [];
 
-				for (var i = 0; i < messages.length; i++) {
-					if (!messages[i]['read'])
-						m_count++;
-				}
+				Message.find({to: req.params.userId}, function(err, messages) {
+					if (err) {
+						throw err;
+					}
+					Application.find({to: req.params.userId}, function(err, applications) {
+						if (err) {
+							throw err;
+						}
 
-				for (var i = 0; i < applications.length; i++) {
-					if (!applications[i]['read'])
-						a_count++;
-				}
+						var m_count = 0;
+						var a_count = 0;
 
-				var data = {
-					messages: m_count,
-					applications: a_count
-				};
+						for (var i = 0; i < messages.length; i++) {
+							if (!messages[i]['read'])
+								m_count++;
+						}
 
-				console.log(data);
-				res.json(data);
-			});
+						for (var i = 0; i < applications.length; i++) {
+							if (!applications[i]['read'])
+								a_count++;
+						}
+
+						var data = {
+							messages: m_count,
+							applications: a_count
+						};
+
+						console.log(data);
+						res.json(data);
+					});
+				});
+			}
 		});
-
 	} else {
 		res.status(400).send({ error: "Invalid ID" });
 	}
@@ -1394,7 +1426,7 @@ app.get("/api/applications/:userId/:token", function(req,res){
 				throw err;
 			}
 			if (authen == null || authen.token != req.params.token) {
-				res.status(400).send({ error: "Access denied: token does not match." });
+				res.status(401).send({ error: "Token does not match." });
 			} else {
 
 				var received = [];
@@ -1477,7 +1509,7 @@ app.post("/api/application/", function(req, res){
 			throw err;
 		}
 		if (authen == null || authen.token != req.body.token) {
-			res.status(400).send({ error: "Access denied: token does not match." });
+			res.status(401).send({ error: "Token does not match." });
 		} else {
 			var post = [];
 			var Posting; // either pet_posting or sitter_posting depends on posting type.
@@ -1529,55 +1561,64 @@ app.put("/api/read_application/:app_id", function(req, res){
 });
 
 // Get inbox and Sent messages of the given user
-app.get("/api/messages/:userId", function(req,res){
+app.get("/api/messages/:userId/:token", function(req,res){
 
 	if (isNumber(req.params.userId)) {
 
-		var inbox = [];
-		var sent = [];
-		Message.find({ to: req.params.userId }).populate('from').exec(function(err, inbox) {
-			if (err) {
+		// check userId matches with token
+		Authentication.findOne({user: req.params.userId}, function(err, authen){
+			if(err) {
 				throw err;
 			}
-			Message.find({ from: req.params.userId }).populate('to').exec(function(err, sent) {
-				if (err) {
-					throw err;
-				}
+			if (authen == null || authen.token != req.params.token) {
+				res.status(401).send({ error: "Token does not match." });
+			} else {
+				var inbox = [];
+				var sent = [];
+				Message.find({ to: req.params.userId }).populate('from').exec(function(err, inbox) {
+					if (err) {
+						throw err;
+					}
+					Message.find({ from: req.params.userId }).populate('to').exec(function(err, sent) {
+						if (err) {
+							throw err;
+						}
 
-				// create JSON object
-				var inbox_json = [];
-				var sent_json = [];
+						// create JSON object
+						var inbox_json = [];
+						var sent_json = [];
 
-				for (var i = 0; i < inbox.length; i++) {
-					inbox_json.push({
-						from: inbox[i]['from']['name'],
-						from_id: inbox[i]['from']['_id'],
-						created_at: inbox[i]['created_at'],
-						message: inbox[i]['message'],
-						read: inbox[i]['read'],
-						msg_id: inbox[i]['_id']
+						for (var i = 0; i < inbox.length; i++) {
+							inbox_json.push({
+								from: inbox[i]['from']['name'],
+								from_id: inbox[i]['from']['_id'],
+								created_at: inbox[i]['created_at'],
+								message: inbox[i]['message'],
+								read: inbox[i]['read'],
+								msg_id: inbox[i]['_id']
+							});
+						}
+
+						for (var i = 0; i < sent.length; i++) {
+							sent_json.push({
+								to: sent[i]['to']['name'],
+								created_at: sent[i]['created_at'],
+								message: sent[i]['message'],
+								read: sent[i]['read']
+							});
+						}
+
+						var data = {
+							inbox: inbox_json,
+							sent: sent_json
+						};
+
+						console.log(data);
+						res.json(data);
 					});
-				}
-
-				for (var i = 0; i < sent.length; i++) {
-					sent_json.push({
-						to: sent[i]['to']['name'],
-						created_at: sent[i]['created_at'],
-						message: sent[i]['message'],
-						read: sent[i]['read']
-					});
-				}
-
-				var data = {
-					inbox: inbox_json,
-					sent: sent_json
-				};
-
-				console.log(data);
-				res.json(data);
-			});
+				});
+			}
 		});
-
 	} else {
 		res.status(400).send({ error: "Invalid ID" });
 	}
@@ -1603,15 +1644,26 @@ app.put("/api/read_msg/:msg_id", function(req, res){
 
 // Post a new message
 app.post("/api/message", function(req, res){
-	var msg = new Message({
-		from: req.body.from,
-		to: req.body.to,
-		message: req.body.message,
-		read: false,
-	});
 
-	msg.save(function(err) {
-    	res.status(201).send(null);
+	// check userId matches with token
+	Authentication.findOne({user: req.body.from}, function(err, authen){
+		if(err) {
+			throw err;
+		}
+		if (authen == null || authen.token != req.body.token) {
+			res.status(401).send({ error: "Token does not match." });
+		} else {
+			var msg = new Message({
+				from: req.body.from,
+				to: req.body.to,
+				message: req.body.message,
+				read: false,
+			});
+
+			msg.save(function(err) {
+		    	res.status(201).send(null);
+			});
+		}
 	});
 });
 

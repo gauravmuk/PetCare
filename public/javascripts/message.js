@@ -10,7 +10,7 @@ message.controller('messageController', ['$http', '$scope', '$cookies', 'msgServ
     $scope.toId; //hold userId to send message
     $scope.msg_content = "";
 
-    $http.get('/api/messages/' + $scope.userId).success(function(data){
+    $http.get('/api/messages/' + $scope.userId + "/" + $cookies.get('token')).success(function(data){
         $scope.inbox = data.inbox;
         $scope.sent = data.sent;
     });

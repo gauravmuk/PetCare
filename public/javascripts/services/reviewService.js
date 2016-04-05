@@ -13,7 +13,8 @@ app.factory('reviewService', ['$http', function($http){
         var dataObj = {
             from: from,
             rating: reviewRating,
-            comment: reviewComment
+            comment: reviewComment,
+            token: $cookies.get('token')
         };
 
         if (typeOfReview === 'petSitter'){

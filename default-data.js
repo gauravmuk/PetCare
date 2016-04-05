@@ -467,14 +467,6 @@ async.series([
 		});
     },
 
-
-
-
-
-
-
-
-
     function(callback) {		// Adding pet posting userId = 2, petId = 1
     	
     	var pet_posting = new Pet_Posting({

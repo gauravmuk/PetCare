@@ -171,6 +171,10 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
                 $scope.recomm_posts[i].show = false;
             }
         }
+
+		$cookies.put('pet', "none");
+		$cookies.put('location', "none");
+		$cookies.put('price', "none");
     });
 
 	// TODO: Display message if id not found
