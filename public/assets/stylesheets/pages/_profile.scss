@@ -53,6 +53,7 @@ $border-color: #CECECE;
 					right: 25px;
 					top: 1px;
 				}
+
 			}
 		}
 		img.add-photo-icon {
@@ -204,6 +205,22 @@ $border-color: #CECECE;
 		background-color: gray;
 	}
 
+	button.delete {
+    	background-color: #EA6C6C;
+
+    	&:hover {
+    		background-color: #BB4C4C;
+    	}
+	}
+
+	button.closeButton {
+    	background-color: #89D88C;
+
+    	&:hover {
+    		background-color: #6AC76D;
+    	}
+	}
+
 	div.pets, div.postings, div.histories, div.reviews {
 		display: none;
 	}
@@ -286,6 +303,18 @@ $border-color: #CECECE;
 		button.apply, button.closed {
 			width: 100%;
 			float: left;
+		}
+
+		button.apply.own {
+		    width: 120px;
+		    float: left;
+		    margin-left: 6px;
+		}
+
+		button.ownClose {
+		    width: 160px;
+		    float: left;
+		    margin-left: 6px;
 		}
 
 		.pet, .posting, .history, .review {
@@ -429,6 +458,11 @@ $border-color: #CECECE;
 			width: 100px;
 			margin-top: 25px;
 		}
+
+		button.apply.own, button.apply.ownClose {
+			margin-top: 5px;
+		}
+
 	}
 
 }

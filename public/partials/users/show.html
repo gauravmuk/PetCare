@@ -207,7 +207,9 @@
                                     <button class="apply" type="button" ng-click="openApplyModal('lg', isNumber(post.user), post._id)">Apply</button>
                                 </div>
                                 <div class="info-column" ng-if="userId == profileUserId ">
-                                    <button class="apply" type="button">Edit</button>
+                                    <button class="apply own" type="button">Edit</button>
+                                    <button class="apply own closeButton" type="button">Close</button>
+                                    <button class="apply own delete" type="button">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -272,8 +274,13 @@
                                         <span class="value">{{ post.pet.age || post.experience }}</span>
                                     </span>
                                 </div>
-                                <div class="info-column">
+                                <div class="info-column" ng-if="userId != profileUserId ">
                                     <button class="closed">Closed</button>
+                                </div>
+                                <div class="info-column" ng-if="userId == profileUserId ">
+                                    <button class="closed ownClose">Closed</button>
+                                    <button class="apply ownClose" type="button">Reopen</button>
+                                </div>
                                 </div>
                             </div>
                         </div>
