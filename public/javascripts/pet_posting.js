@@ -38,13 +38,13 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 						thumbnail = data.url;
 						sendPost(thumbnail);
 					} else {
-						sendPost('/images/cat1.jpg');
+						sendPost('/images/default-pet-pic.jpg');
 					}
 
 				});
 
 		    } else {
-				sendPost('/images/cat1.jpg');
+				sendPost('/images/default-pet-pic.jpg');
 		    }
 
 		}
@@ -308,13 +308,13 @@ pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$c
 						thumbnail = data.url;
 						sendPet(thumbnail);
 					} else {
-						sendPet('/images/cat1.jpg');
+						sendPet('/images/default-pet-pic.jpg');
 					}
 
 				});
 
 		    } else {
-				sendPet('/images/cat1.jpg');
+				sendPet('/images/default-pet-pic.jpg');
 		    }
 
 		}
