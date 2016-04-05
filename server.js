@@ -35,7 +35,11 @@ app.engine("html", require("ejs").renderFile);
 /* Database Setup */
 // Connect to a database
 // NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
-var connection = mongoose.connect("mongodb://localhost/testDB", function(err) {
+var uristring = process.env.MONGOLAB_URI || 
+				process.env.MONGOHQ_URL ||
+				"mongodb://localhost/testDB"
+
+var connection = mongoose.connect(uristring, function(err) {
     if (err) {
 		console.log("Error connecting to the mongo database. Please make sure you are running mongo in another terminal.");
     	console.log(err);
@@ -2044,7 +2048,9 @@ app.use(function(req, res, next) {
 
 
 /* Start server */ 
-app.listen(3000, function(){
+var theport = process.env.PORT || 3000;
+
+app.listen(theport, function(){
 	console.log("PetCare server listening on port 3000");
 });
 
