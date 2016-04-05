@@ -29,13 +29,13 @@ petsitter_posting.controller('sitterPostingFormController', ['$http', '$location
 						thumbnail = data.url;
 						sendPost(thumbnail);
 					} else {
-						sendPost('/images/default-profile-pic.png');
+						sendPost('/assets/images/default-profile-pic.png');
 					}
 
 				});
 
 		    } else {
-				sendPost('/images/default-profile-pic.png');
+				sendPost('/assets/images/default-profile-pic.png');
 		    }
 
 		}

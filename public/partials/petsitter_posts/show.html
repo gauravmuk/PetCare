@@ -38,39 +38,39 @@
                                     <a href="users/{{ sitterPosting.user._id }}/#review">{{ userReviewTotal }} &nbsp;Reviews</a>
                                 </div>
                                 <span class="info-piece">
-                                    <img class="icon" src="assets/icon-icon-pet.svg">
+                                    <img class="icon" src="assets/images/icon-icon-pet.svg">
                                     <span class="value">{{ sitterPosting.types }}</span>
                                 </span>
                                 <span class="info-piece">
-                                    <img class="icon" src="assets/icon-calendar.svg">
+                                    <img class="icon" src="assets/images/icon-calendar.svg">
                                     <span class="value">{{ sitterPosting.duration }}</span>
                                 </span>
                             </div>
                             <div class="info-column">
                                 <span class="info-piece">
-                                    <img class="icon" src="assets/icon-location.svg">
+                                    <img class="icon" src="assets/images/icon-location.svg">
                                     <span class="value">{{ sitterPosting.location }}</span>
                                 </span>
                                 <span class="info-piece">
-                                    <img class="icon" src="assets/icon-price.svg">
+                                    <img class="icon" src="assets/images/icon-price.svg">
                                     <span class="value">{{ sitterPosting.price }} per day</span>
                                 </span>
                                 <span class="info-piece">
-                                    <img class="icon" src="assets/icon-age.svg">
+                                    <img class="icon" src="assets/images/icon-age.svg">
                                     <span class="value">{{ sitterPosting.experience }} experience</span>
                                 </span>
                             </div>
                             <div class="info-column right-corner">
                                 <button class="button apply" ng-click="openApplyModal('lg', false, sitterPosting._id)" ng-hide="closedPost">
-                                    <img class="icon" src="assets/icon-message.svg">
+                                    <img class="icon" src="assets/images/icon-message.svg">
                                     <span>Apply</span>
                                 </button>
                                 <button class="button apply closedPost" ng-show="closedPost">
-                                    <img class="icon" src="assets/icon-message.svg">
+                                    <img class="icon" src="assets/images/icon-message.svg">
                                     <span>Closed</span>
                                 </button>
                                 <button class="button apply" ng-click="openReviewModal('lg', 'petSitter', sitterPosting._id)" ng-hide="ownPost">
-                                    <img class="icon" src="assets/icon-comment.svg">
+                                    <img class="icon" src="assets/images/icon-comment.svg">
                                     <span>Review</span>
                                 </button>
                                 <button class="button apply closeButton" ng-show="ownPost && !closedPost" ng-click="closePosting(sitterPosting._id)">
@@ -116,25 +116,25 @@
                                             {{rating(post.rating, $index)}}
                                         </span>
                                         <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-icon-pet.svg"></span>
+                                            <span class="icon"><img class="icon" src="assets/images/icon-icon-pet.svg"></span>
                                             <span class="value">{{post.types}}</span>
                                         </span>
                                         <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-calendar.svg"></span>
+                                            <span class="icon"><img class="icon" src="assets/images/icon-calendar.svg"></span>
                                             <span class="value">{{post.duration}}</span>
                                         </span>
                                     </div>
                                     <div class="info-column">
                                         <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-location.svg"></span>
+                                            <span class="icon"><img class="icon" src="assets/images/icon-location.svg"></span>
                                             <span class="value">{{post.location}}</span>
                                         </span>
                                         <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-price.svg"></span>
+                                            <span class="icon"><img class="icon" src="assets/images/icon-price.svg"></span>
                                             <span class="value">{{post.price}} per day</span>
                                         </span>
                                         <span class="info-piece">
-                                            <span class="icon"><img class="icon" src="assets/icon-age.svg"></span>
+                                            <span class="icon"><img class="icon" src="assets/images/icon-age.svg"></span>
                                             <span class="value">{{post.experience}} experience</span>
                                         </span>
                                     </div>

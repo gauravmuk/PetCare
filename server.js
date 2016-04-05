@@ -29,7 +29,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Configure View engine
-app.set("views", __dirname + "/views");
+app.set("views", __dirname + "/public/partials");
 app.set("view engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 
@@ -37,8 +37,6 @@ app.engine("html", require("ejs").renderFile);
 // connect to existing bucket
 var s3bucket = new AWS.S3({ params: { Bucket: 'pet.care' }});
 
-//Initialize autoIncrement for _id fields of models
-autoIncrement.initialize(connection);
 
 // Helmet helps you secure your Express apps by setting various HTTP headers
 app.use(helmet());
@@ -54,6 +52,8 @@ var connection = mongoose.connect(database.uri, function(err) {
     	throw err;
     }
 });
+//Initialize autoIncrement for _id fields of models
+autoIncrement.initialize(connection);
 
 // Import Database schema
 var Application 	= require('./server/models/Application');
@@ -118,7 +118,13 @@ passport.use(new FacebookStrategy({
 		           			newUser.facebook_access_token 	= accessToken;                   
 		            		newUser.name  					= profile.displayName;
 		            		newUser.role  					= 'regular'
-		            		newUser.photo					= profile.photos[0].value
+		            		if (profile.photos[0].value) {
+		            			newUser.photo = profile.photos[0].value
+		            		}
+		            		else {
+		            			newUser.photo = '/assets/images/default-profile-pic.png'
+		            		};
+
 		            		if (profile.emails) {
 		            			newUser.username = profile.emails[0].value;
 		            			newUser.email = profile.emails[0].value;
@@ -209,11 +215,11 @@ app.get("/users/messages.html", function(req, res) {
 });
 
 app.get("/signin.html", function(req, res) {
-	res.render("signin.html")
+	res.render("account/signin.html")
 });
 
 app.get("/signup.html", function(req, res) {
-	res.render("signup.html")
+	res.render("account/signup.html")
 });
 
 app.get("/pet_posts/index.html", function(req, res){
@@ -282,7 +288,7 @@ app.post('/api/register', function(req, res, next) {
 	var name 		= req.body.name;
 
 	User.register(new User({ username: username, email: username, name: name, location: '',
-		description: '', role: 'regular', photo: '' }), password, function(err) {
+		description: '', role: 'regular', photo: '/assets/images/default-profile-pic.png' }), password, function(err) {
 		if (err) {
 			res.json({ err: err });
 		}
@@ -784,7 +790,7 @@ app.post("/api/pets", function(req, res){
 		age: req.body.data.age,
 		description: req.body.data.description,
 		rating: req.body.data.rating,
-		photo: req.body.data.photo,	// TODO: Get pet image
+		photo: req.body.data.photo || '/assets/images/default-pet-pic.jpg'
 	});
 
 	newPet.save(function(err) {
@@ -1772,7 +1778,7 @@ app.post("/api/upload", function(req, res){
 });
 
 app.use("*",function(req, res) {
-    res.sendFile(path.join(__dirname,"views/index.html"));
+    res.sendFile(path.join(__dirname,"/server/views/index.html"));
 });
 
 // If none of the above routes matches, display an error
