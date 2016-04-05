@@ -1679,9 +1679,9 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-
+var theport = process.env.PORT || 3000;
 /* Start server */ 
-app.listen(3000, function(){
+app.listen(theport, function(){
 	console.log("PetCare server running at http://localhost:3000/");
 });
 
