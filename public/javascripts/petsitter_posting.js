@@ -137,6 +137,7 @@ petsitter_posting.controller('sitterPostingController',
 	$scope.ownPost = false;
 	$scope.closedPost = false;
 	$scope.animationEnabled = true;
+	$scope.userReviewTotal = 0;
 
 	$scope.rating = rating;
 	$scope.recomm_posts = [];
@@ -184,6 +185,10 @@ petsitter_posting.controller('sitterPostingController',
 				$scope.userRating = $scope.sitterPosting.user.rating;
 			}
 		}
+
+	    $http.get('/api/users/' + $scope.sitterPosting.user._id + '/reviews').success(function(data) {
+	        $scope.userReviewTotal = data.length;
+	    });
 	});
 
     $scope.showDetailPost = function(postId) {

@@ -39,15 +39,25 @@ var ForumPost		= require(__dirname + '/public/models/Forum_Post');
 
 // Drop all collections in the db
 User.collection.drop();
+User.resetCount(function(err, response) {});
 Application.collection.drop();
+Application.resetCount(function(err, response) {});
 Message.collection.drop();
+Message.resetCount(function(err, response) {});
 Pet.collection.drop();
+Pet.resetCount(function(err, response) {});
 Pet_Posting.collection.drop();
+Pet_Posting.resetCount(function(err, response) {});
 Sitter_Posting.collection.drop();
+Sitter_Posting.resetCount(function(err, response) {});
 Report.collection.drop();
+Report.resetCount(function(err, response) {});
 Review.collection.drop();
+Review.resetCount(function(err, response) {});
 Pet_Review.collection.drop();
+Pet_Review.resetCount(function(err, response) {});
 ForumPost.collection.drop();
+ForumPost.resetCount(function(err, response) {});
 
 // Call functions in a series and at the end call process.exit()
 async.series([
@@ -129,6 +139,7 @@ async.series([
     function(callback) {		// Adding pet to userId=2
     	
     	var pet = new Pet({
+        	_id: 1,
 			name: 'Max',
 			user: 2,
 			type: 'Dog',
@@ -151,6 +162,7 @@ async.series([
     function(callback) {		// Adding pet to userId=2
     	
     	var pet = new Pet({
+        	_id: 2,
 			name: 'Chloe',
 			user: 2,
 			type: 'Dog',
@@ -174,6 +186,7 @@ async.series([
     function(callback) {		// Adding pet to userId=3
     	
     	var pet = new Pet({
+        	_id: 3,
 			name: 'Polly',
 			user: 3,
 			type: 'Bird',
@@ -197,6 +210,7 @@ async.series([
     function(callback) {		// Adding pet to userId=3
     	
     	var pet = new Pet({
+        	_id: 4,
 			name: 'Oliver',
 			user: 3,
 			type: 'Cat',

@@ -143,6 +143,7 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 	$scope.ownPost = false;
 	$scope.closedPost = false;
 	$scope.animationEnabled = true;
+	$scope.userReviewTotal = 0;
 
 	$scope.rating = rating;
 	$scope.recomm_posts = [];
@@ -192,6 +193,7 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
 		// make AJAX call to get pet info
 		$http.get('/api/pets/' + petID).success(function(data) {
 			$scope.pet = data;
+			console.log(data);
 		});
 
 		// If user has a rating, store it
