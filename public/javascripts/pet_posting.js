@@ -133,7 +133,7 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 }]);
 
 
-pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService', '$uibModal', 'authService', 'reviewService', '$location'
+pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams', '$cookies', 'appService', '$uibModal', 'authService', 'reviewService', '$location',
 	function($http, $scope, $routeParams, $cookies, appService, $uibModal, authService, reviewService, $location) {
 
 	$scope.petPosting = []
