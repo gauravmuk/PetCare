@@ -14,8 +14,8 @@ var AWS 				= require('aws-sdk');
 var multiparty 			= require('multiparty');
 var fs 					= require('fs');
 var helmet 				= require('helmet');
-var fbConfig			= require(__dirname + '/public/javascripts/fb_authenticate');
-var twitterConfig		= require(__dirname + '/public/javascripts/twitter_authenticate');
+var fbConfig			= require('./server/config/fb_authenticate');
+var twitterConfig		= require('./server/config/twitter_authenticate');
 var app					= express();
 /* Application Setup */ 
 
