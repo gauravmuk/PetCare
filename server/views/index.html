@@ -1,0 +1,133 @@
+<!DOCTYPE html> 
+<html ng-app="petCare">
+    <head>
+    	<meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+    	<title>PetCare</title>
+        <base href="/" />
+
+        <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico"/>
+
+        <!-- Bootstrap Core CSS -->
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+
+        <!-- Custom CSS -->
+    	<link rel="stylesheet" href="assets/stylesheets/style.css" type="text/css"/>
+
+        <!-- Custom Fonts -->
+    	<link href='https://fonts.googleapis.com/css?family=Lato:400,300,700' rel='stylesheet' type='text/css'>
+
+        <!-- Font Awesome Icons -->
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        
+        <!-- jQuery -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+
+        <!-- Bootstrap Core JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+        <!-- Geolocation -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    
+        <!-- AngularJS -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular-route.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular-cookies.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular-messages.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-animate.js"></script>
+        <script type="text/javascript" src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-1.2.5.js"></script>
+        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="controllers/admin.js"></script>
+        <script type="text/javascript" src="controllers/account.js"></script>
+        <script type="text/javascript" src="controllers/application.js"></script>
+        <script type="text/javascript" src="controllers/pet_posting.js"></script>
+        <script type="text/javascript" src="controllers/petsitter_posting.js"></script>
+        <script type="text/javascript" src="controllers/message.js"></script>
+        <script type="text/javascript" src="controllers/search.js"></script>
+        <script type="text/javascript" src="controllers/user.js"></script>
+        <script type="text/javascript" src="controllers/config.js"></script>
+        <script type="text/javascript" src="controllers/forum.js"></script>
+        <script type="text/javascript" src="controllers/modal.js"></script>
+        <script type="text/javascript" src="services/authService.js"></script>
+        <script type="text/javascript" src="services/shareDataService.js"></script>
+        <script type="text/javascript" src="services/msgService.js"></script>
+        <script type="text/javascript" src="services/appService.js"></script>
+        <script type="text/javascript" src="services/reviewService.js"></script>
+    </head>
+
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar" role="navigation" ng-controller="navController">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="toggle" data-toggle="collapse" data-target="#navbar1">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="logo" href="/">PetCare</a>
+                </div>
+                <div class="collapse collapse-bar" id="navbar1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="/">Home</a>
+                        </li>
+                        <li ng-class="forumActive">
+                            <a href="/forum">View Forum</a>
+                        </li>
+                        <li ng-class="sitterPostingActive">
+                            <a href="/petsitter_posts">Hire a Pet Sitter</a>
+                        </li>
+                        <li ng-class="petPostingActive">
+                            <a href="/pet_posts">Offer Pet Sitting</a>
+                        </li>
+                        <li ng-hide="authService.getUserData().userName" class="sign-up">
+                            <a href="signup">Sign Up</a>
+                        </li>
+                        <li ng-show="authService.getUserData().userName" class="sign-up" ng-click="getNews()">
+                            <div class="dropdown">
+                                <a class="btn dropdown-toggle" type="button" id="dropdownUserMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" ng-click="getNews()">
+                                    {{ authService.getUserData().userName }}
+                                </a>
+                                <ul id="dropdown-menu" class="dropdown-menu" aria-labelledby="dropdownUserMenu">
+                                    <li><a href="/users/{{authService.getUserData().userID}}">Settings</a></li>
+                                    <li><a href="/users/{{authService.getUserData().userID}}/applications">Applications<div class="new">{{numb_new_app}}</div></a></li>
+                                    <li><a href="/users/{{authService.getUserData().userID}}/messages">Messages<div class="new">{{numb_new_msg}}</div></a></li>
+                                    <li ng-if="authService.getUserData().userRole == 'admin'">
+                                        <a href="/admin">Admin Console</a></li>
+                                    </li>
+                                    <li><a href="signout" ng-click="logout()">Log out</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+       <div ng-view></div>
+
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="footer-label">
+                	About Us
+                </div>
+
+                <div class="description">
+                	PetCare is an online service where individuals who are looking for someone to take care of their pets can connect with pet sitters in their community who are experienced in taking care of pets. Users can register on the system and look for a pet sitter or offer their pet sitting services, or both.
+                </div>
+
+                <div class="icons">
+                	<i class="fa fa-twitter"></i>
+                	<i class="fa fa-facebook"></i>
+                	<i class="fa fa-youtube-play"></i>
+                </div>
+            </div>
+        </footer>
+    </body>
+</html>

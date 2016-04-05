@@ -1,0 +1,103 @@
+<div class="search-bar content">
+    <div class="container">
+        <div class="search-container">
+            <div class="search">
+                <label for="pet-search"><span class="search-label">Pet</span></label>
+                <input type="text" id="pet-search" placeholder="Enter pet type ..." ng-model="pet"/>
+            </div>
+            <div class="search">
+                <label for="location-search"><span class="search-label">City</span></label>
+                <input type="text" id="location-search" placeholder="Enter city ..." ng-model="location"/>
+            </div>
+            <div class="search">
+                <label for="location-search"><span class="search-label">Price</span></label>
+                <input type="text" id="location-search" placeholder="Enter maximum price ..." ng-model="max_price"/>
+            </div>
+            <a href="" class="button" ng-click="search_sitter()">
+                <span class="button-label">Search</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Search Results -->
+<div class="search-results">
+    <div class="container">
+        <div class="search-term">
+            {{search_term}}
+        </div>
+        <a href="new_petsitter_posts" class="new-post-link">
+            <div class="button new-post-btn">
+                <span class="button-label">Make a new post</span>
+            </div>
+        </a>
+        
+        <!-- Pagination -->
+        <div class="pagination">
+            <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" boundary-link-numbers="true" items-per-page="items_per_page" ng-change="pageChanged()"></uib-pagination>
+        </div>
+        <div class="profile">
+            <div class="recommend">
+                <div class="posting" ng-repeat="post in posts" ng-show="post.show">
+                    <p class="applied-msg" ng-show="post.applied">You already applied for this posting.</p>
+                    <div class="info">
+                    <div class="profile-picture"  ng-style="{ 'background-image': 'url(' + post.thumbnail + ')' }" alt="profile picture">
+                    </div>
+                        <div class="left-info">
+                            <div class="title">
+                                <a href ="" ng-click="showDetailPost(post.posting_id)">
+                                    {{post.title}} rank{{post.rank}}
+                                </a>
+                            </div>
+                            <div>
+                                <div class="info-column">
+                                    <span class="rating" id="rating{{$index}}">
+                                        {{rating(post.rating, $index)}}
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="assets/images/icon-icon-pet.svg"></span>
+                                        <span class="value">{{post.types}}</span>
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="assets/images/icon-calendar.svg"></span>
+                                        <span class="value">{{post.duration}}</span>
+                                    </span>
+                                </div>
+                                <div class="info-column">
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="assets/images/icon-location.svg"></span>
+                                        <span class="value">{{post.location}}</span>
+                                    </span>
+                                        <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="assets/images/icon-price.svg"></span>
+                                        <span class="value">{{post.price}} per day</span>
+                                    </span>
+                                    <span class="info-piece">
+                                        <span class="icon"><img class="icon" src="assets/images/icon-age.svg"></span>
+                                        <span class="value">{{post.experience}} experience</span>
+                                    </span>
+                                </div>
+                                <div class="info-column">
+                                    <button class="apply" ng-click="openApplyModal('lg', false, post.posting_id)">
+                                        Apply
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="description">
+                        {{post.description | limitTo: 200}}...
+                        <a href="" ng-click="showDetailPost(post.posting_id)">See More</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pagination -->
+<div class="pagination">
+    <uib-pagination total-items="totalItems" ng-model="currentPage" max-size="maxSize" boundary-link-numbers="true" items-per-page="items_per_page" ng-change="pageChanged()"></uib-pagination>
+</div>
+
+<div ng-include src="'/modals/applyModal.html'"></div>

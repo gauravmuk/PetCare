@@ -15,8 +15,9 @@ var multiparty 			= require('multiparty');
 var fs 					= require('fs');
 var helmet 				= require('helmet');
 var compression 		= require('compression')
-var fbConfig			= require(__dirname + '/public/javascripts/fb_authenticate');
-var twitterConfig		= require(__dirname + '/public/javascripts/twitter_authenticate');
+var fbConfig			= require('./server/config/fb_authenticate');
+var twitterConfig		= require('./server/config/twitter_authenticate');
+var database 			= require('./server/config/database');
 var app					= express();
 /* Application Setup */ 
 
@@ -32,43 +33,44 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public'), {maxAge:	86400000}));
 
 // Configure View engine
-app.set("views", __dirname + "/views");
+app.set("views", __dirname + "/public/partials");
 app.set("view engine", "ejs");
 app.engine("html", require("ejs").renderFile);
 
-/* Database Setup */
-// Connect to a database
-// NOTE: Dont forget to run 'mongod' (mongoDB daemon) in a different terminal
-var uristring = process.env.MONGOLAB_URI || 
-				process.env.MONGOHQ_URL ||
-				"mongodb://localhost/testDB"
+/* Amazon S3 Upload */
+// connect to existing bucket
+var s3bucket = new AWS.S3({ params: { Bucket: 'pet.care' }});
 
-var connection = mongoose.connect(uristring, function(err) {
-    if (err) {
-		console.log("Error connecting to the mongo database. Please make sure you are running mongo in another terminal.");
-    	console.log(err);
-    	throw err;
-    }
-});// TO-DO: ALSO CHANGE 'testDB' in  default-data.js 
-autoIncrement.initialize(connection);
 
 // Helmet helps you secure your Express apps by setting various HTTP headers
 app.use(helmet());
 app.use(helmet.xssFilter());
 app.use(helmet.xssFilter({ setOnOldIE: true }));
 
+/* Database Setup */
+// Connect to a database
+var connection = mongoose.connect(database.uri, function(err) {
+    if (err) {
+		console.log("Error connecting to the mongo database. Please make sure you are running mongo in another terminal.");
+    	console.log(err);
+    	throw err;
+    }
+});
+//Initialize autoIncrement for _id fields of models
+autoIncrement.initialize(connection);
+
 // Import Database schema
-var Application 	= require('./public/models/Application');
-var Message 		= require('./public/models/Message');
-var Pet 			= require('./public/models/Pet');
-var Pet_Posting 	= require('./public/models/Pet_Posting');
-var Sitter_Posting	= require('./public/models/Sitter_Posting');
-var Report			= require('./public/models/Report');
-var Review			= require('./public/models/Review');
-var Pet_Review		= require('./public/models/Pet_Review');
-var User			= require('./public/models/User');
-var ForumPost		= require('./public/models/Forum_Post');
-var Authentication  = require('./public/models/Authentication');
+var Application 	= require('./server/models/Application');
+var Message 		= require('./server/models/Message');
+var Pet 			= require('./server/models/Pet');
+var Pet_Posting 	= require('./server/models/Pet_Posting');
+var Sitter_Posting	= require('./server/models/Sitter_Posting');
+var Report			= require('./server/models/Report');
+var Review			= require('./server/models/Review');
+var Pet_Review		= require('./server/models/Pet_Review');
+var User			= require('./server/models/User');
+var ForumPost		= require('./server/models/Forum_Post');
+var Authentication  = require('./server/models/Authentication');
 
 // Authentication
 app.use(session({ secret: 'Session Key', resave: true, saveUninitialized: true }));
@@ -120,7 +122,13 @@ passport.use(new FacebookStrategy({
 		           			newUser.facebook_access_token 	= accessToken;                   
 		            		newUser.name  					= profile.displayName;
 		            		newUser.role  					= 'regular'
-		            		newUser.photo					= profile.photos[0].value
+		            		if (profile.photos[0].value) {
+		            			newUser.photo = profile.photos[0].value
+		            		}
+		            		else {
+		            			newUser.photo = '/assets/images/default-profile-pic.png'
+		            		};
+
 		            		if (profile.emails) {
 		            			newUser.username = profile.emails[0].value;
 		            			newUser.email = profile.emails[0].value;
@@ -211,11 +219,11 @@ app.get("/users/messages.html", function(req, res) {
 });
 
 app.get("/signin.html", function(req, res) {
-	res.render("signin.html")
+	res.render("account/signin.html")
 });
 
 app.get("/signup.html", function(req, res) {
-	res.render("signup.html")
+	res.render("account/signup.html")
 });
 
 app.get("/pet_posts/index.html", function(req, res){
@@ -284,7 +292,7 @@ app.post('/api/register', function(req, res, next) {
 	var name 		= req.body.name;
 
 	User.register(new User({ username: username, email: username, name: name, location: '',
-		description: '', role: 'regular', photo: '' }), password, function(err) {
+		description: '', role: 'regular', photo: '/assets/images/default-profile-pic.png' }), password, function(err) {
 		if (err) {
 			res.json({ err: err });
 		}
@@ -793,7 +801,7 @@ app.post("/api/pets", function(req, res){
 		age: req.body.data.age,
 		description: req.body.data.description,
 		rating: req.body.data.rating,
-		photo: req.body.data.photo,	// TODO: Get pet image
+		photo: req.body.data.photo || '/assets/images/default-pet-pic.jpg'
 	});
 
 	newPet.save(function(err) {
@@ -1728,10 +1736,6 @@ app.put('/api/forumposts/:id/like', function (req, res) {
 
 }); 
 
-/* Amazon S3 Upload */
-// connect to existing bucket
-var s3bucket = new AWS.S3({params: {Bucket: 'pet.care'}});
-
 // Uploads a file to Amazon S3 and return the URL
 app.post("/api/upload", function(req, res){
 
@@ -1785,7 +1789,7 @@ app.post("/api/upload", function(req, res){
 });
 
 app.use("*",function(req, res) {
-    res.sendFile(path.join(__dirname,"views/index.html"));
+    res.sendFile(path.join(__dirname,"/server/views/index.html"));
 });
 
 // If none of the above routes matches, display an error
@@ -1795,6 +1799,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 var theport = process.env.PORT || 3000;
 /* Start server */ 
