@@ -14,10 +14,14 @@ var AWS 				= require('aws-sdk');
 var multiparty 			= require('multiparty');
 var fs 					= require('fs');
 var helmet 				= require('helmet');
+var compression 		= require('compression')
 var fbConfig			= require(__dirname + '/public/javascripts/fb_authenticate');
 var twitterConfig		= require(__dirname + '/public/javascripts/twitter_authenticate');
 var app					= express();
 /* Application Setup */ 
+
+// compress all requests to boots performance
+app.use(compression())
 
 // For parsing
 app.use(bodyParser.json());
@@ -25,7 +29,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Serving static files in Express
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public'), {maxAge:	86400000}));
 
 // Configure View engine
 app.set("views", __dirname + "/views");

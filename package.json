@@ -12,6 +12,7 @@
     "async": "^2.0.0-rc.2",
     "aws-sdk": "^2.2.48",
     "body-parser": "^1.15.0",
+    "compression": "^1.6.1",
     "cookie-parser": "^1.4.1",
     "ejs": "^2.4.1",
     "express": "^4.13.4",
