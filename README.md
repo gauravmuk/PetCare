@@ -1,6 +1,7 @@
 # PetCare
 PetCare is an online service where individuals who are looking for someone to take care of their pets can connect with pet sitters in their community who are experienced in taking care of pets. Users can register on the system and look for a pet sitter or offer their pet sitting services, or both.
 
+
 ### Setup
 1. Install nodejs
 2. Install npm
@@ -12,6 +13,7 @@ PetCare is an online service where individuals who are looking for someone to ta
     This file contains the Amazon AWS credentials used for uploading images to Amazon S3 storage.
 5. Execute `npm install` to install the dependencies listed in the package.json file.
 
+
 ### How To Run
 1. Open two terminals.
 2. In one terminal, run `mongod --dbpath ./mongodb_data` to start the mongoDB daemo
@@ -21,6 +23,7 @@ PetCare is an online service where individuals who are looking for someone to ta
 
 
 ### Admin and other user credentials
+After running the default-data.js script as described above, use can sign in one of the following users by using these credentials
 
 Admin Credentials
 	email: 		admin@gmail.com
@@ -33,3 +36,29 @@ Default user 1 credentials
 Default user 2 credentials
 	email:		bale@gmail.com
 	password:	12345678
+
+
+### List of URL
+
+All the REST API end-point are listed in section 6 of the report.pdf document
+
+URLS that does not require sign in 
+	/
+	/forum
+	/petsitter_posts
+	/pet_posts         
+	/pet_posts/:id
+	/petsitter_posts/:id
+	/users/:id
+	NOTE: Default search results may take time to load depending on the network
+
+URLS that does require sign in 
+	/new_pet_posts
+	/new_petsitter_posts
+	/users/:id/applications
+	/users/:id/messages
+	NOTE: You have to sign in to make a Review or to Apply for a post
+
+URL that only Admin can access
+	/admin 
+	NOTE: Admin can access the Admin Console by clicking on their name on the upper left corner and clicking ‘Admin Console’
