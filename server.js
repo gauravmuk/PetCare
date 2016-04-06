@@ -17,31 +17,6 @@ var twitterConfig		= require('./server/config/twitter_authenticate');
 var database 			= require('./server/config/database');
 var app					= express();
 
-// Import Database schema
-var Application 	= require('./server/models/Application');
-var Message 		= require('./server/models/Message');
-var Pet 			= require('./server/models/Pet');
-var Pet_Posting 	= require('./server/models/Pet_Posting');
-var Sitter_Posting	= require('./server/models/Sitter_Posting');
-var Report			= require('./server/models/Report');
-var Review			= require('./server/models/Review');
-var Pet_Review		= require('./server/models/Pet_Review');
-var User			= require('./server/models/User');
-var ForumPost		= require('./server/models/Forum_Post');
-var Authentication  = require('./server/models/Authentication');
-
-// Import Routes
-var userRoute 			= require('./server/routes/user');
-var petRoute 			= require('./server/routes/pet');
-var applicationRoute 	= require('./server/routes/application');
-var reportRoute 		= require('./server/routes/report');
-var messageRoute 		= require('./server/routes/message');
-var forumPostRoute 		= require('./server/routes/forum_post');
-var petPostingRoute 	= require('./server/routes/pet_posting');
-var sitterPostingRoute 	= require('./server/routes/sitter_posting');
-var fileRoute			= require('./server/routes/file');
-var authRoute			= require('./server/routes/auth');
-
 /* Application Setup */ 
 
 // compress all requests to boots performance
@@ -82,6 +57,31 @@ var connection = mongoose.connect(database.uri, function(err) {
 //Initialize autoIncrement for _id fields of models
 autoIncrement.initialize(connection);
 
+
+// Import Database schema
+var Application 	= require('./server/models/Application');
+var Message 		= require('./server/models/Message');
+var Pet 			= require('./server/models/Pet');
+var Pet_Posting 	= require('./server/models/Pet_Posting');
+var Sitter_Posting	= require('./server/models/Sitter_Posting');
+var Report			= require('./server/models/Report');
+var Review			= require('./server/models/Review');
+var Pet_Review		= require('./server/models/Pet_Review');
+var User			= require('./server/models/User');
+var ForumPost		= require('./server/models/Forum_Post');
+var Authentication  = require('./server/models/Authentication');
+
+// Import Routes
+var userRoute 			= require('./server/routes/user');
+var petRoute 			= require('./server/routes/pet');
+var applicationRoute 	= require('./server/routes/application');
+var reportRoute 		= require('./server/routes/report');
+var messageRoute 		= require('./server/routes/message');
+var forumPostRoute 		= require('./server/routes/forum_post');
+var petPostingRoute 	= require('./server/routes/pet_posting');
+var sitterPostingRoute 	= require('./server/routes/sitter_posting');
+var fileRoute			= require('./server/routes/file');
+var authRoute			= require('./server/routes/auth');
 
 /* Authentication Setup */
 // Session
