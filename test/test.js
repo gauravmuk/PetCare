@@ -254,9 +254,18 @@ describe('POST Request Test Suite:   ', function() {
                     assert.equal(obj.role, 'regular');
                     assert.equal(obj.name, mochaTestUser.name);
                     assert.equal(response.statusCode, 200);
-                    done();  
-                });
 
+                    // logout
+                    request.get(
+                        {
+                            url:     'http://localhost:8989/auth/logout',
+                            form:    mochaTestUser
+                        }, 
+                        function(error, response, body){
+                            assert.equal(response.statusCode, 200);
+                            done();
+                        });
+                });
         });
     });
 
@@ -439,8 +448,18 @@ describe('PUT Request Test Suite:   ', function() {
                         // Assert nModified:1
                         assert.equal(obj.nModified, 1);
                         // Status code 200 == OK
-                        assert.equal(response.statusCode, 200);    
-                        done();
+                        assert.equal(response.statusCode, 200);
+
+                        // logout
+                        request.get(
+                            {
+                                url:     'http://localhost:8989/auth/logout',
+                                form:    mochaTestUser
+                            }, 
+                            function(error, response, body){
+                                assert.equal(response.statusCode, 200);
+                                done();
+                            });
                     });
                 });
 
