@@ -21,8 +21,8 @@ router.post("/", function(req, res){
 				read: false,
 			});
 
-			msg.save(function(err) {
-		    	res.status(201).send(msg);
+			msg.save(function(err, result) {
+		    	res.status(201).send(result);
 			});
 		}
 	});

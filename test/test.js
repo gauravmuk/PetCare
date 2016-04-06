@@ -183,7 +183,6 @@ describe('GET Request Test Suite:   ', function() {
             .get('http://localhost:8989/api/messages/1/wrong_token', function(response){
                 
                 response.on('data', function(data) {
-                    var obj = JSON.parse(data);
                 });
 
                 response.on('end', function() {
@@ -536,10 +535,12 @@ describe('PUT Request Test Suite:   ', function() {
 
                     // Make a PUT request to close this posting
                     request({
-                        uri: 'http://localhost:8989/api/messages/1/read',
+                        uri: 'http://localhost:8989/api/messages/' + obj._id + '/read',
                         method: "PUT"
                     },
                     function(error, response, body) {
+                        var obj = JSON.parse(body);
+                        assert.equal(obj.message, mochaTestMsg.message);
                         assert.equal(response.statusCode, 200);    
                         done();
                     });
