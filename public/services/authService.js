@@ -54,7 +54,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 			name: 		name
 		}
 
-		$http.post('/api/register', userData)
+		$http.post('/auth/register', userData)
 			.success(function(data) {
 				if (data.err) {
 					user = false;
@@ -85,7 +85,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 			password: 	password
 		}
 		
-		$http.post('/api/login', userData)
+		$http.post('/auth/login', userData)
 		.success(function(data) {
 			if (data.err) {
 				user = false;
@@ -112,7 +112,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 	}
 
 	function getUserStatus() {
-		$http.get('/api/status')
+		$http.get('/auth/status')
 		  	// handle success
 		  	.success(function (data) {
 		      	user = data.logged_in;
@@ -132,7 +132,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 	function logout() {
 		var deferred = $q.defer();
 
-		$http.get('/api/logout')
+		$http.get('/auth/logout')
 		.success(function(data) {
 			userData = {};
 			$cookies.remove('userID');

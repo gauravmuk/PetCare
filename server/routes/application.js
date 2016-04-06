@@ -91,10 +91,8 @@ router.get("/:userId/:token", function(req,res){
 	}
 });
 
-
 // Post a new application
 router.post("/", function(req, res){
-
 	// check userId matches with token
 	Authentication.findOne({user: req.body.from}, function(err, authen){
 		if(err) {

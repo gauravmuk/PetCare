@@ -32,8 +32,6 @@ pet_posting.controller('petPostingFormController', ['$http', '$location', '$scop
 				})
 
 				.success(function(data) {
-					// console.log(data);
-
 					if (data.url != null) {
 						thumbnail = data.url;
 						sendPost(thumbnail);

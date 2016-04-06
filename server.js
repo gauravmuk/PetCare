@@ -10,54 +10,12 @@ var LocalStrategy 		= require("passport-local");
 var FacebookStrategy 	= require("passport-facebook")
 var TwitterStrategy 	= require("passport-twitter")
 var session   			= require("express-session");
-var AWS 				= require('aws-sdk');
-var multiparty 			= require('multiparty');
-var fs 					= require('fs');
 var helmet 				= require('helmet');
 var compression 		= require('compression')
 var fbConfig			= require('./server/config/fb_authenticate');
 var twitterConfig		= require('./server/config/twitter_authenticate');
 var database 			= require('./server/config/database');
 var app					= express();
-/* Application Setup */ 
-
-// compress all requests to boots performance
-app.use(compression())
-
-// For parsing
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
-
-// Serving static files in Express
-app.use(express.static(path.join(__dirname, 'public'), {maxAge:	86400000}));
-
-// Configure View engine
-app.set("views", __dirname + "/public/partials");
-app.set("view engine", "ejs");
-app.engine("html", require("ejs").renderFile);
-
-/* Amazon S3 Upload */
-// connect to existing bucket
-var s3bucket = new AWS.S3({ params: { Bucket: 'pet.care' }});
-
-
-// Helmet helps you secure your Express apps by setting various HTTP headers
-app.use(helmet());
-app.use(helmet.xssFilter());
-app.use(helmet.xssFilter({ setOnOldIE: true }));
-
-/* Database Setup */
-// Connect to a database
-var connection = mongoose.connect(database.uri, function(err) {
-    if (err) {
-		console.log("Error connecting to the mongo database. Please make sure you are running mongo in another terminal.");
-    	console.log(err);
-    	throw err;
-    }
-});
-//Initialize autoIncrement for _id fields of models
-autoIncrement.initialize(connection);
 
 // Import Database schema
 var Application 	= require('./server/models/Application');
@@ -81,12 +39,57 @@ var messageRoute 		= require('./server/routes/message');
 var forumPostRoute 		= require('./server/routes/forum_post');
 var petPostingRoute 	= require('./server/routes/pet_posting');
 var sitterPostingRoute 	= require('./server/routes/sitter_posting');
+var fileRoute			= require('./server/routes/file');
+var authRoute			= require('./server/routes/auth');
 
-// Authentication
+/* Application Setup */ 
+
+// compress all requests to boots performance
+app.use(compression())
+
+
+// For parsing
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+
+// Serving static files in Express
+app.use(express.static(path.join(__dirname, 'public'), {maxAge:	86400000}));
+
+
+// Configure View engine
+app.set("views", __dirname + "/public/partials");
+app.set("view engine", "ejs");
+app.engine("html", require("ejs").renderFile);
+
+
+// Helmet helps you secure your Express apps by setting various HTTP headers
+app.use(helmet());
+app.use(helmet.xssFilter());
+app.use(helmet.xssFilter({ setOnOldIE: true }));
+
+/* Database Setup */
+// Connect to a database
+var connection = mongoose.connect(database.uri, function(err) {
+    if (err) {
+		console.log("Error connecting to the mongo database. Please make sure you are running mongo in another terminal.");
+    	console.log(err);
+    	throw err;
+    }
+});
+
+//Initialize autoIncrement for _id fields of models
+autoIncrement.initialize(connection);
+
+
+/* Authentication Setup */
+// Session
 app.use(session({ secret: 'Session Key', resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+// LocalStrategy (using username and password)
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(function(user, done) {
 	done(null, user);
@@ -96,6 +99,7 @@ passport.deserializeUser(function(user, done) {
 	done(null, user);
 });
 
+// FacebookStrategy
 passport.use(new FacebookStrategy({
 	clientID		: fbConfig.appID,
 	clientSecret	: fbConfig.appSecret,
@@ -162,6 +166,7 @@ passport.use(new FacebookStrategy({
 	}
 ));
 
+// Twitter Strategy
 passport.use(new TwitterStrategy({
 	consumerKey		: twitterConfig.consumerKey,
 	consumerSecret	: twitterConfig.consumerSecret,
@@ -196,22 +201,9 @@ passport.use(new TwitterStrategy({
 	}
 ));
 
-/**********************************************************************/
-
-// Returns true if the value is an integer
-// TODO: Add mocha tests
-function isNumber(value) {
-    return /^\d+$/.test(value);
-};
-
-// Returns true if the value is a String
-function isString(value) {
-    return /^\w+$/.test(value);
-};
-
-/**********************************************************************/
-
 /* Application Routes */
+
+// Render HTML Files
 app.get("/layouts/home.html",function(req,res){
     res.render("layouts/home.html");
 });
@@ -296,171 +288,9 @@ app.get("/modals/editPetModal.html", function(req, res){
 	res.render("modals/editPetModal.html");
 });
 
-app.post('/api/register', function(req, res, next) {
-	var username 	= req.body.username;
-	var password 	= req.body.password;
-	var name 		= req.body.name;
-
-	User.register(new User({ username: username, email: username, name: name, location: '',
-		description: '', role: 'regular', photo: '/assets/images/default-profile-pic.png' }), password, function(err) {
-		if (err) {
-			res.json({ err: err });
-		}
-		else {
-			passport.authenticate('local', { session: true })(req, res, function() {
-
-				// create authentication token
-				Authentication.findOne({user: req.user.id}, function(err, authen){
-					if (authen == null) {
-						var authen_token = Math.random()
-						var authentication = new Authentication({
-							user: req.user.id,
-							token: authen_token,
-						});
-						authentication.save(function(err) {
-					    	res.json({ id: req.user.id, name: req.user.name, role: req.user.role, token: authen_token});
-						});
-					} else {
-						res.json({ id: req.user.id, name: req.user.name, role: req.user.role, token: authen.token});
-					}
-				});
-			});
-		}
-	});
-});
-
-app.post('/api/login', passport.authenticate('local', { session: true, failWithError: true}), 
-	function(req, res, next) {
-		User.findOne({_id: req.user.id}, function(err, user){
-			if(err) {
-				return next(err);
-			}
-			else {
-				if (user.banned) {
-					res.json({ err: 'This account has been banned'})
-				} 
-				else {
-
-					// create authentication token
-					Authentication.findOne({user: req.user.id}, function(err, authen){
-						if (authen == null) {
-							var authen_token = Math.random()
-							var authentication = new Authentication({
-								user: req.user.id,
-								token: authen_token,
-							});
-							authentication.save(function(err) {
-						    	res.json({ id: req.user.id, name: req.user.name, role: req.user.role, token: authen_token});
-							});
-						} else {
-							res.json({ id: req.user.id, name: req.user.name, role: req.user.role, token: authen.token});
-						}
-					});
-				}
-			}
-		});	
-	},
-	function(err, req, res, next) {
-		res.status(200).json({ err: err });
-	}
-);
-
-
-app.get('/api/logout', function(req, res) {
-	// Remove mapping between userId and token
-	if (req.user) {
-		Authentication.remove({user: req.user._id}, function(err, result){
-			if(err) {
-				throw err;
-			} else {
-				req.logout();
-				res.end();
-			}
-		});
-	}
-	else {
-		res.end();
-	}
-});
-
-app.get('/api/status', function(req, res) {
-	if (!req.isAuthenticated()) {
-		res.json({ logged_in: false });
-	}
-	else {
-		res.json({ logged_in: true, is_banned: req.user.banned, user: { id: req.user._id, name: req.user.name, role: req.user.role }});
-	}
-});
-
-app.get('/auth/twitter', passport.authenticate('twitter', { session: true }));
-
-app.get('/auth/twitter/callback', 
-	passport.authenticate('twitter', { session: true, failureRedirect: '/signin' }),
-	function(req, res) {
-		res.redirect('/');
-	}
-);
-
-app.get('/auth/facebook', passport.authenticate('facebook', { session: true, scope: ['email', 'user_location'] }));
-
-app.get('/auth/facebook/callback', 
-	passport.authenticate('facebook', { session: true, failureRedirect: '/signin' }),
-	function(req, res) {
-		res.redirect('/');
-	}
-);
-
-// Uploads a file to Amazon S3 and return the URL
-app.post("/api/upload", function(req, res){
-
-	var fileForm = new multiparty.Form();
-	var imageToUpload;
-
-	// Parse the file from the form
-    fileForm.parse(req, function(err, fields, files) {
-
-		imageToUpload = files.file[0];
-
-		// Check the filetype and size is 1MB
-		if ((/\.(gif|jpg|jpeg|tiff|png)$/i).test(imageToUpload.path) && imageToUpload.size < 1000000) {
-
-			s3bucket.createBucket(function() {
-
-				var dataLocation = '';
-				var params = {Body: fs.createReadStream(imageToUpload.path), 
-					Key: imageToUpload.originalFilename};
-
-				s3bucket.upload(params, function(err, data) {
-					if (err) {
-						console.log("Error uploading data: ", err);
-					} else {
-						console.log("Successfully uploaded image.");
-					}
-				}).send(function(err, data) {
-
-				    if (err) {
-						console.log("Error uploading image. Please make sure you have set up your credentials file.", 
-							err);
-						var imageJSON = '{ "url": null }';
-						res.setHeader('Location', null);
-						res.status(201).json(JSON.parse(imageJSON));
-				    } else {
-						var imageJSON = '{ "url": "' + data.Location + '"}';
-						res.setHeader('Location', data.Location);
-						res.status(201).json(JSON.parse(imageJSON));
-					}
-				});
-
-			});
-		} else {
-			var imageJSON = '{ "url": null }';
-			res.setHeader('Location', null);
-			res.status(201).json(JSON.parse(imageJSON));
-		}
-
-    });
-});
-
+// API Routes
+app.use('/auth', authRoute)
+app.use('/api/upload', fileRoute)
 app.use('/api/users', userRoute)
 app.use('/api/pets', petRoute)
 app.use('/api/reports', reportRoute)
@@ -488,8 +318,8 @@ app.listen(theport, function(){
 	console.log("PetCare server running at http://localhost:3000/");
 });
 
-/* Helper Functions */
 
+/* Helper Functions */
 // Return a given user's avg Rating
 function getUserRating(userID){
 	User.findOne({_id:userID}, function(err, user){
@@ -513,6 +343,17 @@ function getPetRating(petID){
 		}
 	});
 }
+
+// Returns true if the value is an integer
+function isNumber(value) {
+    return /^\d+$/.test(value);
+};
+
+// Returns true if the value is a String
+function isString(value) {
+    return /^\w+$/.test(value);
+};
+
 
 /* Functions for mocha testing */
 
@@ -582,6 +423,7 @@ exports.removeForumPost = function(message) {
 		}
 	});
 };
+
 
 // export the isNumber() function for Mocha testing
 exports.isInt = isNumber;
