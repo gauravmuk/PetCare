@@ -121,6 +121,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 		      		$cookies.put('userID', data.user.id);
 					$cookies.put('userName', data.user.name);
 					$cookies.put('userRole', data.user.role);
+					$cookies.put('token', data.user.token);
 		      	}
 		  	})
 		  	// handle error

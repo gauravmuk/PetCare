@@ -99,7 +99,42 @@ router.get('/status', function(req, res) {
 		res.json({ logged_in: false });
 	}
 	else {
-		res.json({ logged_in: true, is_banned: req.user.banned, user: { id: req.user._id, name: req.user.name, role: req.user.role }});
+
+		// create authentication token
+		Authentication.findOne({user: req.user._id}, function(err, authen){
+			if (authen == null) {
+
+				// If there is no token to the user, create one
+				var authen_token = Math.random()
+				var authentication = new Authentication({
+					user: req.user._id,
+					token: authen_token,
+				});
+				authentication.save(function(err) {
+					res.json({
+						logged_in: true,
+						is_banned: req.user.banned,
+						user: {
+							id: req.user._id,
+							name: req.user.name,
+							role: req.user.role,
+							token: authen_token,
+						}
+					});
+				});
+			} else { // otherwise, send the one in db
+				res.json({
+					logged_in: true,
+					is_banned: req.user.banned,
+					user: {
+						id: req.user._id,
+						name: req.user.name,
+						role: req.user.role,
+						token: authen.token,
+					}
+				});
+			}
+		});
 	}
 });
 
