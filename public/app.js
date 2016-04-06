@@ -29,11 +29,13 @@ app.run(function ($rootScope, $location, $route, authService, activeLinkService,
 	    };
 
 	    // Redirect user to home page if user is not admin
-	    if (next.$$route.originalPath == '/admin') {
-	    	if ($cookies.get('userRole') != 'admin') {
-	    		$location.path('/');
-	    	}
-	    }
+	    if (next.$$route) {
+		    if (next.$$route.originalPath == '/admin') {
+		    	if ($cookies.get('userRole') != 'admin') {
+		    		$location.path('/');
+		    	}
+		    }
+		}
   	});
   	$rootScope.$on('$routeChangeSuccess', function (event, next, current) {  
   		// User who are banned cannot login. 
