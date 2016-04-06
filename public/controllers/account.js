@@ -50,9 +50,15 @@ account.controller('accountController', ['$http', '$scope', '$location', 'authSe
 	      	$scope.disabled = true;
 
 			authService.login(email, password)
-			.then(function() {
-				$location.path('/');
-				$scope.disabled = false;
+			.then(function(role) {
+				if (role == 'admin') {
+					$location.path('/admin');
+					$scope.disabled = false;
+				}
+				else {
+					$location.path('/');
+					$scope.disabled = false;
+				}
 			})
 			.catch(function(err) {
 				if (err.name == "AuthenticationError") {
