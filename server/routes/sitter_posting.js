@@ -42,10 +42,8 @@ router.put('/:id/:status', function (req, res) {
 
 			if (req.params.status == 'close') {
 	            sitterposting.status = 'closed';
-	        	console.log('closed posting');
 	        } else if (req.params.status == 'open') {
 	            sitterposting.status = 'open';
-	       		console.log('opened posting');
 	        }
 
 		    sitterposting.save(function (err) {

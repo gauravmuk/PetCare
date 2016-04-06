@@ -200,7 +200,7 @@ petsitter_posting.controller('sitterPostingController',
     }
 
     $scope.closePosting = function(postId) {
-        // Make PUT request to /api/petpostings/:id/close
+        // Make PUT request to /api/petpostings/:id/:status
         $http.put('/api/sitterpostings/' + postId + '/close', {})
 
             .success(function(data, status, headers, config) {

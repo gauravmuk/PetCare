@@ -18,10 +18,6 @@ NOTE:
     because mongoDB by default is trying to connect to the same port. 
 */
 
-
-// var User = require("../user");
-// User.collection.drop();
-
 var http = require('http');
 var request = require('request');
 var assert = require('assert');
@@ -359,7 +355,7 @@ describe('POST Request Test Suite:   ', function() {
         });
     });
 
-    describe('Send a messagae', function() {
+    describe('Send a message', function() {
         it('should create a new message', function(done) {
 
             request.post(
@@ -507,7 +503,7 @@ describe('PUT Request Test Suite:   ', function() {
     });
 
     describe('Like a forum post', function() {
-        it('should increase the like on a forum post by 1', function(done) {
+        it('should increase the likes on a forum post by 1', function(done) {
 
             // create the forum post
             request.post(

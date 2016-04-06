@@ -237,10 +237,8 @@ router.put('/api/petpostings/:id/:status', function (req, res) {
 
 			if (req.params.status == 'close') {
 	            petposting.status = 'closed';
-	        	console.log('closed posting');
 	        } else if (req.params.status == 'open') {
 	            petposting.status = 'open';
-	       		console.log('opened posting');
 	        }
 
 		    petposting.save(function (err) {

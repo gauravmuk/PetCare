@@ -9,6 +9,8 @@ var router 		= express.Router();
 var s3bucket = new AWS.S3({ params: { Bucket: 'pet.care' }});
 
 // Uploads a file to Amazon S3 and return the URL
+// Following guide from: http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-examples.html and
+// https://gist.github.com/adon-at-work/26c8a8e0a1aee5ded03c
 router.post("/", function(req, res){
 
 	var fileForm = new multiparty.Form();
@@ -24,7 +26,6 @@ router.post("/", function(req, res){
 
 			s3bucket.createBucket(function() {
 
-				var dataLocation = '';
 				var params = { Body: fs.createReadStream(imageToUpload.path), 
 					Key: imageToUpload.originalFilename };
 
@@ -37,7 +38,7 @@ router.post("/", function(req, res){
 				}).send(function(err, data) {
 
 				    if (err) {
-						console.log("Error uploading image. Please make sure you have set up your credentials file.", 
+						console.log("Error uploading image. Please make sure you have set up your AWS credentials file.", 
 							err);
 						var imageJSON = '{ "url": null }';
 						res.setHeader('Location', null);

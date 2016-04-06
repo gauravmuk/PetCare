@@ -28,7 +28,7 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         var y = position.coords.longitude;
 
         // get city from geolocation
-        $https.get('http://maps.googleapis.com/maps/api/geocode/json?latlng='+x+','+y+'&sensor=true').success(function(data){
+        $http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+x+','+y+'&sensor=true').success(function(data){
             var address_components = data.results[0].address_components;
 
             for(var i = 0; i < address_components.length; i++) {
