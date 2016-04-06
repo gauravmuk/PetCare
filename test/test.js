@@ -129,6 +129,7 @@ describe('GET Request Test Suite:   ', function() {
 
     });
 
+    // Make a GET request to /api/pets/1 and check if we get a valid response/ OK code
     describe('Retrieve pet data for a specified pet', function() {
 
         it('should respond with 200', function(done) {
@@ -139,6 +140,7 @@ describe('GET Request Test Suite:   ', function() {
                 });
 
                 response.on('end', function() {
+                    // Success condition is states code 200
                     assert.equal(response.statusCode, 200);
                     done();
                 });
@@ -147,6 +149,7 @@ describe('GET Request Test Suite:   ', function() {
 
     });
 
+    // Make a GET request to /api/petpostings and check if we get a valid response/ OK code
     describe('Retrieve pet posting data for every posting', function() {
 
         it('should respond with 200', function(done) {
@@ -157,6 +160,7 @@ describe('GET Request Test Suite:   ', function() {
                 });
 
                 response.on('end', function() {
+                    // Success condition is states code 200
                     assert.equal(response.statusCode, 200);
                     done();
                 });
@@ -164,6 +168,7 @@ describe('GET Request Test Suite:   ', function() {
         });
     });
 
+    // Make a GET request to /api/messages/1/ with an invalid token and check if we get 401 Unauthorized code
     describe('Access to another user\'s messages', function() {
 
         it('should respond with 401, unauthorized', function(done) {
@@ -174,6 +179,7 @@ describe('GET Request Test Suite:   ', function() {
                 });
 
                 response.on('end', function() {
+                    // Success condition is states code 401
                     assert.equal(response.statusCode, 401);
                     done();
                 });
@@ -181,6 +187,7 @@ describe('GET Request Test Suite:   ', function() {
         });
     });
 
+    // Make a GET request to /api/applications/1/ with an invalid token and check if we get 401 Unauthorized code
     describe('Access to another user\'s applications', function() {
 
         it('should respond with 401, unauthorized', function(done) {
@@ -191,6 +198,7 @@ describe('GET Request Test Suite:   ', function() {
                 });
 
                 response.on('end', function() {
+                    // Success condition is states code 401
                     assert.equal(response.statusCode, 401);
                     done();
                 });
@@ -266,7 +274,7 @@ describe('POST Request Test Suite:   ', function() {
         });
     });
 
-
+    // Test login to the web application as a test user
     describe('Make an http POST to /api/login', function() {
             it('Should login the user', function(done) {
 
@@ -288,6 +296,7 @@ describe('POST Request Test Suite:   ', function() {
         }); 
     });
 
+    // Test logout from the web application
     describe('Make an http GET to /api/logout', function() {
             it('Should logout the user', function(done) {
 
@@ -304,7 +313,7 @@ describe('POST Request Test Suite:   ', function() {
         }); 
     });
 
-
+    // Make an http POST request to /api/pets to add a new pet
     describe('Create a new pet', function() {
         it('should create new pet and return pet information', function(done) {
 
@@ -330,6 +339,7 @@ describe('POST Request Test Suite:   ', function() {
         });
     });
 
+    // Make an http POST request to /api/sitterpostings to add a new sitter posting 
     describe('Create a new sitter posting', function() {
         it('should create new sitter posting and return posting information', function(done) {
 
@@ -355,6 +365,7 @@ describe('POST Request Test Suite:   ', function() {
         });
     });
 
+    // Make an http POST request to /api/messages to send a message to another user 
     describe('Send a message', function() {
         it('should create a new message', function(done) {
 
@@ -367,11 +378,13 @@ describe('POST Request Test Suite:   ', function() {
                     // Convert the body string into a JavaScript object
                     var obj = JSON.parse(body);
 
+                    // Assert the response data and status code
                     assert.equal(obj.to, mochaTestMsg.to);
                     assert.equal(obj.from, mochaTestMsg.from);
                     assert.equal(obj.message, mochaTestMsg.message);
                     assert.equal(obj.read, false);
                     assert.equal(response.statusCode, 201);
+
                     done();
                 });        
         });
@@ -453,9 +466,11 @@ describe('PUT Request Test Suite:   ', function() {
     });
 
     // `describe()` creates a suite of test cases
+    // change user banned field to ban a user from the system
     describe('Ban a user', function() {
         it('Should create new user and ban that user', function(done) {
 
+            // First register to the system. This will automatically login the test user
             request.post(
                 {
                     url:     'http://localhost:8989/auth/register',
@@ -486,7 +501,7 @@ describe('PUT Request Test Suite:   ', function() {
                         // Status code 200 == OK
                         assert.equal(response.statusCode, 200);
 
-                        // logout
+                        // logout from the system
                         request.get(
                             {
                                 url:     'http://localhost:8989/auth/logout',
@@ -502,6 +517,7 @@ describe('PUT Request Test Suite:   ', function() {
         });
     });
 
+    // Make a PUT request to update the likes field
     describe('Like a forum post', function() {
         it('should increase the likes on a forum post by 1', function(done) {
 
@@ -539,6 +555,7 @@ describe('PUT Request Test Suite:   ', function() {
         });
     });
 
+    // Make a http PUT request to update the status filed of the post
     describe('Close a sitter posting', function() {
         it('should set a sitter posting status to closed', function(done) {
 
@@ -580,6 +597,8 @@ describe('PUT Request Test Suite:   ', function() {
 // Test cases testing the isInt() function
 describe('Valid Integer Test Suite', function() {
 
+    // Test valid user input from the user
+    // Success condition is 'true'
     describe('Valid integer tests', function() {
 
         it('should return true if value is an integer', function(done) {
@@ -590,6 +609,8 @@ describe('Valid Integer Test Suite', function() {
         });
     });
 
+    // Test invalid user input from the user (i.e: doubles, chars, strings instead of intiger values)
+    // Success condition is 'false'
     describe('Invalid integer tests', function() {
 
         it('should return true if value is an integer', function(done) {
