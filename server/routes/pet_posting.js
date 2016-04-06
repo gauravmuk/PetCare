@@ -1,10 +1,10 @@
 var express = require("express");
 var router 	= express.Router();
-var Application 	= require.main.require('./server/models/Application');
-var Authentication  = require.main.require('./server/models/Authentication');
-var Pet 			= require.main.require('./server/models/Pet');
-var Pet_Posting		= require.main.require('./server/models/Pet_Posting');
-var User			= require.main.require('./server/models/User');
+var Application 	= require('../../server/models/Application');
+var Authentication  = require('../../server/models/Authentication');
+var Pet 			= require('../../server/models/Pet');
+var Pet_Posting		= require('../../server/models/Pet_Posting');
+var User			= require('../../server/models/User');
 
 // Update Pet review table, calculate new average rating for the pet on the post and update rating
 router.post("/:id/reviews", function(req, res){

@@ -1,6 +1,6 @@
 var express 	= require("express");
 var router 		= express.Router();
-var ForumPost 	= require.main.require('./server/models/Forum_Post');
+var ForumPost 	= require('../../server/models/Forum_Post');
 
 // Return all forum posts
 router.get("/", function(req, res){

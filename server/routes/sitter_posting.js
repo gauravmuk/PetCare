@@ -1,11 +1,11 @@
 var express = require("express");
 var router 	= express.Router();
-var Application 	= require.main.require('./server/models/Application');
-var Authentication  = require.main.require('./server/models/Authentication');
-var Pet 			= require.main.require('./server/models/Pet');
-var Sitter_Posting	= require.main.require('./server/models/Sitter_Posting');
-var User			= require.main.require('./server/models/User');
-var Review			= require.main.require('./server/models/Review');
+var Application 	= require('../../server/models/Application');
+var Authentication  = require('../../server/models/Authentication');
+var Pet 			= require('../../server/models/Pet');
+var Sitter_Posting	= require('../../server/models/Sitter_Posting');
+var User			= require('../../server/models/User');
+var Review			= require('../../server/models/Review');
 
 router.put('/:id', function (req, res) {
 	if (isNumber(req.params.id)) {

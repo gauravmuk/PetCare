@@ -1,8 +1,8 @@
 var express = require("express");
 var router 	= express.Router();
 var passport = require("passport");
-var User	= require.main.require('./server/models/User');
-var Authentication  = require.main.require('./server/models/Authentication');
+var User	= require('../../server/models/User');
+var Authentication  = require('../../server/models/Authentication');
 
 // Register with username and password
 router.post('/register', function(req, res, next) {

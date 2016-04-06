@@ -1,6 +1,6 @@
 var express = require("express");
 var router 	= express.Router();
-var Report 	= require.main.require('./server/models/Report');
+var Report 	= require('../../server/models/Report');
 
 router.get("/", function(req, res){
 	var report = [];

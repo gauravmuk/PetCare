@@ -1,6 +1,6 @@
 var express = require("express");
 var router 	= express.Router();
-var Pet 	= require.main.require('./server/models/Pet');
+var Pet 	= require('../../server/models/Pet');
 
 router.get("/:id", function(req, res){
 

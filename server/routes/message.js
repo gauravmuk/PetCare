@@ -1,7 +1,7 @@
 var express = require("express");
 var router 	= express.Router();
-var Authentication  = require.main.require('./server/models/Authentication');
-var Message 		= require.main.require('./server/models/Message');
+var Authentication  = require('../../server/models/Authentication');
+var Message 		= require('../../server/models/Message');
 
 // Post a new message
 router.post("/", function(req, res){

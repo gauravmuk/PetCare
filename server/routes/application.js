@@ -1,9 +1,9 @@
 var express = require("express");
 var router 	= express.Router();
-var Authentication  = require.main.require('./server/models/Authentication');
-var Application 	= require.main.require('./server/models/Application');
-var Pet_Posting 	= require.main.require('./server/models/Pet_Posting');
-var Sitter_Posting	= require.main.require('./server/models/Sitter_Posting');
+var Authentication  = require('../../server/models/Authentication');
+var Application 	= require('../../server/models/Application');
+var Pet_Posting 	= require('../../server/models/Pet_Posting');
+var Sitter_Posting	= require('../../server/models/Sitter_Posting');
 
 
 // Get Received and Sent applications of the given user

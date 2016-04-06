@@ -188,12 +188,12 @@ describe('POST Request Test Suite:   ', function() {
     });
 
     // `describe()` creates a suite of test cases
-    describe('Make an http POST to /api/register', function() {
+    describe('Make an http POST to /auth/register', function() {
             it('Should create new user', function(done) {
 
             request.post(
                 {
-                    url:     'http://localhost:8989/api/register',
+                    url:     'http://localhost:8989/auth/register',
                     form:    mochaTestUser
                 }, 
                 function(error, response, body){
@@ -340,7 +340,7 @@ describe('PUT Request Test Suite:   ', function() {
 
             request.post(
                 {
-                    url:     'http://localhost:8989/api/register',
+                    url:     'http://localhost:8989/auth/register',
                     form:    mochaTestUser
                 }, 
                 function(error, response, body){
