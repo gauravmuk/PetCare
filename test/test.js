@@ -253,6 +253,7 @@ describe('POST Request Test Suite:   ', function() {
                     // Assert the user role, user name and status code
                     assert.equal(obj.role, 'regular');
                     assert.equal(obj.name, mochaTestUser.name);
+                    assert.notEqual(obj.token, null);
                     assert.equal(response.statusCode, 200);
 
                     // logout
@@ -268,6 +269,45 @@ describe('POST Request Test Suite:   ', function() {
                 });
         });
     });
+
+
+    describe('Make an http POST to /api/login', function() {
+            it('Should login the user', function(done) {
+
+            request.post(
+                {
+                    url:     'http://localhost:8989/auth/login',
+                    form:    mochaTestUser
+                }, 
+                function(error, response, body){
+                    // Convert the body string into a JavaScript object
+                    var obj = JSON.parse(body);
+                    // Assert the user role, user name and status code
+                    assert.equal(obj.name, mochaTestUser.name);
+                    assert.notEqual(obj.token, null);
+                    assert.equal(response.statusCode, 200);
+                    done();  
+                });
+
+        }); 
+    });
+
+    describe('Make an http GET to /api/logout', function() {
+            it('Should logout the user', function(done) {
+
+            request.get(
+                {
+                    url:     'http://localhost:8989/auth/logout',
+                    form:    mochaTestUser
+                }, 
+                function(error, response, body){
+                    assert.equal(response.statusCode, 200);
+                    done();  
+                });
+
+        }); 
+    });
+
 
     describe('Create a new pet', function() {
         it('should create new pet and return pet information', function(done) {
