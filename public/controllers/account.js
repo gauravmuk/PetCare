@@ -10,9 +10,15 @@ account.controller('accountController', ['$http', '$scope', '$location', 'authSe
 
 	      	var promise = authService.register(email, password, name);
 
-			promise.then(function() {
-					$location.path('/');
-					$scope.disabled = false;
+			promise.then(function(role) {
+					if (role == 'admin') {
+						$location.path('/admin');
+						$scope.disabled = false;
+					}
+					else {
+						$location.path('/');
+						$scope.disabled = false;
+					}
 				})
 				.catch(function(err) {
 					if (err.name == "UserExistsError") {
