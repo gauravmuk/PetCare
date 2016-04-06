@@ -6,7 +6,6 @@ var Pet_Posting 	= require.main.require('./server/models/Pet_Posting');
 var Sitter_Posting	= require.main.require('./server/models/Sitter_Posting');
 
 
-
 // Get Received and Sent applications of the given user
 router.get("/:userId/:token", function(req,res){
 
@@ -92,10 +91,8 @@ router.get("/:userId/:token", function(req,res){
 	}
 });
 
-
 // Post a new application
 router.post("/", function(req, res){
-
 	// check userId matches with token
 	Authentication.findOne({user: req.body.from}, function(err, authen){
 		if(err) {

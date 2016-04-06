@@ -163,8 +163,6 @@ router.get("/:pet/:location/:max_price/:userId", function(req, res){
 							applied: applied
 						});
 					}
-
-					console.log(data);
 					res.json(data);
 
 				});
