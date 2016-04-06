@@ -195,6 +195,7 @@ router.get("/:userId/:token/news", function(req, res){
 				res.status(401).send({ error: "Token does not match." });
 			} else {
 
+				// get messages and applications of the user from db
 				var messages = [];
 				var applications = [];
 
@@ -210,11 +211,13 @@ router.get("/:userId/:token/news", function(req, res){
 						var m_count = 0;
 						var a_count = 0;
 
+						// count unread messages
 						for (var i = 0; i < messages.length; i++) {
 							if (!messages[i]['read'])
 								m_count++;
 						}
 
+						// count unread applications
 						for (var i = 0; i < applications.length; i++) {
 							if (!applications[i]['read'])
 								a_count++;
@@ -225,7 +228,6 @@ router.get("/:userId/:token/news", function(req, res){
 							applications: a_count
 						};
 
-						console.log(data);
 						res.json(data);
 					});
 				});

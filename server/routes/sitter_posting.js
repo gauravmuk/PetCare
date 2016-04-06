@@ -64,7 +64,7 @@ router.put('/:id/:status', function (req, res) {
 
 }); 
 
-// Search sitter postings
+// Search sitter postings given user queries
 router.get("/:pet/:location/:max_price/:userId", function(req, res){
 	var sitterPosting = [];
 	var application = [];
@@ -76,8 +76,7 @@ router.get("/:pet/:location/:max_price/:userId", function(req, res){
 	var max_price = req.params.max_price;
 	var userId = req.params.userId;
 
-	console.log(pet +" "+location+" "+ max_price+" " +userId);
-
+	// get datas from db
 	Sitter_Posting.find({}).populate('user').exec(function(err, sitterPosting) {
 		if (err) { throw err; }
 		Application.find({}, function(err, application) {
@@ -87,17 +86,24 @@ router.get("/:pet/:location/:max_price/:userId", function(req, res){
 				Pet.find({}, function(err, pets){
 					if (err) { throw err; }
 
+					// regular expression to search postings that contain pet and location queries
 					var regex_pet = new RegExp(".*" + pet + ".*", "i");
 					var regex_location = new RegExp(".*" + location + ".*", "i");
 
 					// create JSON object
 					var data = [];
 					for (var i = 0; i < sitterPosting.length; i++) {
+
+						// if the posting is closed or user's own posting, exclude it from search results
 						if (sitterPosting[i]['status'] === "closed" || sitterPosting[i]['user']['_id'] == userId)
 							continue;
 
-						var rank = 0;
+						var rank = 0; // priority in recommendation
 
+						// Pet query
+						// If "none", give rank 1.
+						// If it is "user_data", match the pet type with the user's pet if the user has any pet.
+						// Otherwise, match with the query.
 						if (pet === "none") {
 							rank += 1;
 						} else if (pet === "user_data" && userId != 'undefined') {
@@ -115,6 +121,10 @@ router.get("/:pet/:location/:max_price/:userId", function(req, res){
 							rank += 2;
 						}
 
+						// Location (city) query
+						// If "none", give rank 1.
+						// If it is "user_data", match the location with the user's location.
+						// Otherwise, match with the query.
 						if (location === "none") {
 							rank += 1;
 			 			} else if (location === "user_data" && userId != 'undefined') {
@@ -128,6 +138,9 @@ router.get("/:pet/:location/:max_price/:userId", function(req, res){
 							rank += 2;
 						}
 
+						// Price query
+						// If "none", give rank 1.
+						// If the price in the posting is greater than the price from query, exclude the posting.
 						var lower_price = "" + sitterPosting[i]['price'].match(/([^ ]+)/, "")[1];
 
 						if (max_price === "none") {
@@ -139,6 +152,7 @@ router.get("/:pet/:location/:max_price/:userId", function(req, res){
 							rank += 2;
 						}
 
+						// notify the user that he/she applied to the posting before
 						var applied = false;
 						for (var j = 0; j < application.length; j++) {
 							if (!application[j]['isPetPost'] && application[j]['sitter_posting'] == sitterPosting[i]['_id']
@@ -164,8 +178,8 @@ router.get("/:pet/:location/:max_price/:userId", function(req, res){
 							applied: applied
 						});
 					}
+					
 					res.json(data);
-
 				});
 			});
 		});

@@ -59,8 +59,11 @@ router.get("/:userId/:token", function(req,res){
 			if (authen == null || authen.token != req.params.token) {
 				res.status(401).send({ error: "Token does not match." });
 			} else {
+
+				// get user's messages from db
 				var inbox = [];
 				var sent = [];
+
 				Message.find({ to: req.params.userId }).populate('from').exec(function(err, inbox) {
 					if (err) {
 						throw err;
@@ -74,6 +77,7 @@ router.get("/:userId/:token", function(req,res){
 						var inbox_json = [];
 						var sent_json = [];
 
+						// inbox messages
 						for (var i = 0; i < inbox.length; i++) {
 							inbox_json.push({
 								from: inbox[i]['from']['name'],
@@ -85,6 +89,7 @@ router.get("/:userId/:token", function(req,res){
 							});
 						}
 
+						// sent messages
 						for (var i = 0; i < sent.length; i++) {
 							sent_json.push({
 								to: sent[i]['to']['name'],
@@ -99,7 +104,6 @@ router.get("/:userId/:token", function(req,res){
 							sent: sent_json
 						};
 
-						console.log(data);
 						res.json(data);
 					});
 				});

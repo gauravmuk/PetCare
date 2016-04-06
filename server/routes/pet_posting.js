@@ -271,6 +271,7 @@ router.get("/:pet/:location/:min_price/:userId", function(req, res){
 	var min_price = req.params.min_price;
 	var userId = req.params.userId;
 
+	// get datas from db
 	Pet_Posting.find({}).populate('pet').exec(function(err, petposting) {
 		if (err) { throw err; }
 		Application.find({}, function(err, application) {
@@ -280,17 +281,24 @@ router.get("/:pet/:location/:min_price/:userId", function(req, res){
 				Pet.find({}, function(err, pets){
 					if (err) { throw err; }
 
+					// regular expression to search postings that contain pet and location queries
 					var regex_pet = new RegExp(".*" + pet + ".*", "i");
 					var regex_location = new RegExp(".*" + location + ".*", "i");
 
 					// create JSON object
 					var data = [];
 					for (var i = 0; i < petposting.length; i++) {
+
+						// if the posting is closed or user's own posting, exclude it from search results
 						if (petposting[i]['status'] === "closed" || petposting[i]['user'] == userId)
 							continue;
 
-						var rank = 0;
+						var rank = 0; // priority in recommendation
 
+						// Pet query
+						// If "none", give rank 1.
+						// If it is "user_data", match the pet type with the user's pet if the user has any pet.
+						// Otherwise, match with the query.
 						if (pet === "none") {
 							rank += 1;
 						} else if (pet === "user_data" && userId != 'undefined') {
@@ -304,6 +312,10 @@ router.get("/:pet/:location/:min_price/:userId", function(req, res){
 							rank += 2;
 						}
 
+						// Location (city) query
+						// If "none", give rank 1.
+						// If it is "user_data", match the location with the user's location.
+						// Otherwise, match with the query.
 						if (location === "none") {
 							rank += 1;
 						} else if (location === "user_data" && userId != 'undefined') {
@@ -317,6 +329,9 @@ router.get("/:pet/:location/:min_price/:userId", function(req, res){
 							rank += 2;
 						}
 
+						// Price query
+						// If "none", give rank 1.
+						// If the price in the posting is less than the price from query, exclude the posting.
 						if (min_price === "none") {
 							rank += 1;
 						} else if (isNaN(min_price) || isNaN(petposting[i]['price'])
@@ -326,6 +341,7 @@ router.get("/:pet/:location/:min_price/:userId", function(req, res){
 							rank += 2;
 						}
 
+						// notify the user that he/she applied to the posting before
 						var applied = false;
 						for (var j = 0; j < application.length; j++) {
 							if (application[j]['isPetPost'] && application[j]['pet_posting'] == petposting[i]['_id']
@@ -352,7 +368,7 @@ router.get("/:pet/:location/:min_price/:userId", function(req, res){
 							applied: applied
 						});
 					}
-					//console.log(data);
+					
 					res.json(data);
 				});
 			});

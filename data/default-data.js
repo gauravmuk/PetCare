@@ -1088,7 +1088,7 @@ async.series([
 			from: 1,
 			isPetPost: true,
 			pet_posting: 1,
-			pet_posting: 1,
+			sitter_posting: 1,
 			read: true,
 			message: 'Hi. I would like to take care of your dog while you are out the country.',
 		});
@@ -1108,7 +1108,7 @@ async.series([
 			from: 1,
 			isPetPost: false,
 			pet_posting: 8,
-			pet_posting: 8,
+			sitter_posting: 8,
 			read: false,
 			message: 'Hi. My cousin has a sheep and he asked me to take care of it. I think I found a wonderful place!',
 		});

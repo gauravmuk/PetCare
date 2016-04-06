@@ -20,6 +20,7 @@ router.get("/:userId/:token", function(req,res){
 				res.status(401).send({ error: "Token does not match." });
 			} else {
 
+				// get user's applications from db
 				var received = [];
 				var sent = [];
 
@@ -36,6 +37,7 @@ router.get("/:userId/:token", function(req,res){
 						var received_json = [];
 						var sent_json = [];
 
+						// received applications
 						for (var i = 0; i < received.length; i++) {
 							if (received[i]['isPetPost']) {
 								var posting_id = received[i]['pet_posting'];
@@ -57,6 +59,7 @@ router.get("/:userId/:token", function(req,res){
 							});
 						}
 
+						// sent applications
 						for (var i = 0; i < sent.length; i++) {
 							if (sent[i]['isPetPost']) {
 								var posting_id = sent[i]['pet_posting'];
@@ -80,7 +83,6 @@ router.get("/:userId/:token", function(req,res){
 							sent: sent_json
 						};
 
-						console.log(data);
 						res.json(data);
 					});
 				});
