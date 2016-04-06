@@ -1,6 +1,6 @@
 app.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
 	$locationProvider.html5Mode(true);
-
+	// Route configuration
 	$routeProvider
 		.when('/', {
 			templateUrl: 	'/layouts/home.html',

@@ -1,3 +1,5 @@
+// This authService was developed by following the tutorial on 
+// http://mherman.org/blog/2015/07/02/handling-user-authentication-with-the-mean-stack
 app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, $timeout, $http, $cookies) {
 	var user = null;
 	var user_banned = null;
@@ -14,6 +16,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 		setUserData: setUserData
 	});
 
+	// Returns true if any user is currently logged in.
 	function isLoggedIn() {
 		if (user || $cookies.get('userID') != undefined) {
 			return true;
@@ -23,6 +26,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 		}
 	}
 
+	// Returns true if current user is banned.
 	function isBanned() {
 		if (user_banned) {
 			return true;
@@ -32,6 +36,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 		}
 	}
 
+	// Returns data of current user.
 	function getUserData() {
 		userData = {
 			userID: $cookies.get('userID'),
@@ -41,10 +46,12 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 		return userData;
 	};
 
+	// Change current user's name 
 	function setUserData(newName) {
 		$cookies.put('userName', newName);
 	};
 
+	// Register the user
 	function register(username, password, name) {
 		var deferred = $q.defer();
 
@@ -77,6 +84,8 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 		return deferred.promise;
 	}
 
+
+	// Login the user.
 	function login(username, password) {
 		var deferred = $q.defer();
 
@@ -111,6 +120,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 		return deferred.promise;
 	}
 
+	// Check if any user is logged in and get user data from database
 	function getUserStatus() {
 		$http.get('/auth/status')
 		  	// handle success
@@ -130,6 +140,7 @@ app.factory('authService', ['$q', '$timeout', '$http', '$cookies', function($q, 
 	  	});
 	}
 
+	// Logout the user.
 	function logout() {
 		var deferred = $q.defer();
 

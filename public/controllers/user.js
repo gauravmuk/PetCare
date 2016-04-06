@@ -9,11 +9,13 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
         $scope.animationEnabled = true;
         $scope.editMode = false;
 
+        // Get user data
     	$http.get('/api/users/' + $scope.profileUserId).success(function(data){
     		$scope.user = data;
             $scope.setUserData(data);
     	});
 
+        // Get pet data of specific user
         $scope.getPetData = function() {
             $http.get('/api/users/' + $scope.profileUserId + '/pets').success(function(data){
                 $scope.pets = data;
@@ -35,15 +37,16 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
         };
 
         $scope.getPetData();
-
         refreshOpenedPost();
         refreshClosedPost();
 
+        // Get reviews data of specific user
         $http.get('/api/users/' + $scope.profileUserId + '/reviews').success(function(data){
             $scope.reviews = data;
             $scope.userReviewTotal = data.length;
         });
 
+        // Upload user's image 
         $scope.uploadUserImage = function (imageFile) {
             // If user selected a file, upload it
             if (imageFile) {
@@ -56,7 +59,6 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                     headers: {'Content-Type': undefined}
                 })
                 .success(function(data) {
-                    // console.log(data.url)
                     if (data.url != null) {
                         $scope.editUserData.photo = data.url;
                     }
@@ -68,6 +70,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             $scope.editMode = !$scope.editMode;
         }
 
+        // Exit edit mode and update user information
         $scope.exitEditMode = function(type) {
             $scope.toggleEditMode()
             if (type == "save") {
@@ -102,6 +105,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             return ratings
         };
 
+        // File a report for a specific user
         $scope.sendReport = function() {
             // Get user IDs of user who is making the report and the ID of the user reporting against 
             var from            = $cookies.get('userID');
@@ -116,14 +120,14 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                 reportMsg: reportMsg
             }
 
-            // Make http post request to the server
             $http.post('/api/reports/', { data:dataObj })
                 .success(function(data, status, headers, config) {
                 }).error(function(data, status, headers, config) {
             });
         };
 
-        $scope.createPet = function (pet, isValid, imageFile) {
+        // Update pet information
+        $scope.updatePet = function (pet, isValid, imageFile) {
             // Check if form information is valid   
             if (isValid) {
                 var file = imageFile;
@@ -138,7 +142,6 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                         headers: {'Content-Type': undefined}
                     })
                     .success(function(data) {
-                        // console.log(data);
                         if (data.url != null) {
                             thumbnail = data.url;
                             editPet(pet, thumbnail);
@@ -175,7 +178,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
 
         };
 
-        $scope.createPosting = function (posting, postingType, isValid, imageFile) {
+        $scope.updatePosting = function (posting, postingType, isValid, imageFile) {
             // Check if form information is valid   
             if (isValid) {
                 var file = imageFile;
@@ -190,7 +193,6 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                         headers: {'Content-Type': undefined}
                     })
                     .success(function(data) {
-                        // console.log(data);
                         if (data.url != null) {
                             thumbnail = data.url;
                             editPosting(posting, postingType, thumbnail);
@@ -262,6 +264,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             }
         };
 
+        // openMessageModal
         $scope.openMessageModal = function(size) {
             if (!authService.isLoggedIn()) {
                 $location.path('/signin');
@@ -279,6 +282,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             };
         };
 
+        //open ReportModal
         $scope.openReportModal = function(size) {
             if (!authService.isLoggedIn()) {
                 $location.path('/signin');
@@ -297,6 +301,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             }
         };
 
+        // open ApplyModal
         $scope.openApplyModal = function(size, isPetPost, postID) {
             if (!authService.isLoggedIn()) {
                 $location.path('/signin');
@@ -316,6 +321,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             };
         };
 
+        // open PetReviewModal
         $scope.openPetReviewModal = function(size, reviews) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationEnabled,
@@ -332,6 +338,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             });
         };
 
+        // open EditPetModal
         $scope.openEditPetModal = function(size, pet) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationEnabled,
@@ -352,10 +359,11 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                 }
             });
             modalInstance.result.then(function (petData) {
-                $scope.createPet(petData.pet, petData.isValid, petData.file);
+                $scope.updatePet(petData.pet, petData.isValid, petData.file);
             });
         };
 
+        // open EditPostingModal
         $scope.openEditPostingModal = function(size, posting) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationEnabled,
@@ -375,7 +383,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
                 }
             });
             modalInstance.result.then(function (postingData) {
-                $scope.createPosting(postingData.posting, posting.postingType, postingData.isValid, postingData.file);
+                $scope.updatePosting(postingData.posting, posting.postingType, postingData.isValid, postingData.file);
             });
         };
 
@@ -440,7 +448,6 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
         
         // Make http PUT requests for the given post id to open it
         $scope.reopenPost = function (postID, postingType) {
-            // console.log(postingType);
 
             // If type is sitterPosting, make an API call to chage status to 'close'
             if (postingType === 'sitterPosting'){
@@ -467,7 +474,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
 
         };
 
-
+        // Get open posts
         function refreshOpenedPost (){
             $http.get('/api/users/' + $scope.profileUserId + '/posts/open').success(function(data){
                 $scope.open_posts = data;
@@ -483,6 +490,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             });
         }
 
+        // Get closed posts
         function refreshClosedPost (){
             $http.get('/api/users/' + $scope.profileUserId + '/posts/closed').success(function(data){
                 $scope.closed_posts = data;

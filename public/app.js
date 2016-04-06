@@ -15,8 +15,11 @@ var app = angular.module('petCare',	['ngRoute',
 
 app.run(function ($rootScope, $location, $route, authService, activeLinkService, $window, $cookies) {
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
+		// Check login status of the user
 	    authService.getUserStatus();
         activeLinkService.prepForBroadcast($location.path());
+
+        // Redirect user to login page if user tries to access to restricted page
 		if (next.access.restricted) {
 			if (!authService.isLoggedIn()) {
 				$rootScope.loginRequired = true;
@@ -24,13 +27,16 @@ app.run(function ($rootScope, $location, $route, authService, activeLinkService,
 	        	$route.reload();
 	        }
 	    };
+
+	    // Redirect user to home page if user is not admin
 	    if (next.$$route.originalPath == '/admin') {
 	    	if ($cookies.get('userRole') != 'admin') {
 	    		$location.path('/');
 	    	}
 	    }
   	});
-  	$rootScope.$on('$routeChangeSuccess', function (event, next, current) {   
+  	$rootScope.$on('$routeChangeSuccess', function (event, next, current) {  
+  		// User who are banned cannot login. 
         if (authService.isBanned()) {
         	$location.path('/signin');
         }
