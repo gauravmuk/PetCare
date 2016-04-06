@@ -22,7 +22,7 @@ router.post("/", function(req, res){
 			});
 
 			msg.save(function(err) {
-		    	res.status(201).send(null);
+		    	res.status(201).send(msg);
 			});
 		}
 	});
@@ -37,7 +37,7 @@ router.put("/:msg_id/read", function(req, res){
 
 		Message.findByIdAndUpdate(req.params.msg_id, {$set: {read:true}}, function(err, msg){
 			if (err) throw err;
-    		res.status(201).send(null);
+    		res.status(200).send(msg);
 		});
 
 	} else {

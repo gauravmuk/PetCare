@@ -27,7 +27,24 @@ var request = require('request');
 var assert = require('assert');
 var app = require('../server');
 
+
 // Test data
+
+// set token to user 1
+var Authentication  = require('../server/models/Authentication');
+var authentication = new Authentication({
+    user: 1,
+    token: 1,
+});
+authentication.save();
+
+// Message data
+var mochaTestMsg = {
+    to: 2,
+    from: 1,
+    message: 'I am good today. Thanks!',
+    token: 1,
+}
 
 // Pet data
 var mochaTestPet = {
@@ -157,10 +174,43 @@ describe('GET Request Test Suite:   ', function() {
                 });
             }); 
         });
-
     });
 
+    describe('Access to another user\'s messages', function() {
 
+        it('should respond with 401, unauthorized', function(done) {
+            http
+            .get('http://localhost:8989/api/messages/1/wrong_token', function(response){
+                
+                response.on('data', function(data) {
+                    var obj = JSON.parse(data);
+                });
+
+                response.on('end', function() {
+                    assert.equal(response.statusCode, 401);
+                    done();
+                });
+            }); 
+        });
+    });
+
+    describe('Access to another user\'s applications', function() {
+
+        it('should respond with 401, unauthorized', function(done) {
+            http
+            .get('http://localhost:8989/api/applications/1/wrong_token', function(response){
+                
+                response.on('data', function(data) {
+                });
+
+                response.on('end', function() {
+                    assert.equal(response.statusCode, 401);
+                    done();
+                });
+            }); 
+        });
+    });
+    
 });
 
 // All the test cases that make http POST requests to the server are written in this suite
@@ -189,7 +239,7 @@ describe('POST Request Test Suite:   ', function() {
 
     // `describe()` creates a suite of test cases
     describe('Make an http POST to /auth/register', function() {
-            it('Should create new user', function(done) {
+        it('Should create new user', function(done) {
 
             request.post(
                 {
@@ -210,7 +260,7 @@ describe('POST Request Test Suite:   ', function() {
     });
 
     describe('Create a new pet', function() {
-            it('should create new pet and return pet information', function(done) {
+        it('should create new pet and return pet information', function(done) {
 
             request.post(
                 {
@@ -235,7 +285,7 @@ describe('POST Request Test Suite:   ', function() {
     });
 
     describe('Create a new sitter posting', function() {
-            it('should create new sitter posting and return posting information', function(done) {
+        it('should create new sitter posting and return posting information', function(done) {
 
             request.post(
                 {
@@ -256,6 +306,28 @@ describe('POST Request Test Suite:   ', function() {
 
                 });
 
+        });
+    });
+
+    describe('Send a messagae', function() {
+        it('should create a new message', function(done) {
+
+            request.post(
+                {
+                    url:     'http://localhost:8989/api/messages',
+                    form:    mochaTestMsg
+                }, 
+                function(error, response, body){
+                    // Convert the body string into a JavaScript object
+                    var obj = JSON.parse(body);
+
+                    assert.equal(obj.to, mochaTestMsg.to);
+                    assert.equal(obj.from, mochaTestMsg.from);
+                    assert.equal(obj.message, mochaTestMsg.message);
+                    assert.equal(obj.read, false);
+                    assert.equal(response.statusCode, 201);
+                    done();
+                });        
         });
     });
 
@@ -336,7 +408,7 @@ describe('PUT Request Test Suite:   ', function() {
 
     // `describe()` creates a suite of test cases
     describe('Ban a user', function() {
-            it('Should create new user and ban that user', function(done) {
+        it('Should create new user and ban that user', function(done) {
 
             request.post(
                 {
@@ -375,7 +447,7 @@ describe('PUT Request Test Suite:   ', function() {
     });
 
     describe('Like a forum post', function() {
-            it('should increase the like on a forum post by 1', function(done) {
+        it('should increase the like on a forum post by 1', function(done) {
 
             // create the forum post
             request.post(
@@ -412,7 +484,7 @@ describe('PUT Request Test Suite:   ', function() {
     });
 
     describe('Close a sitter posting', function() {
-            it('should set a sitter posting status to closed', function(done) {
+        it('should set a sitter posting status to closed', function(done) {
 
             request.post(
                 {
@@ -444,6 +516,34 @@ describe('PUT Request Test Suite:   ', function() {
                     });
                 });
 
+        });
+    });
+
+    describe('Read a message', function() {
+        it('should change the read status of the message', function(done) {
+
+            request.post(
+                {
+                    url:     'http://localhost:8989/api/messages',
+                    form:    mochaTestMsg
+                }, 
+                function(error, response, body){
+                    // Convert the body string into a JavaScript object
+                    var obj = JSON.parse(body);
+
+                    assert.equal(obj.read, false);
+                    assert.equal(response.statusCode, 201);
+
+                    // Make a PUT request to close this posting
+                    request({
+                        uri: 'http://localhost:8989/api/messages/1/read',
+                        method: "PUT"
+                    },
+                    function(error, response, body) {
+                        assert.equal(response.statusCode, 200);    
+                        done();
+                    });
+                });
         });
     });
 
