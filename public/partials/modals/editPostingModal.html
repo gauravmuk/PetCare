@@ -1,0 +1,52 @@
+<script id="editPostingModalContent.html" type="text/ng-template">
+    <div class="modal-header">
+        <h4 class="modal-title">Edit</h4>
+    </div>
+    <div class="modal-body">
+        <form name="postingForm">
+            <div class="form-group">
+                <label for="petImageToUpload">Upload your posting thumnail:</label>
+                <input type="file" class="file-input" name="userImageToUpload" id="userImageToUpload" ng-model="thumbnail" file-model="imageFile">
+            </div>
+            <div class="form-group">
+                <label for="inputTitle">Title</label>
+                <input type="text" class="form-control" name="inputTitle" id="inputTitle" ng-model="posting.title" required>
+                <span ng-show="postingForm.inputName.$touched && postingForm.inputName.$invalid" class="form-error">This field is required.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputType">Duration</label>
+                <input type="text" class="form-control" name="inputDuration" id="inputDuration" ng-model="posting.duration" required>
+                <span ng-show="postingForm.inputDuration.$touched && postingForm.inputDuration.$invalid" class="form-error">This field is required.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputType">Location</label>
+                <input type="text" class="form-control" name="inputLocation" id="inputLocation" ng-model="posting.location" required>
+                <span ng-show="postingForm.inputLocation.$touched && postingForm.inputLocation.$invalid" class="form-error">This field is required.</span>
+            </div>
+
+            <div class="form-group">
+                <label for="inputAge">Price ($ per day)</label>
+                <input type="text" class="form-control" name="inputPrice" id="inputPrice" ng-model="posting.price" required>
+                <span ng-show="postingForm.inputPrice.$touched && postingForm.inputPrice.$invalid" class="form-error">This field is required.</span>
+            </div>
+            
+            <div class="form-group">
+                <label for="inputDescription">Description</label>
+                <textarea row="10" class="form-control" name="inputDescription" id="inputDescription" ng-model="posting.description" required>
+                </textarea>
+                <span ng-show="postingForm.inputDescription.$touched && postingForm.inputDescription.$invalid" class="form-error">This field is required.
+                </span>
+            </div>
+
+            <div ng-messages="postingForm.$error" role="alert">
+                <div ng-message="required" class="form-error">Please enter all fields.</div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" ng-click="close()">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="ok(postingForm.$valid)">Submit</button>
+    </div>
+</script>

@@ -207,7 +207,7 @@
                                     <button class="apply" type="button" ng-click="openApplyModal('lg', isNumber(post.user), post._id)">Apply</button>
                                 </div>
                                 <div class="info-column" ng-if="userId == profileUserId ">
-                                    <button class="apply own" type="button">Edit</button>
+                                    <button class="apply own" type="button" ng-click="openEditPostingModal('lg', post)">Edit</button>
                                     <button class="apply own closeButton" type="button" ng-click="closePost(post._id, post.postingType)">Close</button>
                                     <button class="apply own delete" type="button" ng-click="deletePost(post._id, post.postingType)">Delete</button>
                                 </div>
@@ -216,7 +216,8 @@
                     </div>
                     <p class="description">
                         {{ post.description}}
-                        <a href="/post_pet">See More</a>
+                        <a ng-if="isNumber(post.user)" ng-href="/pet_posts/{{ post._id }}">&nbsp;See More</a>
+                        <a ng-if="!isNumber(post.user)" ng-href="/petsitter_posts/{{ post._id }}">&nbsp;See More</a>
                     </p>
                 </div>
             </div>
@@ -286,7 +287,8 @@
                     </div>
                     <p class="description">
                         {{ post.description }}
-                        <a href="/post_pet">See More</a>
+                        <a ng-if="isNumber(post.user)" ng-href="/pet_posts/{{ post._id }}">&nbsp;See More</a>
+                        <a ng-if="!isNumber(post.user)" ng-href="/petsitter_posts/{{ post._id }}">&nbsp;See More</a>
                     </p>
                 </div>
             </div>
@@ -336,3 +338,4 @@
 <div ng-include src="'/modals/applyModal.html'"></div>
 <div ng-include src="'/modals/reportModal.html'"></div>
 <div ng-include src="'/modals/editPetModal.html'"></div>
+<div ng-include src="'/modals/editPostingModal.html'"></div>

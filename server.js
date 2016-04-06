@@ -288,6 +288,10 @@ app.get("/modals/editPetModal.html", function(req, res){
 	res.render("modals/editPetModal.html");
 });
 
+app.get("/modals/editPostingModal.html", function(req, res){
+	res.render("modals/editPostingModal.html");
+});
+
 // API Routes
 app.use('/auth', authRoute)
 app.use('/api/upload', fileRoute)

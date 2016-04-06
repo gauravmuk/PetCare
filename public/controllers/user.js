@@ -175,6 +175,71 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
 
         };
 
+        $scope.createPosting = function (posting, postingType, isValid, imageFile) {
+            // Check if form information is valid   
+            if (isValid) {
+                var file = imageFile;
+
+                // If user selected a file, upload it
+                if (file) {
+                    var fd = new FormData();
+                    fd.append('file', file);
+
+                    $http.post('/api/upload', fd, {
+                        transformRequest: angular.identity,
+                        headers: {'Content-Type': undefined}
+                    })
+                    .success(function(data) {
+                        // console.log(data);
+                        if (data.url != null) {
+                            thumbnail = data.url;
+                            editPosting(posting, postingType, thumbnail);
+                        }
+                    });
+                }
+                else {
+                    editPosting(posting, postingType, null);
+                }
+            }
+
+        };
+
+        function editPosting(posting, postingType, postingThumbnail) {
+            // Create object to be sent through the POST request
+            var dataObj = {
+                title:          posting.title,
+                duration:       posting.duration,
+                location:       posting.location,
+                price:          posting.price,
+                description:    posting.description
+            };
+
+            if (postingThumbnail) {
+                dataObj.photo = postingThumbnail;
+            }
+
+
+            // Make REST call to update the posting information
+            if (postingType == 'sitterPosting'){
+                $http.put('/api/sitterpostings/' + posting.id, { data: dataObj })
+                    .success(function(data, status, headers, config) {
+                        refreshOpenedPost();
+                        refreshClosedPost();
+                    }).error(function(data, status, headers, config) {
+                        
+                });
+            } else if(postingType === 'petPosting'){
+                $http.put('/api/petpostings/' + posting.id, { data: dataObj })
+                    .success(function(data, status, headers, config) {
+                        refreshOpenedPost();
+                        refreshClosedPost();
+                    }).error(function(data, status, headers, config) {
+                        
+                });
+            }
+
+        };
+
         $scope.select = function(section) {
             $scope.selected = section;
         }
@@ -288,6 +353,29 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
             });
             modalInstance.result.then(function (petData) {
                 $scope.createPet(petData.pet, petData.isValid, petData.file);
+            });
+        };
+
+        $scope.openEditPostingModal = function(size, posting) {
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationEnabled,
+                templateUrl: 'editPostingModalContent.html',
+                controller: 'editPostingModalController',
+                size: size,
+                resolve: {
+                    posting: function() {
+                        return {    id:             posting._id,
+                                    title:          posting.title,
+                                    duration:       posting.duration,
+                                    location:       posting.location,
+                                    price:          posting.price,
+                                    description:    posting.description
+                        };
+                    }
+                }
+            });
+            modalInstance.result.then(function (postingData) {
+                $scope.createPosting(postingData.posting, posting.postingType, postingData.isValid, postingData.file);
             });
         };
 

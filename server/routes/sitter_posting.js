@@ -18,6 +18,10 @@ router.put('/:id', function (req, res) {
             sitterposting.price = req.body.data.price;
             sitterposting.description = req.body.data.description;
 
+		    if (req.body.data.photo) {
+		    	sitterposting.thumbnail = req.body.data.photo;
+		    }
+		    
 		    sitterposting.save(function (err) {
 		        if(err) {
 		        }

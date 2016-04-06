@@ -211,7 +211,9 @@ router.put('/:id', function (req, res) {
             petposting.location = req.body.data.location;
             petposting.price = req.body.data.price;
             petposting.description = req.body.data.description;
-
+		    if (req.body.data.photo) {
+		    	petposting.thumbnail = req.body.data.photo;
+		    }
 
 		    petposting.save(function (err) {
 		        if(err) {
@@ -229,7 +231,7 @@ router.put('/:id', function (req, res) {
 }); 
 
 // Changes the status of a pet posting
-router.put('/api/petpostings/:id/:status', function (req, res) {
+router.put('/:id/:status', function (req, res) {
 
 	if (isNumber(req.params.id) && isString(req.params.status)) {
 

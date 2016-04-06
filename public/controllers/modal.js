@@ -64,6 +64,19 @@ modal.controller('editPetModalController', ['$http', '$scope', '$uibModalInstanc
         };
 }]);
 
+modal.controller('editPostingModalController', ['$http', '$scope', '$uibModalInstance', 'posting',
+    function($http, $scope, $uibModalInstance, posting) {
+        $scope.posting = posting;
+
+        $scope.ok = function (isValid) {
+            $uibModalInstance.close({ posting: $scope.posting, isValid: isValid, file: $scope.imageFile});
+        };
+
+        $scope.close = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+}]);
+
 modal.controller('userReviewModalController', ['$http', '$scope', '$uibModalInstance',
     function($http, $scope, $uibModalInstance) {
         $scope.submitStar = function(rating){
