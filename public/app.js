@@ -17,7 +17,6 @@ app.run(function ($rootScope, $location, $route, authService, activeLinkService,
 	$rootScope.$on('$routeChangeStart', function (event, next, current) {
 	    authService.getUserStatus();
         activeLinkService.prepForBroadcast($location.path());
-        
 		if (next.access.restricted) {
 			if (!authService.isLoggedIn()) {
 				$rootScope.loginRequired = true;
@@ -25,6 +24,11 @@ app.run(function ($rootScope, $location, $route, authService, activeLinkService,
 	        	$route.reload();
 	        }
 	    };
+	    if (next.$$route.originalPath == '/admin') {
+	    	if ($cookies.get('role') != 'admin') {
+	    		$location.path('/');
+	    	}
+	    }
   	});
   	$rootScope.$on('$routeChangeSuccess', function (event, next, current) {   
         if (authService.isBanned()) {
@@ -39,7 +43,6 @@ app.run(function ($rootScope, $location, $route, authService, activeLinkService,
 });
 
 app.controller('mainController', function() {
-
 });
 
 app.controller('navController', ['$scope', '$location', 'authService', '$cookies', '$http', 'activeLinkService',
