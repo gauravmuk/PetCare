@@ -29,7 +29,7 @@ var app = require('../server');
 // Message data
 var mochaTestMsg = {
     to: 2,
-    from: 1,
+    from: -1,
     message: 'Mocha: I am good today. Thanks!',
     token: 1,
 }
@@ -217,7 +217,7 @@ describe('POST Request Test Suite:   ', function() {
         // set token to user 1
         var Authentication  = require('../server/models/Authentication');
         var authentication = new Authentication({
-            user: 1,
+            user: -1,
             token: 1,
         });
         authentication.save();
