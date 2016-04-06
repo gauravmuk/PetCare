@@ -149,7 +149,7 @@ petsitter_posting.controller('sitterPostingController',
     $scope.maxSize = 5;
 
     // search recommendation postings given three queries: pet type, location, and price
-    $http.get("/api/search_sitter/" + $cookies.get('pet') + "/" + $cookies.get('location') + "/" + $cookies.get('price') + "/" + $scope.userId).success(function(data){
+    $http.get("/api/sitterpostings/" + $cookies.get('pet') + "/" + $cookies.get('location') + "/" + $cookies.get('price') + "/" + $scope.userId).success(function(data){
         $scope.totalItems = data.length - 1;
         $scope.currentPage = 1;
 

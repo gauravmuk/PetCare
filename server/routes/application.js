@@ -6,7 +6,6 @@ var Pet_Posting 	= require.main.require('./server/models/Pet_Posting');
 var Sitter_Posting	= require.main.require('./server/models/Sitter_Posting');
 
 
-
 // Get Received and Sent applications of the given user
 router.get("/:userId/:token", function(req,res){
 

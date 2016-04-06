@@ -155,7 +155,7 @@ pet_posting.controller('petPostingController', ['$http', '$scope', '$routeParams
     $scope.maxSize = 5;
 
     // search recommendation postings given three queries: pet type, location, and price
-    $http.get("/api/search_pet/" + $cookies.get('pet') + "/" + $cookies.get('location') + "/" + $cookies.get('price') + "/" + $scope.userId).success(function(data){
+    $http.get("/api/petpostings/" + $cookies.get('pet') + "/" + $cookies.get('location') + "/" + $cookies.get('price') + "/" + $scope.userId).success(function(data){
         $scope.totalItems = data.length;
         $scope.currentPage = 1;
 
@@ -308,8 +308,6 @@ pet_posting.controller('petFormController', ['$http', '$location', '$scope', '$c
 				})
 
 				.success(function(data) {
-					// console.log(data);
-
 					if (data.url != null) {
 						thumbnail = data.url;
 						sendPet(thumbnail);
