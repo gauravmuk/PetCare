@@ -5,6 +5,7 @@ var Authentication  = require.main.require('./server/models/Authentication');
 var Pet 			= require.main.require('./server/models/Pet');
 var Sitter_Posting	= require.main.require('./server/models/Sitter_Posting');
 var User			= require.main.require('./server/models/User');
+var Review			= require.main.require('./server/models/Review');
 
 router.put('/:id', function (req, res) {
 	if (isNumber(req.params.id)) {
