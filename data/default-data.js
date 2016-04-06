@@ -9,7 +9,7 @@
 		3) do 'npm istall' if you haven't done so
 		4) in one terminal start the mongoDB daemon by typing 'mongod --dbpath ./mongodb_data'
 			NOTE: If the mongoDB daemon is already running, you DO NOT have to run it again 
-		5) in the second termianl type 'node default-data.js'
+		5) in the second termianl type 'node data/default-data.js'
 			WAIT: Until you see the 'Completed successfully!' message
 				: This might take a few seconds
 		6) now you can do 'npm start' and load http://localhost:3000/ in a browser
@@ -30,17 +30,17 @@ var connection = mongoose.connect(uristring);
 autoIncrement.initialize(connection);
 
 // Import Database schema
-var Application 	= require(__dirname + '/server/models/Application');
-var Message 		= require(__dirname + '/server/models/Message');
-var Pet 			= require(__dirname + '/server/models/Pet');
-var Pet_Posting 	= require(__dirname + '/server/models/Pet_Posting');
-var Sitter_Posting	= require(__dirname + '/server/models/Sitter_Posting');
-var Report			= require(__dirname + '/server/models/Report');
-var Review			= require(__dirname + '/server/models/Review');
-var Pet_Review		= require(__dirname + '/server/models/Pet_Review');
-var User			= require(__dirname + '/server/models/User');
-var ForumPost		= require(__dirname + '/server/models/Forum_Post');
-var Authentication  = require(__dirname + '/server/models/Authentication');
+var Application 	= require(__dirname + '/../server/models/Application');
+var Message 		= require(__dirname + '/../server/models/Message');
+var Pet 			= require(__dirname + '/../server/models/Pet');
+var Pet_Posting 	= require(__dirname + '/../server/models/Pet_Posting');
+var Sitter_Posting	= require(__dirname + '/../server/models/Sitter_Posting');
+var Report			= require(__dirname + '/../server/models/Report');
+var Review			= require(__dirname + '/../server/models/Review');
+var Pet_Review		= require(__dirname + '/../server/models/Pet_Review');
+var User			= require(__dirname + '/../server/models/User');
+var ForumPost		= require(__dirname + '/../server/models/Forum_Post');
+var Authentication  = require(__dirname + '/../server/models/Authentication');
 
 // Drop all collections in the db
 User.collection.drop();

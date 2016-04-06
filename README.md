@@ -15,7 +15,7 @@ PetCare is an online service where individuals who are looking for someone to ta
 ### How To Run
 1. Open two terminals.
 2. In one terminal, run `mongod --dbpath ./mongodb_data` to start the mongoDB daemo
-3. In the second terminal, run `node default-data.js` to import the data    
+3. In the second terminal, run `node data/default-data.js` to import the data    
     And then run `npm start` to start the nodeJS serve
 4. Go to http://localhost:3000/ for the interface.
 
