@@ -99,8 +99,6 @@ router.get("/:pet/:location/:max_price/:userId", function(req, res){
 
 						if (pet === "none") {
 							rank += 1;
-						} else if (sitterPosting[i]['types'].match(regex_pet)) {
-							rank += 2;
 						} else if (pet === "user_data" && userId != 'undefined') {
 							for (var k = 0; k < pets.length; k++) {
 								if (pets[k]['user'] == userId) {
@@ -112,20 +110,22 @@ router.get("/:pet/:location/:max_price/:userId", function(req, res){
 									}
 								}
 							}
+						} else if (sitterPosting[i]['types'].match(regex_pet)) {
+							rank += 2;
 						}
 
 						if (location === "none") {
 							rank += 1;
-						} else if (sitterPosting[i]['location'].match(regex_location)) {
-							rank += 2;
-			 			} else if (userId != 'undefined') {
+			 			} else if (location === "user_data" && userId != 'undefined') {
 			 				for (var k = 0; k < users.length; k++) {
 			 					if (users[k]['_id'] == userId && users[k]['location'] == sitterPosting[i]['location']) {
 			 						rank += 2;
 			 						break;
 			 					}
 			 				}
-			 			}
+						} else if (sitterPosting[i]['location'].match(regex_location)) {
+							rank += 2;
+						}
 
 						var lower_price = "" + sitterPosting[i]['price'].match(/([^ ]+)/, "")[1];
 

@@ -41,6 +41,7 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
             // display query for default search
             if (authService.isLoggedIn()) {
                 $scope.search_term = "Recommendations near your location.";
+                $scope.location = "user_data";
             } else {
                 $scope.search_term = "Recommendations near " + $scope.location + ".";
             }
@@ -217,6 +218,7 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
             // display query for default search
             if (authService.isLoggedIn()) {
                 $scope.search_term = "Recommendations near your location.";
+                $scope.location = "user_data";
             } else {
                 $scope.search_term = "Recommendations near " + $scope.location + ".";
             }
