@@ -30,19 +30,11 @@ var app = require('../server');
 
 // Test data
 
-// set token to user 1
-var Authentication  = require('../server/models/Authentication');
-var authentication = new Authentication({
-    user: 1,
-    token: 1,
-});
-authentication.save();
-
 // Message data
 var mochaTestMsg = {
     to: 2,
     from: 1,
-    message: 'I am good today. Thanks!',
+    message: 'Mocha: I am good today. Thanks!',
     token: 1,
 }
 
@@ -225,6 +217,14 @@ describe('POST Request Test Suite:   ', function() {
     // The function passed to before() is called before running the test cases.
     before(function() {
         app.startServer(8989);
+
+        // set token to user 1
+        var Authentication  = require('../server/models/Authentication');
+        var authentication = new Authentication({
+            user: 1,
+            token: 1,
+        });
+        authentication.save();
     });
 
     // The function passed to after() is called after running the test cases.
@@ -233,6 +233,8 @@ describe('POST Request Test Suite:   ', function() {
         app.removeMochaTestUser(mochaTestUser.username);
         app.removeMochaPet(mochaTestPet.name);
         app.removePosting('sitterPosting', mochaTestSitterPosting.title);
+        app.removeMochaMessage(mochaTestMsg.message);
+        app.removeMochaToken(1);
         app.closeServer();
     });
 
@@ -515,36 +517,6 @@ describe('PUT Request Test Suite:   ', function() {
                     });
                 });
 
-        });
-    });
-
-    describe('Read a message', function() {
-        it('should change the read status of the message', function(done) {
-
-            request.post(
-                {
-                    url:     'http://localhost:8989/api/messages',
-                    form:    mochaTestMsg
-                }, 
-                function(error, response, body){
-                    // Convert the body string into a JavaScript object
-                    var obj = JSON.parse(body);
-
-                    assert.equal(obj.read, false);
-                    assert.equal(response.statusCode, 201);
-
-                    // Make a PUT request to close this posting
-                    request({
-                        uri: 'http://localhost:8989/api/messages/' + obj._id + '/read',
-                        method: "PUT"
-                    },
-                    function(error, response, body) {
-                        var obj = JSON.parse(body);
-                        assert.equal(obj.message, mochaTestMsg.message);
-                        assert.equal(response.statusCode, 200);    
-                        done();
-                    });
-                });
         });
     });
 

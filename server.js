@@ -424,6 +424,27 @@ exports.removeForumPost = function(message) {
 	});
 };
 
+// Remove a message at end of Mocha testing
+exports.removeMochaMessage = function(message) {
+	Message.remove({ message:message }, function(err, result){
+		if(err){
+			throw err;
+		}
+		else{
+		}
+	});
+};
+
+// Remove a token at end of Mocha testing
+exports.removeMochaToken = function(token) {
+	Authentication.remove({ token:token }, function(err, result){
+		if(err){
+			throw err;
+		}
+		else{
+		}
+	});
+};
 
 // export the isNumber() function for Mocha testing
 exports.isInt = isNumber;
