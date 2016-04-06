@@ -61,6 +61,7 @@
                                     <th>Message</th>
                                     <th>Edit Info</th>
                                     <th>Ban User</th>
+                                    <th>Admin</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -79,6 +80,9 @@
                                     </td>
                                     <td>
                                         <button ng-attr-id="{{ 'ban-btn-' + user._id }}" class="admin-button delete" data-toggle="modal" data-target="#banModal" ng-click="setUserId(user._id)">{{ user.banned ? 'Banned' : 'Ban' }}</button>
+                                    </td>
+                                    <td>
+                                        <button ng-attr-id="{{ 'ban-btn-' + user._id }}" class="admin-button delete" data-toggle="modal" data-target="#banModal" ng-click="setUserId(user._id)">Make admin</button>
                                     </td>
                                 </tr>
                             </tbody>

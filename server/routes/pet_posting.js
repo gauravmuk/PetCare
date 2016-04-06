@@ -5,6 +5,7 @@ var Authentication  = require('../../server/models/Authentication');
 var Pet 			= require('../../server/models/Pet');
 var Pet_Posting		= require('../../server/models/Pet_Posting');
 var User			= require('../../server/models/User');
+var Pet_Review		= require('../../server/models/Pet_Review');
 
 // Update Pet review table, calculate new average rating for the pet on the post and update rating
 router.post("/:id/reviews", function(req, res){
@@ -117,6 +118,7 @@ router.get("/:id/rating", function(req, res){
 	}
 });
 
+// Returns information about a pet posting with the given id
 router.get("/:id", function(req, res){
 
 	if (isNumber(req.params.id)) {
@@ -135,7 +137,7 @@ router.get("/:id", function(req, res){
 
 });
 
-// Return all pet postings
+// Returns all pet postings
 router.get("/", function(req, res){
 	var petposting = [];
 	Pet_Posting.find({}, function(err, petposting) {
@@ -173,6 +175,7 @@ router.delete("/:id", function(req, res){
 
 });
 
+// Creates a new pet posting
 router.post("/", function(req, res){
 
 	var newPost = new Pet_Posting({
@@ -196,6 +199,7 @@ router.post("/", function(req, res){
 	});
 });
 
+// Updates information for a pet posting with the given id
 router.put('/:id', function (req, res) {
 
 	if (isNumber(req.params.id)) {
@@ -224,7 +228,7 @@ router.put('/:id', function (req, res) {
 
 }); 
 
-// Close a pet posting
+// Changes the status of a pet posting
 router.put('/api/petpostings/:id/:status', function (req, res) {
 
 	if (isNumber(req.params.id) && isString(req.params.status)) {
@@ -255,8 +259,7 @@ router.put('/api/petpostings/:id/:status', function (req, res) {
 
 }); 
 
-
-// Search pet postings given user quieries
+// Search pet postings given user queries
 router.get("/:pet/:location/:min_price/:userId", function(req, res){
 	var petposting = [];
 	var application = [];
@@ -357,10 +360,12 @@ router.get("/:pet/:location/:min_price/:userId", function(req, res){
 	});
 });
 
+// Returns true if the value is an integer
 function isNumber(value) {
     return /^\d+$/.test(value);
 };
 
+// Returns true if the value is a String
 function isString(value) {
     return /^\w+$/.test(value);
 };

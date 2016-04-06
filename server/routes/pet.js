@@ -2,6 +2,7 @@ var express = require("express");
 var router 	= express.Router();
 var Pet 	= require('../../server/models/Pet');
 
+// Returns information about a pet with the given id
 router.get("/:id", function(req, res){
 
 	if (isNumber(req.params.id)) {
@@ -20,6 +21,7 @@ router.get("/:id", function(req, res){
 
 });
 
+// Creates a new pet
 router.post("/", function(req, res){
 
 	var newPet = new Pet({
@@ -41,7 +43,7 @@ router.post("/", function(req, res){
 
 });
 
-// Update pet information
+// Updates pet information
 router.put("/:id", function (req, res) {
 
 	if (isNumber(req.params.id)) {
@@ -70,9 +72,9 @@ router.put("/:id", function (req, res) {
 
 }); 
 
+// Returns true if the value is an integer
 function isNumber(value) {
     return /^\d+$/.test(value);
 };
-
 
 module.exports = router

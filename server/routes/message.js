@@ -110,6 +110,7 @@ router.get("/:userId/:token", function(req,res){
 	}
 });
 
+// Returns true if the value is an integer
 function isNumber(value) {
     return /^\d+$/.test(value);
 };

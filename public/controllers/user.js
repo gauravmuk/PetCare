@@ -352,7 +352,7 @@ user.controller('userController', ['$http', '$scope', '$routeParams', '$cookies'
         
         // Make http PUT requests for the given post id to open it
         $scope.reopenPost = function (postID, postingType) {
-            console.log(postingType);
+            // console.log(postingType);
 
             // If type is sitterPosting, make an API call to chage status to 'close'
             if (postingType === 'sitterPosting'){

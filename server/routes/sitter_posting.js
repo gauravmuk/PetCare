@@ -7,6 +7,7 @@ var Sitter_Posting	= require('../../server/models/Sitter_Posting');
 var User			= require('../../server/models/User');
 var Review			= require('../../server/models/Review');
 
+// Updates information for a sitter posting with the given id
 router.put('/:id', function (req, res) {
 	if (isNumber(req.params.id)) {
 
@@ -32,7 +33,7 @@ router.put('/:id', function (req, res) {
 
 }); 
 
-// Close a sitter posting
+// Closes a sitter posting with the given id
 router.put('/:id/:status', function (req, res) {
 
 	if (isNumber(req.params.id) && isString(req.params.status)) {
@@ -197,7 +198,7 @@ router.delete("/:id", function(req, res){
 
 });
 
-// Return all sitter postings
+// Returns all sitter postings
 router.get("/", function(req, res){
 	var sitterposting = [];
 	Sitter_Posting.find({}, function(err, sitterposting) {
@@ -208,6 +209,7 @@ router.get("/", function(req, res){
 	});
 });
 
+// Returns information for a sitter posting with the given id
 router.get("/:id", function(req, res){
 
 	if (isNumber(req.params.id)) {
@@ -226,6 +228,7 @@ router.get("/:id", function(req, res){
 
 });
 
+// Updates information for a sitter posting with the given id
 router.post("/", function(req, res){
 	var newPost = new Sitter_Posting({
 		user: req.body.data.user,

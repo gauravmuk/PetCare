@@ -50,6 +50,7 @@ router.get("/:id", function(req, res){
 	}
 });
 
+// Returns true if the value is a String
 function isNumber(value) {
     return /^\d+$/.test(value);
 };
