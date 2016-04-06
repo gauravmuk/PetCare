@@ -24,6 +24,12 @@
 				margin-bottom: 10px;
 				width: 100%;
 				height: 60px;
+				cursor: pointer;
+  				@include transition(background-color 0.2s ease-in);
+
+				&:hover {
+					background-color: #DEDEDE;
+				}
 
 				.icon {
 					height: 60px;

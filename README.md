@@ -23,42 +23,42 @@ PetCare is an online service where individuals who are looking for someone to ta
 
 
 ### Admin and other user credentials
-After running the default-data.js script as described above, use can sign in one of the following users by using these credentials
+After running the default-data.js script as described above, users can sign in as one of the following users by using these credentials. Users can also sign up with their own account.
 
-Admin Credentials
-	email: 		admin@gmail.com
-	password:	admin123
+- Admin Credentials  
+	email: 		admin@gmail.com  
+	password:	admin123  
 
-Default user 1 credentials
-	email:		jennifer@gmail.com
-	password:	12345678
+- Default user 1 credentials  
+	email:		jennifer@gmail.com  
+	password:	12345678  
 
-Default user 2 credentials
-	email:		bale@gmail.com
-	password:	12345678
+- Default user 2 credentials  
+	email:		bale@gmail.com  
+	password:	12345678  
 
 
-### List of URL
+### List of URLs
 
-All the REST API end-point are listed in section 6 of the report.pdf document
+All the REST API end-points are listed in section 6 of the report.pdf document.
 
-URLS that does not require sign in 
-	/
-	/forum
-	/petsitter_posts
-	/pet_posts         
-	/pet_posts/:id
-	/petsitter_posts/:id
-	/users/:id
-	NOTE: Default search results may take time to load depending on the network
+URLs that does not require sign in  
+	/  
+	/forum  
+	/petsitter_posts  
+	/pet_posts  
+	/pet_posts/:id  
+	/petsitter_posts/:id  
+	/users/:id  
+	NOTE: Default search results may take time to load depending on the network  
 
-URLS that does require sign in 
-	/new_pet_posts
-	/new_petsitter_posts
-	/users/:id/applications
-	/users/:id/messages
-	NOTE: You have to sign in to make a Review or to Apply for a post
+URLs that does require sign in  
+	/new_pet_posts  
+	/new_petsitter_posts  
+	/users/:id/applications  
+	/users/:id/messages  
+	NOTE: You have to sign in to make a Review or to Apply for a posting  
 
-URL that only Admin can access
-	/admin 
-	NOTE: Admin can access the Admin Console by clicking on their name on the upper left corner and clicking ‘Admin Console’
+URLs that only Admins can access  
+	/admin  
+	NOTE: Admins can access the Admin Console by clicking on their name on the upper left corner and clicking ‘Admin Console’  

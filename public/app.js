@@ -25,7 +25,7 @@ app.run(function ($rootScope, $location, $route, authService, activeLinkService,
 	        }
 	    };
 	    if (next.$$route.originalPath == '/admin') {
-	    	if ($cookies.get('role') != 'admin') {
+	    	if ($cookies.get('userRole') != 'admin') {
 	    		$location.path('/');
 	    	}
 	    }
