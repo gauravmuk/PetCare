@@ -82,7 +82,7 @@
                                         <button ng-attr-id="{{ 'ban-btn-' + user._id }}" class="admin-button delete" data-toggle="modal" data-target="#banModal" ng-click="setUserId(user._id)">{{ user.banned ? 'Banned' : 'Ban' }}</button>
                                     </td>
                                     <td>
-                                        <button ng-attr-id="{{ 'ban-btn-' + user._id }}" class="admin-button delete" data-toggle="modal" data-target="#banModal" ng-click="setUserId(user._id)">Make admin</button>
+                                        <button ng-attr-id="{{ 'admin-btn-' + user._id }}" ng-attr-id="{{ 'ban-btn-' + user._id }}" class="admin-button message" data-toggle="modal" data-target="#makeAdminModal" ng-click="setUserRole(user.role, user._id)">{{ user.role == 'admin' ? 'Remove admin' : 'Make admin' }}</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -224,8 +224,27 @@
         </div>
     </div>
 
+    <!-- Make Admin Modal -->
+    <div class="modal fade" id="makeAdminModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="adminModalController">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Confirm Action</h4>
+                </div>
+                <div class="modal-body">
+                    Update the role of this user?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="ConfirmAdmin()">Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Delete Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="adminModalController">
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="adminController">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

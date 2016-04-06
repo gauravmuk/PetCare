@@ -60,6 +60,15 @@ admin.controller('adminController', ['$rootScope', '$anchorScroll', '$location',
         shareDataService.setData(obj);
     }
 
+    $scope.setUserRole = function(role, userID){
+        // Pass arguments as one object for easier handling
+        var obj = {
+            role : role,
+            userID : userID
+        }
+        shareDataService.setData(obj);
+    }
+
     $scope.setReportMessage = function(reportMessage) {
         $('#reportModal .modal-body').html(reportMessage);
     }
@@ -119,6 +128,37 @@ admin.controller('adminModalController', ['$rootScope', '$http', '$scope', 'shar
                     // console.log("error");
                 });
         } 
+    }
+
+    // Make HTTP request to update the role of the user
+    $scope.ConfirmAdmin = function(){
+
+        var oldRole = shareDataService.getData().role;
+        var userID   = shareDataService.getData().userID;
+        //console.log("old user role: " + oldRole + " id: " + userID);
+
+        // Create object to be sent through the put request 
+        var dataObj = {
+            oldRole: oldRole,
+            userID: userID
+        }
+        
+        // Make an HTTP request to /api/users/:id/role
+        $http.put('/api/users/' + userID + '/role', {data: dataObj})
+            .success(function(data, status, headers, config) {
+
+                var newText;
+
+                if (oldRole == 'admin') {
+                    newText = 'Removed as admin';
+                } else {
+                    newText = 'Added as admin';
+                }
+
+                $('#admin-btn-' + userID).html(newText);
+                $('#admin-btn-' + userID).prop('disabled', true);
+            }).error(function(data, status, headers, config) {
+            });
     }
 
     // Send a message to a given

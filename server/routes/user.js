@@ -62,6 +62,37 @@ router.put("/:id/ban", function(req, res){
 	}
 });
 
+// Update the role of a user
+router.put("/:id/role", function(req, res){
+
+	if (isNumber(req.params.id)) {
+
+		var id = req.params.id;
+		var oldRole = req.body.data.oldRole;
+		var newRole;
+
+		if (oldRole == 'admin') {
+			newRole = 'regular';
+		} else {
+			newRole = 'admin';
+		}
+
+		// Update the role of the user
+		User.update({_id: id}, {$set: {role: newRole}}, function(err, updatedUser){
+			if (err) {
+				throw err;
+			}
+			else{
+				console.log(updatedUser);
+				res.json(updatedUser);
+			}
+		});
+
+	} else {
+		res.status(400).send({ error: "Invalid ID" });
+	}
+});
+
 // Return the pets for a given user
 router.get("/:id/pets", function(req, res){
 	if (isNumber(req.params.id)) {
