@@ -290,8 +290,6 @@ router.get("/:pet/:location/:min_price/:userId", function(req, res){
 
 						if (pet === "none") {
 							rank += 1;
-						} else if (petposting[i]['pet']['type'].match(regex_pet)) {
-							rank += 2;
 						} else if (pet === "user_data" && userId != 'undefined') {
 							for (var k = 0; k < pets.length; k++) {
 								if (pets[k]['user'] == userId && pets[k]['type'] == petposting[i]['pet']['type']) {
@@ -299,20 +297,22 @@ router.get("/:pet/:location/:min_price/:userId", function(req, res){
 									break;
 								}
 							}
+						} else if (petposting[i]['pet']['type'].match(regex_pet)) {
+							rank += 2;
 						}
 
 						if (location === "none") {
 							rank += 1;
-						} else if (petposting[i]['location'].match(regex_location)) {
-							rank += 2;
-			 			} else if (userId != 'undefined') {
+						} else if (location === "user_data" && userId != 'undefined') {
 			 				for (var k = 0; k < users.length; k++) {
 			 					if (users[k]['_id'] == userId && users[k]['location'] == petposting[i]['location']) {
 			 						rank += 2;
 			 						break;
 			 					}
 			 				}
-			 			}
+						} else if (petposting[i]['location'].match(regex_location)) {
+							rank += 2;
+						}
 
 						if (min_price === "none") {
 							rank += 1;
