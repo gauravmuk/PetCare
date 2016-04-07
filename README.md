@@ -5,13 +5,13 @@ PetCare is an online service where individuals who are looking for someone to ta
 ### Setup
 1. Install node.js
 2. Install npm
-3. Install mongoDB 3.2 Community Edition   
-    OS X: 			https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/   
-    Windows:		https://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/
+3. Install mongoDB 3.2 Community Edition    
+    OS X: 			https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/    
+    Windows:		https://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/
 4. Copy the Amazon AWS credentials file
-    On OS X/Linux, copy into	~/.aws/credentials                  
-    On Windows, copy into 		C:\Users\USERNAME\.aws\credentials   
-    NOTE:  You can find the credentials file inside the a4p2.zip in the PetCare directory
+    On OS X/Linux, copy into	~/.aws/credentials   
+    On Windows, copy into 		C:\Users\USERNAME\.aws\credentials   
+    NOTE: You can find the credentials file inside the a4p2.zip in the PetCare directory
     This file contains the Amazon AWS credentials used for uploading images to Amazon S3 storage.
 5. Execute `npm install` to install the dependencies listed in the package.json file.
 
@@ -45,22 +45,25 @@ After running the default-data.js script as described above, users can sign in a
 All the REST API end-points are listed in section 6 of the report.pdf document.
 
 URLs that does not require sign in  
-	/  
-	/forum  
-	/petsitter_posts  
-	/pet_posts  
-	/pet_posts/:id  
-	/petsitter_posts/:id  
-	/users/:id  
-	NOTE: Default search results may take time to load depending on the network  
+- /  
+- /forum  
+- /petsitter_posts  
+- /pet_posts  
+- /pet_posts/:id  
+- /petsitter_posts/:id  
+- /users/:id   
+
+NOTE: Default search results may take time to load depending on the network  
 
 URLs that does require sign in  
-	/new_pet_posts  
-	/new_petsitter_posts  
-	/users/:id/applications  
-	/users/:id/messages  
-	NOTE: You have to sign in to make a Review or to Apply for a posting  
+- /new_pet_posts  
+- /new_petsitter_posts  
+- /users/:id/applications  
+- /users/:id/messages  
+
+NOTE: You have to sign in to make a Review or to Apply for a posting  
 
 URLs that only Admins can access  
-	/admin  
-	NOTE: Admins can access the Admin Console by clicking on their name on the upper left corner and clicking ‘Admin Console’  
+- /admin  
+
+NOTE: Admins can access the Admin Console by clicking on their name on the upper left corner and clicking ‘Admin Console’  
