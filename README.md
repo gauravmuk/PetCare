@@ -3,23 +3,26 @@ PetCare is an online service where individuals who are looking for someone to ta
 
 
 ### Setup
-1. Install nodejs
+1. Install node.js
 2. Install npm
-3. Install mongoDB 3.2 Community Edition   
-    OS X: 		https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/   
-    Windows:	https://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/
-4. On OS X/Linux, copy the credentials file into ~/.aws/credentials                  
-    on Windows, copy the credentials file into C:\Users\USERNAME\.aws\credentials   
+3. Install mongoDB 3.2 Community Edition   
+    OS X: 			https://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/   
+    Windows:		https://docs.mongodb.org/manual/tutorial/install-mongodb-on-windows/
+4. Copy the Amazon AWS credentials file
+    On OS X/Linux, copy into	~/.aws/credentials                  
+    On Windows, copy into 		C:\Users\USERNAME\.aws\credentials   
+    NOTE:  You can find the credentials file inside the a4p2.zip in the PetCare directory
     This file contains the Amazon AWS credentials used for uploading images to Amazon S3 storage.
 5. Execute `npm install` to install the dependencies listed in the package.json file.
 
 
 ### How To Run
 1. Open two terminals.
-2. In one terminal, run `mongod --dbpath ./mongodb_data` to start the mongoDB daemo
-3. In the second terminal, run `node data/default-data.js` to import the data    
-    And then run `npm start` to start the nodeJS serve
-4. Go to http://localhost:3000/ for the interface.
+2. cd in to the PetCare directory
+3. In one terminal, run `mongod --dbpath ./mongodb_data` to start the mongoDB daemo
+4. In the second terminal, run `node data/default-data.js` to import the data    
+5. And then run `npm start` to start the node.js server
+6. Go to http://localhost:3000/ for the interface.
 
 
 ### Admin and other user credentials
@@ -39,7 +42,6 @@ After running the default-data.js script as described above, users can sign in a
 
 
 ### List of URLs
-
 All the REST API end-points are listed in section 6 of the report.pdf document.
 
 URLs that does not require sign in  
