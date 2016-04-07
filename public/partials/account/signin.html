@@ -17,10 +17,10 @@
                 </span>
                 <span ng-if="error" class="form-error" ng-hide="focus">{{ errorMsg }}</span>
                  <span ng-if="error" class="form-error" ng-hide="focus">{{ errorLoginMsg }}</span>
-                <div class="remember-me">
+                <!-- <div class="remember-me">
                     <label><input type="checkbox" name="remember-me" />Remember me</label>
                     <a href="#forgot-pw">Forgot Password?</a>
-                </div>
+                </div> -->
                 <input class="signup-button" type="submit" value="Sign In" ng-click="login(form.$valid, email, password)">
                 <span class="center">Don't have an account? <a href="signup">Sign Up</a></span>
                 <span class="center">
