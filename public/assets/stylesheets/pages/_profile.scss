@@ -175,6 +175,16 @@ $border-color: #CECECE;
    		margin: 0 auto;
 	}
 
+	div.user-review-photo {
+		height: 120px;
+		padding: 10px;
+		max-width: 120px;
+		background-size: cover;
+    	background-position: center;
+   		background-repeat: no-repeat;
+   		margin: 0 auto;
+	}
+
 	img.review-user-picture {
 		height: 120px;
 		padding: 10px;
@@ -288,6 +298,18 @@ $border-color: #CECECE;
 			margin-right: 20px;
     		max-width: 160px;
     		min-width: 160px;
+    		background-size: cover;
+    		background-position: center;
+    		background-repeat: no-repeat;
+    		display: inline-block;
+		}
+
+		div.user-review-photo {
+			float: left;
+			height: 120px;
+			padding: 0;
+    		max-width: 120px;
+    		min-width: 120px;
     		background-size: cover;
     		background-position: center;
     		background-repeat: no-repeat;
