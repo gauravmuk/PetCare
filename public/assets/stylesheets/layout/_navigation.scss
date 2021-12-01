@@ -15,7 +15,7 @@
 		margin-top: 8px;
 		margin-right: 15px;
 		margin-bottom: 8px;
-		background-color: $green;
+		background-color: $charcoal;
 		background-image: none;
 		border: 1px solid $white;
 		border-radius: 4px;
@@ -23,7 +23,7 @@
   		@include transition(background-color 0.2s ease-in);
 
 		&:hover {
-			background-color: $green-dark;
+			background-color: $charcoal-dark;
 		}
 
 		.icon-bar {
@@ -169,8 +169,8 @@
 				height: 50px;
 
 				&.active, &.active:focus {
-					background-color: #EEE;
-					border-top: 3px solid #10C8CD;
+					background-color: rgb(34, 36, 38);
+					border-top: 3px solid $charcoal;
 
 					a {
 						top: -3px;
@@ -178,7 +178,7 @@
 				}
 
 				&:hover {
-					background-color: #EEE;
+					background-color: rgb(34, 36, 38);
 				}
 
 			}
@@ -190,13 +190,13 @@
 					display: block;
 					border-radius: 4px;
 					color: $white;
-					background-color: $green;
+					background-color: $charcoal;
 					padding: 8px 16px;
   					@include transition(all 0.2s ease-in);
 
 					&:hover, &:focus {
 						color: $white;
-						background-color: $green-dark;
+						background-color: $charcoal-dark;
 					}
 			    }
 

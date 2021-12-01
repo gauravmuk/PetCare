@@ -1,7 +1,7 @@
 {
-  "name": "petcare",
+  "name": "petandplant",
   "version": "1.0.0",
-  "description": "Connect with people in your neighbourhood who you can trust to look after your pets while you are away or offer your pet sitting services.",
+  "description": "Connect with people in your neighbourhood who you can trust to look after your pets while you are away or offer your care taking services.",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

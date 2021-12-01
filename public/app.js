@@ -1,4 +1,4 @@
-var app = angular.module('petCare',	['ngRoute', 
+var app = angular.module('petAndPlant',	['ngRoute', 
 									 'ngCookies', 
 									 'ngMessages',
 									 'admin', 

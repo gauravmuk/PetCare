@@ -27,12 +27,12 @@ $screen-md-max: ($screen-lg-min - 1);
 // ----------------------------------------------------------------------
 	// Colors
 // ----------------------------------------------------------------------
-$body-bg: #FEFEFE;
+$body-bg: rgb(25, 27, 28);
 
 $white: #FFF;
 
 $gray-light: #F8F8F8;
-$gray: #F8F8F8;
+$gray: #1C1E1F;
 $gray-dark: #DADADA;
 $gray-darker: #828282;
 
@@ -42,5 +42,8 @@ $black: #000;
 $green: #10C8CD;
 $green-dark: #0EA3AB;
 
-$link-color: #476D82;
+$link-color: #83A7BB;
 $link-dark: #273D4A;
+
+$charcoal: #3A6B7E;
+$charcoal-dark: #264653;

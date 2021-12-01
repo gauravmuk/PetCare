@@ -29,7 +29,7 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
 
         // get city from geolocation
         $http.get('https://maps.googleapis.com/maps/api/geocode/json?latlng='+x+','+y+'&sensor=true').success(function(data){
-            var address_components = data.results[0].address_components;
+            var address_components = data.results[0]?.address_components;
 
             for(var i = 0; i < address_components.length; i++) {
                 if (address_components[i].types == "locality,political") {

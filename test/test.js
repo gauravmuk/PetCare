@@ -47,7 +47,7 @@ var mochaTestPet = {
     photo: 'http://elelur.com/data_images/dog-breeds/labrador-retriever/labrador-retriever-06.jpg'
 }
 
-// Pet sitter data
+// Care Taking data
 var mochaTestSitterPosting = {
     user: 2,
     title: 'Mocha sitter posting',
@@ -67,7 +67,7 @@ var mochaTestSitterPosting = {
 var mochaTestPetPosting = {
     user        : 2,
     pet         : 3,
-    title       : 'Mocha Max needs a pet sitter',
+    title       : 'Mocha Max needs a care taker',
     duration    : '2 days',
     location    : 'Toronto',
     price       : '20',
