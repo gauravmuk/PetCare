@@ -1,5 +1,5 @@
-# Pet & Plant Care
-Pet & Plant Care is an online service where individuals who are looking for someone to take care of their pets & plants can connect with care takers in their community who are experienced in taking care of pets & plants. Users can register on the system and look for a care taker or offer their care taking services, or both.
+# Pet & Plant Crib
+Pet & Plant Crib is an online service where individuals who are looking for someone to take care of their pets & plants can connect with care takers in their community who are experienced in taking care of pets & plants. Users can register on the system and look for a care taker or offer their care taking services, or both.
 
 
 ### Setup

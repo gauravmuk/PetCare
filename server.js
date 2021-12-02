@@ -319,7 +319,7 @@ app.use(function(req, res, next) {
 var theport = process.env.PORT || 3000;
 /* Start server */ 
 app.listen(theport, function(){
-	console.log("Pet & Plant Care server running at http://localhost:3000/");
+	console.log("Pet & Plant Crib server running at http://localhost:3000/");
 });
 
 

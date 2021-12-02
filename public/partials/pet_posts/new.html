@@ -29,12 +29,12 @@
                     </div>
 
                     <div class="form-group select-pet">
-                        <label >Pet</label>
+                        <label >Pet/Plant</label>
                         <select class="form-control" name="inputPet" ng-model="inputPet" required>
                             <option value="{{ pet._id }}" ng-repeat="pet in userPets">{{ pet.name }}</option>
                         </select>
                     </div>
-                    <a href="new_pet" class="add_pet button">Add a Pet</a>
+                    <a href="new_pet" class="add_pet button">Add a Pet/Plant</a>
 
                     <div class="row">
                         <div class="col-md-6">
@@ -72,7 +72,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="inputPetSupplies">Pet Supplies</label>
+                        <label for="inputPetSupplies">Supplies</label>
                         <input type="text" class="form-control" name="inputPetSupplies" id="inputPetSupplies" ng-model="supplies" required>
                         <span ng-show="postingForm.inputPetSupplies.$touched && postingForm.inputPetSupplies.$invalid" class="form-error">This field is required.</span>
                     </div>
