@@ -180,7 +180,6 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
  // Controller for petsitter_posts
 search.controller('OfferController', ['$http', '$scope', '$cookies', '$location', 'appService', 'authService', '$uibModal', 
     function($http, $scope, $cookies, $location, appService, authService, $uibModal){
-
     $scope.posts = [];
     $scope.rating = rating;
     $scope.userId = $cookies.get('userID');
@@ -248,7 +247,6 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
 
     // get search results given three queries: pet type, location, and price
     $scope.search_sitter = function() {
-
         // set default values to queries if not given from user
         $scope.search_term = "";
         if ($scope.pet === "")
@@ -286,6 +284,8 @@ search.controller('OfferController', ['$http', '$scope', '$cookies', '$location'
                 $scope.max_price = "";
         });
     };
+
+    $scope.search_sitter();
 
     // goto detail posting page
     $scope.showDetailPost = function(postId) {
