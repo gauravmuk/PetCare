@@ -6,7 +6,7 @@ var router 		= express.Router();
 
 /* Amazon S3 Upload */
 // connect to existing bucket
-var s3bucket = new AWS.S3({ params: { Bucket: 'pet.care' }});
+var s3bucket = new AWS.S3({ params: { Bucket: 'stfx-pet' }, region: 'ca-central-1'});
 
 // Uploads a file to Amazon S3 and return the URL
 // Following guide from: http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-examples.html and
