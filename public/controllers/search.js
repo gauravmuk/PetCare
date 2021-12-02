@@ -111,6 +111,8 @@ search.controller('HireController', ['$http', '$scope', '$cookies', '$location',
         });
     };
 
+    $scope.search_pet();
+
     // goto detail posting page
     $scope.showDetailPost = function(postId) {
 
